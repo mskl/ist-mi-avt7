@@ -41,18 +41,21 @@ GLint lPos_uniformId;
 	
 // Camera Position
 float camX, camY, camZ;
-
 // Mouse Tracking Variables
 int startX, startY, tracking = 0;
-
 // Camera Spherical Coordinates
 float alpha = 39.0f, beta = 51.0f;
 float r = 10.0f;
-
 // Frame counting and FPS computation
-long myTime,timebase = 0,frame = 0;
+long myTime, timebase = 0, frame = 0;
 char s[32];
 float lightPos[4] = {4.0f, 6.0f, 2.0f, 1.0f};
+
+// Trying to pass time into the shader
+// GLint vTime = 0;
+// const char* attribute_name = "vTime";
+// attribute_coord2d = glGetAttribLocation(p, attribute_name);
+
 
 void timer(int value)
 {
@@ -75,7 +78,7 @@ void changeSize(int w, int h)
 {
 	float ratio;
 	// Prevent a divide by zero, when window is too short
-	if (h == 0){
+	if (h == 0) {
         h = 1;
 	}
 
@@ -106,12 +109,12 @@ void renderScene(void)
 	glUseProgram(shader.getProgramIndex());
 
 	// send the light position in eye coordinates
-    // glUniform4fv(lPos_uniformId, 1, lightPos);
+	// glUniform4fv(lPos_uniformId, 1, lightPos);
     // efeito capacete do mineiro, ou seja lighPos foi definido em eye coord
 
     float res[4];
     // lightPos definido em World Coord so is converted to eye space
-    multMatrixPoint(VIEW, lightPos,res);
+    multMatrixPoint(VIEW, lightPos, res);
     glUniform4fv(lPos_uniformId, 1, res);
 
 	objId = 0;
@@ -125,6 +128,7 @@ void renderScene(void)
 			loc = glGetUniformLocation(shader.getProgramIndex(), "mat.specular");
 			glUniform4fv(loc, 1, mesh[objId].mat.specular);
 			loc = glGetUniformLocation(shader.getProgramIndex(), "mat.shininess");
+
 			glUniform1f(loc,mesh[objId].mat.shininess);
 			pushMatrix(MODEL);
 			translate(MODEL, i*2.0f, 0.0f, j*2.0f);
@@ -236,7 +240,6 @@ void processMouseMotion(int xx, int yy)
     // glutPostRedisplay();
 }
 
-
 void mouseWheel(int wheel, int direction, int x, int y)
 {
 	r += direction * 0.1f;
@@ -251,28 +254,21 @@ void mouseWheel(int wheel, int direction, int x, int y)
 	// glutPostRedisplay();
 }
 
-const GLchar* VertexShader =
-        {
-                "#version 330\n\nuniform mat4 m_pvm;\nuniform mat4 m_viewModel;\nuniform mat3 m_normal;\n\nuniform vec4 l_pos;\n\nin vec4 position;\nin vec4 normal;    //por causa do gerador de geometria\n\nout Data {\n\tvec3 normal;\n\tvec3 eye;\n\tvec3 lightDir;\n} DataOut;\n\nvoid main () {\n\n\tvec4 pos = m_viewModel * position;\n\n\tDataOut.normal = normalize(m_normal * normal.xyz);\n\tDataOut.lightDir = vec3(l_pos - pos);\n\tDataOut.eye = vec3(-pos);\n\n\tgl_Position = m_pvm * position;\t\n}"
-        };
-
-const GLchar* FragmentShader =
-        {
-                "#version 330\n\nout vec4 colorOut;\n\nstruct Materials {\n\tvec4 diffuse;\n\tvec4 ambient;\n\tvec4 specular;\n\tvec4 emissive;\n\tfloat shininess;\n\tint texCount;\n};\n\nuniform Materials mat;\n\nin Data {\n\tvec3 normal;\n\tvec3 eye;\n\tvec3 lightDir;\n} DataIn;\n\nvoid main() {\n\n\tvec3 spec = vec3(0.0);\n\n\tvec3 n = normalize(DataIn.normal);\n\tvec3 l = normalize(DataIn.lightDir);\n\tvec3 e = normalize(DataIn.eye);\n\n\tfloat intensity = max(dot(n,l), 0.0);\n\n\t\n\tif (intensity > 0.0) {\n\n\t\tvec3 h = normalize(l + e);\n\t\tfloat intSpec = max(dot(h,n), 0.0);\n\t\tspec = mat.specular.rgb * pow(intSpec, mat.shininess);\n\t}\n\t\n\tcolorOut = vec4(max(intensity * mat.diffuse.rgb + spec, mat.ambient.rgb), 1.0);\n}"
-        };
-
 GLuint setupShaders()
 {
 	// Shader for models
 	shader.init();
-    shader.loadShaderFromString(VSShaderLib::VERTEX_SHADER, VertexShader);
-    shader.loadShaderFromString(VSShaderLib::FRAGMENT_SHADER, FragmentShader);
+	shader.loadShader(VSShaderLib::VERTEX_SHADER, "shaders/pointlight.vert");
+    shader.loadShader(VSShaderLib::FRAGMENT_SHADER, "shaders/pointlight.frag");
 
     // set semantics for the shader variables
 	glBindFragDataLocation(shader.getProgramIndex(), 0,"colorOut");
 	glBindAttribLocation(shader.getProgramIndex(), VERTEX_COORD_ATTRIB, "position");
 	glBindAttribLocation(shader.getProgramIndex(), NORMAL_ATTRIB, "normal");
-	//glBindAttribLocation(shader.getProgramIndex(), TEXTURE_COORD_ATTRIB, "texCoord");
+
+	// TODO:
+    // glBindAttribLocation(shader.getProgramIndex(), VERTEX_ATTRIB4, "time");
+	// glBindAttribLocation(shader.getProgramIndex(), TEXTURE_COORD_ATTRIB, "texCoord");
 
 	glLinkProgram(shader.getProgramIndex());
 
@@ -356,15 +352,13 @@ void init()
 	glEnable(GL_CULL_FACE);
 	glEnable(GL_MULTISAMPLE);
 	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
-
 }
-
 
 int main(int argc, char **argv)
 {
     // GLUT initialization
 	glutInit(&argc, argv);
-	glutInitDisplayMode(GLUT_DEPTH|GLUT_DOUBLE|GLUT_RGBA|GLUT_MULTISAMPLE);
+	glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA | GLUT_MULTISAMPLE);
 
 	glutInitContextVersion (3, 3);
 	glutInitContextProfile (GLUT_CORE_PROFILE );
@@ -374,20 +368,19 @@ int main(int argc, char **argv)
 	glutInitWindowSize(WinX, WinY);
 	WindowHandle = glutCreateWindow(CAPTION);
 
-
     // Callback Registration
 	glutDisplayFunc(renderScene);
 	glutReshapeFunc(changeSize);
 
 	glutTimerFunc(0, timer, 0);
-	glutIdleFunc(renderScene);  // Use it for maximum performance
-	// glutTimerFunc(0, refresh, 0);    // use it to to get 60 FPS whatever
+	glutTimerFunc(0, refresh, 0);    // use it to to get 60 FPS whatever,
+	// glutIdleFunc(renderScene); // Use it for maximum performance, glutPostRedisplay() could be used as well?
 
     // Mouse and Keyboard Callbacks
 	glutKeyboardFunc(processKeys);
 	glutMouseFunc(processMouseButtons);
 	glutMotionFunc(processMouseMotion);
-	glutMouseWheelFunc ( mouseWheel ) ;
+	glutMouseWheelFunc(mouseWheel) ;
 
     // return from main loop
 	glutSetOption(GLUT_ACTION_ON_WINDOW_CLOSE, GLUT_ACTION_GLUTMAINLOOP_RETURNS);

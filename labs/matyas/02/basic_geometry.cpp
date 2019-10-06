@@ -62,7 +62,6 @@ void createQuad(float size_x, float size_y) {
     glEnableVertexAttribArray(TEXTURE_COORD_ATTRIB);
     glVertexAttribPointer(TEXTURE_COORD_ATTRIB, 4, GL_FLOAT, 0, 0, (void *)(sizeof(quad_vertices)+ sizeof(quad_normals)));
     
-    
     //index buffer
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, VboId[1]);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * mesh[objId].numIndexes, quad_faceIndex , GL_STATIC_DRAW);
@@ -479,7 +478,7 @@ float *circularProfile(float minAngle, float maxAngle, float radius, int divisio
 	
 		p[i*2]   = radius * cos(minAngle + k * step) + transX;
 		p[i*2+1] = radius * sin(minAngle + k * step) + transY;
-//		printf("%f %f\n", p[i*2], p[i * 2 + 1]);
+        // printf("%f %f\n", p[i*2], p[i * 2 + 1]);
 	}
 	return p;
 }

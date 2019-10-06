@@ -92,20 +92,12 @@ void read_shader_file(const char *shader_file, string & str) {
 }
 
 void createShaderProgram() {
-    string vert_shader;
-    read_shader_file("simple.vert", vert_shader);
-    const char *vert_shader_ptr = vert_shader.c_str();
-
     VertexShaderId = glCreateShader(GL_VERTEX_SHADER);
-    glShaderSource(VertexShaderId, 1, &vert_shader_ptr, 0);
+    glShaderSource(VertexShaderId, 1, &VertexShader, 0);
     glCompileShader(VertexShaderId);
 
-    string frag_shader;
-    read_shader_file("simple.frag", frag_shader);
-    const char *frag_shader_ptr = frag_shader.c_str();
-
     FragmentShaderId = glCreateShader(GL_FRAGMENT_SHADER);
-    glShaderSource(FragmentShaderId, 1, &frag_shader_ptr, 0);
+    glShaderSource(FragmentShaderId, 1, &FragmentShader, 0);
     glCompileShader(FragmentShaderId);
 
     ProgramId = glCreateProgram();
@@ -193,15 +185,22 @@ const Matrix M = {
         0.0f, 0.0f, 0.0f, 1.0f
 }; // Row Major (GLSL is Column Major)
 
+const Matrix C = {
+        1.0f, 0.0f, 0.0f, -0.5f,
+        0.0f, 1.0f, 0.0f, -0.5f,
+        0.0f, 0.0f, 1.0f, 0.0f,
+        0.0f, 0.0f, 0.0f, 1.0f
+}; // Row Major (GLSL is Column Major)
+
 void renderScene() {
     glBindVertexArray(VaoId);
     glUseProgram(ProgramId);
 
-    glUniformMatrix4fv(UniformId, 1, GL_TRUE, I);
+    glUniformMatrix4fv(UniformId, 1, GL_TRUE, C);
     glDrawElements(GL_TRIANGLES, faceCount * 3, GL_UNSIGNED_INT, (GLvoid *) 0);
 
-    glUniformMatrix4fv(UniformId, 1, GL_TRUE, M);
-    glDrawElements(GL_TRIANGLES, faceCount * 3, GL_UNSIGNED_INT, (GLvoid *) 0);
+    //glUniformMatrix4fv(UniformId, 1, GL_TRUE, M);
+    //glDrawElements(GL_TRIANGLES, faceCount * 3, GL_UNSIGNED_INT, (GLvoid *) 0);
 
     glUseProgram(0);
     glBindVertexArray(0);
@@ -220,20 +219,12 @@ void cleanup() {
 int previous_draw_time = 0;
 
 void display() {
-    while (glutGet(GLUT_ELAPSED_TIME) < (previous_draw_time + 1000/60)) {
-        // Do nothing
-    }
-
     ++FrameCount;
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     renderScene();
     glutSwapBuffers();
 
     previous_draw_time = glutGet(GLUT_ELAPSED_TIME);
-}
-
-void idle() {
-    glutPostRedisplay();
 }
 
 void reshape(int w, int h) {
@@ -252,14 +243,20 @@ void timer(int value) {
     glutTimerFunc(1000, timer, 0);
 }
 
+void refresh(int value)
+{
+    glutPostRedisplay();
+    glutTimerFunc(1000/60, refresh, 0);
+}
+
 /////////////////////////////////////////////////////////////////////// SETUP
 
 void setupCallbacks() {
     glutCloseFunc(cleanup);
     glutDisplayFunc(display);
-    glutIdleFunc(idle);
     glutReshapeFunc(reshape);
     glutTimerFunc(0, timer, 0);
+    glutTimerFunc(0, refresh, 0);
 }
 
 void setupOpenGL() {

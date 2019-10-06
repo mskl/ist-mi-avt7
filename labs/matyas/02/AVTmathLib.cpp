@@ -10,7 +10,7 @@ AVT Math Lib
 
 ALL resulting matrices are in COLUMN ORDER
 
-Author: João Madeiras Pereira
+Author: Jo?o Madeiras Pereira
 ----------------------------------------------------*/
 
 #include "AVTmathLib.h"

@@ -6,6 +6,8 @@ uniform mat3 m_normal;
 
 uniform vec4 l_pos;
 
+uniform int time;
+
 in vec4 position;
 in vec4 normal;    //por causa do gerador de geometria
 
@@ -15,9 +17,10 @@ out Data {
 	vec3 lightDir;
 } DataOut;
 
-void main () {
-
+void main ()
+{
 	vec4 pos = m_viewModel * position;
+	pos.x = pos.x + sin(pos.y*10.0 + time*10.0)*0.1;
 
 	DataOut.normal = normalize(m_normal * normal.xyz);
 	DataOut.lightDir = vec3(l_pos - pos);

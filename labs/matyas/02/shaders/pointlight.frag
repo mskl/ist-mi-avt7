@@ -19,19 +19,16 @@ in Data {
 	vec3 lightDir;
 } DataIn;
 
-void main() {
-
+void main()
+{
 	vec3 spec = vec3(0.0);
-
 	vec3 n = normalize(DataIn.normal);
 	vec3 l = normalize(DataIn.lightDir);
 	vec3 e = normalize(DataIn.eye);
 
 	float intensity = max(dot(n,l), 0.0);
-
 	
 	if (intensity > 0.0) {
-
 		vec3 h = normalize(l + e);
 		float intSpec = max(dot(h,n), 0.0);
 		spec = mat.specular.rgb * pow(intSpec, mat.shininess);
