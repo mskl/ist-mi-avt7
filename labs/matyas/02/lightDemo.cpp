@@ -265,12 +265,11 @@ GLuint setupShaders()
 {
 	// Shader for models
 	shader.init();
-	shader.loadShader(VSShaderLib::VERTEX_SHADER, "shaders/pointlight.vert");
-    shader.loadShader(VSShaderLib::FRAGMENT_SHADER, "shaders/pointlight.frag");
-    //shader.loadShaderFromString(VSShaderLib::VERTEX_SHADER, VertexShader);
-    //shader.loadShaderFromString(VSShaderLib::FRAGMENT_SHADER, FragmentShader);
-
-
+	//shader.loadShader(VSShaderLib::VERTEX_SHADER, "shaders/pointlight.vert");
+    //shader.loadShader(VSShaderLib::FRAGMENT_SHADER, "shaders/pointlight.frag");
+    shader.loadShaderFromString(VSShaderLib::VERTEX_SHADER, VertexShader);
+    shader.loadShaderFromString(VSShaderLib::FRAGMENT_SHADER, FragmentShader);
+    
     // set semantics for the shader variables
 	glBindFragDataLocation(shader.getProgramIndex(), 0,"colorOut");
 	glBindAttribLocation(shader.getProgramIndex(), VERTEX_COORD_ATTRIB, "position");
