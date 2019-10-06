@@ -1,5 +1,5 @@
 
-#define MAX_TEXTURES 4
+#define MAXIMUM_TEXTURES 4
 
 struct Material{
 	float diffuse[4];
@@ -12,8 +12,8 @@ struct Material{
 // A model can be made of many meshes. Each is stored  in the following structure
 struct MyMesh {
 		GLuint vao;
-		GLuint texUnits[MAX_TEXTURES];
-		GLuint texTypes[MAX_TEXTURES];
+		GLuint texUnits[MAXIMUM_TEXTURES];
+		GLuint texTypes[MAXIMUM_TEXTURES];
 		float transform[16];
 		int numIndexes;
 		unsigned int type;

@@ -10,13 +10,11 @@ Basic Revolution Geometry
 
  Jo?o Madeiras Pereira
 ----------------------------------------------------*/
-#include <string>
 #include <assert.h>
 #include <stdlib.h>
 #include <vector>
-
-#include <stdio.h>
-#include <string.h>
+#include <cstring>
+#include <math.h>
 
 // include GLEW to access OpenGL 3.3 functions
 #include <GL/glew.h>
