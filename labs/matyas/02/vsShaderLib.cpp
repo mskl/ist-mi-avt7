@@ -556,8 +556,8 @@ VSShaderLib::getAllInfoLogs() {
 // PRIVATE METHODS
 
 char *
-VSShaderLib::textFileRead(std::string fileName) {
-
+VSShaderLib::textFileRead(std::string fileName)
+{
 
     FILE *fp;
     char *content = NULL;
