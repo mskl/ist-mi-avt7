@@ -40,7 +40,7 @@
 
 
 
-class vsShaderLib
+class VSShaderLib
 {
 public:
 	
@@ -70,8 +70,8 @@ public:
 	/// Just a helper define
 	static const int MAX_TEXTURES = 8;
 
-	vsShaderLib();
-	~vsShaderLib();
+	VSShaderLib();
+	~VSShaderLib();
 
 	/** Init should be called for every shader instance
 	  * prior to any other function
@@ -83,7 +83,7 @@ public:
 	  * \param st one of the enum values of ShaderType
 	  *	\param filename the file where the source is to be found
 	*/
-	void loadShader(vsShaderLib::ShaderType st, std::string fileName);
+	void loadShader(VSShaderLib::ShaderType st, std::string fileName);
 
 	/** bind a user-defined varying out variable to a 
 	  * fragment shader color number
@@ -93,7 +93,10 @@ public:
 	  * \param index the fragment colour number
 	  * \param the name of the fragment's shader variable
 	*/
-	void setProgramOutput(int index, std::string name);
+
+    void loadShaderFromString(ShaderType st, const char *s);
+
+    void setProgramOutput(int index, std::string name);
 
 	/** returns the fragment shader color number bound to 
 	  * a user-defined varying out variable
@@ -114,7 +117,7 @@ public:
 	  * \param the semantic of the attribute
 	  * \param the name of the vertex attribute
 	*/
-	void setVertexAttribName(vsShaderLib::AttribType at, std::string name);
+	void setVertexAttribName(VSShaderLib::AttribType at, std::string name);
 
 	/** Prepares program for usage. Links it and collects information
 	  * about uniform variables and uniform blocks
@@ -142,10 +145,10 @@ public:
 	/// returns the program index
 	GLuint getProgramIndex();
 	/// returns a shader index
-	GLuint getShaderIndex(vsShaderLib::ShaderType);
+	GLuint getShaderIndex(VSShaderLib::ShaderType);
 
 	/// returns a string with a shader's infolog
-	std::string getShaderInfoLog(vsShaderLib::ShaderType);
+	std::string getShaderInfoLog(VSShaderLib::ShaderType);
 	/// returns a string with the program's infolog
 	std::string getProgramInfoLog();
 	/// returns a string will all info logs
@@ -153,7 +156,7 @@ public:
 	/// returns GL_VALIDATE_STATUS for the program 
 	bool isProgramValid();
 	/// returns true if compiled, false otherwise
-	bool isShaderCompiled(vsShaderLib::ShaderType);
+	bool isShaderCompiled(VSShaderLib::ShaderType);
 	/// returns true if linked, false otherwise
 	bool isProgramLinked();
 
@@ -205,16 +208,16 @@ protected:
 	static std::map<std::string, UniformBlock> spBlocks;
 
 	/// stores the OpenGL shader types
-	static GLenum spGLShaderTypes[vsShaderLib::COUNT_SHADER_TYPE];
+	static GLenum spGLShaderTypes[VSShaderLib::COUNT_SHADER_TYPE];
 	
 	/// stores the text string related to each type
-	static std::string spStringShaderTypes[vsShaderLib::COUNT_SHADER_TYPE];
+	static std::string spStringShaderTypes[VSShaderLib::COUNT_SHADER_TYPE];
 
 	/// aux string used to return the shaders infologs
 	std::string pResult;
 
 	/// stores the shaders and program indices
-	GLuint pShader[vsShaderLib::COUNT_SHADER_TYPE], pProgram;
+	GLuint pShader[VSShaderLib::COUNT_SHADER_TYPE], pProgram;
 
 	/// stores info on the uniforms
 	std::map<std::string, myUniforms> pUniforms;
