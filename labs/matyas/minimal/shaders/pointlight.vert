@@ -29,13 +29,13 @@ void main ()
 
 	vec4 tmp_Position = m_pvm * position;
 
-	vec4 tmp_Position_new = tmp_Position;
-	tmp_Position_new.x = tmp_Position.x * cos(sinTime) - tmp_Position.z * sin(sinTime);
-	tmp_Position_new.y = tmp_Position.y;
-	tmp_Position_new.z = tmp_Position.x * sin(sinTime) + tmp_Position.z * cos(sinTime);
+	//vec4 tmp_Position_new = tmp_Position;
+	//tmp_Position_new.x = tmp_Position.x * cos(sinTime) - tmp_Position.z * sin(sinTime);
+	//tmp_Position_new.y = tmp_Position.y;
+	//tmp_Position_new.z = tmp_Position.x * sin(sinTime) + tmp_Position.z * cos(sinTime);
 
 	//tmp_Position.x = tmp_Position.x + sin(tmp_Position.y*10.0 + sinTime*20.0)*0.1;
 	//tmp_Position[3] = tmp_Position[3] + (sinTime+1) * 2;
 
-	gl_Position = tmp_Position_new;
+	gl_Position = tmp_Position;
 }
