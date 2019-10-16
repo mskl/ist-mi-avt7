@@ -28,7 +28,9 @@ extern float mCompMatrix[COUNT_COMPUTED_MATRICES][16];
 extern float mNormal3x3[9];
 
 int objId = 0;
+
 struct MyMesh mesh[10];
+//vector<MyMesh> mesh;
 
 class GameManager {
 public:
@@ -249,14 +251,14 @@ private:
 
     void renderObjectPlayer() {
         objId = 5; // Player
-        GLint loc = glGetUniformLocation(shader.getProgramIndex(), "mat.ambient");
-        glUniform4fv(loc, 1, mesh[objId].mat.ambient);
-        loc = glGetUniformLocation(shader.getProgramIndex(), "mat.diffuse");
-        glUniform4fv(loc, 1, mesh[objId].mat.diffuse);
-        loc = glGetUniformLocation(shader.getProgramIndex(), "mat.specular");
-        glUniform4fv(loc, 1, mesh[objId].mat.specular);
-        loc = glGetUniformLocation(shader.getProgramIndex(), "mat.shininess");
-        glUniform1f(loc, mesh[objId].mat.shininess);
+        GLint loc_amb = glGetUniformLocation(shader.getProgramIndex(), "mat.ambient");
+        glUniform4fv(loc_amb, 1, mesh[objId].mat.ambient);
+        GLint loc_dif = glGetUniformLocation(shader.getProgramIndex(), "mat.diffuse");
+        glUniform4fv(loc_dif, 1, mesh[objId].mat.diffuse);
+        GLint loc_spc = glGetUniformLocation(shader.getProgramIndex(), "mat.specular");
+        glUniform4fv(loc_spc, 1, mesh[objId].mat.specular);
+        GLint loc_shi = glGetUniformLocation(shader.getProgramIndex(), "mat.shininess");
+        glUniform1f(loc_shi, mesh[objId].mat.shininess);
 
         pushMatrix(MODEL);
         translate(MODEL, 0.5, 0.5, 0.5);
