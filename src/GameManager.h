@@ -21,6 +21,7 @@ using namespace std;
 #include "VertexAttrDef.h"
 #include "basic_geometry.h"
 #include "libs/vsShaderLib.h"
+#include "Camera.h"
 
 #define CAPTION "AVT Per Fragment Phong Lightning Demo"
 extern float mMatrix[COUNT_MATRICES][16];
@@ -45,12 +46,13 @@ public:
     GLint normal_uniformId;
     GLint lPos_uniformId;
 
-    float camX, camY, camZ;
     int startX, startY, tracking = 0;
     float alpha = 0.0f, beta = 40.0f, r = 20.0f;
     float lightPos[4] = {4.0f, 6.0f, 2.0f, 1.0f};
     float playerPos[3] = {0.0f, 1.0f, 0.0f};
     int cameraType = 1;
+
+    Camera camera = Camera(r, alpha, beta);
 
 public:
     GameManager() {
@@ -63,17 +65,15 @@ public:
     {
         float ratio;
         // Prevent a divide by zero, when window is too short
-        if (h == 0) {
-            h = 1;
-        }
+        if (h == 0) h = 1;
 
         // set the viewport to be the entire window
         glViewport(0, 0, w, h);
 
         // set the projection matrix
         ratio = (1.0f * w) / h;
-        loadIdentity(PROJECTION);
 
+        loadIdentity(PROJECTION);
         if (cameraType == 1) {
             perspective(53.13f, ratio, 0.1f, 1000.0f);
         } else if (cameraType == 2) {
@@ -159,9 +159,7 @@ public:
                 rAux = 0.1f;
         }
 
-        camX = rAux * sin(alphaAux * 3.14f / 180.0f) * cos(betaAux * 3.14f / 180.0f);
-        camZ = rAux * cos(alphaAux * 3.14f / 180.0f) * cos(betaAux * 3.14f / 180.0f);
-        camY = rAux *   						          sin(betaAux * 3.14f / 180.0f);
+        camera.mouseUpdate(rAux, alphaAux, betaAux);
     }
 
     void mouseWheel(int wheel, int direction, int x, int y)
@@ -170,9 +168,7 @@ public:
         if (r < 0.1f)
             r = 0.1f;
 
-        camX = r * sin(alpha * 3.14f / 180.0f) * cos(beta * 3.14f / 180.0f);
-        camZ = r * cos(alpha * 3.14f / 180.0f) * cos(beta * 3.14f / 180.0f);
-        camY = r *   						        sin(beta * 3.14f / 180.0f);
+        camera.mouseUpdate(r, alpha, beta);
     }
 
     GLuint setupShaders()
@@ -206,8 +202,7 @@ public:
         loadIdentity(VIEW);
         loadIdentity(MODEL);
 
-        // set the camera using a function similar to gluLookAt
-        lookAt(camX, camY, camZ, 0, 0, 0, 0, 1, 0);
+        camera.renderCam();
 
         // use our shader
         glUseProgram(shader.getProgramIndex());
@@ -229,7 +224,6 @@ public:
 
     void initScene()
     {
-        initObjectCamera();
         initObjectGround();
         initObjectPlayer();
         initObjectRoad();
@@ -462,14 +456,6 @@ private:
         mesh[objId].mat.shininess = material.shininess;
         mesh[objId].mat.texCount = material.texcount;
         createSphere(0.5f, 20);
-    }
-
-    void initObjectCamera()
-    {
-        // set the camera position based on its spherical coordinates
-        camX = r * sin(alpha * 3.14f / 180.0f) * cos(beta * 3.14f / 180.0f);
-        camZ = r * cos(alpha * 3.14f / 180.0f) * cos(beta * 3.14f / 180.0f);
-        camY = r *   						     sin(beta * 3.14f / 180.0f);
     }
 
     struct Material{

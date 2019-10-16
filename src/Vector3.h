@@ -7,8 +7,16 @@
 
 class Vector3 {
 public:
-    Vector3(float _x, float _y, float _z) {
-        this->set(_x, _y, _z);
+    Vector3(float v = 0) {
+        this->x = v;
+        this->y = v;
+        this->z = v;
+    }
+
+    Vector3(float x, float y, float z) {
+        this->x = x;
+        this->y = y;
+        this->z = z;
     }
 
     float getX() const {
@@ -21,12 +29,6 @@ public:
 
     float getZ() const {
         return this->z;
-    }
-
-    void set(float _x, float _y, float _z) {
-        this->x = _x;
-        this->y = _y;
-        this->z = _z;
     }
 
     inline bool operator==(const Vector3& vec) const {
@@ -51,7 +53,6 @@ public:
         z = vec.getZ();
     }
 
-private:
     float x;
     float y;
     float z;
