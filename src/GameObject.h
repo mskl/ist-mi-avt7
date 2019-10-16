@@ -10,14 +10,18 @@
 class GameObject
     {
 public:
-    GameObject();
+    GameObject() = default;
 
-    Vector3* getPosition();
-    void setPosition(float _x, float _y, float _z) {
-
+    Vector3 getPosition() {
+        return this->_position;
     }
-    void setPosition(Vector3 _pos) {
 
+    void setPosition(float _x, float _y, float _z) {
+        this->_position.set(_x, _y, _z);
+    }
+
+    void setPosition(Vector3 _pos) {
+        this->_position = _pos;
     }
 
 protected:

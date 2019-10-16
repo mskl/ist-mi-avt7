@@ -1,4 +1,3 @@
-
 #define MAXIMUM_TEXTURES 4
 
 struct Material{
@@ -9,6 +8,7 @@ struct Material{
 	float shininess;
 	int texCount;
 };
+
 // A model can be made of many meshes. Each is stored  in the following structure
 struct MyMesh {
 		GLuint vao;

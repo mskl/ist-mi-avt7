@@ -40,15 +40,15 @@ struct GameManagerWrapper {
     static GameManager *manager;
 };
 
-GameManager* GameManagerWrapper::manager = 0;
+GameManager* GameManagerWrapper::manager = nullptr;
 
 void timer(int value)
 {
 	std::ostringstream oss;
-	oss << CAPTION << ": " << GameManagerWrapper::manager->FrameCount << " FPS @ (" << GameManagerWrapper::manager->WinX << "x" << GameManagerWrapper::manager->WinY << ")";
-	std::string s = oss.str();
+	oss << CAPTION << ": " << GameManagerWrapper::manager->FrameCount <<
+	    " FPS @ (" << GameManagerWrapper::manager->WinX << "x" << GameManagerWrapper::manager->WinY << ")";
 	glutSetWindow(GameManagerWrapper::manager->WindowHandle);
-	glutSetWindowTitle(s.c_str());
+    glutSetWindowTitle(oss.str().c_str());
     GameManagerWrapper::manager->FrameCount = 0;
     glutTimerFunc(1000, timer, 0);
 }
@@ -104,7 +104,7 @@ int main(int argc, char **argv)
 	printf ("Version: %s\n", glGetString (GL_VERSION));
 	if (!GameManagerWrapper::manager->setupShaders()) return(1);
 
-    GameManagerWrapper::manager->initializeObjects();
+    GameManagerWrapper::manager->initScene();
 	glutMainLoop();
 
 	return(0);
