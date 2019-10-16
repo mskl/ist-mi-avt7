@@ -22,6 +22,7 @@ using namespace std;
 #include "basic_geometry.h"
 #include "libs/vsShaderLib.h"
 #include "Camera.h"
+#include "PerspectiveCamera.h"
 
 #define CAPTION "AVT Per Fragment Phong Lightning Demo"
 extern float mMatrix[COUNT_MATRICES][16];
@@ -31,7 +32,6 @@ extern float mNormal3x3[9];
 int objId = 0;
 
 struct MyMesh mesh[10];
-//vector<MyMesh> mesh;
 
 class GameManager {
 public:
@@ -47,12 +47,12 @@ public:
     GLint lPos_uniformId;
 
     int startX, startY, tracking = 0;
-    float alpha = 0.0f, beta = 40.0f, r = 20.0f;
     float lightPos[4] = {4.0f, 6.0f, 2.0f, 1.0f};
     float playerPos[3] = {0.0f, 1.0f, 0.0f};
     int cameraType = 1;
 
-    Camera camera = Camera(r, alpha, beta);
+    float alpha = 0.0f, beta = 40.0f, r = 20.0f;
+    PerspectiveCamera cam = PerspectiveCamera(r, alpha, beta);
 
 public:
     GameManager() {
@@ -75,7 +75,7 @@ public:
 
         loadIdentity(PROJECTION);
         if (cameraType == 1) {
-            perspective(53.13f, ratio, 0.1f, 1000.0f);
+            cam.project(w, h);
         } else if (cameraType == 2) {
             ortho(-13, 13, -13, 13, -100, 100);
         }
@@ -118,8 +118,8 @@ public:
         // stop tracking the mouse
         else if (state == GLUT_UP) {
             if (tracking == 1) {
-                alpha -= (xx - startX);
-                beta += (yy - startY);
+                alpha -= xx - startX;
+                beta += yy - startY;
             }
             else if (tracking == 2) {
                 r += (yy - startY) * 0.01f;
@@ -132,22 +132,19 @@ public:
 
     void processMouseMotion(int xx, int yy)
     {
-        int deltaX, deltaY;
-        float alphaAux, betaAux;
-        float rAux;
+        int deltaX = 0, deltaY = 0;
+        float alphaAux = 0, betaAux = 0, rAux = 0;
 
-        deltaX =  - xx + startX;
-        deltaY =    yy - startY;
+        deltaX = -xx + startX;
+        deltaY =  yy - startY;
 
-        // left mouse button: move camera
+        // left mouse button: move cam
         if (tracking == 1) {
             alphaAux = alpha + deltaX;
             betaAux = beta + deltaY;
 
-            if (betaAux > 85.0f)
-                betaAux = 85.0f;
-            else if (betaAux < -85.0f)
-                betaAux = -85.0f;
+            if (betaAux > 85.0f) betaAux = 85.0f;
+            else if (betaAux < -85.0f) betaAux = -85.0f;
             rAux = r;
         }
         // right mouse button: zoom
@@ -155,11 +152,10 @@ public:
             alphaAux = alpha;
             betaAux = beta;
             rAux = r + (deltaY * 0.01f);
-            if (rAux < 0.1f)
-                rAux = 0.1f;
+            if (rAux < 0.1f) rAux = 0.1f;
         }
 
-        camera.mouseUpdate(rAux, alphaAux, betaAux);
+        cam.mouseUpdate(rAux, alphaAux, betaAux);
     }
 
     void mouseWheel(int wheel, int direction, int x, int y)
@@ -168,7 +164,7 @@ public:
         if (r < 0.1f)
             r = 0.1f;
 
-        camera.mouseUpdate(r, alpha, beta);
+        cam.mouseUpdate(r, alpha, beta);
     }
 
     GLuint setupShaders()
@@ -202,7 +198,7 @@ public:
         loadIdentity(VIEW);
         loadIdentity(MODEL);
 
-        camera.renderCam();
+        cam.view();
 
         // use our shader
         glUseProgram(shader.getProgramIndex());
