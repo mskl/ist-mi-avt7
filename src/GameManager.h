@@ -34,6 +34,8 @@ using namespace std;
 const char* VERTEX_SHADER_PATH = "shaders/pointlight.vert";
 const char* FRAGMENT_SHADER_PATH = "shaders/pointlight.frag";
 
+extern int deltaTime;
+
 #define CAPTION "AVT Per Fragment Phong Lightning Demo"
 
 class GameManager {
@@ -50,6 +52,10 @@ public:
     float bottomVerticalLimitPlayerPos = 6.0f;
     float leftHorizontalLimitPlayerPos = -6.0f;
     float rightHorizontalLimitPlayerPos = 6.0f;
+
+    // All in microseconds
+    GLint lastMoveTime = 0;
+    GLint moveTimeout = 500;
 
     enum CameraType {
         CAMERA_PERSPECTIVE_FOLLOW,
@@ -103,14 +109,13 @@ public:
             case 'M': glDisable(GL_MULTISAMPLE); break;
 
             // Player movement
-            case 'p': movePlayerHorizontally(1); break;
-            case 'o': movePlayerHorizontally(-1); break;
-            case 'q': movePlayerVertically(-1); break;
-            case 'a': movePlayerVertically(1); break;
+            case 'p': movePlayer(1, 0); break;
+            case 'o': movePlayer(-1, 0); break;
+            case 'q': movePlayer(0, -1); break;
+            case 'a': movePlayer(0, 1); break;
 
             // Night mode toggle
             case 'n': isNight = !isNight; break;
-
             // Stop/Continue game
             case 's': isPlaying = !isPlaying; break;
 
@@ -124,30 +129,23 @@ public:
         }
     }
 
-    void movePlayerVertically(float dir){
-        if(!isPlaying)
+    void movePlayer(float x, float z) {
+        GLint curTime = glutGet(GLUT_ELAPSED_TIME);
+
+        if (curTime - lastMoveTime < moveTimeout)
+            return;
+        else if(!isPlaying)
             return;
 
-        float tempPos = player.position.z + dir;
-
-        if(tempPos < topVerticalLimitPlayerPos || tempPos > bottomVerticalLimitPlayerPos)
+        Vector3 moveVec = Vector3(x, 0, z);
+        Vector3 tempPos = player.position + moveVec;
+        if(tempPos.z < topVerticalLimitPlayerPos || tempPos.z > bottomVerticalLimitPlayerPos ||
+           tempPos.x > rightHorizontalLimitPlayerPos || tempPos.x < leftHorizontalLimitPlayerPos)
             return;
 
-        cameraPerspectiveMoving.pos.z += dir;
-        player.position.z = tempPos;
-    }
-
-    void movePlayerHorizontally(float dir){
-        if(!isPlaying)
-            return;
-
-        float tempPos = player.position.x + dir;
-
-        if(tempPos > rightHorizontalLimitPlayerPos || tempPos < leftHorizontalLimitPlayerPos)
-            return;
-
-        cameraPerspectiveMoving.pos.x += dir;
-        player.position.x = tempPos;
+        player.position = tempPos;
+        lastMoveTime = curTime;
+        cameraPerspectiveMoving.pos = cameraPerspectiveMoving.pos + moveVec;
     }
 
     GLuint setupShaders()

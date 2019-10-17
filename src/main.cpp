@@ -18,7 +18,11 @@ GLint vm_uniformId;
 GLint normal_uniformId;
 GLint lPos_uniformId;
 struct MyMesh mesh[1000];
+
 int objId = 0;
+
+GLint deltaTime = 1;
+GLint prevTime = 1;
 
 struct GameManagerWrapper {
     static void changeSize(int w, int h) {
@@ -26,6 +30,9 @@ struct GameManagerWrapper {
     }
 
     static void renderScene() {
+        GLint currentTime = glutGet(GLUT_ELAPSED_TIME);
+        deltaTime = prevTime - currentTime;
+        prevTime = currentTime;
         manager->renderScene();
     }
 

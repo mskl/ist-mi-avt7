@@ -22,9 +22,9 @@ Basic Revolution Geometry
 // GLUT is the toolkit to interface with the OS
 #include <GL/freeglut.h>
 
-#include "VertexAttrDef.h"
+#include "../VertexAttrDef.h"
 #include "basic_geometry.h"
-#include "primitives/cube.h"
+#include "../primitives/cube.h"
 
 extern struct MyMesh mesh[];
 extern int objId;
