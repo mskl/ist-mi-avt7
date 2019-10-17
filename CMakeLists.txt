@@ -4,7 +4,7 @@ project(AVT7)
 set(CMAKE_CXX_STANDARD 11)
 
 # Include all of the files into the project
-file(GLOB_RECURSE SOURCES)
+file(GLOB_RECURSE SOURCES src/*.h src/*.cpp)
 add_executable(AVT7 ${SOURCES})
 
 if (WIN64)
