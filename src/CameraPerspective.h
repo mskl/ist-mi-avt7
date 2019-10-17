@@ -27,7 +27,6 @@ public:
         pos.x = r * sin(alpha * 3.14f / 180.0f) * cos(beta * 3.14f / 180.0f);
         pos.z = r * cos(alpha * 3.14f / 180.0f) * cos(beta * 3.14f / 180.0f);
         pos.y = r * sin(beta  * 3.14f / 180.0f);
-        cout << r << " " << alpha << " " <<  beta << endl;
     }
 
     void view()  {

@@ -12,7 +12,7 @@ public:
     int startX = 0, startY = 0, tracking = 0;
 
     CameraPerspectiveMoving(float r, float alpha, float beta): CameraPerspective(r, alpha, beta) {
-        cout << r << " " << " " << alpha << " " << beta << endl;
+
     }
 
     void processMouseButtons(int button, int state, int xx, int yy)

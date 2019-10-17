@@ -12,6 +12,14 @@ using namespace std;
 
 #include "GameManager.h"
 
+VSShaderLib shader;
+GLint pvm_uniformId;
+GLint vm_uniformId;
+GLint normal_uniformId;
+GLint lPos_uniformId;
+struct MyMesh mesh[1000];
+int objId = 0;
+
 struct GameManagerWrapper {
     static void changeSize(int w, int h) {
         manager->changeSize(w, h);
