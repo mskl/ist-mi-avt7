@@ -26,15 +26,15 @@ struct GameManagerWrapper {
     }
 
     static void processMouseButtons(int button, int state, int xx, int yy) {
-        manager->processMouseButtons(button, state, xx, yy);
+        manager->cameraPerspectiveMoving.processMouseButtons(button, state, xx, yy);
     }
 
     static void processMouseMotion(int xx, int yy) {
-        manager->processMouseMotion(xx, yy);
+        manager->cameraPerspectiveMoving.processMouseMotion(xx, yy);
     }
 
     static void mouseWheel(int wheel, int direction, int x, int y) {
-        manager->mouseWheel(wheel, direction, x, y);
+        manager->cameraPerspectiveMoving.mouseWheel(wheel, direction, x, y);
     }
 
     static GameManager *manager;

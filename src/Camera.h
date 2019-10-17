@@ -10,6 +10,14 @@
 
 class Camera {
 public:
+    float nearp = 0.1f;
+    float farp = 1000.0f;
+    Vector3 pos;
+
+    explicit Camera(Vector3 pos) {
+        pos = pos;
+    }
+
     virtual void view() = 0;
     virtual void project(int w, int h) = 0;
 };

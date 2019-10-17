@@ -22,7 +22,9 @@ using namespace std;
 #include "basic_geometry.h"
 #include "libs/vsShaderLib.h"
 #include "Camera.h"
-#include "PerspectiveCamera.h"
+#include "CameraPerspective.h"
+#include "CameraPerspectiveMoving.h"
+#include "CameraOrthogonal.h"
 
 #define CAPTION "AVT Per Fragment Phong Lightning Demo"
 extern float mMatrix[COUNT_MATRICES][16];
@@ -46,21 +48,22 @@ public:
     GLint normal_uniformId;
     GLint lPos_uniformId;
 
-    int startX, startY, tracking = 0;
     float lightPos[4] = {4.0f, 6.0f, 2.0f, 1.0f};
     float playerPos[3] = {0.0f, 1.0f, 0.0f};
-    int cameraType = 1;
 
-    float alpha = 0.0f, beta = 40.0f, r = 20.0f;
-    PerspectiveCamera cam = PerspectiveCamera(r, alpha, beta);
+    enum CameraType {
+        CAMERA_PERSPECTIVE_FOLLOW,
+        CAMERA_PERSPECTIVE_FIXED,
+        CAMERA_ORTHO
+    };
+
+    CameraType selectedCamera = CAMERA_ORTHO;
+    CameraPerspectiveMoving cameraPerspectiveMoving = CameraPerspectiveMoving(20, 0, 40);
+    CameraPerspective cameraPerspectiveFixed = CameraPerspective(20, 0, 90);
+    CameraOrthogonal cameraOrthogonal = CameraOrthogonal(-15, 15, -15, 15,
+            Vector3(0, 20, 0));
 
 public:
-    GameManager() {
-        // Setup a GameManager
-    }
-
-    ~GameManager() = default;
-
     void changeSize(int w, int h)
     {
         float ratio;
@@ -69,15 +72,14 @@ public:
 
         // set the viewport to be the entire window
         glViewport(0, 0, w, h);
-
-        // set the projection matrix
-        ratio = (1.0f * w) / h;
-
         loadIdentity(PROJECTION);
-        if (cameraType == 1) {
-            cam.project(w, h);
-        } else if (cameraType == 2) {
-            ortho(-13, 13, -13, 13, -100, 100);
+
+        if (selectedCamera == CAMERA_PERSPECTIVE_FOLLOW) {
+            cameraPerspectiveMoving.project(w, h);
+        } else if (selectedCamera == CAMERA_PERSPECTIVE_FIXED) {
+           cameraPerspectiveFixed.project(w, h);
+        } else if (selectedCamera == CAMERA_ORTHO) {
+            cameraOrthogonal.project(w, h);
         }
     }
 
@@ -87,84 +89,25 @@ public:
         switch(key) {
             // Escape exits the game
             case 27: glutLeaveMainLoop(); break;
-            case 'c': printf("Camera Spherical Coordinates (%f, %f, %f)\n", alpha, beta, r); break;
+            // case 'c': cameraPerspectiveFollow.printCoordinates(); break;
             // Quality settings
             case 'm': glEnable(GL_MULTISAMPLE); break;
             case 'n': glDisable(GL_MULTISAMPLE); break;
+
             // Player movement
             case 'p': playerPos[0] += 1; break;
             case 'o': playerPos[0] -= 1; break;
             case 'q': playerPos[2] -= 1; break;
             case 'a': playerPos[2] += 1; break;
+
             // CameraType
-            case '1': cameraType = 1; break;
-            case '2': cameraType = 2; break;
-            case '3': cameraType = 3; break;
+            case '1':
+                selectedCamera = CAMERA_PERSPECTIVE_FOLLOW; break;
+            case '2':
+                selectedCamera = CAMERA_PERSPECTIVE_FIXED; break;
+            case '3':
+                selectedCamera = CAMERA_ORTHO; break;
         }
-    }
-
-    void processMouseButtons(int button, int state, int xx, int yy)
-    {
-        // start tracking the mouse
-        if (state == GLUT_DOWN)  {
-            startX = xx;
-            startY = yy;
-            if (button == GLUT_LEFT_BUTTON)
-                tracking = 1;
-            else if (button == GLUT_RIGHT_BUTTON)
-                tracking = 2;
-        }
-
-        // stop tracking the mouse
-        else if (state == GLUT_UP) {
-            if (tracking == 1) {
-                alpha -= xx - startX;
-                beta += yy - startY;
-            }
-            else if (tracking == 2) {
-                r += (yy - startY) * 0.01f;
-                if (r < 0.1f)
-                    r = 0.1f;
-            }
-            tracking = 0;
-        }
-    }
-
-    void processMouseMotion(int xx, int yy)
-    {
-        int deltaX = 0, deltaY = 0;
-        float alphaAux = 0, betaAux = 0, rAux = 0;
-
-        deltaX = -xx + startX;
-        deltaY =  yy - startY;
-
-        // left mouse button: move cam
-        if (tracking == 1) {
-            alphaAux = alpha + deltaX;
-            betaAux = beta + deltaY;
-
-            if (betaAux > 85.0f) betaAux = 85.0f;
-            else if (betaAux < -85.0f) betaAux = -85.0f;
-            rAux = r;
-        }
-        // right mouse button: zoom
-        else if (tracking == 2) {
-            alphaAux = alpha;
-            betaAux = beta;
-            rAux = r + (deltaY * 0.01f);
-            if (rAux < 0.1f) rAux = 0.1f;
-        }
-
-        cam.mouseUpdate(rAux, alphaAux, betaAux);
-    }
-
-    void mouseWheel(int wheel, int direction, int x, int y)
-    {
-        r += direction * 0.1f;
-        if (r < 0.1f)
-            r = 0.1f;
-
-        cam.mouseUpdate(r, alpha, beta);
     }
 
     GLuint setupShaders()
@@ -198,7 +141,14 @@ public:
         loadIdentity(VIEW);
         loadIdentity(MODEL);
 
-        cam.view();
+        if (selectedCamera == CAMERA_PERSPECTIVE_FOLLOW) {
+            cameraPerspectiveMoving.view();
+        } else if (selectedCamera == CAMERA_PERSPECTIVE_FIXED) {
+            cameraPerspectiveFixed.view();
+        } else if (selectedCamera == CAMERA_ORTHO) {
+            cameraOrthogonal.view();
+        }
+
 
         // use our shader
         glUseProgram(shader.getProgramIndex());
