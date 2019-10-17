@@ -4,8 +4,12 @@ project(AVT7)
 set(CMAKE_CXX_STANDARD 11)
 
 # Include all of the files into the project
-file(GLOB_RECURSE SOURCES src/*.h src/*.cpp src/Camera.h)
-add_executable(AVT7 ${SOURCES} src/CameraPerspective.h src/CameraPerspectiveMoving.h src/CameraOrthogonal.h)
+file(GLOB_RECURSE SOURCES)
+add_executable(AVT7 ${SOURCES})
 
-# Linking might be different on other OS
-target_link_libraries(AVT7 -lm -lGL -L/usr/X11R6/lib -lGLU -lglut -lGLEW)
+if (WIN64)
+    # TODO
+elseif(UNIX)
+    target_link_libraries(AVT7 -lm -lGL -L/usr/X11R6/lib -lGLU -lglut -lGLEW)
+endif(UNIX)
+
