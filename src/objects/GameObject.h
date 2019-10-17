@@ -16,15 +16,21 @@ extern float mNormal3x3[9];
 extern struct MyMesh mesh[];
 extern GLint objId;
 
-#include "Vector3.h"
+#include "../Vector3.h"
 
 class GameObject {
 public:
-    Vector3 position = Vector3();
+    Vector3 position;
+    int id;
 
-    void update() { }
+    GameObject(Vector3 pos, int id) {
+        this->position = pos;
+        this->id = id;
+    }
+
     virtual void init() { }
     virtual void render() { }
+    void update() { }
 };
 
 #endif //AVT7_GAMEOBJECT_H

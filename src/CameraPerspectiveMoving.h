@@ -11,7 +11,7 @@ class CameraPerspectiveMoving: public CameraPerspective {
 public:
     int startX = 0, startY = 0, tracking = 0;
 
-    CameraPerspectiveMoving(float r, float alpha, float beta): CameraPerspective(r, alpha, beta) {
+    CameraPerspectiveMoving(float r, float alpha, float beta, Vector3 pos): CameraPerspective(r, alpha, beta, pos) {
 
     }
 

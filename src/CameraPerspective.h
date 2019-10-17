@@ -15,7 +15,9 @@ public:
     float alpha = 0.0f;
     float beta = 40.0f;
 
-    CameraPerspective(float r, float alpha, float beta, Vector3 pos = Vector3())
+    Vector3 localPos = Vector3();
+
+    CameraPerspective(float r, float alpha, float beta, Vector3 pos)
     : Camera(pos) {
         this->r = r;
         this->alpha = alpha;
@@ -24,16 +26,18 @@ public:
     }
 
     void mouseUpdate(float r, float alpha, float beta) {
-        pos.x = r * sin(alpha * 3.14f / 180.0f) * cos(beta * 3.14f / 180.0f);
-        pos.z = r * cos(alpha * 3.14f / 180.0f) * cos(beta * 3.14f / 180.0f);
-        pos.y = r * sin(beta  * 3.14f / 180.0f);
+        localPos.x = r * sin(alpha * 3.14f / 180.0f) * cos(beta * 3.14f / 180.0f);
+        localPos.z = r * cos(alpha * 3.14f / 180.0f) * cos(beta * 3.14f / 180.0f);
+        localPos.y = r * sin(beta  * 3.14f / 180.0f);
     }
 
-    void view()  {
-        lookAt(pos.x, pos.y, pos.z, 0, 0, 0, 0, 1, 0);
+    void view() override {
+        lookAt(localPos.x + pos.x, localPos.y + pos.y, localPos.z + pos.z,
+                pos.x, pos.y, pos.z,
+                0, 1, 0);
     }
 
-    void project(int w, int h) {
+    void project(int w, int h) override {
         perspective(fov, (1.0f * w) / h, nearp, farp);
     }
 

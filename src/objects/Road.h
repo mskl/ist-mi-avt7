@@ -5,12 +5,17 @@
 #ifndef AVT7_ROAD_H
 #define AVT7_ROAD_H
 
-#include "../GameObject.h"
+#include "GameObject.h"
 
 class Road: public GameObject {
 public:
-    void init() {
-        objId=1;
+
+    Road(Vector3 pos, int id): GameObject(pos, id) {
+
+    }
+
+    void init() override {
+        objId = id;
         memcpy(mesh[objId].mat.ambient, customMaterial.amb, 4 * sizeof(float));
         memcpy(mesh[objId].mat.diffuse, customMaterial.diff_black, 4 * sizeof(float));
         memcpy(mesh[objId].mat.specular, customMaterial.spec, 4 * sizeof(float));
@@ -20,8 +25,8 @@ public:
         createCube();
     }
 
-    void render() {
-        objId = 1;
+    void render() override {
+        objId = id;
         GLint loc = glGetUniformLocation(shader.getProgramIndex(), "mat.ambient");
         glUniform4fv(loc, 1, mesh[objId].mat.ambient);
         loc = glGetUniformLocation(shader.getProgramIndex(), "mat.diffuse");
@@ -32,7 +37,8 @@ public:
         glUniform1f(loc, mesh[objId].mat.shininess);
         pushMatrix(MODEL);
 
-        translate(MODEL, -13 / 2, 0, 1);
+        translate(MODEL, position.x, position.y, position.z);
+        translate(MODEL, -13 / 2, 0, 0);
         scale(MODEL, 13, 1, 5);
 
         computeDerivedMatrix(PROJ_VIEW_MODEL);

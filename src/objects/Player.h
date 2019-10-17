@@ -5,17 +5,17 @@
 #ifndef AVT7_PLAYER_H
 #define AVT7_PLAYER_H
 
-#include "../GameObject.h"
+#include "GameObject.h"
 
 class Player: public GameObject {
 public:
 
-    Player() {
-        position = Vector3(0.0f, 1.0f, 0.0f);
+    Player(Vector3 pos, int id): GameObject(pos, id) {
+
     }
 
-    void init() {
-        objId=5; // Player
+    void init() override {
+        objId = id;
         memcpy(mesh[objId].mat.ambient, customMaterial.amb, 4 * sizeof(float));
         memcpy(mesh[objId].mat.diffuse, customMaterial.diff, 4 * sizeof(float));
         memcpy(mesh[objId].mat.specular, customMaterial.spec, 4 * sizeof(float));
@@ -25,8 +25,8 @@ public:
         createSphere(0.5f, 20);
     }
 
-    void render() {
-        objId = 5; // Player
+    void render() override {
+        objId = id; // Player
         GLint loc_amb = glGetUniformLocation(shader.getProgramIndex(), "mat.ambient");
         glUniform4fv(loc_amb, 1, mesh[objId].mat.ambient);
         GLint loc_dif = glGetUniformLocation(shader.getProgramIndex(), "mat.diffuse");

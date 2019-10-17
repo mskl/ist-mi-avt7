@@ -31,6 +31,8 @@ using namespace std;
 #include "objects/Road.h"
 #include "objects/PointLight.h"
 
+const char* VERTEX_SHADER_PATH = "shaders/pointlight.vert";
+const char* FRAGMENT_SHADER_PATH = "shaders/pointlight.frag";
 
 #define CAPTION "AVT Per Fragment Phong Lightning Demo"
 
@@ -56,16 +58,18 @@ public:
     };
 
     CameraType selectedCamera = CAMERA_PERSPECTIVE_FOLLOW;
-    CameraPerspectiveMoving cameraPerspectiveMoving = CameraPerspectiveMoving(20, 0, 40);
-    CameraPerspective cameraPerspectiveFixed = CameraPerspective(20, 0, 90);
-    CameraOrthogonal cameraOrthogonal = CameraOrthogonal(-15, 15, -15, 15,
-            Vector3(0, 20, 0));
+    CameraPerspectiveMoving cameraPerspectiveMoving
+        = CameraPerspectiveMoving(20, 0, 40, Vector3(0, 20, 0));
+    CameraPerspective cameraPerspectiveFixed
+        = CameraPerspective(20, 0, 90, Vector3(0, 20, 0));
+    CameraOrthogonal cameraOrthogonal
+        = CameraOrthogonal(-15, 15, -15, 15,Vector3(0, 20, 0));
 
-    River river = River();
-    Ground ground = Ground();
-    Player player = Player();
-    Road road = Road();
-    PointLight pointLight = PointLight();
+    River river = River(Vector3(0, 0, -5), 3);
+    Road road = Road(Vector3(0, 0, 1), 1);
+    Ground ground = Ground(Vector3(0, 0, 0));
+    Player player = Player(Vector3(0, 1, 0), 5);
+    PointLight pointLight = PointLight(Vector3(4.0f, 6.0f, 2.0f));
 
 public:
     void changeSize(int w, int h)
@@ -89,9 +93,6 @@ public:
 
     void processKeys(unsigned char key, int xx, int yy)
     {
-        // printf("Key value (%d)\n", key);
-
-        // TODO: This should be extracted to the player update function
         switch(key) {
             // Escape exits the game
             case 27: glutLeaveMainLoop(); break;
@@ -128,6 +129,7 @@ public:
         if(tempPos < topVerticalLimitPlayerPos || tempPos > bottomVerticalLimitPlayerPos)
             return;
 
+        cameraPerspectiveMoving.pos.z += dir;
         player.position.z = tempPos;
     }
 
@@ -140,6 +142,7 @@ public:
         if(tempPos > rightHorizontalLimitPlayerPos || tempPos < leftHorizontalLimitPlayerPos)
             return;
 
+        cameraPerspectiveMoving.pos.x += dir;
         player.position.x = tempPos;
     }
 
@@ -147,8 +150,8 @@ public:
     {
         // Shader for models
         shader.init();
-        shader.loadShader(VSShaderLib::VERTEX_SHADER, "shaders/pointlight.vert");
-        shader.loadShader(VSShaderLib::FRAGMENT_SHADER, "shaders/pointlight.frag");
+        shader.loadShader(VSShaderLib::VERTEX_SHADER, VERTEX_SHADER_PATH);
+        shader.loadShader(VSShaderLib::FRAGMENT_SHADER, FRAGMENT_SHADER_PATH);
 
         // set semantics for the shader variables
         glBindFragDataLocation(shader.getProgramIndex(), 0,"colorOut");
@@ -166,7 +169,7 @@ public:
         return(shader.isProgramLinked());
     }
 
-    void renderScene(void) {
+    void renderScene() {
         GLint loc;
 
         FrameCount++;

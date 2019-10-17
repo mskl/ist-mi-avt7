@@ -5,15 +5,19 @@
 #ifndef AVT7_POINTLIGHT_H
 #define AVT7_POINTLIGHT_H
 
-#include "../GameObject.h"
+#include "GameObject.h"
 
 class PointLight: public GameObject {
 public:
-    void init() {
-        position = Vector3(4.0f, 6.0f, 2.0f);
+    explicit PointLight(Vector3 pos): GameObject(pos, -1) {
+
     }
 
-    void render() {
+    void init() override {
+        // Do nothing
+    }
+
+    void render() override {
         float res[4];
         float lightPos[4] = {position.x, position.y, position.z, 1};
         multMatrixPoint(VIEW, lightPos, res);

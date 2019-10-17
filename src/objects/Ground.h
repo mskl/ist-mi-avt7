@@ -7,7 +7,11 @@
 
 class Ground: public GameObject {
 public:
-    void init() {
+    explicit Ground(Vector3 pos): GameObject(pos, -1) {
+
+    }
+
+    void init() override {
         objId=0; // Bottom ground
         memcpy(mesh[objId].mat.ambient, customMaterial.amb, 4 * sizeof(float));
         memcpy(mesh[objId].mat.diffuse, customMaterial.diff_green, 4 * sizeof(float));
@@ -36,7 +40,7 @@ public:
         createCube();
     }
 
-    void render() {
+    void render() override {
         objId = 0;
         GLint loc = glGetUniformLocation(shader.getProgramIndex(), "mat.ambient");
         glUniform4fv(loc, 1, mesh[objId].mat.ambient);
@@ -48,6 +52,7 @@ public:
         glUniform1f(loc, mesh[objId].mat.shininess);
 
         pushMatrix(MODEL);
+        translate(MODEL, position.x, position.y, position.z);
         translate(MODEL, -13 / 2, 0, 6);
         scale(MODEL, 13, 1, 1);
         computeDerivedMatrix(PROJ_VIEW_MODEL);
@@ -70,7 +75,7 @@ public:
         loc = glGetUniformLocation(shader.getProgramIndex(), "mat.shininess");
         glUniform1f(loc, mesh[objId].mat.shininess);
         pushMatrix(MODEL);
-
+        translate(MODEL, position.x, position.y, position.z);
         translate(MODEL, -13 / 2, 0, 0);
         scale(MODEL, 13, 1, 1);
 
@@ -95,6 +100,7 @@ public:
         glUniform1f(loc, mesh[objId].mat.shininess);
 
         pushMatrix(MODEL);
+        translate(MODEL, position.x, position.y, position.z);
         translate(MODEL, -13 / 2, 0, -6);
         scale(MODEL, 13, 1, 1);
         computeDerivedMatrix(PROJ_VIEW_MODEL);
