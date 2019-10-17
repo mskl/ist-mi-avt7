@@ -10,22 +10,19 @@
 class GameObject
     {
 public:
-    GameObject() = default;
+    Vector3 position = Vector3();
 
-    Vector3 getPosition() {
-        return this->_position;
+    void update() {
+
     }
 
-    void setPosition(float _x, float _y, float _z) {
-        this->_position.set(_x, _y, _z);
+    void init() {
+
     }
 
-    void setPosition(Vector3 _pos) {
-        this->_position = _pos;
-    }
+    void render() {
 
-protected:
-    Vector3 _position;
+    }
 };
 
 #endif //AVT7_GAMEOBJECT_H

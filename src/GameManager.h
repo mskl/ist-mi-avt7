@@ -10,6 +10,7 @@
 #include <sstream>
 #include <string.h>
 #include "stdio.h"
+#include "CustomMaterial.h"
 
 using namespace std;
 
@@ -57,7 +58,7 @@ public:
         CAMERA_ORTHO
     };
 
-    CameraType selectedCamera = CAMERA_ORTHO;
+    CameraType selectedCamera = CAMERA_PERSPECTIVE_FOLLOW;
     CameraPerspectiveMoving cameraPerspectiveMoving = CameraPerspectiveMoving(20, 0, 40);
     CameraPerspective cameraPerspectiveFixed = CameraPerspective(20, 0, 90);
     CameraOrthogonal cameraOrthogonal = CameraOrthogonal(-15, 15, -15, 15,
@@ -341,83 +342,68 @@ private:
     void initObjectGround()
     {
         objId=0; // Bottom ground
-        memcpy(mesh[objId].mat.ambient, material.amb,4*sizeof(float));
-        memcpy(mesh[objId].mat.diffuse, material.diff_green,4*sizeof(float));
-        memcpy(mesh[objId].mat.specular, material.spec,4*sizeof(float));
-        memcpy(mesh[objId].mat.emissive, material.emissive,4*sizeof(float));
-        mesh[objId].mat.shininess = material.shininess;
-        mesh[objId].mat.texCount = material.texcount;
+        memcpy(mesh[objId].mat.ambient, customMaterial.amb, 4 * sizeof(float));
+        memcpy(mesh[objId].mat.diffuse, customMaterial.diff_green, 4 * sizeof(float));
+        memcpy(mesh[objId].mat.specular, customMaterial.spec, 4 * sizeof(float));
+        memcpy(mesh[objId].mat.emissive, customMaterial.emissive, 4 * sizeof(float));
+        mesh[objId].mat.shininess = customMaterial.shininess;
+        mesh[objId].mat.texCount = customMaterial.texcount;
         createCube();
 
         objId=2; // Land2 - middle
-        memcpy(mesh[objId].mat.ambient, material.amb,4*sizeof(float));
-        memcpy(mesh[objId].mat.diffuse, material.diff_green,4*sizeof(float));
-        memcpy(mesh[objId].mat.specular, material.spec,4*sizeof(float));
-        memcpy(mesh[objId].mat.emissive, material.emissive,4*sizeof(float));
-        mesh[objId].mat.shininess = material.shininess;
-        mesh[objId].mat.texCount = material.texcount;
+        memcpy(mesh[objId].mat.ambient, customMaterial.amb, 4 * sizeof(float));
+        memcpy(mesh[objId].mat.diffuse, customMaterial.diff_green, 4 * sizeof(float));
+        memcpy(mesh[objId].mat.specular, customMaterial.spec, 4 * sizeof(float));
+        memcpy(mesh[objId].mat.emissive, customMaterial.emissive, 4 * sizeof(float));
+        mesh[objId].mat.shininess = customMaterial.shininess;
+        mesh[objId].mat.texCount = customMaterial.texcount;
         createCube();
 
         objId=4; // Land3 - top
-        memcpy(mesh[objId].mat.ambient, material.amb,4*sizeof(float));
-        memcpy(mesh[objId].mat.diffuse, material.diff_green,4*sizeof(float));
-        memcpy(mesh[objId].mat.specular, material.spec,4*sizeof(float));
-        memcpy(mesh[objId].mat.emissive, material.emissive,4*sizeof(float));
-        mesh[objId].mat.shininess = material.shininess;
-        mesh[objId].mat.texCount = material.texcount;
+        memcpy(mesh[objId].mat.ambient, customMaterial.amb, 4 * sizeof(float));
+        memcpy(mesh[objId].mat.diffuse, customMaterial.diff_green, 4 * sizeof(float));
+        memcpy(mesh[objId].mat.specular, customMaterial.spec, 4 * sizeof(float));
+        memcpy(mesh[objId].mat.emissive, customMaterial.emissive, 4 * sizeof(float));
+        mesh[objId].mat.shininess = customMaterial.shininess;
+        mesh[objId].mat.texCount = customMaterial.texcount;
         createCube();
     }
 
     void initObjectRoad()
     {
         objId=1; // Road
-        memcpy(mesh[objId].mat.ambient, material.amb,4*sizeof(float));
-        memcpy(mesh[objId].mat.diffuse, material.diff_black,4*sizeof(float));
-        memcpy(mesh[objId].mat.specular, material.spec,4*sizeof(float));
-        memcpy(mesh[objId].mat.emissive, material.emissive,4*sizeof(float));
-        mesh[objId].mat.shininess = material.shininess;
-        mesh[objId].mat.texCount = material.texcount;
+        memcpy(mesh[objId].mat.ambient, customMaterial.amb, 4 * sizeof(float));
+        memcpy(mesh[objId].mat.diffuse, customMaterial.diff_black, 4 * sizeof(float));
+        memcpy(mesh[objId].mat.specular, customMaterial.spec, 4 * sizeof(float));
+        memcpy(mesh[objId].mat.emissive, customMaterial.emissive, 4 * sizeof(float));
+        mesh[objId].mat.shininess = customMaterial.shininess;
+        mesh[objId].mat.texCount = customMaterial.texcount;
         createCube();
     }
 
     void initObjectRiver()
     {
         objId=3; // River
-        memcpy(mesh[objId].mat.ambient, material.amb,4*sizeof(float));
-        memcpy(mesh[objId].mat.diffuse, material.diff_blue,4*sizeof(float));
-        memcpy(mesh[objId].mat.specular, material.spec,4*sizeof(float));
-        memcpy(mesh[objId].mat.emissive, material.emissive,4*sizeof(float));
-        mesh[objId].mat.shininess = material.shininess;
-        mesh[objId].mat.texCount = material.texcount;
+        memcpy(mesh[objId].mat.ambient, customMaterial.amb, 4 * sizeof(float));
+        memcpy(mesh[objId].mat.diffuse, customMaterial.diff_blue, 4 * sizeof(float));
+        memcpy(mesh[objId].mat.specular, customMaterial.spec, 4 * sizeof(float));
+        memcpy(mesh[objId].mat.emissive, customMaterial.emissive, 4 * sizeof(float));
+        mesh[objId].mat.shininess = customMaterial.shininess;
+        mesh[objId].mat.texCount = customMaterial.texcount;
         createCube();
     }
 
     void initObjectPlayer()
     {
         objId=5; // Player
-        memcpy(mesh[objId].mat.ambient, material.amb,4*sizeof(float));
-        memcpy(mesh[objId].mat.diffuse, material.diff,4*sizeof(float));
-        memcpy(mesh[objId].mat.specular, material.spec,4*sizeof(float));
-        memcpy(mesh[objId].mat.emissive, material.emissive,4*sizeof(float));
-        mesh[objId].mat.shininess = material.shininess;
-        mesh[objId].mat.texCount = material.texcount;
+        memcpy(mesh[objId].mat.ambient, customMaterial.amb, 4 * sizeof(float));
+        memcpy(mesh[objId].mat.diffuse, customMaterial.diff, 4 * sizeof(float));
+        memcpy(mesh[objId].mat.specular, customMaterial.spec, 4 * sizeof(float));
+        memcpy(mesh[objId].mat.emissive, customMaterial.emissive, 4 * sizeof(float));
+        mesh[objId].mat.shininess = customMaterial.shininess;
+        mesh[objId].mat.texCount = customMaterial.texcount;
         createSphere(0.5f, 20);
     }
-
-    struct Material{
-        float amb[4] = {0.2f, 0.15f, 0.1f, 1.0f};
-        float diff[4] = {0.8f, 0.6f, 0.4f, 1.0f};
-
-        float diff_black[4] = {0.0f, 0.0f, 0.0f, 1.0f};
-        float diff_blue[4] = {0.0f, 0.0f, 1.0f, 1.0f};
-        float diff_green[4] = {0.0f, 1.0f, 0.0f, 1.0f};
-
-        float spec[4] = {0.8f, 0.8f, 0.8f, 1.0f};
-        float emissive[4] = {0.0f, 0.0f, 0.0f, 1.0f};
-        float shininess= 10.0f;
-        int texcount = 0;
-
-    }; Material material;
 };
 
 #endif //AVT7_GAMEMANAGER_H
