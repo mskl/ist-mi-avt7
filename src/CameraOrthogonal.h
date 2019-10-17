@@ -19,12 +19,12 @@ public:
         this->bottom = bottom;
     }
 
-    void view()  {
+    void view() override {
         // TODO: FIX POS NOT BEING TAKEN FROM CONSTRUCTOR
-        lookAt(0, 20, 0, 0, 1, -1, 0, 1, 0);
+        lookAt(0, 20, 0, 0, 0, -0.000000000000000001, 0, 1, 0);
     }
 
-    void project(int w, int h) {
+    void project (int w, int h) override {
         ortho(left, right, bottom, top, nearp, farp);
     }
 

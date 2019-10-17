@@ -29,7 +29,7 @@ using namespace std;
 #include "objects/Ground.h"
 #include "objects/Player.h"
 #include "objects/Road.h"
-#include "objects/PointLight.h"
+#include "objects/Light.h"
 
 const char* VERTEX_SHADER_PATH = "shaders/pointlight.vert";
 const char* FRAGMENT_SHADER_PATH = "shaders/pointlight.frag";
@@ -44,10 +44,10 @@ public:
     unsigned int FrameCount = 0;
 
     bool isPlaying = true;
+    bool isNight = true;
 
     float topVerticalLimitPlayerPos = -6.0f;
     float bottomVerticalLimitPlayerPos = 6.0f;
-
     float leftHorizontalLimitPlayerPos = -6.0f;
     float rightHorizontalLimitPlayerPos = 6.0f;
 
@@ -69,7 +69,8 @@ public:
     Road road = Road(Vector3(0, 0, 1), 1);
     Ground ground = Ground(Vector3(0, 0, 0));
     Player player = Player(Vector3(0, 1, 0), 5);
-    PointLight pointLight = PointLight(Vector3(4.0f, 6.0f, 2.0f));
+    Light pointLight = Light(Vector3(4.0f, 6.0f, 2.0f), 1);
+    Light directionalLight = Light(Vector3(0.0f, -0.1f, 0.0f), 0);
 
 public:
     void changeSize(int w, int h)
@@ -99,13 +100,16 @@ public:
             // case 'c': cameraPerspectiveFollow.printCoordinates(); break;
             // Quality settings
             case 'm': glEnable(GL_MULTISAMPLE); break;
-            case 'n': glDisable(GL_MULTISAMPLE); break;
+            case 'M': glDisable(GL_MULTISAMPLE); break;
 
             // Player movement
             case 'p': movePlayerHorizontally(1); break;
             case 'o': movePlayerHorizontally(-1); break;
             case 'q': movePlayerVertically(-1); break;
             case 'a': movePlayerVertically(1); break;
+
+            // Night mode toggle
+            case 'n': isNight = !isNight; break;
 
             // Stop/Continue game
             case 's': isPlaying = !isPlaying; break;
@@ -198,6 +202,10 @@ public:
         player.render();
         road.render();
         pointLight.render();
+
+        if(!isNight) {
+            directionalLight.render();
+        }
 
         glutSwapBuffers();
     }
