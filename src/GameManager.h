@@ -89,7 +89,7 @@ public:
 
     void processKeys(unsigned char key, int xx, int yy)
     {
-        printf("Key value (%d)\n", key);
+        // printf("Key value (%d)\n", key);
 
         // TODO: This should be extracted to the player update function
         switch(key) {
@@ -123,24 +123,24 @@ public:
         if(!isPlaying)
             return;
 
-        float tempPos = playerPos[2] + dir;
+        float tempPos = player.position.z + dir;
 
         if(tempPos < topVerticalLimitPlayerPos || tempPos > bottomVerticalLimitPlayerPos)
             return;
 
-        playerPos[2] = tempPos;
+        player.position.z = tempPos;
     }
 
     void movePlayerHorizontally(float dir){
         if(!isPlaying)
             return;
 
-        float tempPos = playerPos[0] + dir;
+        float tempPos = player.position.x + dir;
 
         if(tempPos > rightHorizontalLimitPlayerPos || tempPos < leftHorizontalLimitPlayerPos)
             return;
 
-        playerPos[0] = tempPos;
+        player.position.x = tempPos;
     }
 
     GLuint setupShaders()
