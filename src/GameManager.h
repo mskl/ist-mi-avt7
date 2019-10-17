@@ -41,6 +41,14 @@ public:
 
     unsigned int FrameCount = 0;
 
+    bool isPlaying = true;
+
+    float topVerticalLimitPlayerPos = -6.0f;
+    float bottomVerticalLimitPlayerPos = 6.0f;
+
+    float leftHorizontalLimitPlayerPos = -6.0f;
+    float rightHorizontalLimitPlayerPos = 6.0f;
+
     enum CameraType {
         CAMERA_PERSPECTIVE_FOLLOW,
         CAMERA_PERSPECTIVE_FIXED,
@@ -82,6 +90,8 @@ public:
     void processKeys(unsigned char key, int xx, int yy)
     {
         printf("Key value (%d)\n", key);
+
+        // TODO: This should be extracted to the player update function
         switch(key) {
             // Escape exits the game
             case 27: glutLeaveMainLoop(); break;
@@ -91,10 +101,13 @@ public:
             case 'n': glDisable(GL_MULTISAMPLE); break;
 
             // Player movement
-            case 'p': player.position.x += 1; break;
-            case 'o': player.position.x -= 1; break;
-            case 'q': player.position.z -= 1; break;
-            case 'a': player.position.z += 1; break;
+            case 'p': movePlayerHorizontally(1); break;
+            case 'o': movePlayerHorizontally(-1); break;
+            case 'q': movePlayerVertically(-1); break;
+            case 'a': movePlayerVertically(1); break;
+
+            // Stop/Continue game
+            case 's': isPlaying = !isPlaying; break;
 
             // CameraType
             case '1':
@@ -104,6 +117,30 @@ public:
             case '3':
                 selectedCamera = CAMERA_ORTHO; break;
         }
+    }
+
+    void movePlayerVertically(float dir){
+        if(!isPlaying)
+            return;
+
+        float tempPos = playerPos[2] + dir;
+
+        if(tempPos < topVerticalLimitPlayerPos || tempPos > bottomVerticalLimitPlayerPos)
+            return;
+
+        playerPos[2] = tempPos;
+    }
+
+    void movePlayerHorizontally(float dir){
+        if(!isPlaying)
+            return;
+
+        float tempPos = playerPos[0] + dir;
+
+        if(tempPos > rightHorizontalLimitPlayerPos || tempPos < leftHorizontalLimitPlayerPos)
+            return;
+
+        playerPos[0] = tempPos;
     }
 
     GLuint setupShaders()
