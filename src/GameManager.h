@@ -81,9 +81,9 @@ public:
     CameraOrthogonal cameraOrthogonal
         = CameraOrthogonal(-15, 15, -15, 15,Vector3(0, 20, 0));
 
-
     Player* player = new Player(Vector3(0, 1, 0));
     Light* directionalLight = new Light(Vector3(0.0f, -0.1f, 0.0f), 0);
+    Bus* bus = new Bus(Vector3(6, 1, 0), Vector3(1, 0, 0));
 
 public:
     GameManager() {
@@ -99,6 +99,7 @@ public:
         gameObjects.push_back(new Coordinates(Vector3(-6.5, 0, -6.5)));
 
         // Custom objects with saved pointers
+        gameObjects.push_back(bus);
         gameObjects.push_back(directionalLight);
         gameObjects.push_back(player);
     }
@@ -236,10 +237,24 @@ public:
             exit(1);
         }
 
+        cout << player->collideWith(bus) << endl;
+
         // Render all of the GameObjects
         for (GameObject *go : gameObjects) {
-            if (go->isEnabled())
+            if (go->isEnabled()) {
+                go->update(deltaTime);
                 go->render();
+
+                // Check collisions with player
+                if (!(go->position == player->position)) {
+                    //if (go->getType() == COLLIDABLE) {
+                        bool didCollide = player->collideWith(go);
+                        if(didCollide) {
+                            cout << "COLLISION!" << endl;
+                        }
+                    //}
+                }
+            }
         }
 
         glutSwapBuffers();

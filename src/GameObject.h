@@ -9,6 +9,7 @@
 #include <tuple>
 #include "Vector3.h"
 #include "ShaderIndices.h"
+#include "BoundingBox.h"
 
 
 extern struct MyMesh mesh[];
@@ -21,6 +22,8 @@ extern GLint pvm_uniformId;
 extern GLint vm_uniformId;
 extern GLint normal_uniformId;
 extern GLint lPos_uniformId;
+
+enum GameObjectType {BOUNDS, TARGET, GRASS, LOG, RIVER, GROUND, BUS, ROAD, UNKNOWN, COLLIDABLE, PLAYER};
 
 
 class GameObject {
@@ -100,7 +103,19 @@ public:
 
     virtual void render() { }
 
-    void update() { }
+    virtual void update(int deltaTime) { }
+
+    virtual GameObjectType getType() {
+        return UNKNOWN;
+    }
+
+    virtual bool collideWith(const GameObject* other) const {
+        return false;
+    }
+
+    virtual BoundingBox getBoundingBox() const {
+        return BoundingBox(Vector3(0, 0, 0), Vector3(0, 0, 0));
+    }
 };
 
 // Track how many IDs were used

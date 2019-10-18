@@ -5,13 +5,14 @@
 #ifndef AVT7_PLAYER_H
 #define AVT7_PLAYER_H
 
-#include "../GameObject.h"
+#include "../CollidableGameObject.h"
 
 
-class Player: public GameObject {
+class Player: public CollidableGameObject {
 public:
 
-    Player(Vector3 pos): GameObject(pos) {
+    Player(Vector3 pos)
+        : CollidableGameObject(pos, Vector3(0, 0, 0), Vector3(1, 1, 1), PLAYER) {
 
     }
 
@@ -42,44 +43,36 @@ public:
     }
 
     void render() override {
+        float eyeSize = 0.25;
+
         // Body
         renderMaterials(ids[0]);
         pushMatrix(MODEL);
-        translate(MODEL, -0.5, 0, -0.5);
-        translate(MODEL, position.x, position.y, position.z);
-        buildVAO(ids[0]);
-        popMatrix(MODEL);
+            translate(MODEL, -0.5, 0, -0.5);
+            translate(MODEL, position.x, position.y, position.z);
+            buildVAO(ids[0]);
 
-        float eyeSize = 0.3;
+            renderMaterials(ids[1]);
+            pushMatrix(MODEL);
+                translate(MODEL, -0.25, 0.75,  -0.25);
+                scale(MODEL,      0.5, 0.5, 0.5);
+                buildVAO(ids[1]);
+            popMatrix(MODEL);
 
-        // LeftEye
-        renderMaterials(ids[1]);
-        pushMatrix(MODEL);
-        translate(MODEL, -eyeSize, 0, -eyeSize/2.0f);
-        translate(MODEL, 0.5, 1-eyeSize, 0.65f);
-        translate(MODEL, position.x, position.y, position.z);    // Move with player
-        scale(MODEL, eyeSize, eyeSize, 0.05);
-        buildVAO(ids[1]);
-        popMatrix(MODEL);
+            renderMaterials(ids[2]);
+            pushMatrix(MODEL);
+                pushMatrix(MODEL);
+                translate(MODEL, 0.75, 0.75,  -0.25);
+                scale(MODEL,      0.5, 0.5, 0.5);
+                buildVAO(ids[2]);
+            popMatrix(MODEL);
 
-        // RightEye
-        renderMaterials(ids[2]);
-        pushMatrix(MODEL);
-        translate(MODEL, eyeSize, 0, -eyeSize/2.0f);
-        translate(MODEL, -0.5, 1-eyeSize, 0.65f);
-        translate(MODEL, position.x, position.y, position.z);    // Move with player
-        scale(MODEL, eyeSize, eyeSize, 0.05);
-        buildVAO(ids[2]);
-        popMatrix(MODEL);
-
-        // Mouth
-        renderMaterials(ids[3]);
-        pushMatrix(MODEL);
-        translate(MODEL, eyeSize, 0, -eyeSize/2.0f);
-        translate(MODEL, -0.6, 0.2, 0.65f);
-        translate(MODEL, position.x, position.y, position.z);    // Move with player
-        scale(MODEL, 0.8f, 0.25, 0.05f);
-        buildVAO(ids[3]);
+            renderMaterials(ids[3]);
+            pushMatrix(MODEL);
+                translate(MODEL, 0, 0.2, -0.025);
+                scale(MODEL, 0.8f, 0.25, 0.05f);
+                buildVAO(ids[3]);
+            popMatrix(MODEL);
         popMatrix(MODEL);
 
     }

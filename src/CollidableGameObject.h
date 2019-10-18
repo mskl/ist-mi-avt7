@@ -8,15 +8,27 @@
 #include "GameObject.h"
 #include "BoundingBox.h"
 
-enum GameObjectType {BOUNDS, TARGET, GRASS, LOG, RIVER, GROUND, BUS, ROAD, UNKNOWN};
-
 class CollidableGameObject: public GameObject {
 public:
     BoundingBox boundingBox;
     GameObjectType gameObjectType;
 
     CollidableGameObject(Vector3 pos, Vector3 min, Vector3 max, GameObjectType type = UNKNOWN)
-        : GameObject(pos), boundingBox(min, max), gameObjectType(type) { }
+        : GameObject(pos), boundingBox(min, max), gameObjectType(type) {
+
+    }
+
+    virtual GameObjectType getType() override {
+        return COLLIDABLE;
+    }
+
+    virtual BoundingBox getBoundingBox() const override {
+        return this->boundingBox;
+    }
+
+    virtual bool collideWith(const GameObject* other) const override {
+        return this->boundingBox.isColliding(other->getBoundingBox(), position, other->position);
+    }
 };
 
 
