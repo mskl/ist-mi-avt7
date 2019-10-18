@@ -17,6 +17,7 @@ struct CustomMaterial{
     float diff_yellow[4] = {1.0f, 1.0f, 0.0f, 1.0f};
     float diff_blue[4] = {0.0f, 0.0f, 1.0f, 1.0f};
     float diff_green[4] = {0.0f, 1.0f, 0.0f, 1.0f};
+    float diff_red[4] = {1.0f, 0.0f, 0.0f, 1.0f};
 
     float spec[4] = {0.8f, 0.8f, 0.8f, 1.0f};
     float spec_matte[4] = {0, 0, 0, 1};
