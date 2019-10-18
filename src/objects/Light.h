@@ -5,7 +5,7 @@
 #ifndef AVT7_LIGHT_H
 #define AVT7_LIGHT_H
 
-#include "GameObject.h"
+#include "../GameObject.h"
 
 class Light: public GameObject {
 public:

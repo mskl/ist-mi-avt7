@@ -10,10 +10,13 @@ struct CustomMaterial{
     float diff[4] = {0.8f, 0.6f, 0.4f, 1.0f};
 
     float diff_black[4] = {0.0f, 0.0f, 0.0f, 1.0f};
+    float diff_yellow[4] = {1.0f, 1.0f, 0.0f, 1.0f};
     float diff_blue[4] = {0.0f, 0.0f, 1.0f, 1.0f};
     float diff_green[4] = {0.0f, 1.0f, 0.0f, 1.0f};
 
     float spec[4] = {0.8f, 0.8f, 0.8f, 1.0f};
+    float spec_matte[4] = {0, 0, 0, 1};
+
     float emissive[4] = {0.0f, 0.0f, 0.0f, 1.0f};
     float shininess= 10.0f;
     int texcount = 0;

@@ -74,11 +74,11 @@ void createQuad(float size_x, float size_y)
 }
 */
 
-void createCube() {
-    mesh[objId].numIndexes = faceCount * 3;
+void createCube(GLint _objId) {
+    mesh[_objId].numIndexes = faceCount * 3;
 
-    glGenVertexArrays(1, &(mesh[objId].vao));
-    glBindVertexArray(mesh[objId].vao);
+    glGenVertexArrays(1, &(mesh[_objId].vao));
+    glBindVertexArray(mesh[_objId].vao);
 
     glGenBuffers(2, VboId);
     glBindBuffer(GL_ARRAY_BUFFER, VboId[0]);
@@ -98,12 +98,12 @@ void createCube() {
 
     //index buffer
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, VboId[1]);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * mesh[objId].numIndexes, faceIndex, GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * mesh[_objId].numIndexes, faceIndex, GL_STATIC_DRAW);
 
     // unbind the VAO
     glBindVertexArray(0);
 
-    mesh[objId].type = GL_TRIANGLES;
+    mesh[_objId].type = GL_TRIANGLES;
 }
 
 void createSphere(float radius, int divisions) {

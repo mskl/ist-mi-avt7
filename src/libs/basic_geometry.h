@@ -20,7 +20,7 @@ struct MyMesh {
 		struct Material mat;
 	};
 
-void createCube();
+void createCube(GLint id);
 void createSphere(float radius, int divisions);
 void computeVAO(int numP, float *p, float *pfloatoints, int sides, float smoothCos);
 int revSmoothNormal2(float *p, float *nx, float *ny, float smoothCos, int beginEnd);

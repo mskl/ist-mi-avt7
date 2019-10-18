@@ -30,6 +30,9 @@ using namespace std;
 #include "objects/Player.h"
 #include "objects/Road.h"
 #include "objects/Light.h"
+#include "objects/Bus.h"
+#include "objects/Coordinates.h"
+
 
 const char* VERTEX_SHADER_PATH = "shaders/pointlight.vert";
 const char* FRAGMENT_SHADER_PATH = "shaders/pointlight.frag";
@@ -55,7 +58,7 @@ public:
 
     // All in microseconds
     GLint lastMoveTime = 0;
-    GLint moveTimeout = 500;
+    GLint moveTimeout = 300;
 
     enum CameraType {
         CAMERA_PERSPECTIVE_FOLLOW,
@@ -77,6 +80,9 @@ public:
     Player player = Player(Vector3(0, 1, 0), 5);
     Light pointLight = Light(Vector3(4.0f, 6.0f, 2.0f), 1);
     Light directionalLight = Light(Vector3(0.0f, -0.1f, 0.0f), 0);
+    Bus bus = Bus(Vector3(2, 0, 2), 6);
+    Coordinates coordinates = Coordinates(Vector3(0, 0, 0), -1);
+
 
 public:
     void changeSize(int w, int h)
@@ -171,6 +177,23 @@ public:
         return(shader.isProgramLinked());
     }
 
+    void initScene()
+    {
+        river.init();
+        ground.init();
+        player.init();
+        road.init();
+        pointLight.init();
+        bus.init();
+        coordinates.init();
+
+        // some GL settings
+        glEnable(GL_DEPTH_TEST);
+        glEnable(GL_CULL_FACE);
+        glEnable(GL_MULTISAMPLE);
+        glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+    }
+
     void renderScene() {
         GLint loc;
 
@@ -195,32 +218,19 @@ public:
             exit(1);
         }
 
-        river.render();
-        ground.render();
+        //river.render();
+        //ground.render();
         player.render();
-        road.render();
-        pointLight.render();
+        //road.render();
+        //pointLight.render();
+        //bus.render();
+        coordinates.render();
 
         if(!isNight) {
             directionalLight.render();
         }
 
         glutSwapBuffers();
-    }
-
-    void initScene()
-    {
-        river.init();
-        ground.init();
-        player.init();
-        road.init();
-        pointLight.init();
-
-        // some GL settings
-        glEnable(GL_DEPTH_TEST);
-        glEnable(GL_CULL_FACE);
-        glEnable(GL_MULTISAMPLE);
-        glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
     }
 };
 

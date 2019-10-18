@@ -19,7 +19,7 @@ public:
         memcpy(mesh[objId].mat.emissive, customMaterial.emissive, 4 * sizeof(float));
         mesh[objId].mat.shininess = customMaterial.shininess;
         mesh[objId].mat.texCount = customMaterial.texcount;
-        createCube();
+        createCube(0);
 
         objId=2; // Land2 - middle
         memcpy(mesh[objId].mat.ambient, customMaterial.amb, 4 * sizeof(float));
@@ -28,7 +28,7 @@ public:
         memcpy(mesh[objId].mat.emissive, customMaterial.emissive, 4 * sizeof(float));
         mesh[objId].mat.shininess = customMaterial.shininess;
         mesh[objId].mat.texCount = customMaterial.texcount;
-        createCube();
+        createCube(2);
 
         objId=4; // Land3 - top
         memcpy(mesh[objId].mat.ambient, customMaterial.amb, 4 * sizeof(float));
@@ -37,7 +37,7 @@ public:
         memcpy(mesh[objId].mat.emissive, customMaterial.emissive, 4 * sizeof(float));
         mesh[objId].mat.shininess = customMaterial.shininess;
         mesh[objId].mat.texCount = customMaterial.texcount;
-        createCube();
+        createCube(4);
     }
 
     void render() override {

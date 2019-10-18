@@ -16,7 +16,7 @@ extern float mNormal3x3[9];
 extern struct MyMesh mesh[];
 extern GLint objId;
 
-#include "../Vector3.h"
+#include "Vector3.h"
 
 class GameObject {
 public:

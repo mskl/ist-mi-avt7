@@ -1,23 +1,23 @@
 //
-// Created by skalimat on 17.10.19.
+// Created by skalimat on 18.10.19.
 //
 
-#ifndef AVT7_ROAD_H
-#define AVT7_ROAD_H
+#ifndef AVT7_BUS_H
+#define AVT7_BUS_H
 
-#include "../GameObject.h"
+#include "../CollidableGameObject.h"
 
-class Road: public GameObject {
+class Bus: public CollidableGameObject {
 public:
-
-    Road(Vector3 pos, int id): GameObject(pos, id) {
+    Bus(Vector3 pos, int id)
+            : CollidableGameObject(pos, id, Vector3(0, 0, 0), Vector3(5, 1, 1), BUS) {
 
     }
 
     void init() override {
         objId = id;
         memcpy(mesh[objId].mat.ambient, customMaterial.amb, 4 * sizeof(float));
-        memcpy(mesh[objId].mat.diffuse, customMaterial.diff_black, 4 * sizeof(float));
+        memcpy(mesh[objId].mat.diffuse, customMaterial.diff, 4 * sizeof(float));
         memcpy(mesh[objId].mat.specular, customMaterial.spec, 4 * sizeof(float));
         memcpy(mesh[objId].mat.emissive, customMaterial.emissive, 4 * sizeof(float));
         mesh[objId].mat.shininess = customMaterial.shininess;
@@ -27,20 +27,19 @@ public:
 
     void render() override {
         objId = id;
-        GLint loc = glGetUniformLocation(shader.getProgramIndex(), "mat.ambient");
-        glUniform4fv(loc, 1, mesh[objId].mat.ambient);
-        loc = glGetUniformLocation(shader.getProgramIndex(), "mat.diffuse");
-        glUniform4fv(loc, 1, mesh[objId].mat.diffuse);
-        loc = glGetUniformLocation(shader.getProgramIndex(), "mat.specular");
-        glUniform4fv(loc, 1, mesh[objId].mat.specular);
-        loc = glGetUniformLocation(shader.getProgramIndex(), "mat.shininess");
-        glUniform1f(loc, mesh[objId].mat.shininess);
+        GLint loc_amb = glGetUniformLocation(shader.getProgramIndex(), "mat.ambient");
+        glUniform4fv(loc_amb, 1, mesh[objId].mat.ambient);
+        GLint loc_dif = glGetUniformLocation(shader.getProgramIndex(), "mat.diffuse");
+        glUniform4fv(loc_dif, 1, mesh[objId].mat.diffuse);
+        GLint loc_spc = glGetUniformLocation(shader.getProgramIndex(), "mat.specular");
+        glUniform4fv(loc_spc, 1, mesh[objId].mat.specular);
+        GLint loc_shi = glGetUniformLocation(shader.getProgramIndex(), "mat.shininess");
+        glUniform1f(loc_shi, mesh[objId].mat.shininess);
+
         pushMatrix(MODEL);
-
+        translate(MODEL, 0.5, 0.5, 0.5);
         translate(MODEL, position.x, position.y, position.z);
-        translate(MODEL, -13 / 2, 0, 0);
-        scale(MODEL, 13, 1, 5);
-
+        scale(MODEL, 5, 1, 1);
         computeDerivedMatrix(PROJ_VIEW_MODEL);
         glUniformMatrix4fv(vm_uniformId, 1, GL_FALSE, mCompMatrix[VIEW_MODEL]);
         glUniformMatrix4fv(pvm_uniformId, 1, GL_FALSE, mCompMatrix[PROJ_VIEW_MODEL]);
@@ -53,4 +52,4 @@ public:
     }
 };
 
-#endif //AVT7_ROAD_H
+#endif //AVT7_BUS_H

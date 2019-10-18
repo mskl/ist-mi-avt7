@@ -5,7 +5,7 @@
 #ifndef AVT7_RIVER_H
 #define AVT7_RIVER_H
 
-#include "GameObject.h"
+#include "../GameObject.h"
 #include <stdlib.h>
 #include "GL/glew.h"
 #include "../libs/vsShaderLib.h"
@@ -29,7 +29,7 @@ public:
         memcpy(mesh[objId].mat.emissive, customMaterial.emissive, 4 * sizeof(float));
         mesh[objId].mat.shininess = customMaterial.shininess;
         mesh[objId].mat.texCount = customMaterial.texcount;
-        createCube();
+        createCube(id);
     }
 
     void render() {

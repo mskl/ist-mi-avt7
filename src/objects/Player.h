@@ -5,7 +5,8 @@
 #ifndef AVT7_PLAYER_H
 #define AVT7_PLAYER_H
 
-#include "GameObject.h"
+#include "../GameObject.h"
+
 
 class Player: public GameObject {
 public:
@@ -22,7 +23,7 @@ public:
         memcpy(mesh[objId].mat.emissive, customMaterial.emissive, 4 * sizeof(float));
         mesh[objId].mat.shininess = customMaterial.shininess;
         mesh[objId].mat.texCount = customMaterial.texcount;
-        createSphere(0.5f, 20);
+        createCube(id);
     }
 
     void render() override {
@@ -37,8 +38,7 @@ public:
         glUniform1f(loc_shi, mesh[objId].mat.shininess);
 
         pushMatrix(MODEL);
-        translate(MODEL, 0.5, 0.5, 0.5);
-        translate(MODEL, position.x, position.y, position.z);
+        //translate(MODEL, position.x, position.y, position.z);
         computeDerivedMatrix(PROJ_VIEW_MODEL);
         glUniformMatrix4fv(vm_uniformId, 1, GL_FALSE, mCompMatrix[VIEW_MODEL]);
         glUniformMatrix4fv(pvm_uniformId, 1, GL_FALSE, mCompMatrix[PROJ_VIEW_MODEL]);
