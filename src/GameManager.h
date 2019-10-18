@@ -93,6 +93,11 @@ public:
         gameObjects.push_back(new Light(Vector3(4.0f, 6.0f, 2.0f), 1));
         gameObjects.push_back(new Coordinates(Vector3(0, 0, 0)));
 
+        gameObjects.push_back(new Coordinates(Vector3(6.5, 0, 6.5)));
+        gameObjects.push_back(new Coordinates(Vector3(6.5, 0, -6.5)));
+        gameObjects.push_back(new Coordinates(Vector3(-6.5, 0, 6.5)));
+        gameObjects.push_back(new Coordinates(Vector3(-6.5, 0, -6.5)));
+
         // Custom objects with saved pointers
         gameObjects.push_back(directionalLight);
         gameObjects.push_back(player);

@@ -27,8 +27,6 @@ Basic Revolution Geometry
 #include "../primitives/cube.h"
 
 extern struct MyMesh mesh[];
-extern int objId;
-
 GLuint VboId[2];
 
 /*
@@ -106,6 +104,7 @@ void createCube(GLint _objId) {
     mesh[_objId].type = GL_TRIANGLES;
 }
 
+/*
 void createSphere(float radius, int divisions) {
     float *p = circularProfile(-3.14159f / 2.0f, 3.14159f / 2.0f, radius, divisions);
     computeVAO(divisions + 1, p + 2, p, divisions * 2, 0.0f);
@@ -187,12 +186,12 @@ void computeVAO(int numP, float *p, float *points, int sides, float smoothCos) {
     for (int i = 0; i < numP - 1; ++i) {
         for (int j = 0; j < numSides; ++j) {
 
-            /*if (i != 0 || p[0] != 0.0)*/ {
+            if (i != 0 || p[0] != 0.0) {
                 faceIndex[count++] = k * (numSides + 1) + j;
                 faceIndex[count++] = (k + 1) * (numSides + 1) + j + 1;
                 faceIndex[count++] = (k + 1) * (numSides + 1) + j;
             }
-            /*if (i != numP-2 || p[(numP-1)*2] != 0.0)*/ {
+            if (i != numP-2 || p[(numP-1)*2] != 0.0) {
                 faceIndex[count++] = k * (numSides + 1) + j;
                 faceIndex[count++] = k * (numSides + 1) + j + 1;
                 faceIndex[count++] = (k + 1) * (numSides + 1) + j + 1;
@@ -295,3 +294,4 @@ float *circularProfile(float minAngle, float maxAngle, float radius, int divisio
     }
     return p;
 }
+*/

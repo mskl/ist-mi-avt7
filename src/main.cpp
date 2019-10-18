@@ -8,14 +8,12 @@ using namespace std;
 
 #include <GL/glew.h>     // include GLEW to access OpenGL 3.3 functions
 #include <GL/freeglut.h> // GLUT is the toolkit to interface with the OS
-
-
 #include "GameManager.h"
 
-VSShaderLib shader;
-struct MyMesh mesh[1000];
+#define MAX_MESH_COUNT 1000
 
-int objId = 0;
+VSShaderLib shader;
+struct MyMesh mesh[MAX_MESH_COUNT];
 
 GLint deltaTime = 1;
 GLint prevTime = 1;

@@ -25,6 +25,7 @@ public:
     void render() override {
         renderMaterials(ids[0]);
         pushMatrix(MODEL);
+        translate(MODEL, -0.5, 0, -0.5);
         translate(MODEL, position.x, position.y, position.z);
         buildVAO(ids[0]);
         popMatrix(MODEL);
