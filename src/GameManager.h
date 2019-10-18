@@ -38,6 +38,11 @@ const char* VERTEX_SHADER_PATH = "shaders/pointlight.vert";
 const char* FRAGMENT_SHADER_PATH = "shaders/pointlight.frag";
 
 extern int deltaTime;
+GLint pvm_uniformId;
+GLint vm_uniformId;
+GLint normal_uniformId;
+GLint lPos_uniformId;
+
 
 #define CAPTION "AVT Per Fragment Phong Lightning Demo"
 

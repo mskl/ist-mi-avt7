@@ -6,13 +6,6 @@
 #define AVT7_RIVER_H
 
 #include "../GameObject.h"
-#include <stdlib.h>
-#include "GL/glew.h"
-#include "../libs/vsShaderLib.h"
-#include "../libs/AVTmathLib.h"
-#include "../CustomMaterial.h"
-#include "../libs/basic_geometry.h"
-#include <string.h>
 
 class River: public GameObject {
 public:
