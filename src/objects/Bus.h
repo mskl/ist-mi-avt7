@@ -7,6 +7,7 @@
 
 #include "../CollidableGameObject.h"
 
+/*
 class Bus: public CollidableGameObject {
 public:
     Bus(Vector3 pos, int id)
@@ -51,5 +52,7 @@ public:
         popMatrix(MODEL);
     }
 };
+
+/**/
 
 #endif //AVT7_BUS_H

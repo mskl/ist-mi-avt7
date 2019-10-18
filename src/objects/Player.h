@@ -11,23 +11,22 @@
 class Player: public GameObject {
 public:
 
-    Player(Vector3 pos, int id): GameObject(pos, id) {
+    Player(Vector3 pos): GameObject(pos) {
 
     }
 
     void init() override {
-        setMesh(id, customMaterial.amb, customMaterial.diff, customMaterial.spec,
+        ids.push_back(idCount+=1);
+        setMesh(ids.back(), customMaterial.amb, customMaterial.diff, customMaterial.spec,
                 customMaterial.emissive, customMaterial.shininess, customMaterial.texcount);
-        createCube(id);
+        createCube(ids.back());
     }
 
     void render() override {
-        // Set the materials
-        renderMaterials(id);
-
+        renderMaterials(ids[0]);
         pushMatrix(MODEL);
         // translate(MODEL, position.x, position.y, position.z);
-        buildVAO(id);
+        buildVAO(ids[0]);
         popMatrix(MODEL);
     }
 };

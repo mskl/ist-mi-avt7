@@ -5,6 +5,7 @@
 #ifndef AVT7_GROUND_H
 #define AVT7_GROUND_H
 
+/*
 class Ground: public GameObject {
 public:
     explicit Ground(Vector3 pos): GameObject(pos, -1) {
@@ -114,5 +115,7 @@ public:
         popMatrix(MODEL);
     }
 };
+
+/**/
 
 #endif //AVT7_GROUND_H

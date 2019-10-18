@@ -16,7 +16,6 @@ extern VSShaderLib shader;
 extern float mMatrix[COUNT_MATRICES][16];
 extern float mCompMatrix[COUNT_COMPUTED_MATRICES][16];
 extern float mNormal3x3[9];
-extern GLint objId;
 
 extern GLint pvm_uniformId;
 extern GLint vm_uniformId;
@@ -26,13 +25,14 @@ extern GLint lPos_uniformId;
 
 class GameObject {
 public:
+    std::vector<int> ids = {};
     Vector3 position;
-    static int idCount;
-    int id;
 
-    GameObject(Vector3 pos, int id) {
+    // Static counter of the highest assigned id
+    static int idCount;
+
+    GameObject(Vector3 pos) {
         this->position = pos;
-        this->id = id;
     }
 
     virtual void init() { }

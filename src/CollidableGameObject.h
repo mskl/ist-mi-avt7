@@ -15,8 +15,8 @@ public:
     BoundingBox boundingBox;
     GameObjectType gameObjectType;
 
-    CollidableGameObject(Vector3 pos, int id, Vector3 min, Vector3 max, GameObjectType type = UNKNOWN)
-        : GameObject(pos, id), boundingBox(min, max), gameObjectType(type) { }
+    CollidableGameObject(Vector3 pos, Vector3 min, Vector3 max, GameObjectType type = UNKNOWN)
+        : GameObject(pos), boundingBox(min, max), gameObjectType(type) { }
 };
 
 

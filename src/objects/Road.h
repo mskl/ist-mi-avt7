@@ -7,6 +7,7 @@
 
 #include "../GameObject.h"
 
+/*
 class Road: public GameObject {
 public:
 
@@ -52,5 +53,7 @@ public:
         popMatrix(MODEL);
     }
 };
+
+/**/
 
 #endif //AVT7_ROAD_H

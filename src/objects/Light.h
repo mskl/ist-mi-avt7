@@ -14,7 +14,7 @@ public:
     // 1 for point
     float lightType = 0;
 
-    explicit Light(Vector3 pos, float type): GameObject(pos, -1) {
+    explicit Light(Vector3 pos, float type): GameObject(pos) {
         this->lightType = type;
     }
 

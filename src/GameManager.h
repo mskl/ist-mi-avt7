@@ -79,14 +79,14 @@ public:
     CameraOrthogonal cameraOrthogonal
         = CameraOrthogonal(-15, 15, -15, 15,Vector3(0, 20, 0));
 
-    River river = River(Vector3(0, 0, -5), 3);
-    Road road = Road(Vector3(0, 0, 1), 1);
-    Ground ground = Ground(Vector3(0, 0, 0));
-    Player player = Player(Vector3(0, 1, 0), 5);
+    //River river = River(Vector3(0, 0, -5), 3);
+    //Road road = Road(Vector3(0, 0, 1), 1);
+    //Ground ground = Ground(Vector3(0, 0, 0));
+    Player player = Player(Vector3(0, 1, 0));
     Light pointLight = Light(Vector3(4.0f, 6.0f, 2.0f), 1);
     Light directionalLight = Light(Vector3(0.0f, -0.1f, 0.0f), 0);
-    Bus bus = Bus(Vector3(2, 0, 2), 6);
-    Coordinates coordinates = Coordinates(Vector3(0, 0, 0), -1);
+    //Bus bus = Bus(Vector3(2, 0, 2), 6);
+    Coordinates coordinates = Coordinates(Vector3(0, 0, 0));
 
 
 public:
@@ -184,12 +184,12 @@ public:
 
     void initScene()
     {
-        river.init();
-        ground.init();
+        //river.init();
+        //ground.init();
         player.init();
-        road.init();
+        //road.init();
         pointLight.init();
-        bus.init();
+        //bus.init();
         coordinates.init();
 
         // some GL settings
