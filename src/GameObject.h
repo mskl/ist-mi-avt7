@@ -24,21 +24,12 @@ extern GLint lPos_uniformId;
 
 
 class GameObject {
-public:
+protected:
+    bool enabled = true;
     std::vector<int> ids = {};
-    Vector3 position;
 
     // Static counter of the highest assigned id
     static int idCount;
-
-    GameObject(Vector3 pos) {
-        this->position = pos;
-    }
-
-    virtual void init() { }
-    virtual void render() { }
-
-    void update() { }
 
     static void renderMaterials(GLint mid) {
         ShaderIndices si = getPointers(mid);
@@ -49,7 +40,7 @@ public:
     }
 
     static void setMesh(GLint mid, float amb[4], float dif[4], float spec[4], float emmit[4],
-                 float shinnines, float texcount) {
+                        float shinnines, float texcount) {
         memcpy(mesh[mid].mat.ambient, amb, 4 * sizeof(float));
         memcpy(mesh[mid].mat.diffuse, dif, 4 * sizeof(float));
         memcpy(mesh[mid].mat.specular, spec, 4 * sizeof(float));
@@ -81,6 +72,35 @@ public:
         glDrawElements(mesh[mid].type, mesh[mid].numIndexes, GL_UNSIGNED_INT, 0);
         glBindVertexArray(0);
     }
+
+public:
+    Vector3 position;
+
+    GameObject(Vector3 pos) {
+        this->position = pos;
+    }
+
+    void enable() {
+        this->enabled = true;
+    }
+
+    void disable() {
+        this->enabled = false;
+    }
+
+    void setEnabled(bool state) {
+        this->enabled = state;
+    }
+
+    bool isEnabled() {
+        return enabled;
+    }
+
+    virtual void init() { }
+
+    virtual void render() { }
+
+    void update() { }
 };
 
 // Track how many IDs were used

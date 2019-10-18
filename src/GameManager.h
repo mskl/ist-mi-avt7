@@ -54,12 +54,14 @@ public:
     unsigned int FrameCount = 0;
 
     bool isPlaying = true;
-    bool isNight = true;
+    bool isNight = false;
 
     float topVerticalLimitPlayerPos = -6.0f;
     float bottomVerticalLimitPlayerPos = 6.0f;
     float leftHorizontalLimitPlayerPos = -6.0f;
     float rightHorizontalLimitPlayerPos = 6.0f;
+
+    std::vector<GameObject*> gameObjects = std::vector<GameObject*>();
 
     // All in microseconds
     GLint lastMoveTime = 0;
@@ -79,17 +81,23 @@ public:
     CameraOrthogonal cameraOrthogonal
         = CameraOrthogonal(-15, 15, -15, 15,Vector3(0, 20, 0));
 
-    //River river = River(Vector3(0, 0, -5), 3);
-    //Road road = Road(Vector3(0, 0, 1), 1);
-    //Ground ground = Ground(Vector3(0, 0, 0));
-    Player player = Player(Vector3(0, 1, 0));
-    Light pointLight = Light(Vector3(4.0f, 6.0f, 2.0f), 1);
-    Light directionalLight = Light(Vector3(0.0f, -0.1f, 0.0f), 0);
-    //Bus bus = Bus(Vector3(2, 0, 2), 6);
-    Coordinates coordinates = Coordinates(Vector3(0, 0, 0));
 
+    Player* player = new Player(Vector3(0, 1, 0));
+    Light* directionalLight = new Light(Vector3(0.0f, -0.1f, 0.0f), 0);
 
 public:
+    GameManager() {
+        gameObjects.push_back(new River(Vector3(0, 0, -5)));
+        gameObjects.push_back(new Road(Vector3(0, 0, 1)));
+        gameObjects.push_back(new Ground(Vector3(0, 0, 0)));
+        gameObjects.push_back(new Light(Vector3(4.0f, 6.0f, 2.0f), 1));
+        gameObjects.push_back(new Coordinates(Vector3(0, 0, 0)));
+
+        // Custom objects with saved pointers
+        gameObjects.push_back(directionalLight);
+        gameObjects.push_back(player);
+    }
+
     void changeSize(int w, int h)
     {
         float ratio;
@@ -126,7 +134,10 @@ public:
             case 'a': movePlayer(0, 1); break;
 
             // Night mode toggle
-            case 'n': isNight = !isNight; break;
+            case 'n':
+                isNight = !isNight;
+                directionalLight->setEnabled(isNight);
+                break;
             // Stop/Continue game
             case 's': isPlaying = !isPlaying; break;
 
@@ -149,12 +160,12 @@ public:
             return;
 
         Vector3 moveVec = Vector3(x, 0, z);
-        Vector3 tempPos = player.position + moveVec;
+        Vector3 tempPos = player->position + moveVec;
         if(tempPos.z < topVerticalLimitPlayerPos || tempPos.z > bottomVerticalLimitPlayerPos ||
            tempPos.x > rightHorizontalLimitPlayerPos || tempPos.x < leftHorizontalLimitPlayerPos)
             return;
 
-        player.position = tempPos;
+        player->position = tempPos;
         lastMoveTime = curTime;
         cameraPerspectiveMoving.pos = cameraPerspectiveMoving.pos + moveVec;
     }
@@ -184,13 +195,10 @@ public:
 
     void initScene()
     {
-        //river.init();
-        //ground.init();
-        player.init();
-        //road.init();
-        pointLight.init();
-        //bus.init();
-        coordinates.init();
+        // Initialize all of the GameObjects
+        for (GameObject* go : gameObjects) {
+            go->init();
+        }
 
         // some GL settings
         glEnable(GL_DEPTH_TEST);
@@ -223,16 +231,10 @@ public:
             exit(1);
         }
 
-        //river.render();
-        //ground.render();
-        player.render();
-        //road.render();
-        //pointLight.render();
-        //bus.render();
-        coordinates.render();
-
-        if(!isNight) {
-            directionalLight.render();
+        // Render all of the GameObjects
+        for (GameObject *go : gameObjects) {
+            if (go->isEnabled())
+                go->render();
         }
 
         glutSwapBuffers();
