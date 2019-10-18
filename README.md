@@ -25,3 +25,16 @@ Also contains includes for both OSX and Win:
 ```
 - https://github.com/jmsfilipe/avt-frogger-opengl
 - https://github.com/dtcpatricio/avt
+
+## Libs installation
+``` bash
+# TinyXML
+sudo apt-get install libtinyxml-dev
+
+# DevIL
+sudo apt install libdevil-dev
+
+# Assimp
+sudo apt-get install libassimp-dev assimp-utils
+sudo apt-get install libxmu-dev libxi-dev
+```
