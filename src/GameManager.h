@@ -10,7 +10,6 @@
 #include <sstream>
 #include <string.h>
 #include "stdio.h"
-#include "CustomMaterial.h"
 
 using namespace std;
 
@@ -54,7 +53,6 @@ public:
     unsigned int FrameCount = 0;
 
     bool isPlaying = true;
-    bool isNight = false;
 
     float topVerticalLimitPlayerPos = -6.0f;
     float bottomVerticalLimitPlayerPos = 6.0f;
@@ -101,6 +99,7 @@ public:
         // Custom objects with saved pointers
         gameObjects.push_back(bus);
         gameObjects.push_back(directionalLight);
+        directionalLight->setEnabled(false);
         gameObjects.push_back(player);
     }
 
@@ -141,9 +140,7 @@ public:
 
             // Night mode toggle
             case 'n':
-                isNight = !isNight;
-                directionalLight->setEnabled(isNight);
-                break;
+                directionalLight->setEnabled(!directionalLight->isEnabled()); break;
             // Stop/Continue game
             case 's': isPlaying = !isPlaying; break;
 
@@ -237,8 +234,6 @@ public:
             exit(1);
         }
 
-        cout << player->collideWith(bus) << endl;
-
         // Render all of the GameObjects
         for (GameObject *go : gameObjects) {
             if (go->isEnabled()) {
@@ -247,12 +242,10 @@ public:
 
                 // Check collisions with player
                 if (!(go->position == player->position)) {
-                    //if (go->getType() == COLLIDABLE) {
-                        bool didCollide = player->collideWith(go);
-                        if(didCollide) {
-                            cout << "COLLISION!" << endl;
-                        }
-                    //}
+                    bool didCollide = player->collideWith(go);
+                    if(didCollide) {
+                        cout << "COLLISION!" << endl;
+                    }
                 }
             }
         }

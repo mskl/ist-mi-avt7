@@ -19,26 +19,22 @@ public:
     void init() override {
         // Body
         ids.push_back(idCount+=1);
-        setMesh(ids.back(), customMaterial.amb, customMaterial.diff, customMaterial.spec,
-                customMaterial.emissive, customMaterial.shininess, customMaterial.texcount);
+        setMaterial(ids.back(), mat_player);
         createCube(ids.back());
 
         // Left Eye
         ids.push_back(idCount+=1);
-        setMesh(ids.back(), customMaterial.amb, customMaterial.diff_yellow, customMaterial.spec,
-                customMaterial.emissive, customMaterial.shininess, customMaterial.texcount);
+        setMaterial(ids.back(), mat_player);
         createCube(ids.back());
 
         // Right Eye
         ids.push_back(idCount+=1);
-        setMesh(ids.back(), customMaterial.amb, customMaterial.diff_yellow, customMaterial.spec,
-                customMaterial.emissive, customMaterial.shininess, customMaterial.texcount);
+        setMaterial(ids.back(), mat_player);
         createCube(ids.back());
 
         // Mouth
         ids.push_back(idCount+=1);
-        setMesh(ids.back(), customMaterial.amb, customMaterial.diff_red, customMaterial.spec,
-                customMaterial.emissive, customMaterial.shininess, customMaterial.texcount);
+        setMaterial(ids.back(), mat_player);
         createCube(ids.back());
     }
 

@@ -16,8 +16,7 @@ public:
 
     void init() {
         ids.push_back(idCount+=1);
-        setMesh(ids.back(), customMaterial.amb, customMaterial.diff_blue, customMaterial.spec_matte,
-                customMaterial.emissive, customMaterial.shininess, customMaterial.texcount);
+        setMaterial(ids.back(), mat_river);
         createCube(ids.back());
     }
 

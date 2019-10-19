@@ -10,6 +10,7 @@
 #include "Vector3.h"
 #include "ShaderIndices.h"
 #include "BoundingBox.h"
+#include "materials/Materials.h"
 
 
 extern struct MyMesh mesh[];
@@ -42,14 +43,23 @@ protected:
         glUniform1f(si.loc_shi, mesh[mid].mat.shininess);
     }
 
-    static void setMesh(GLint mid, float amb[4], float dif[4], float spec[4], float emmit[4],
-                        float shinnines, float texcount) {
+    static void setMaterial(GLint mid, float *amb, float *dif, float *spec, float *emmit,
+                            float shinnines, float texcount) {
         memcpy(mesh[mid].mat.ambient, amb, 4 * sizeof(float));
         memcpy(mesh[mid].mat.diffuse, dif, 4 * sizeof(float));
         memcpy(mesh[mid].mat.specular, spec, 4 * sizeof(float));
         memcpy(mesh[mid].mat.emissive, emmit, 4 * sizeof(float));
         mesh[mid].mat.shininess = shinnines;
         mesh[mid].mat.texCount = texcount;
+    }
+
+    static void setMaterial(GLint mid, AMaterial mat) {
+        memcpy(mesh[mid].mat.ambient, mat.amb, 4 * sizeof(float));
+        memcpy(mesh[mid].mat.diffuse, mat.diff, 4 * sizeof(float));
+        memcpy(mesh[mid].mat.specular, mat.spec, 4 * sizeof(float));
+        memcpy(mesh[mid].mat.emissive, mat.emissive, 4 * sizeof(float));
+        mesh[mid].mat.shininess = mat.shininess;
+        mesh[mid].mat.texCount = mat.texcount;
     }
 
     static ShaderIndices getPointers(GLint mid) {

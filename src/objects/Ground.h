@@ -14,18 +14,15 @@ public:
 
     void init() override {
         ids.push_back(idCount+=1);
-        setMesh(ids.back(), customMaterial.amb, customMaterial.diff_green, customMaterial.spec_matte,
-                customMaterial.emissive, customMaterial.shininess, customMaterial.texcount);
+        setMaterial(ids.back(), mat_ground);
         createCube(ids.back());
 
         ids.push_back(idCount+=1);
-        setMesh(ids.back(), customMaterial.amb, customMaterial.diff_green, customMaterial.spec_matte,
-                customMaterial.emissive, customMaterial.shininess, customMaterial.texcount);
+        setMaterial(ids.back(), mat_ground);
         createCube(ids.back());
 
         ids.push_back(idCount+=1);
-        setMesh(ids.back(), customMaterial.amb, customMaterial.diff_green, customMaterial.spec_matte,
-                customMaterial.emissive, customMaterial.shininess, customMaterial.texcount);
+        setMaterial(ids.back(), mat_ground);
         createCube(ids.back());
     }
 

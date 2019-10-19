@@ -15,8 +15,7 @@ public:
 
     void init() override {
         ids.push_back(idCount+=1);
-        setMesh(ids.back(), customMaterial.amb, customMaterial.diff_red, customMaterial.spec,
-                customMaterial.emissive, customMaterial.shininess, customMaterial.texcount);
+        setMaterial(ids.back(), mat_bus);
         createCube(ids.back());
     }
 
