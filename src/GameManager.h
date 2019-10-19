@@ -32,6 +32,7 @@ using namespace std;
 #include "objects/Bus.h"
 #include "objects/Coordinates.h"
 #include "objects/Log.h"
+#include "objects/Sidewalls.h"
 
 
 const char* VERTEX_SHADER_PATH = "shaders/pointlight.vert";
@@ -88,8 +89,9 @@ public:
 public:
     GameManager() {
         gameObjects.push_back(new River());
-        gameObjects.push_back(new Road(Vector3(0, 0, 1)));
-        gameObjects.push_back(new Ground(Vector3(0, 0, 0)));
+        gameObjects.push_back(new Road());
+        gameObjects.push_back(new Ground());
+        gameObjects.push_back(new Sidewalls());
         gameObjects.push_back(new Light(Vector3(4.0f, 6.0f, 2.0f), 1));
         gameObjects.push_back(new Log(Vector3(7, 0, -1), Vector3(0.3f, 0, 0)));
         gameObjects.push_back(new Log(Vector3(7, 0, -2), Vector3(0.4f, 0, 0)));

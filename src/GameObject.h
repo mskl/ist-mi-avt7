@@ -82,20 +82,12 @@ public:
         this->position = pos;
     }
 
-    void enable() {
-        this->enabled = true;
-    }
-
-    void disable() {
-        this->enabled = false;
-    }
-
     void setEnabled(bool state) {
         this->enabled = state;
     }
 
     bool isEnabled() {
-        return enabled;
+        return this->enabled;
     }
 
     virtual void init() { }
@@ -104,6 +96,7 @@ public:
 
     virtual void update(int deltaTime) { }
 
+    // --------------------------------- following methods are meant to be overriden -------------------------------- //
     virtual GameObjectType getType() {
         return UNKNOWN;
     }
@@ -119,6 +112,7 @@ public:
     virtual BoundingBox getBoundingBox() const {
         return BoundingBox(Vector3(0, 0, 0), Vector3(0, 0, 0));
     }
+    // ---------------------------------- end of the overriden methods ---------------------------------------------- //
 };
 
 // Track how many IDs were used

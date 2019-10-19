@@ -11,10 +11,10 @@ public:
     float y;
     float z;
 
-    Vector3(float v = 0) {
-        this->x = v;
-        this->y = v;
-        this->z = v;
+    Vector3(float val = 0) {
+        this->x = val;
+        this->y = val;
+        this->z = val;
     }
 
     Vector3(float x, float y, float z) {

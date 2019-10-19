@@ -8,7 +8,7 @@
 
 class Ground: public GameObject {
 public:
-    explicit Ground(Vector3 pos): GameObject(pos) {
+    explicit Ground(): GameObject(Vector3()) {
 
     }
 
@@ -28,7 +28,6 @@ public:
 
     void render() override {
         pushMatrix(MODEL);
-            translate(MODEL, position.x, position.y, position.z);
             // The integral division by 2 is wanted
             pushMatrix(MODEL);
                 renderMaterials(ids[0]);
