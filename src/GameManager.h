@@ -76,7 +76,7 @@ public:
     CameraPerspective cameraPerspectiveFixed
         = CameraPerspective(20, 0, 90, Vector3(0, 20, 0));
     CameraOrthogonal cameraOrthogonal
-        = CameraOrthogonal(-15, 15, -15, 15,Vector3(0, 20, 0));
+        = CameraOrthogonal(-7, 8, -8, 7);
 
     Player* player = new Player(Vector3(0, 1, 0));
     Light* directionalLight = new Light(Vector3(0.0f, -0.1f, 0.0f), 0);

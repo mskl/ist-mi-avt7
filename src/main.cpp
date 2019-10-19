@@ -14,12 +14,11 @@ using namespace std;
 #define CAPTION "AVT Per Fragment Phong Lightning Demo"
 #define MAX_MESH_COUNT 1000
 #define WINDOW_WIDTH 1280
-#define WINDOW_HEIGHT 960
+#define WINDOW_HEIGHT 1280
 
 
 VSShaderLib shader;
 struct MyMesh mesh[MAX_MESH_COUNT];
-
 
 struct GameManagerWrapper {
     static void changeSize(int w, int h) {

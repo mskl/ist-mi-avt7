@@ -11,8 +11,8 @@ class CameraOrthogonal: public Camera {
 public:
     float left, right, top, bottom;
 
-    CameraOrthogonal(float left, float right, float bottom, float top, Vector3 pos)
-    : Camera(pos) {
+    CameraOrthogonal(float left, float right, float bottom, float top)
+    : Camera(Vector3()) {
         this->left = left;
         this->right = right;
         this->top = top;
@@ -24,7 +24,7 @@ public:
     }
 
     void project (int w, int h) final {
-        ortho(-7, 8, -8, 7, -30, 30);
+        ortho(left, right, bottom, top, -30, 30);
     }
 };
 
