@@ -168,9 +168,8 @@ public:
            tempPos.x > rightHorizontalLimitPlayerPos || tempPos.x < leftHorizontalLimitPlayerPos)
             return;
 
-        player->position = tempPos;
+        player->jump(tempPos, 0.5f);
         lastMoveTime = curTime;
-        cameraPerspectiveMoving.pos = cameraPerspectiveMoving.pos + moveVec;
     }
 
     GLuint setupShaders()
@@ -219,6 +218,7 @@ public:
         loadIdentity(MODEL);
 
         if (selectedCamera == CAMERA_PERSPECTIVE_FOLLOW) {
+            cameraPerspectiveMoving.pos = player->position;
             cameraPerspectiveMoving.view();
         } else if (selectedCamera == CAMERA_PERSPECTIVE_FIXED) {
             cameraPerspectiveFixed.view();

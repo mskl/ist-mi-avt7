@@ -39,10 +39,24 @@ public:
         return {this->x * scalar, this->y * scalar, this->z * scalar};
     }
 
+    inline Vector3 operator/(float scalar) const {
+        return {this->x / scalar, this->y / scalar, this->z / scalar};
+    }
+
+    inline bool operator>(const Vector3& vec) const {
+        return (this->x > vec.x) && (this->y > vec.y) && (this->z > vec.z);
+    }
+
+
     inline void operator=(const Vector3& vec) {
         x = vec.x;
         y = vec.y;
         z = vec.z;
+    }
+
+    inline float distance(const Vector3& vec) const{
+        Vector3 delta = Vector3(this->x - vec.x, this->y - vec.y, this->z - vec.z);
+        return sqrt(delta.x * delta.x + delta.y * delta.y + delta.z * delta.z);
     }
 };
 

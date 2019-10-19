@@ -5,18 +5,31 @@
 #ifndef AVT7_PLAYER_H
 #define AVT7_PLAYER_H
 
-#include "../CollidableGameObject.h"
+#include "../DynamicGameObject.h"
 
 
-class Player: public CollidableGameObject {
+enum PlayerState {GROUNDED, JUMPING, ONLOG};
+
+class Player: public DynamicGameObject {
+protected:
+    PlayerState playerState = GROUNDED;
+    Vector3 jumpStart = Vector3();
+    Vector3 jumpTarget = Vector3();
+
 public:
 
     Player(Vector3 pos)
-        : CollidableGameObject(pos, Vector3(0, 0, 0), Vector3(1, 1, 1), PLAYER) {
-
+        : DynamicGameObject(pos,Vector3(), Vector3(1),PLAYER, Vector3()) {
     }
 
-    void init() override {
+    void jump(Vector3 target, float jumpSpeed) {
+        playerState = JUMPING;
+        jumpStart = position;
+        jumpTarget = target;
+        speed = (jumpStart - jumpTarget) / jumpSpeed;
+    }
+
+    void init() final {
         // Body
         ids.push_back(idCount+=1);
         setMaterial(ids.back(), mat_player);
@@ -38,7 +51,7 @@ public:
         createCube(ids.back());
     }
 
-    void render() override {
+    void render() final {
         float eyeSize = 0.25;
 
         // Body
@@ -71,6 +84,19 @@ public:
             popMatrix(MODEL);
         popMatrix(MODEL);
 
+    }
+
+    void update(int deltaTime) final {
+        // Update the position
+        DynamicGameObject::update(deltaTime);
+
+        // If jumping
+        if (playerState == JUMPING) {
+            if(position.distance(jumpStart) > jumpStart.distance(jumpTarget)){
+                playerState = GROUNDED;
+                speed = Vector3(0, 0, 0);
+            }
+        }
     }
 };
 
