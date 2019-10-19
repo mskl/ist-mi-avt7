@@ -43,6 +43,10 @@ public:
         return {this->x / scalar, this->y / scalar, this->z / scalar};
     }
 
+    Vector3 operator-() const {
+        return {-this->x, -this->y, -this->z};
+    }
+
     inline bool operator>(const Vector3& vec) const {
         return (this->x > vec.x) && (this->y > vec.y) && (this->z > vec.z);
     }
@@ -57,6 +61,12 @@ public:
         Vector3 delta = Vector3(this->x - vec.x, this->y - vec.y, this->z - vec.z);
         return sqrt(delta.x * delta.x + delta.y * delta.y + delta.z * delta.z);
     }
+
+    friend ostream& operator<< (ostream& os, const Vector3& vec) {
+        os << "(" << vec.x << ", " << vec.y << ", " << vec.z << ")";
+        return os;
+    }
+
 };
 
 #endif //AVT7_VECTOR3_H

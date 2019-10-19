@@ -79,7 +79,7 @@ public:
 
     Player* player = new Player(Vector3(0, 1, 0));
     Light* directionalLight = new Light(Vector3(0.0f, -0.1f, 0.0f), 0);
-    Bus* bus = new Bus(Vector3(6, 1, 0), Vector3(1, 0, 0));
+    Bus* bus = new Bus(Vector3(6, 1, 1), Vector3(1, 0, 0));
     Log* log = new Log(Vector3(6, 0, -3), Vector3(0.5f, 0, 0));
 
     Coordinates* cmin = new Coordinates(Vector3(-6, 0, -5));
@@ -161,7 +161,7 @@ public:
            tempPos.x > rightHorizontalLimitPlayerPos || tempPos.x < leftHorizontalLimitPlayerPos)
             return;
 
-        player->jump(Vector3(x, 0, z), 0.5f);
+        player->jump(moveVec, 0.5f);
         lastMoveTime = curTime;
     }
 

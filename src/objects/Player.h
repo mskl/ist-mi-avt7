@@ -13,13 +13,12 @@ enum PlayerState {JUMPING, GROUNDED, ONLOG, JUMPSTAGED};
 class Player: public DynamicGameObject {
 protected:
     // Position of the start of the jump and the end of the jump
-    Vector3 jumpStartPos = Vector3();
     Vector3 jumpTargetPos = Vector3();
 
     // Calculated position where the jump will happen
     Vector3 transitionPos = Vector3();
-    Vector3 transitionDelta = Vector3();
-    float transitionSpeed = 0;
+    Vector3 transitionJumpDir = Vector3();
+    float transitionJumpSpeed = 0;
 
     // The bottomBoundingBox check for collisions with river and (or) a log
     BoundingBox bottomBox = BoundingBox(Vector3(0.1, -1, 0.1), Vector3(0.9, 0, 0.9));
@@ -31,30 +30,35 @@ public:
         : DynamicGameObject(pos,Vector3(), Vector3(1),PLAYER, Vector3()) {
     }
 
-    void jump(Vector3 delta, float jumpSpeed) {
+    void jump(Vector3 jumpDir, float jumpSpeed) {
         // Player is riding a log
         if (playerState == ONLOG) {
             playerState = JUMPSTAGED;
+            transitionJumpDir = jumpDir;
+            transitionJumpSpeed = jumpSpeed;
 
             transitionPos = Vector3();
-            transitionDelta = delta;
-            transitionSpeed = jumpSpeed;
 
-            if (speed.x > 0) { transitionPos.x = ceil(position.x);
-            } else if (speed.x < 0) { transitionPos.x = floor(position.x);}
+            if (speed.x > 0) transitionPos.x = floor(position.x);
+            else if (speed.x < 0) transitionPos.x = ceil(position.x);
+            else transitionPos.x = position.x;
 
             transitionPos.y = position.y;
 
-            if (speed.z > 0) { transitionPos.z = ceil(position.z);
-            } else if (speed.z < 0) { transitionPos.z = floor(position.z);}
+            if (speed.z > 0) transitionPos.z = floor(position.z);
+            else if (speed.z < 0) transitionPos.z = ceil(position.z);
+            else transitionPos.z = position.z;
+
+            cout << "Player pos: " << position << endl;
+            cout << "Player speed: " << speed << endl;
+            cout << "Staged transition pos: " << transitionPos << endl;
         }
 
         // Player is grounded
         if (playerState == GROUNDED) {
             playerState = JUMPING;
-            jumpStartPos = position;
-            jumpTargetPos = position + delta;
-            speed = (delta*-1) / jumpSpeed;
+            jumpTargetPos = position + jumpDir;
+            speed = (jumpDir * -1) / jumpSpeed;
         }
     }
 
@@ -69,14 +73,13 @@ public:
             if (futureDistance > targetDistance) {
                 playerState = JUMPING;
                 position = transitionPos;
-                jumpStartPos = transitionPos;
-                jumpTargetPos = position + transitionDelta;
-                speed = transitionDelta / transitionSpeed;
+                jumpTargetPos = position + transitionJumpDir;
+                speed = (transitionJumpDir * -1) / transitionJumpSpeed;
             }
         }
 
         // Player is currently jumping
-        if (playerState == JUMPING) {
+        else if (playerState == JUMPING) {
             float targetDistance = jumpTargetPos.distance(position);
             float futureDistance = jumpTargetPos.distance(position + deltaSpeed);
 
