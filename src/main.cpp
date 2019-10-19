@@ -10,7 +10,12 @@ using namespace std;
 #include <GL/freeglut.h> // GLUT is the toolkit to interface with the OS
 #include "GameManager.h"
 
+
+#define CAPTION "AVT Per Fragment Phong Lightning Demo"
 #define MAX_MESH_COUNT 1000
+#define WINDOW_WIDTH 1280
+#define WINDOW_HEIGHT 960
+
 
 VSShaderLib shader;
 struct MyMesh mesh[MAX_MESH_COUNT];
@@ -35,12 +40,12 @@ struct GameManagerWrapper {
     }
 
     static void processMouseButtons(int button, int state, int xx, int yy) {
-        if(manager->selectedCamera == manager->CAMERA_PERSPECTIVE_FOLLOW)
+        if(manager->currentCameraType == manager->CAMERA_PERSPECTIVE_FOLLOW)
             manager->cameraPerspectiveMoving.processMouseButtons(button, state, xx, yy);
     }
 
     static void processMouseMotion(int xx, int yy) {
-        if(manager->selectedCamera == manager->CAMERA_PERSPECTIVE_FOLLOW)
+        if(manager->currentCameraType == manager->CAMERA_PERSPECTIVE_FOLLOW)
             manager->cameraPerspectiveMoving.processMouseMotion(xx, yy);
     }
 
@@ -56,8 +61,9 @@ GameManager* GameManagerWrapper::manager = nullptr;
 void timer(int value)
 {
 	std::ostringstream oss;
-	oss << CAPTION << ": " << GameManagerWrapper::manager->FrameCount <<
-	    " FPS @ (" << GameManagerWrapper::manager->WinX << "x" << GameManagerWrapper::manager->WinY << ")";
+	oss << CAPTION;
+	//": " << "GameManagerWrapper::manager->FrameCount" << " FPS @ (" << "GameManagerWrapper::manager->w"
+	//<< "x" << "GameManagerWrapper::manager->h" << ")";
 	glutSetWindow(GameManagerWrapper::manager->WindowHandle);
     glutSetWindowTitle(oss.str().c_str());
     GameManagerWrapper::manager->FrameCount = 0;
@@ -80,7 +86,7 @@ void initialiseGlut(int argc, char **argv) {
     glutInitContextFlags(GLUT_FORWARD_COMPATIBLE | GLUT_DEBUG);
 
     glutInitWindowPosition(100,100);
-    glutInitWindowSize(GameManagerWrapper::manager->WinX, GameManagerWrapper::manager->WinY);
+    glutInitWindowSize(WINDOW_WIDTH, WINDOW_HEIGHT);
     GameManagerWrapper::manager->WindowHandle = glutCreateWindow(CAPTION);
 
     // Callback Registration

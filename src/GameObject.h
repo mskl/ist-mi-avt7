@@ -43,16 +43,6 @@ protected:
         glUniform1f(si.loc_shi, mesh[mid].mat.shininess);
     }
 
-    static void setMaterial(GLint mid, float *amb, float *dif, float *spec, float *emmit,
-                            float shinnines, float texcount) {
-        memcpy(mesh[mid].mat.ambient, amb, 4 * sizeof(float));
-        memcpy(mesh[mid].mat.diffuse, dif, 4 * sizeof(float));
-        memcpy(mesh[mid].mat.specular, spec, 4 * sizeof(float));
-        memcpy(mesh[mid].mat.emissive, emmit, 4 * sizeof(float));
-        mesh[mid].mat.shininess = shinnines;
-        mesh[mid].mat.texCount = texcount;
-    }
-
     static void setMaterial(GLint mid, AMaterial mat) {
         memcpy(mesh[mid].mat.ambient, mat.amb, 4 * sizeof(float));
         memcpy(mesh[mid].mat.diffuse, mat.diff, 4 * sizeof(float));

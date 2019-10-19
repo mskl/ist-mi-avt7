@@ -42,14 +42,9 @@ GLint vm_uniformId;
 GLint normal_uniformId;
 GLint lPos_uniformId;
 
-
-#define CAPTION "AVT Per Fragment Phong Lightning Demo"
-
 class GameManager {
 public:
     int WindowHandle = 0;
-    int WinX = 1280, WinY = 960;
-
     unsigned int FrameCount = 0;
 
     bool isPlaying = true;
@@ -71,7 +66,7 @@ public:
         CAMERA_ORTHO
     };
 
-    CameraType selectedCamera = CAMERA_PERSPECTIVE_FOLLOW;
+    CameraType currentCameraType = CAMERA_PERSPECTIVE_FOLLOW;
     CameraPerspectiveMoving cameraPerspectiveMoving
         = CameraPerspectiveMoving(20, 0, 40, Vector3(0, 20, 0));
     CameraPerspective cameraPerspectiveFixed
@@ -113,13 +108,7 @@ public:
         glViewport(0, 0, w, h);
         loadIdentity(PROJECTION);
 
-        if (selectedCamera == CAMERA_PERSPECTIVE_FOLLOW) {
-            cameraPerspectiveMoving.project(w, h);
-        } else if (selectedCamera == CAMERA_PERSPECTIVE_FIXED) {
-           cameraPerspectiveFixed.project(w, h);
-        } else if (selectedCamera == CAMERA_ORTHO) {
-            cameraOrthogonal.project(w, h);
-        }
+        selectCamera(currentCameraType);
     }
 
     void processKeys(unsigned char key, int xx, int yy)
@@ -145,12 +134,9 @@ public:
             case 's': isPlaying = !isPlaying; break;
 
             // CameraType
-            case '1':
-                selectedCamera = CAMERA_PERSPECTIVE_FOLLOW; break;
-            case '2':
-                selectedCamera = CAMERA_PERSPECTIVE_FIXED; break;
-            case '3':
-                selectedCamera = CAMERA_ORTHO; break;
+            case '1': selectCamera(CAMERA_PERSPECTIVE_FOLLOW); break;
+            case '2': selectCamera(CAMERA_PERSPECTIVE_FIXED); break;
+            case '3': selectCamera(CAMERA_ORTHO); break;
         }
     }
 
@@ -212,17 +198,16 @@ public:
     void renderScene() {
         GLint loc;
 
-        FrameCount++;
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         loadIdentity(VIEW);
         loadIdentity(MODEL);
 
-        if (selectedCamera == CAMERA_PERSPECTIVE_FOLLOW) {
+        if (currentCameraType == CAMERA_PERSPECTIVE_FOLLOW) {
             cameraPerspectiveMoving.pos = player->position;
             cameraPerspectiveMoving.view();
-        } else if (selectedCamera == CAMERA_PERSPECTIVE_FIXED) {
+        } else if (currentCameraType == CAMERA_PERSPECTIVE_FIXED) {
             cameraPerspectiveFixed.view();
-        } else if (selectedCamera == CAMERA_ORTHO) {
+        } else if (currentCameraType == CAMERA_ORTHO) {
             cameraOrthogonal.view();
         }
 
@@ -251,6 +236,22 @@ public:
         }
 
         glutSwapBuffers();
+    }
+
+private:
+    void selectCamera(CameraType newCamera) {
+        currentCameraType = newCamera;
+
+        if (newCamera == CAMERA_PERSPECTIVE_FOLLOW) {
+            loadIdentity(PROJECTION);
+            cameraPerspectiveMoving.project(glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT));
+        } else if (newCamera == CAMERA_PERSPECTIVE_FIXED) {
+            loadIdentity(PROJECTION);
+            cameraPerspectiveFixed.project(glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT));
+        } else if (newCamera == CAMERA_ORTHO) {
+            loadIdentity(PROJECTION);
+            cameraOrthogonal.project(glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT));
+        }
     }
 };
 
