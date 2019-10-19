@@ -31,12 +31,15 @@ using namespace std;
 #include "objects/Light.h"
 #include "objects/Bus.h"
 #include "objects/Coordinates.h"
+#include "objects/Log.h"
 
 
 const char* VERTEX_SHADER_PATH = "shaders/pointlight.vert";
 const char* FRAGMENT_SHADER_PATH = "shaders/pointlight.frag";
 
-extern int deltaTime;
+GLint deltaTime = 1;
+GLint prevTime = 1;
+
 GLint pvm_uniformId;
 GLint vm_uniformId;
 GLint normal_uniformId;
@@ -77,25 +80,29 @@ public:
     Player* player = new Player(Vector3(0, 1, 0));
     Light* directionalLight = new Light(Vector3(0.0f, -0.1f, 0.0f), 0);
     Bus* bus = new Bus(Vector3(6, 1, 0), Vector3(1, 0, 0));
+    Log* log = new Log(Vector3(6, 0, -3), Vector3(0.5f, 0, 0));
+
+    Coordinates* cmin = new Coordinates(Vector3(-6, 0, -5));
+    Coordinates* cmax = new Coordinates(Vector3(7, 0.8, 0));
 
 public:
     GameManager() {
-        gameObjects.push_back(new River(Vector3(0, 0, -5)));
+        gameObjects.push_back(new River());
         gameObjects.push_back(new Road(Vector3(0, 0, 1)));
         gameObjects.push_back(new Ground(Vector3(0, 0, 0)));
         gameObjects.push_back(new Light(Vector3(4.0f, 6.0f, 2.0f), 1));
-        gameObjects.push_back(new Coordinates(Vector3(0, 0, 0)));
-
-        gameObjects.push_back(new Coordinates(Vector3(6.5, 0, 6.5)));
-        gameObjects.push_back(new Coordinates(Vector3(6.5, 0, -6.5)));
-        gameObjects.push_back(new Coordinates(Vector3(-6.5, 0, 6.5)));
-        gameObjects.push_back(new Coordinates(Vector3(-6.5, 0, -6.5)));
+        gameObjects.push_back(new Log(Vector3(7, 0, -1), Vector3(0.3f, 0, 0)));
+        gameObjects.push_back(new Log(Vector3(7, 0, -2), Vector3(0.4f, 0, 0)));
 
         // Custom objects with saved pointers
-        gameObjects.push_back(bus);
         gameObjects.push_back(directionalLight);
         directionalLight->setEnabled(false);
+
+        gameObjects.push_back(bus);
+        gameObjects.push_back(log);
         gameObjects.push_back(player);
+        gameObjects.push_back(cmin);
+        gameObjects.push_back(cmax);
     }
 
     void changeSize(int w, int h)
@@ -154,7 +161,7 @@ public:
            tempPos.x > rightHorizontalLimitPlayerPos || tempPos.x < leftHorizontalLimitPlayerPos)
             return;
 
-        player->jump(tempPos, 0.5f);
+        player->jump(Vector3(x, 0, z), 0.5f);
         lastMoveTime = curTime;
     }
 
@@ -196,7 +203,9 @@ public:
     }
 
     void renderScene() {
-        GLint loc;
+        GLint currentTime = glutGet(GLUT_ELAPSED_TIME);
+        deltaTime = prevTime - currentTime;
+        prevTime = currentTime;
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         loadIdentity(VIEW);
@@ -211,6 +220,12 @@ public:
             cameraOrthogonal.view();
         }
 
+        if(isPlaying) {
+            // Draw the testing coordinates
+            //cmax->position = player->position + player->boundingBox.vecMax;
+            //cmin->position = player->position + player->boundingBox.vecMin;
+        }
+
         // use our shader
         glUseProgram(shader.getProgramIndex());
 
@@ -219,20 +234,46 @@ public:
             exit(1);
         }
 
-        // Render all of the GameObjects
+        bool roadDeath = false;
+        bool hitRiver = false;
+        bool hitLog = false;
+
         for (GameObject *go : gameObjects) {
             if (go->isEnabled()) {
-                go->update(deltaTime);
+                // Update the physics
+                if (isPlaying) go->update(deltaTime);
+
+                // Render the objects
                 go->render();
 
                 // Check collisions with player
                 if (!(go->position == player->position)) {
-                    bool didCollide = player->collideWith(go);
-                    if(didCollide) {
-                        cout << "COLLISION!" << endl;
+                    if (player->collideWith(go)) {
+                        if (go->getType() == BUS) {
+                            roadDeath = true;
+                        }
+                    }
+                    else if ((player->playerState == GROUNDED) && (player->collideWithBottom(go))) {
+                        // cout << "Bottom collision with " << go->getType() << endl;
+                        if (go->getType() == LOG) {
+                            hitLog = true;
+                            player->playerState = ONLOG;
+                            player->speed = go->getSpeed();
+                        } else if (go->getType() == RIVER) {
+                            hitRiver = true;
+                        }
                     }
                 }
             }
+        }
+
+        bool deathInRiver = hitRiver && (!hitLog) && (player->playerState != ONLOG);
+
+        if (deathInRiver) {
+            cout << "Death in river!" << endl;
+        }
+        if (roadDeath) {
+            cout << "Death on the road!" << endl;
         }
 
         glutSwapBuffers();
@@ -242,14 +283,12 @@ private:
     void selectCamera(CameraType newCamera) {
         currentCameraType = newCamera;
 
+        loadIdentity(PROJECTION);
         if (newCamera == CAMERA_PERSPECTIVE_FOLLOW) {
-            loadIdentity(PROJECTION);
             cameraPerspectiveMoving.project(glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT));
         } else if (newCamera == CAMERA_PERSPECTIVE_FIXED) {
-            loadIdentity(PROJECTION);
             cameraPerspectiveFixed.project(glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT));
         } else if (newCamera == CAMERA_ORTHO) {
-            loadIdentity(PROJECTION);
             cameraOrthogonal.project(glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT));
         }
     }

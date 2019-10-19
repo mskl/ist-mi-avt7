@@ -17,6 +17,7 @@ float green[4] = {0.0f, 1.0f, 0.0f, 1.0f};
 float blue[4] = {0.0f, 0.0f, 1.0f, 1.0f};
 float yellow[4] = {1.0f, 1.0f, 0.0f, 1.0f};
 float white[4] = {1.0f, 1.0f, 1.0f, 1.0f};
+float brown[4] = {0.59f, 0.29f, 0.00f, 1.0f};
 float black[4] = {0.0f, 0.0f, 0.0f, 1.0f};
 
 float froggy_green[4] = {0.0f, 1.0f, 0.5f, 1.0f};
@@ -25,6 +26,7 @@ AMaterial mat_player    = AMaterial(amb, froggy_green, spec_matte, black, 10, 0)
 AMaterial mat_bus       = AMaterial(amb, red, spec_matte, black, 10, 0);
 AMaterial mat_ground    = AMaterial(amb, green, spec_matte, black, 10, 0);
 AMaterial mat_river     = AMaterial(amb, blue, spec_matte, black, 10, 0);
+AMaterial mat_log       = AMaterial(amb, brown, spec_matte, black, 10, 0);
 AMaterial mat_road      = AMaterial(amb, black, spec_matte, black, 10, 0);
 AMaterial mat_coord_x   = AMaterial(blue, blue, spec_matte, black, 10, 0);
 AMaterial mat_coord_y   = AMaterial(yellow, yellow, spec_matte, black, 10, 0);

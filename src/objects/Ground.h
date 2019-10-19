@@ -27,28 +27,29 @@ public:
     }
 
     void render() override {
-        renderMaterials(ids[0]);
         pushMatrix(MODEL);
-        translate(MODEL, position.x, position.y, position.z);
-        translate(MODEL, -13 / 2.0, 0, 6 - 0.5);
-        scale(MODEL, 13, 1, 1);
-        buildVAO(ids[0]);
-        popMatrix(MODEL);
+            translate(MODEL, position.x, position.y, position.z);
+            // The integral division by 2 is wanted
+            pushMatrix(MODEL);
+                renderMaterials(ids[0]);
+                translate(MODEL, -13 / 2, 0, 6);
+                scale(MODEL, 13, 1, 1);
+                buildVAO(ids[0]);
+            popMatrix(MODEL);
 
-        renderMaterials(ids[1]);
-        pushMatrix(MODEL);
-        translate(MODEL, position.x, position.y, position.z);
-        translate(MODEL, -13 / 2.0, 0, 0 - 0.5);
-        scale(MODEL, 13, 1, 1);
-        buildVAO(ids[1]);
-        popMatrix(MODEL);
+            pushMatrix(MODEL);
+                renderMaterials(ids[1]);
+                translate(MODEL, -13 / 2, 0, 0);
+                scale(MODEL, 13, 1, 1);
+                buildVAO(ids[1]);
+            popMatrix(MODEL);
 
-        renderMaterials(ids[2]);
-        pushMatrix(MODEL);
-        translate(MODEL, position.x, position.y, position.z);
-        translate(MODEL, -13 / 2.0, 0, -6 - 0.5);
-        scale(MODEL, 13, 1, 1);
-        buildVAO(ids[2]);
+            pushMatrix(MODEL);
+                renderMaterials(ids[2]);
+                translate(MODEL, -13 / 2, 0, -6);
+                scale(MODEL, 13, 1, 1);
+                buildVAO(ids[2]);
+            popMatrix(MODEL);
         popMatrix(MODEL);
     }
 };

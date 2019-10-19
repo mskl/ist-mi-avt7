@@ -47,7 +47,6 @@ public:
         return (this->x > vec.x) && (this->y > vec.y) && (this->z > vec.z);
     }
 
-
     inline void operator=(const Vector3& vec) {
         x = vec.x;
         y = vec.y;

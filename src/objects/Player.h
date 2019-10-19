@@ -8,25 +8,89 @@
 #include "../DynamicGameObject.h"
 
 
-enum PlayerState {GROUNDED, JUMPING, ONLOG};
+enum PlayerState {JUMPING, GROUNDED, ONLOG, JUMPSTAGED};
 
 class Player: public DynamicGameObject {
 protected:
-    PlayerState playerState = GROUNDED;
-    Vector3 jumpStart = Vector3();
-    Vector3 jumpTarget = Vector3();
+    // Position of the start of the jump and the end of the jump
+    Vector3 jumpStartPos = Vector3();
+    Vector3 jumpTargetPos = Vector3();
 
+    // Calculated position where the jump will happen
+    Vector3 transitionPos = Vector3();
+    Vector3 transitionDelta = Vector3();
+    float transitionSpeed = 0;
+
+    // The bottomBoundingBox check for collisions with river and (or) a log
+    BoundingBox bottomBox = BoundingBox(Vector3(0.1, -1, 0.1), Vector3(0.9, 0, 0.9));
 public:
+    // Current state of the player
+    PlayerState playerState = GROUNDED;
 
     Player(Vector3 pos)
         : DynamicGameObject(pos,Vector3(), Vector3(1),PLAYER, Vector3()) {
     }
 
-    void jump(Vector3 target, float jumpSpeed) {
-        playerState = JUMPING;
-        jumpStart = position;
-        jumpTarget = target;
-        speed = (jumpStart - jumpTarget) / jumpSpeed;
+    void jump(Vector3 delta, float jumpSpeed) {
+        // Player is riding a log
+        if (playerState == ONLOG) {
+            playerState = JUMPSTAGED;
+
+            transitionPos = Vector3();
+            transitionDelta = delta;
+            transitionSpeed = jumpSpeed;
+
+            if (speed.x > 0) { transitionPos.x = ceil(position.x);
+            } else if (speed.x < 0) { transitionPos.x = floor(position.x);}
+
+            transitionPos.y = position.y;
+
+            if (speed.z > 0) { transitionPos.z = ceil(position.z);
+            } else if (speed.z < 0) { transitionPos.z = floor(position.z);}
+        }
+
+        // Player is grounded
+        if (playerState == GROUNDED) {
+            playerState = JUMPING;
+            jumpStartPos = position;
+            jumpTargetPos = position + delta;
+            speed = (delta*-1) / jumpSpeed;
+        }
+    }
+
+    void update(int deltaTime) final {
+        Vector3 deltaSpeed = speed *(1.0f/(float)deltaTime);
+
+        // Player is on a log staged for a jump
+        if (playerState == JUMPSTAGED) {
+            float targetDistance = transitionPos.distance(position);
+            float futureDistance = transitionPos.distance(position + deltaSpeed);
+
+            if (futureDistance > targetDistance) {
+                playerState = JUMPING;
+                position = transitionPos;
+                jumpStartPos = transitionPos;
+                jumpTargetPos = position + transitionDelta;
+                speed = transitionDelta / transitionSpeed;
+            }
+        }
+
+        // Player is currently jumping
+        if (playerState == JUMPING) {
+            float targetDistance = jumpTargetPos.distance(position);
+            float futureDistance = jumpTargetPos.distance(position + deltaSpeed);
+
+            if (futureDistance > targetDistance) {
+                playerState = GROUNDED;
+                speed = Vector3(0, 0, 0);
+                position = jumpTargetPos;
+            }
+        }
+        DynamicGameObject::update(deltaTime);
+    }
+
+    bool collideWithBottom(const GameObject* other) const {
+        return this->bottomBox.isColliding(other->getBoundingBox(), this->position, other->position);
     }
 
     void init() final {
@@ -36,7 +100,7 @@ public:
         createCube(ids.back());
 
         // Left Eye
-        ids.push_back(idCount+=1);
+        /*ids.push_back(idCount+=1);
         setMaterial(ids.back(), mat_player);
         createCube(ids.back());
 
@@ -48,7 +112,8 @@ public:
         // Mouth
         ids.push_back(idCount+=1);
         setMaterial(ids.back(), mat_player);
-        createCube(ids.back());
+        createCube(ids.back());*/
+
     }
 
     void render() final {
@@ -57,13 +122,17 @@ public:
         // Body
         renderMaterials(ids[0]);
         pushMatrix(MODEL);
-            translate(MODEL, -0.5, 0, -0.5);
+        translate(MODEL, position.x, position.y, position.z);
+        buildVAO(ids[0]);
+        popMatrix(MODEL);
+
+        /*
+        pushMatrix(MODEL);
             translate(MODEL, position.x, position.y, position.z);
             buildVAO(ids[0]);
 
             renderMaterials(ids[1]);
             pushMatrix(MODEL);
-                translate(MODEL, -0.25, 0.75,  -0.25);
                 scale(MODEL,      0.5, 0.5, 0.5);
                 buildVAO(ids[1]);
             popMatrix(MODEL);
@@ -71,32 +140,18 @@ public:
             renderMaterials(ids[2]);
             pushMatrix(MODEL);
                 pushMatrix(MODEL);
-                translate(MODEL, 0.75, 0.75,  -0.25);
                 scale(MODEL,      0.5, 0.5, 0.5);
                 buildVAO(ids[2]);
             popMatrix(MODEL);
 
             renderMaterials(ids[3]);
             pushMatrix(MODEL);
-                translate(MODEL, 0, 0.2, -0.025);
                 scale(MODEL, 0.8f, 0.25, 0.05f);
                 buildVAO(ids[3]);
             popMatrix(MODEL);
         popMatrix(MODEL);
+         */
 
-    }
-
-    void update(int deltaTime) final {
-        if (playerState == JUMPING) {
-            Vector3 deltaSpeed = speed *(1.0f/(float)deltaTime);
-            if (jumpTarget.distance(position + deltaSpeed) > jumpTarget.distance(position)) {
-                playerState = GROUNDED;
-                speed = Vector3(0, 0, 0);
-                position = jumpTarget;
-            }
-        }
-
-        DynamicGameObject::update(deltaTime);
     }
 };
 

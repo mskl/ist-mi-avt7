@@ -5,12 +5,11 @@
 #ifndef AVT7_RIVER_H
 #define AVT7_RIVER_H
 
-#include "../GameObject.h"
+#include "../CollidableGameObject.h"
 
-class River: public GameObject {
+class River: public CollidableGameObject {
 public:
-
-    River(Vector3 pos): GameObject(pos) {
+    River(): CollidableGameObject(Vector3(), Vector3(-6, 0, -5), Vector3(7, 0.8, 0), RIVER) {
 
     }
 
@@ -21,12 +20,13 @@ public:
     }
 
     void render() {
-        renderMaterials(ids[0]);
         pushMatrix(MODEL);
-        translate(MODEL, position.x, position.y, position.z);
-        translate(MODEL, -13 / 2.0, 0, - 0.5);
-        scale(MODEL, 13, 1, 5);
-        buildVAO(ids[0]);
+            pushMatrix(MODEL);
+                renderMaterials(ids[0]);
+                translate(MODEL, -13 / 2, 0, -5);
+                scale(MODEL, 13, 0.8, 5);
+                buildVAO(ids[0]);
+            popMatrix(MODEL);
         popMatrix(MODEL);
     }
 };

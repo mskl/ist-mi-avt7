@@ -20,8 +20,6 @@ using namespace std;
 VSShaderLib shader;
 struct MyMesh mesh[MAX_MESH_COUNT];
 
-GLint deltaTime = 1;
-GLint prevTime = 1;
 
 struct GameManagerWrapper {
     static void changeSize(int w, int h) {
@@ -29,9 +27,6 @@ struct GameManagerWrapper {
     }
 
     static void renderScene() {
-        GLint currentTime = glutGet(GLUT_ELAPSED_TIME);
-        deltaTime = prevTime - currentTime;
-        prevTime = currentTime;
         manager->renderScene();
     }
 

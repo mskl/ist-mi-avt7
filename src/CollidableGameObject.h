@@ -19,7 +19,7 @@ public:
     }
 
     virtual GameObjectType getType() override {
-        return COLLIDABLE;
+        return gameObjectType;
     }
 
     virtual BoundingBox getBoundingBox() const override {

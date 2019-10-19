@@ -26,7 +26,6 @@ extern GLint lPos_uniformId;
 
 enum GameObjectType {BOUNDS, TARGET, GRASS, LOG, RIVER, GROUND, BUS, ROAD, UNKNOWN, COLLIDABLE, PLAYER};
 
-
 class GameObject {
 protected:
     bool enabled = true;
@@ -107,6 +106,10 @@ public:
 
     virtual GameObjectType getType() {
         return UNKNOWN;
+    }
+
+    virtual Vector3 getSpeed() {
+        return Vector3(0, 0, 0);
     }
 
     virtual bool collideWith(const GameObject* other) const {

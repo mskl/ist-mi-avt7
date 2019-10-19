@@ -10,7 +10,7 @@
 class Bus: public DynamicGameObject {
 public:
     Bus(Vector3 pos, Vector3 speed)
-            : DynamicGameObject(pos, Vector3(0, 0, 0), Vector3(5, 1, 1), BUS, speed) {
+            : DynamicGameObject(pos, Vector3(0, 0, 0), Vector3(3, 1, 1), BUS, speed) {
     }
 
     void init() override {
@@ -24,10 +24,11 @@ public:
 
         renderMaterials(ids[0]);
         pushMatrix(MODEL);
-        scale(MODEL,      3, 1, 1);
-        translate(MODEL, 0.5/3.0, 0,  -0.5);
-        translate(MODEL, position.x/3, position.y, position.z);
-        buildVAO(ids[0]);
+            translate(MODEL, position.x, position.y, position.z);
+            pushMatrix(MODEL);
+                scale(MODEL,     3.0, 1, 1);
+                buildVAO(ids[0]);
+            popMatrix(MODEL);
         popMatrix(MODEL);
     }
 };

@@ -16,7 +16,11 @@ public:
 
     }
 
-    virtual void update(int deltaTime) override {
+    Vector3 getSpeed() final {
+        return speed;
+    }
+
+    void update(int deltaTime) override {
         position = position + speed*(1.0f/(float)deltaTime);
     }
 };

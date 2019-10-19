@@ -27,25 +27,28 @@ public:
     }
 
     void render() override {
-        renderMaterials(ids[0]);
         pushMatrix(MODEL);
-        translate(MODEL, position.x - 50, position.y, position.z);
-        scale(MODEL, 100, 0.01, 0.01);
-        buildVAO(ids[0]);
-        popMatrix(MODEL);
+            translate(MODEL, position.x , position.y, position.z);
+            renderMaterials(ids[0]);
+            pushMatrix(MODEL);
+                translate(MODEL, -50, 0, 0);
+                scale(MODEL, 100, 0.01, 0.01);
+                buildVAO(ids[0]);
+            popMatrix(MODEL);
 
-        renderMaterials(ids[1]);
-        pushMatrix(MODEL);
-        translate(MODEL, position.x, position.y - 50, position.z);
-        scale(MODEL, 0.01, 100, 0.01);
-        buildVAO(ids[0]);
-        popMatrix(MODEL);
+            renderMaterials(ids[1]);
+            pushMatrix(MODEL);
+                translate(MODEL, 0, -50, 0);
+                scale(MODEL, 0.01, 100, 0.01);
+                buildVAO(ids[1]);
+            popMatrix(MODEL);
 
-        renderMaterials(ids[2]);
-        pushMatrix(MODEL);
-        translate(MODEL, position.x, position.y, position.z - 50);
-        scale(MODEL, 0.01, 0.01, 100);
-        buildVAO(ids[0]);
+            renderMaterials(ids[2]);
+            pushMatrix(MODEL);
+                translate(MODEL, 0, 0, -50);
+                scale(MODEL, 0.01, 0.01, 100);
+                buildVAO(ids[2]);
+            popMatrix(MODEL);
         popMatrix(MODEL);
     }
 };

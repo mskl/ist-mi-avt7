@@ -8,10 +8,10 @@
 #include "Vector3.h"
 
 class BoundingBox {
-protected:
+public:
     Vector3 vecMin;
     Vector3 vecMax;
-public:
+
     BoundingBox(Vector3 min, Vector3 max) {
         this->vecMin = min;
         this->vecMax = max;
