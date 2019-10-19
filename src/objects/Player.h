@@ -87,16 +87,16 @@ public:
     }
 
     void update(int deltaTime) final {
-        // Update the position
-        DynamicGameObject::update(deltaTime);
-
-        // If jumping
         if (playerState == JUMPING) {
-            if(position.distance(jumpStart) > jumpStart.distance(jumpTarget)){
+            Vector3 deltaSpeed = speed *(1.0f/(float)deltaTime);
+            if (jumpTarget.distance(position + deltaSpeed) > jumpTarget.distance(position)) {
                 playerState = GROUNDED;
                 speed = Vector3(0, 0, 0);
+                position = jumpTarget;
             }
         }
+
+        DynamicGameObject::update(deltaTime);
     }
 };
 
