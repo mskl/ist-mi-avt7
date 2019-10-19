@@ -41,4 +41,5 @@ sudo apt-get install libxmu-dev libxi-dev
 
 ## Frogger map
 Note that the object are created from their (top, left, bottom) corner. Each object is therefore not centered in the middle. The collider is centered, however if all of them are shifted in the same way, it is not an issude. This hack saves a some struggle when translating scaled objects. 
+
 ![img/froggerMap.jpeg](img/froggerMap.jpeg)
