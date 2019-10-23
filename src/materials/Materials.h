@@ -30,6 +30,8 @@ AMaterial mat_player_eye_inner  = AMaterial(amb, black, spec_matte, black, 10, 0
 AMaterial mat_player_mouth      = AMaterial(amb, red, spec_matte, black, 10, 0);
 
 AMaterial mat_bus       = AMaterial(amb, red, spec_matte, black, 10, 0);
+AMaterial mat_bus_wheel = AMaterial(amb, black, spec_matte, black, 10, 0);
+
 AMaterial mat_ground    = AMaterial(amb, green, spec_matte, black, 10, 0);
 AMaterial mat_river     = AMaterial(amb, blue, spec_matte, black, 10, 0);
 AMaterial mat_log       = AMaterial(amb, brown, spec_matte, black, 10, 0);
