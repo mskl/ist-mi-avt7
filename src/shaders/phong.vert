@@ -11,7 +11,7 @@ uniform vec4[8] l_pos;
 
 //           point    point    point    point    point    point    dir      spot
 uniform vec4 l_pos_0, l_pos_1, l_pos_2, l_pos_3, l_pos_4, l_pos_5, l_pos_6, l_pos_7;
-uniform vec3 l_point_dir;
+uniform vec4 l_spot_dir;
 
 in vec4 position;
 in vec4 normal;
@@ -48,7 +48,7 @@ void main () {
         DataOut.lightDir[5] = vec3(l_pos_5 - pos);
     if(l_enabled[6] == 1) // directional light
         DataOut.lightDir[6] = vec3(l_pos_6);
-    if(l_enabled[7] == 1) // spotlight
+    if(l_enabled[7] == 1) // cone light
         DataOut.lightDir[7] = vec3(l_pos_7 - pos);
 
     // Return the vertex position

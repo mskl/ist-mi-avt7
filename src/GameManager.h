@@ -52,10 +52,10 @@ GLint normal_uniformId;
 // Light GLSL stuff
 GLint l_pos_id[8];  // pointers to shader variables
 GLint l_enabled_id; // GLSL pointer to the boolean array
-GLint l_enabled[8] = {0, 0, 0, 0, 0, 0, 0, 0};
+GLint l_enabled[8] = {1, 1, 1, 1, 1, 1, 1, 1};
 GLint l_type_id;
-GLint l_type[8] = {0, 0, 0, 0, 0, 0, 0, 0};
-GLint l_point_dir_id;
+GLint l_type[8] = {1, 1, 1, 1, 1, 1, 0, 2};
+GLint l_spot_dir_id;
 
 class GameManager {
 public:
@@ -107,7 +107,7 @@ public:
     Coordinates* cmax = new Coordinates(Vector3(7, 0.8, 0));
 
     Light* directionalLight = new DirectionalLight(Vector3(0.0f, 5.0f, 0.0f), 6, false);
-    SpotLight* spotLight = new SpotLight(Vector3(0, 0.2, 0), Vector3(0, 0, 1), 7, true);
+    SpotLight* spotLight = new SpotLight(Vector3(0, -1, 0), Vector3(0, 2, 0), 7, true);
 
 public:
     GameManager() {
@@ -117,12 +117,12 @@ public:
         gameObjects.push_back(new Sidewalls());
 
         // Lights
-        gameObjects.push_back(new PointLight(Vector3(-4.0f, 3.0f, -6.0f), 0));
-        gameObjects.push_back(new PointLight(Vector3(-4.0f, 3.0f, 0.0f), 1));
-        gameObjects.push_back(new PointLight(Vector3(-4.0f, 3.0f, 7.0f), 2));
-        gameObjects.push_back(new PointLight(Vector3(5.0f, 3.0f, -6.0f), 3));
-        gameObjects.push_back(new PointLight(Vector3(5.0f, 3.0f, 0.0f), 4));
-        gameObjects.push_back(new PointLight(Vector3(5.0f, 3.0f, 7.0f), 5));
+        gameObjects.push_back(new PointLight(Vector3(-4.0f, 3.0f, -6.0f), 0, false));
+        gameObjects.push_back(new PointLight(Vector3(-4.0f, 3.0f, 0.0f), 1, true));
+        gameObjects.push_back(new PointLight(Vector3(-4.0f, 3.0f, 7.0f), 2, false));
+        gameObjects.push_back(new PointLight(Vector3(5.0f, 3.0f, -6.0f), 3, false));
+        gameObjects.push_back(new PointLight(Vector3(5.0f, 3.0f, 0.0f), 4, false));
+        gameObjects.push_back(new PointLight(Vector3(5.0f, 3.0f, 7.0f), 5, false));
         gameObjects.push_back(directionalLight);
         gameObjects.push_back(spotLight);
 
@@ -220,7 +220,7 @@ public:
         // Get the index of a light boolean mask
         l_enabled_id = glGetUniformLocation(shader.getProgramIndex(), "l_enabled");
         l_type_id = glGetUniformLocation(shader.getProgramIndex(), "l_type");
-        l_point_dir_id = glGetUniformLocation(shader.getProgramIndex(), "l_point_dir");
+        l_spot_dir_id = glGetUniformLocation(shader.getProgramIndex(), "l_spot_dir");
 
         printf("InfoLog for Per Fragment Phong Lightning Shader\n%s\n\n", shader.getAllInfoLogs().c_str());
         return(shader.isProgramLinked());
@@ -240,7 +240,7 @@ public:
         glEnable(GL_DEPTH_TEST);
         glEnable(GL_CULL_FACE);
         glEnable(GL_MULTISAMPLE);
-        glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+        glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
     }
 
     void renderScene() {
@@ -268,6 +268,10 @@ public:
             printf("Program Not Valid!\n");
             exit(1);
         }
+
+        // Update conelight position
+        spotLight->position = player->position + Vector3(0.5f, 1.2f, 0.5f);
+        spotLight->light_dir = Vector3(0, 0, -1);
 
         bool riverBorder = false;
         bool roadDeath = false;
