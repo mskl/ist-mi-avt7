@@ -25,9 +25,10 @@ protected:
 public:
     // Current state of the player
     PlayerState playerState = GROUNDED;
-
+    Vector3 initPos;
     Player(Vector3 pos)
         : DynamicGameObject(pos,Vector3(), Vector3(1),PLAYER, Vector3()) {
+        initPos = pos;
     }
 
     void jump(Vector3 jumpDir, float jumpSpeed) {
@@ -94,6 +95,11 @@ public:
 
     bool collideWithBottom(const GameObject* other) const {
         return this->bottomBox.isColliding(other->getBoundingBox(), this->position, other->position);
+    }
+
+
+    void respawn(){
+        position = initPos;
     }
 
     void init() final {

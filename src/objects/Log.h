@@ -10,8 +10,11 @@
 
 class Log: public DynamicGameObject {
 public:
+
+    Vector3 initPos;
     Log(Vector3 pos, Vector3 speed)
             : DynamicGameObject(pos, Vector3(0, 0, 0), Vector3(3, 1, 1), LOG, speed) {
+        initPos = pos;
     }
 
     void init() override {
@@ -30,6 +33,9 @@ public:
                 buildVAO(ids[0]);
             popMatrix(MODEL);
         popMatrix(MODEL);
+    }
+    void respawn(){
+        position = initPos;
     }
 };
 

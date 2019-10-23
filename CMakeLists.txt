@@ -5,7 +5,7 @@ set(CMAKE_CXX_STANDARD 11)
 
 # Include all of the files into the project
 file(GLOB_RECURSE SOURCES src/*.h src/*.cpp)
-add_executable(AVT7 ${SOURCES})
+add_executable(AVT7 ${SOURCES} src/objects/TestCollider.h)
 
 if (WIN64)
     # TODO

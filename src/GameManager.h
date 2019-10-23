@@ -33,6 +33,8 @@ using namespace std;
 #include "objects/Coordinates.h"
 #include "objects/Log.h"
 #include "objects/Sidewalls.h"
+#include "objects/SceneCollider.h"
+#include "objects/Target.h"
 
 
 const char* VERTEX_SHADER_PATH = "shaders/pointlight.vert";
@@ -53,12 +55,20 @@ public:
 
     bool isPlaying = true;
 
+    int startingLives = 5;
+    int currentLives = startingLives;
+    int score = 0;
+    int pointsPerTarget = 100;
+    float speedMultiplier = 1.2;
+
     float topVerticalLimitPlayerPos = -6.0f;
     float bottomVerticalLimitPlayerPos = 6.0f;
     float leftHorizontalLimitPlayerPos = -6.0f;
     float rightHorizontalLimitPlayerPos = 6.0f;
 
     std::vector<GameObject*> gameObjects = std::vector<GameObject*>();
+    std::vector<Bus*> busses = std::vector<Bus*>();
+    std::vector<Log*> logs = std::vector<Log*>();
 
     // All in microseconds
     GLint lastMoveTime = 0;
@@ -77,12 +87,13 @@ public:
         = CameraPerspective(20, 0, 90, Vector3(0, 20, 0));
     CameraOrthogonal cameraOrthogonal
         = CameraOrthogonal(-7, 8, -8, 7);
-
-    Player* player = new Player(Vector3(0, 1, 0));
+    Vector3 playerInitPos =  Vector3(0, 1, 0);
+    Player* player = new Player(playerInitPos);
     Light* directionalLight = new Light(Vector3(0.0f, -0.1f, 0.0f), 0);
-    Bus* bus = new Bus(Vector3(6, 1, 1), Vector3(1, 0, 0));
-    Log* log = new Log(Vector3(6, 0, -3), Vector3(0.5f, 0, 0));
 
+    SceneCollider* sceneCollider = new SceneCollider(Vector3(-6.0f, -1, -6));
+
+    Target* target = new Target(Vector3(0.25f, 1.25f, -5.75f));
     Coordinates* cmin = new Coordinates(Vector3(-6, 0, -5));
     Coordinates* cmax = new Coordinates(Vector3(7, 0.8, 0));
 
@@ -93,18 +104,17 @@ public:
         gameObjects.push_back(new Ground());
         gameObjects.push_back(new Sidewalls());
         gameObjects.push_back(new Light(Vector3(4.0f, 6.0f, 2.0f), 1));
-        gameObjects.push_back(new Log(Vector3(7, 0, -1), Vector3(0.3f, 0, 0)));
-        gameObjects.push_back(new Log(Vector3(7, 0, -2), Vector3(0.4f, 0, 0)));
 
         // Custom objects with saved pointers
         gameObjects.push_back(directionalLight);
         directionalLight->setEnabled(false);
 
-        gameObjects.push_back(bus);
-        gameObjects.push_back(log);
         gameObjects.push_back(player);
-        gameObjects.push_back(cmin);
-        gameObjects.push_back(cmax);
+
+        gameObjects.push_back(sceneCollider);
+        gameObjects.push_back(target);
+        //gameObjects.push_back(cmin);
+        //gameObjects.push_back(cmax);
     }
 
     void changeSize(int w, int h)
@@ -135,6 +145,13 @@ public:
             case 'o': movePlayer(-1, 0); break;
             case 'q': movePlayer(0, -1); break;
             case 'a': movePlayer(0, 1); break;
+            // Respawn player
+            case 'r': player->respawn(); break;
+            // Random target position
+            case 'v': randomTargetPosition(); break;
+
+            // Increase speed
+            case 'i': increaseSpeed(); break;
 
             // Night mode toggle
             case 'n':
@@ -189,9 +206,59 @@ public:
         printf("InfoLog for Per Fragment Phong Lightning Shader\n%s\n\n", shader.getAllInfoLogs().c_str());
         return(shader.isProgramLinked());
     }
-
-    void initScene()
+    void createLogs()
     {
+        Log * log;
+        for (int i = 0; i < 5; i++){
+            float randSpeed =(float)(rand() % 60 + 20) / 100.0f;
+
+            for (int j = 0; j < 4; j++){
+                int offset = rand() % 7;
+
+                Vector3 spawnPosition = Vector3(7.0f+j*3+offset, 0, -i-1);
+                if(j > 0){
+                    spawnPosition.x = logs.back()->position.x+3.5f+offset;
+                }
+                log = new Log(spawnPosition, Vector3(randSpeed, 0, 0));
+                gameObjects.push_back(log);
+                logs.push_back(log);
+            }
+        }
+    }
+
+    void randomTargetPosition(){
+
+        int randomX = rand() % 13 - 6;
+        int randomZ = rand() % 13 - 6;
+
+        if (randomX == 7)
+            randomX -=1;
+        if (randomZ == 7)
+            randomZ -=1;
+
+        target->position = Vector3(randomX + 0.25f, 1.25f, randomZ-0.75f);
+    }
+    void createBus(){
+        Bus * bus;
+        for (int i = 0; i < 3; i++){
+            float randSpeed =(float)(rand() % 80 + 50) / 100.0f;
+            for (int j = 0; j < 4; j++){
+                int offset = rand() % 7 + 1;
+                Vector3 spawnPosition = Vector3(7.0f + offset, 1, i*2+1);
+                if(j > 0){
+                    spawnPosition.x = busses.back()->position.x + 5.0f * i + offset;
+                }
+                bus = new Bus(spawnPosition, Vector3(randSpeed, 0, 0));
+                gameObjects.push_back(bus);
+                busses.push_back(bus);
+            }
+        }
+    }
+    void initScene(){
+
+        srand (time(NULL));
+        createBus();
+        createLogs();
         // Initialize all of the GameObjects
         for (GameObject* go : gameObjects) {
             go->init();
@@ -202,6 +269,66 @@ public:
         glEnable(GL_CULL_FACE);
         glEnable(GL_MULTISAMPLE);
         glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+    }
+
+    void checkBusCollisions(GameObject* go){
+        std::vector<Bus *>::iterator it_obj;
+        for (it_obj = busses.begin(); it_obj != busses.end(); it_obj++) {
+            if (!(go->position == (*it_obj)->position)) {
+                if (!(*it_obj)->collideWith(go)) {
+                    if (go->getType() == BOUNDS) {
+                        if ((*it_obj)->position.x < go->position.x) {
+                            (*it_obj)->respawn();
+                        }
+                    }
+                }
+                if ((*it_obj)->collideWith(go)) {
+                    if (go->getType() == BUS) {
+                        GameObject *objA = ((*it_obj)->position.x > go->position.x) ? (*it_obj) : go;
+
+                        Vector3 tempPos = objA->position;
+                        tempPos.x += (float) (rand() % 5 + 3);
+                        objA->position = tempPos;
+                    }
+                }
+            }
+        }
+    }
+
+    void checkLogCollisions(GameObject* go){
+        std::vector<Log *>::iterator it_obj;
+        for (it_obj = logs.begin(); it_obj != logs.end(); it_obj++) {
+            if (!(go->position == (*it_obj)->position)) {
+                if (!(*it_obj)->collideWith(go)) {
+                    if (go->getType() == BOUNDS) {
+                        if ((*it_obj)->position.x < go->position.x) {
+                            (*it_obj)->respawn();
+                        }
+                    }
+                }
+                if ((*it_obj)->collideWith(go)) {
+                    if (go->getType() == LOG) {
+                        GameObject *objA = ((*it_obj)->position.x > go->position.x) ? (*it_obj) : go;
+
+                        Vector3 tempPos = objA->position;
+                        tempPos.x += (float) (rand() % 5 + 3);
+                        objA->position = tempPos;
+                    }
+                }
+            }
+        }
+    }
+
+    void increaseSpeed(){
+
+        std::vector<Bus *>::iterator bus_obj;
+        for (bus_obj = busses.begin(); bus_obj != busses.end(); bus_obj++) {
+            (*bus_obj)->speed = (*bus_obj)->speed*speedMultiplier;
+        }
+        std::vector<Log *>::iterator log_obj;
+        for (log_obj = logs.begin(); log_obj != logs.end(); log_obj++) {
+            (*log_obj)->speed = (*log_obj)->speed*speedMultiplier;
+        }
     }
 
     void renderScene() {
@@ -236,23 +363,41 @@ public:
             exit(1);
         }
 
+        bool riverBorder = false;
         bool roadDeath = false;
         bool hitRiver = false;
         bool hitLog = false;
 
         for (GameObject *go : gameObjects) {
             if (go->isEnabled()) {
+
                 // Update the physics
-                if (isPlaying) go->update(deltaTime);
+                if (isPlaying){
+                    go->update(deltaTime);
+
+                    if(go->getType() == TARGET){
+                        target->rotateCube(deltaTime);
+                    }
+                }
+                checkBusCollisions(go);
+                checkLogCollisions(go);
 
                 // Render the objects
                 go->render();
 
                 // Check collisions with player
                 if (!(go->position == player->position)) {
+                    /*if (go->getType() == BOUNDS){
+                        cout << player->getBoundingBox().vecMax.x << player->getBoundingBox().vecMax.y <<  player->getBoundingBox().vecMax.z<< go->getBoundingBox().vecMax.x << player->getBoundingBox().vecMax.y <<  player->getBoundingBox().vecMax.z<<endl;
+                        cout << player->isInsideOther(go)<<endl;
+                    }*/
                     if (player->collideWith(go)) {
                         if (go->getType() == BUS) {
                             roadDeath = true;
+                        }else if(go->getType() == TARGET){
+                            randomTargetPosition();
+                            increaseSpeed();
+                            score += pointsPerTarget;
                         }
                     }
                     else if ((player->playerState == GROUNDED) && (player->collideWithBottom(go))) {
@@ -264,21 +409,39 @@ public:
                         } else if (go->getType() == RIVER) {
                             hitRiver = true;
                         }
+                    }else{
+                        if(go->getType() == BOUNDS && player->playerState == ONLOG){
+                            riverBorder = true;
+                        }
                     }
                 }
             }
         }
 
         bool deathInRiver = hitRiver && (!hitLog) && (player->playerState != ONLOG);
-
+        if (riverBorder) {
+            cout << "Death in river border!" << endl;
+            onDeath();
+        }
         if (deathInRiver) {
             cout << "Death in river!" << endl;
+            onDeath();
         }
         if (roadDeath) {
             cout << "Death on the road!" << endl;
+            onDeath();
         }
 
         glutSwapBuffers();
+    }
+
+    void onDeath(){
+        currentLives--;
+        player->playerState = GROUNDED;
+        player->speed = Vector3(0, 0, 0);
+        if(currentLives > 0){
+            player->respawn();
+        }
     }
 
 private:

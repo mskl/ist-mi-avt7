@@ -11,7 +11,7 @@ public:
     float y;
     float z;
 
-    Vector3(float val = 0) {
+    explicit Vector3(float val = 0) {
         this->x = val;
         this->y = val;
         this->z = val;
