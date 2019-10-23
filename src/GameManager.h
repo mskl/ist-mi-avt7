@@ -135,11 +135,9 @@ public:
         switch(key) {
             // Escape exits the game
             case 27: glutLeaveMainLoop(); break;
-            // case 'c': cameraPerspectiveFollow.printCoordinates(); break;
             // Quality settings
             case 'm': glEnable(GL_MULTISAMPLE); break;
             case 'M': glDisable(GL_MULTISAMPLE); break;
-
             // Player movement
             case 'p': movePlayer(1, 0); break;
             case 'o': movePlayer(-1, 0); break;

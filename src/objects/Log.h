@@ -11,10 +11,17 @@
 class Log: public DynamicGameObject {
 public:
 
+    // Initial position of the player
     Vector3 initPos;
+    // Random offset of the rotation of the log
+    float randomTimeOffset = 0.0f;
+    // One rotation revolution happens in this time
+    const float waveTime = 2000.0f;
+
     Log(Vector3 pos, Vector3 speed)
-            : DynamicGameObject(pos, Vector3(0, 0, 0), Vector3(3, 1, 1), LOG, speed) {
-        initPos = pos;
+            : DynamicGameObject(pos, Vector3(0, 0, 0), Vector3(3, 1, 1), LOG, speed),
+              initPos(pos) {
+        randomTimeOffset = (((float) rand()) / (float)RAND_MAX) * waveTime;
     }
 
     void init() override {
@@ -24,16 +31,20 @@ public:
     }
 
     void render() override {
+        GLint curTime = glutGet(GLUT_ELAPSED_TIME);
         pushMatrix(MODEL);
             translate(MODEL, position.x, position.y, position.z);
                 renderMaterials(ids[0]);
                 pushMatrix(MODEL);
                 scale(MODEL,     3.0, 0.8, 0.8);
+                rotate(MODEL, 8.0f*sin(curTime/waveTime + randomTimeOffset), 1, 0, 0);
                 translate(MODEL, 0, 0.2, 0.2);
                 buildVAO(ids[0]);
             popMatrix(MODEL);
         popMatrix(MODEL);
+
     }
+
     void respawn(){
         position = initPos;
     }
