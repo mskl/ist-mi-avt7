@@ -87,7 +87,7 @@ public:
         = CameraPerspective(20, 0, 90, Vector3(0, 20, 0));
     CameraOrthogonal cameraOrthogonal
         = CameraOrthogonal(-7, 8, -8, 7);
-    Vector3 playerInitPos =  Vector3(0, 1, 0);
+    Vector3 playerInitPos =  Vector3(0, 1, 6);
     Player* player = new Player(playerInitPos);
     Light* directionalLight = new Light(Vector3(0.0f, -0.1f, 0.0f), 0);
 
@@ -439,9 +439,7 @@ public:
         currentLives--;
         player->playerState = GROUNDED;
         player->speed = Vector3(0, 0, 0);
-        if(currentLives > 0){
-            player->respawn();
-        }
+        player->respawn();
     }
 
 private:
