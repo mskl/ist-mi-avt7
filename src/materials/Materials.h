@@ -24,7 +24,11 @@ float bluelight[4] = {0.6f, 1.0f, 1.0f, 1.0f};
 
 float froggy_green[4] = {0.0f, 1.0f, 0.5f, 1.0f};
 
-AMaterial mat_player    = AMaterial(amb, froggy_green, spec_matte, black, 10, 0);
+AMaterial mat_player            = AMaterial(amb, froggy_green, spec_matte, black, 10, 0);
+AMaterial mat_player_eye        = AMaterial(amb, yellow, spec_matte, black, 10, 0);
+AMaterial mat_player_eye_inner  = AMaterial(amb, black, spec_matte, black, 10, 0);
+AMaterial mat_player_mouth      = AMaterial(amb, red, spec_matte, black, 10, 0);
+
 AMaterial mat_bus       = AMaterial(amb, red, spec_matte, black, 10, 0);
 AMaterial mat_ground    = AMaterial(amb, green, spec_matte, black, 10, 0);
 AMaterial mat_river     = AMaterial(amb, blue, spec_matte, black, 10, 0);

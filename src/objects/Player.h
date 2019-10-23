@@ -109,57 +109,57 @@ public:
         createCube(ids.back());
 
         // Left Eye
-        /*ids.push_back(idCount+=1);
-        setMaterial(ids.back(), mat_player);
+        ids.push_back(idCount+=1);
+        setMaterial(ids.back(), mat_player_eye);
         createCube(ids.back());
 
         // Right Eye
         ids.push_back(idCount+=1);
-        setMaterial(ids.back(), mat_player);
+        setMaterial(ids.back(), mat_player_eye);
         createCube(ids.back());
 
         // Mouth
         ids.push_back(idCount+=1);
-        setMaterial(ids.back(), mat_player);
-        createCube(ids.back());*/
-
+        setMaterial(ids.back(), mat_player_mouth);
+        createCube(ids.back());
     }
 
     void render() final {
         float eyeSize = 0.25;
 
-        // Body
-        renderMaterials(ids[0]);
-        pushMatrix(MODEL);
-        translate(MODEL, position.x, position.y, position.z);
-        buildVAO(ids[0]);
-        popMatrix(MODEL);
 
-        /*
         pushMatrix(MODEL);
+            // Body
+            renderMaterials(ids[0]);
             translate(MODEL, position.x, position.y, position.z);
+            translate(MODEL, 0.1, 0, 0.1);
+            scale(MODEL, 0.8, 0.8, 0.8);
             buildVAO(ids[0]);
 
+            // Left eye
             renderMaterials(ids[1]);
             pushMatrix(MODEL);
-                scale(MODEL,      0.5, 0.5, 0.5);
+                translate(MODEL, 0.2, 1, 0);
+                scale(MODEL,      0.2, 0.2, 0.2);
                 buildVAO(ids[1]);
             popMatrix(MODEL);
 
+            // Right eye
             renderMaterials(ids[2]);
             pushMatrix(MODEL);
-                pushMatrix(MODEL);
-                scale(MODEL,      0.5, 0.5, 0.5);
+                translate(MODEL, 0.6, 1, 0);
+                scale(MODEL,0.2, 0.2, 0.2);
                 buildVAO(ids[2]);
             popMatrix(MODEL);
 
+            // Mouth
             renderMaterials(ids[3]);
             pushMatrix(MODEL);
+                translate(MODEL, 0, 0.2, -0.05f);
                 scale(MODEL, 0.8f, 0.25, 0.05f);
                 buildVAO(ids[3]);
             popMatrix(MODEL);
         popMatrix(MODEL);
-         */
 
     }
 };
