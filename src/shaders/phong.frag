@@ -12,7 +12,7 @@ struct Materials {
 };
 
 uniform Materials mat;
-
+uniform int[8] l_type;
 
 in Data {
     vec3 normal;
@@ -26,22 +26,24 @@ void main() {
     vec3 h;
     float intSpec;
     vec4 spec = vec4(0.0);
-    float a = 0.7;
+    float a = 0.3;
     float b = 0;
-    float c = 0.07;
+    float c = 0.04;
     float attenuation;
     float distance;
     vec4 texel, texel2;
 
     vec4 l_spotdir = vec4(0, 1, 0, 1);
 
-    for(int i = 0; i < 8; i++){
+    for (int i = 0; i < 8; i++) {
         vec3 n = normalize(DataIn.normal);
         vec3 l = normalize(DataIn.lightDir[i]);
         vec3 e = normalize(DataIn.eye);
         vec3 sd = normalize(vec3(-l_spotdir));
 
-        if (i<=5) {
+
+        if (l_type[i] == 0) {
+            /* POINTLIGHT */
             distance = length(DataIn.lightDir[i]);
             attenuation = 0.5/(a+(b*distance)+(c*distance*distance));
             intensity += max(dot(n,l), 0.0) * attenuation;
@@ -50,14 +52,16 @@ void main() {
                 float intSpec = max(dot(h,n), 0.0);
                 spec = spec + mat.specular * pow(intSpec, mat.shininess) * attenuation;
             }
-        } else if (i == 6) {
+        } else if (l_type[i] == 1) {
+            /* DIRLIGHT */
             intensity += max(dot(n,l), 0.0)*0.5;
             if (intensity > 0.0) {
                 vec3 h = normalize(l + e);
                 float intSpec = max(dot(h,n), 0.0);
                 spec = spec + mat.specular * pow(intSpec, mat.shininess)*0.5;
             }
-        } else if (i==7) {
+        } else if (l_type[i] == 2) {
+            /* SPOTLIGHT */
             float cosSDL = dot(sd,l);
             float spotExponent = 100.0;
             if (cosSDL > spotCutOff) {
@@ -71,7 +75,6 @@ void main() {
                 }
             }
         }
-
     }
 
     colorOut = max((intensity * mat.diffuse + spec),mat.ambient);

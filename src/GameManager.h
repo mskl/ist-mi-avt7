@@ -49,7 +49,13 @@ GLint prevTime = 1;
 GLint pvm_uniformId;
 GLint vm_uniformId;
 GLint normal_uniformId;
-GLint l_pos[8];
+
+// Light GLSL stuff
+GLint l_pos_id[8];  // pointers to shader variables
+GLint l_enabled_id; // GLSL pointer to the boolean array
+GLint l_enabled[8] = {0, 0, 0, 0, 0, 0, 0, 0};
+GLint l_type_id;
+GLint l_type[8] = {0, 0, 0, 0, 0, 0, 0, 0};
 
 class GameManager {
 public:
@@ -100,6 +106,8 @@ public:
     Coordinates* cmin = new Coordinates(Vector3(-6, 0, -5));
     Coordinates* cmax = new Coordinates(Vector3(7, 0.8, 0));
 
+    Light* directLight = new Light(Vector3(0.0f, 5.0f, 0.0f), DIRECTIONAL, 6, false);
+
 public:
     GameManager() {
         gameObjects.push_back(new River());
@@ -107,12 +115,16 @@ public:
         gameObjects.push_back(new Ground());
         gameObjects.push_back(new Sidewalls());
 
-        gameObjects.push_back(new Light(Vector3(-5.0f, 2.0f, -6.0f), 1, 0));
-        gameObjects.push_back(new Light(Vector3(-5.0f, 2.0f, 0.0f), 1, 1));
-        gameObjects.push_back(new Light(Vector3(-5.0f, 2.0f, 7.0f), 1, 2));
-        gameObjects.push_back(new Light(Vector3(6.0f, 2.0f, -6.0f), 1, 3));
-        gameObjects.push_back(new Light(Vector3(6.0f, 2.0f, 0.0f), 1, 4));
-        gameObjects.push_back(new Light(Vector3(6.0f, 2.0f, 7.0f), 1, 5));
+        // Side lights
+        gameObjects.push_back(new Light(Vector3(-4.0f, 3.0f, -6.0f), POINT, 0));
+        gameObjects.push_back(new Light(Vector3(-4.0f, 3.0f, 0.0f), POINT, 1));
+        gameObjects.push_back(new Light(Vector3(-4.0f, 3.0f, 7.0f), POINT, 2));
+        gameObjects.push_back(new Light(Vector3(5.0f, 3.0f, -6.0f), POINT, 3));
+        gameObjects.push_back(new Light(Vector3(5.0f, 3.0f, 0.0f), POINT, 4));
+        gameObjects.push_back(new Light(Vector3(5.0f, 3.0f, 7.0f), POINT, 5));
+
+        // Top light
+        gameObjects.push_back(directLight);
 
         gameObjects.push_back(player);
         gameObjects.push_back(sceneCollider);
@@ -149,13 +161,10 @@ public:
             case 'r': player->respawn(); break;
             // Random target position
             case 'v': randomTargetPosition(); break;
-
             // Increase speed
             case 'i': increaseSpeed(); break;
-
             // Night mode toggle
-            case 'n':
-                //directionalLight->setEnabled(!directionalLight->isEnabled()); break;
+            case 'n': directLight->light_enabled = !directLight->light_enabled; break;
             // Stop/Continue game
             case 's': isPlaying = !isPlaying; break;
 
@@ -184,8 +193,7 @@ public:
         lastMoveTime = curTime;
     }
 
-    GLuint setupShaders()
-    {
+    GLuint setupShaders() {
         // Shader for models
         shader.init();
         shader.loadShader(VSShaderLib::VERTEX_SHADER, VERTEX_SHADER_PATH);
@@ -206,64 +214,18 @@ public:
         // Get the light indexes
         for (int i = 0; i < 8; i++) {
             std::string pos = "l_pos_" + to_string(i);
-            l_pos[i] = glGetUniformLocation(shader.getProgramIndex(), pos.c_str());
+            l_pos_id[i] = glGetUniformLocation(shader.getProgramIndex(), pos.c_str());
         }
+
+        // Get the index of a light boolean mask
+        l_enabled_id = glGetUniformLocation(shader.getProgramIndex(), "l_enabled");
+        l_type_id = glGetUniformLocation(shader.getProgramIndex(), "l_type");
 
         printf("InfoLog for Per Fragment Phong Lightning Shader\n%s\n\n", shader.getAllInfoLogs().c_str());
         return(shader.isProgramLinked());
     }
 
-    void createLogs()
-    {
-        Log * log;
-        for (int i = 0; i < 5; i++){
-            float randSpeed =(float)(rand() % 60 + 20) / 100.0f;
-
-            for (int j = 0; j < 4; j++){
-                int offset = rand() % 7;
-
-                Vector3 spawnPosition = Vector3(7.0f+j*3+offset, 0, -i-1);
-                if(j > 0){
-                    spawnPosition.x = logs.back()->position.x+3.5f+offset;
-                }
-                log = new Log(spawnPosition, Vector3(randSpeed, 0, 0));
-                gameObjects.push_back(log);
-                logs.push_back(log);
-            }
-        }
-    }
-
-    void randomTargetPosition() {
-        int randomX = rand() % 13 - 6;
-        int randomZ = rand() % 13 - 6;
-
-        if (randomX == 7)
-            randomX -=1;
-        if (randomZ == 7)
-            randomZ -=1;
-
-        target->position = Vector3(randomX + 0.25f, 1.25f, randomZ-0.75f);
-    }
-
-    void createBus() {
-        Bus * bus;
-        for (int i = 0; i < 3; i++){
-            float randSpeed =(float)(rand() % 80 + 50) / 100.0f;
-            for (int j = 0; j < 4; j++){
-                int offset = rand() % 7 + 1;
-                Vector3 spawnPosition = Vector3(7.0f + offset, 1, i*2+1);
-                if(j > 0){
-                    spawnPosition.x = busses.back()->position.x + 5.0f * i + offset;
-                }
-                bus = new Bus(spawnPosition, Vector3(randSpeed, 0, 0));
-                gameObjects.push_back(bus);
-                busses.push_back(bus);
-            }
-        }
-    }
-
     void initScene(){
-
         srand(time(NULL));
         createBus();
         createLogs();
@@ -278,65 +240,6 @@ public:
         glEnable(GL_CULL_FACE);
         glEnable(GL_MULTISAMPLE);
         glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
-    }
-
-    void checkBusCollisions(GameObject* go){
-        std::vector<Bus *>::iterator it_obj;
-        for (it_obj = busses.begin(); it_obj != busses.end(); it_obj++) {
-            if (!(go->position == (*it_obj)->position)) {
-                if (!(*it_obj)->collideWith(go)) {
-                    if (go->getType() == BOUNDS) {
-                        if ((*it_obj)->position.x < go->position.x) {
-                            (*it_obj)->respawn();
-                        }
-                    }
-                }
-                if ((*it_obj)->collideWith(go)) {
-                    if (go->getType() == BUS) {
-                        GameObject *objA = ((*it_obj)->position.x > go->position.x) ? (*it_obj) : go;
-
-                        Vector3 tempPos = objA->position;
-                        tempPos.x += (float) (rand() % 5 + 3);
-                        objA->position = tempPos;
-                    }
-                }
-            }
-        }
-    }
-
-    void checkLogCollisions(GameObject* go){
-        std::vector<Log *>::iterator it_obj;
-        for (it_obj = logs.begin(); it_obj != logs.end(); it_obj++) {
-            if (!(go->position == (*it_obj)->position)) {
-                if (!(*it_obj)->collideWith(go)) {
-                    if (go->getType() == BOUNDS) {
-                        if ((*it_obj)->position.x < go->position.x) {
-                            (*it_obj)->respawn();
-                        }
-                    }
-                }
-                if ((*it_obj)->collideWith(go)) {
-                    if (go->getType() == LOG) {
-                        GameObject *objA = ((*it_obj)->position.x > go->position.x) ? (*it_obj) : go;
-
-                        Vector3 tempPos = objA->position;
-                        tempPos.x += (float) (rand() % 5 + 3);
-                        objA->position = tempPos;
-                    }
-                }
-            }
-        }
-    }
-
-    void increaseSpeed() {
-        std::vector<Bus *>::iterator bus_obj;
-        for (bus_obj = busses.begin(); bus_obj != busses.end(); bus_obj++) {
-            (*bus_obj)->speed = (*bus_obj)->speed*speedMultiplier;
-        }
-        std::vector<Log *>::iterator log_obj;
-        for (log_obj = logs.begin(); log_obj != logs.end(); log_obj++) {
-            (*log_obj)->speed = (*log_obj)->speed*speedMultiplier;
-        }
     }
 
     void renderScene() {
@@ -378,9 +281,12 @@ public:
                     go->update(deltaTime);
 
                     if(go->getType() == TARGET){
+                        // TODO: put this into an update method of the Target object, there is no need to have it here
                         target->rotateCube(deltaTime);
                     }
                 }
+
+                // Check the colisions
                 checkBusCollisions(go);
                 checkLogCollisions(go);
 
@@ -437,6 +343,7 @@ public:
         glutSwapBuffers();
     }
 
+private:
     void onDeath(){
         currentLives--;
         player->playerState = GROUNDED;
@@ -444,7 +351,17 @@ public:
         player->respawn();
     }
 
-private:
+    void increaseSpeed() {
+        std::vector<Bus *>::iterator bus_obj;
+        for (bus_obj = busses.begin(); bus_obj != busses.end(); bus_obj++) {
+            (*bus_obj)->speed = (*bus_obj)->speed*speedMultiplier;
+        }
+        std::vector<Log *>::iterator log_obj;
+        for (log_obj = logs.begin(); log_obj != logs.end(); log_obj++) {
+            (*log_obj)->speed = (*log_obj)->speed*speedMultiplier;
+        }
+    }
+
     void selectCamera(CameraType newCamera) {
         currentCameraType = newCamera;
 
@@ -456,6 +373,103 @@ private:
         } else if (newCamera == CAMERA_ORTHO) {
             cameraOrthogonal.project(glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT));
         }
+    }
+
+    void createBus() {
+        Bus * bus;
+        for (int i = 0; i < 3; i++){
+            float randSpeed =(float)(rand() % 80 + 50) / 100.0f;
+            for (int j = 0; j < 4; j++){
+                int offset = rand() % 7 + 1;
+                Vector3 spawnPosition = Vector3(7.0f + offset, 1, i*2+1);
+                if(j > 0){
+                    spawnPosition.x = busses.back()->position.x + 5.0f * i + offset;
+                }
+                bus = new Bus(spawnPosition, Vector3(randSpeed, 0, 0));
+                gameObjects.push_back(bus);
+                busses.push_back(bus);
+            }
+        }
+    }
+
+    void checkBusCollisions(GameObject* go){
+        std::vector<Bus *>::iterator it_obj;
+        for (it_obj = busses.begin(); it_obj != busses.end(); it_obj++) {
+            if (!(go->position == (*it_obj)->position)) {
+                if (!(*it_obj)->collideWith(go)) {
+                    if (go->getType() == BOUNDS) {
+                        if ((*it_obj)->position.x < go->position.x) {
+                            (*it_obj)->respawn();
+                        }
+                    }
+                }
+                if ((*it_obj)->collideWith(go)) {
+                    if (go->getType() == BUS) {
+                        GameObject *objA = ((*it_obj)->position.x > go->position.x) ? (*it_obj) : go;
+
+                        Vector3 tempPos = objA->position;
+                        tempPos.x += (float) (rand() % 5 + 3);
+                        objA->position = tempPos;
+                    }
+                }
+            }
+        }
+    }
+
+    void createLogs()
+    {
+        Log * log;
+        for (int i = 0; i < 5; i++){
+            float randSpeed =(float)(rand() % 60 + 20) / 100.0f;
+
+            for (int j = 0; j < 4; j++){
+                int offset = rand() % 7;
+
+                Vector3 spawnPosition = Vector3(7.0f+j*3+offset, 0, -i-1);
+                if(j > 0){
+                    spawnPosition.x = logs.back()->position.x+3.5f+offset;
+                }
+                log = new Log(spawnPosition, Vector3(randSpeed, 0, 0));
+                gameObjects.push_back(log);
+                logs.push_back(log);
+            }
+        }
+    }
+
+    void checkLogCollisions(GameObject* go){
+        std::vector<Log *>::iterator it_obj;
+        for (it_obj = logs.begin(); it_obj != logs.end(); it_obj++) {
+            if (!(go->position == (*it_obj)->position)) {
+                if (!(*it_obj)->collideWith(go)) {
+                    if (go->getType() == BOUNDS) {
+                        if ((*it_obj)->position.x < go->position.x) {
+                            (*it_obj)->respawn();
+                        }
+                    }
+                }
+                if ((*it_obj)->collideWith(go)) {
+                    if (go->getType() == LOG) {
+                        GameObject *objA = ((*it_obj)->position.x > go->position.x) ? (*it_obj) : go;
+
+                        Vector3 tempPos = objA->position;
+                        tempPos.x += (float) (rand() % 5 + 3);
+                        objA->position = tempPos;
+                    }
+                }
+            }
+        }
+    }
+
+    void randomTargetPosition() {
+        int randomX = rand() % 13 - 6;
+        int randomZ = rand() % 13 - 6;
+
+        if (randomX == 7)
+            randomX -=1;
+        if (randomZ == 7)
+            randomZ -=1;
+
+        target->position = Vector3(randomX + 0.25f, 1.25f, randomZ-0.75f);
     }
 };
 

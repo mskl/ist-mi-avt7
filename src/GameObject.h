@@ -22,7 +22,7 @@ extern float mNormal3x3[9];
 extern GLint pvm_uniformId;
 extern GLint vm_uniformId;
 extern GLint normal_uniformId;
-extern GLint l_pos[8];
+extern GLint l_pos_id[8];
 
 enum GameObjectType {BOUNDS, TARGET, GRASS, LOG, RIVER, GROUND, BUS, ROAD, UNKNOWN, COLLIDABLE, PLAYER};
 
