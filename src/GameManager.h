@@ -105,22 +105,29 @@ public:
 //    Coordinates* cmax = new Coordinates(Vector3(7, 0.8, 0));
 
     Light* directionalLight = new DirectionalLight(Vector3(0.0f, 5.0f, 0.0f), 6, false);
-    SpotLight* spotLight = new SpotLight(Vector3(0, -1, 0), Vector3(0, 2, 0), 7, true);
+    SpotLight* spotLight = new SpotLight(Vector3(0, -1, 0), Vector3(0, 2, 0), 7, false);
+    vector<PointLight*> pointLights = vector<PointLight*>();
+
 
 public:
     GameManager() {
+        // Keep the pointLight in separate vector as well.
+        pointLights.push_back(new PointLight(Vector3(-4.0f, 3.0f, -6.0f), 0, true));
+        pointLights.push_back(new PointLight(Vector3(-4.0f, 3.0f, 0.0f), 1, true));
+        pointLights.push_back(new PointLight(Vector3(-4.0f, 3.0f, 7.0f), 2, true));
+        pointLights.push_back(new PointLight(Vector3(5.0f, 3.0f, -6.0f), 3, true));
+        pointLights.push_back(new PointLight(Vector3(5.0f, 3.0f, 0.0f), 4, true));
+        pointLights.push_back(new PointLight(Vector3(5.0f, 3.0f, 7.0f), 5, true));
+
         gameObjects.push_back(new River());
         gameObjects.push_back(new Road());
         gameObjects.push_back(new Ground());
         gameObjects.push_back(new Sidewalls());
 
-        // Lights
-        gameObjects.push_back(new PointLight(Vector3(-4.0f, 3.0f, -6.0f), 0, true));
-        gameObjects.push_back(new PointLight(Vector3(-4.0f, 3.0f, 0.0f), 1, true));
-        gameObjects.push_back(new PointLight(Vector3(-4.0f, 3.0f, 7.0f), 2, true));
-        gameObjects.push_back(new PointLight(Vector3(5.0f, 3.0f, -6.0f), 3, true));
-        gameObjects.push_back(new PointLight(Vector3(5.0f, 3.0f, 0.0f), 4, true));
-        gameObjects.push_back(new PointLight(Vector3(5.0f, 3.0f, 7.0f), 5, true));
+        // Save the lights to gameObjects
+        for (auto &pl : pointLights)
+            gameObjects.push_back(pl);
+
         gameObjects.push_back(directionalLight);
         gameObjects.push_back(spotLight);
 
@@ -161,8 +168,13 @@ public:
             case 'v': randomTargetPosition(); break;
             // Increase speed
             case 'i': increaseSpeed(); break;
-            // Night mode toggle
+            // Night lights
             case 'n': directionalLight->light_enabled = !directionalLight->light_enabled; break;
+            case 'h': spotLight->light_enabled = !spotLight->light_enabled; break;
+            case 'c':
+                for (auto &c: pointLights)
+                    c->light_enabled = !c->light_enabled;
+                break;
             // Stop/Continue game
             case 's': isPlaying = !isPlaying; break;
 
