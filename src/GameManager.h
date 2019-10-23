@@ -35,11 +35,10 @@ using namespace std;
 #include "objects/Sidewalls.h"
 #include "objects/SceneCollider.h"
 #include "objects/Target.h"
+#include "objects/SpotLight.h"
+#include "objects/DirectionalLight.h"
+#include "objects/PointLight.h"
 
-/*
- * const char* VERTEX_SHADER_PATH = "shaders/pointlight.vert";
- * const char* FRAGMENT_SHADER_PATH = "shaders/pointlight.frag";
- */
 const char* VERTEX_SHADER_PATH = "shaders/phong.vert";
 const char* FRAGMENT_SHADER_PATH = "shaders/phong.frag";
 
@@ -56,6 +55,7 @@ GLint l_enabled_id; // GLSL pointer to the boolean array
 GLint l_enabled[8] = {0, 0, 0, 0, 0, 0, 0, 0};
 GLint l_type_id;
 GLint l_type[8] = {0, 0, 0, 0, 0, 0, 0, 0};
+GLint l_point_dir_id;
 
 class GameManager {
 public:
@@ -106,7 +106,8 @@ public:
     Coordinates* cmin = new Coordinates(Vector3(-6, 0, -5));
     Coordinates* cmax = new Coordinates(Vector3(7, 0.8, 0));
 
-    Light* directLight = new Light(Vector3(0.0f, 5.0f, 0.0f), DIRECTIONAL, 6, false);
+    Light* directionalLight = new DirectionalLight(Vector3(0.0f, 5.0f, 0.0f), 6, false);
+    SpotLight* spotLight = new SpotLight(Vector3(0, 0.2, 0), Vector3(0, 0, 1), 7, true);
 
 public:
     GameManager() {
@@ -115,16 +116,15 @@ public:
         gameObjects.push_back(new Ground());
         gameObjects.push_back(new Sidewalls());
 
-        // Side lights
-        gameObjects.push_back(new Light(Vector3(-4.0f, 3.0f, -6.0f), POINT, 0));
-        gameObjects.push_back(new Light(Vector3(-4.0f, 3.0f, 0.0f), POINT, 1));
-        gameObjects.push_back(new Light(Vector3(-4.0f, 3.0f, 7.0f), POINT, 2));
-        gameObjects.push_back(new Light(Vector3(5.0f, 3.0f, -6.0f), POINT, 3));
-        gameObjects.push_back(new Light(Vector3(5.0f, 3.0f, 0.0f), POINT, 4));
-        gameObjects.push_back(new Light(Vector3(5.0f, 3.0f, 7.0f), POINT, 5));
-
-        // Top light
-        gameObjects.push_back(directLight);
+        // Lights
+        gameObjects.push_back(new PointLight(Vector3(-4.0f, 3.0f, -6.0f), 0));
+        gameObjects.push_back(new PointLight(Vector3(-4.0f, 3.0f, 0.0f), 1));
+        gameObjects.push_back(new PointLight(Vector3(-4.0f, 3.0f, 7.0f), 2));
+        gameObjects.push_back(new PointLight(Vector3(5.0f, 3.0f, -6.0f), 3));
+        gameObjects.push_back(new PointLight(Vector3(5.0f, 3.0f, 0.0f), 4));
+        gameObjects.push_back(new PointLight(Vector3(5.0f, 3.0f, 7.0f), 5));
+        gameObjects.push_back(directionalLight);
+        gameObjects.push_back(spotLight);
 
         gameObjects.push_back(player);
         gameObjects.push_back(sceneCollider);
@@ -164,7 +164,7 @@ public:
             // Increase speed
             case 'i': increaseSpeed(); break;
             // Night mode toggle
-            case 'n': directLight->light_enabled = !directLight->light_enabled; break;
+            case 'n': directionalLight->light_enabled = !directionalLight->light_enabled; break;
             // Stop/Continue game
             case 's': isPlaying = !isPlaying; break;
 
@@ -220,6 +220,7 @@ public:
         // Get the index of a light boolean mask
         l_enabled_id = glGetUniformLocation(shader.getProgramIndex(), "l_enabled");
         l_type_id = glGetUniformLocation(shader.getProgramIndex(), "l_type");
+        l_point_dir_id = glGetUniformLocation(shader.getProgramIndex(), "l_point_dir");
 
         printf("InfoLog for Per Fragment Phong Lightning Shader\n%s\n\n", shader.getAllInfoLogs().c_str());
         return(shader.isProgramLinked());
