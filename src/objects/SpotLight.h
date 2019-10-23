@@ -11,7 +11,7 @@ extern GLint l_spot_dir_id;
 class SpotLight: public Light {
 public:
     Vector3 light_dir;
-    SpotLight (Vector3 pos, Vector3 dir, int light_id, bool light_active = true): Light(pos, SPOT, light_id, light_active) {
+    SpotLight (Vector3 pos, Vector3 dir, int light_id, bool light_active = true): Light(pos, light_id, light_active) {
         light_dir = dir;
     }
 

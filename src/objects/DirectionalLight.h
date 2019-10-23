@@ -10,7 +10,7 @@
 
 class DirectionalLight: public Light {
 public:
-    DirectionalLight(Vector3 pos, int light_id, bool light_active = true): Light(pos, DIRECTIONAL, light_id, light_active) {
+    DirectionalLight(Vector3 pos, int light_id, bool light_active = true): Light(pos, light_id, light_active) {
 
     }
 

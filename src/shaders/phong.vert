@@ -6,7 +6,6 @@ uniform mat3 m_normal;
 uniform vec3 lightState;
 
 uniform int[8] l_enabled;
-uniform int[8] l_type;
 uniform vec4[8] l_pos;
 
 //           point    point    point    point    point    point    dir      spot

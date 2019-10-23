@@ -12,7 +12,6 @@ struct Materials {
 };
 
 uniform Materials mat;
-uniform int[8] l_type;
 uniform vec4 l_spot_dir;
 
 in Data {
@@ -35,7 +34,7 @@ void main() {
         vec3 e = normalize(DataIn.eye);
         vec3 sd = normalize(-vec3(l_spot_dir));
 
-        if (i<=5) {//l_type[i] == 0) {
+        if (i <= 5) {
             /* POINTLIGHT */
             float distance = length(DataIn.lightDir[i]);
             float attenuation = 0.5/(a+(b*distance)+(c*distance*distance));
@@ -45,7 +44,7 @@ void main() {
                 float intSpec = max(dot(h,n), 0.0);
                 spec += mat.specular * pow(intSpec, mat.shininess) * attenuation;
             }
-        } else if (i == 6){ //(l_type[i] == 1) {
+        } else if (i == 6) {
             /* DIRLIGHT */
             intensity += max(dot(n,l), 0.0)*0.5;
             if (intensity > 0.0) {
@@ -53,7 +52,7 @@ void main() {
                 float intSpec = max(dot(h,n), 0.0);
                 spec += mat.specular * pow(intSpec, mat.shininess)*0.5;
             }
-        } else if (i == 7){// if (l_type[i] == 2) {
+        } else if (i == 7) {
             /* SPOTLIGHT */
             if(dot(l, sd) > 0.9)  {
                 intensity += max(dot(n,l), 0.0);

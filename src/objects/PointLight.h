@@ -10,7 +10,7 @@
 
 class PointLight: public Light {
 public:
-    PointLight(Vector3 pos, int light_id, bool light_active = true): Light(pos, POINT, light_id, light_active) {
+    PointLight(Vector3 pos, int light_id, bool light_active = true): Light(pos, light_id, light_active) {
 
     }
 
