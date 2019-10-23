@@ -36,9 +36,12 @@ using namespace std;
 #include "objects/SceneCollider.h"
 #include "objects/Target.h"
 
-
-const char* VERTEX_SHADER_PATH = "shaders/pointlight.vert";
-const char* FRAGMENT_SHADER_PATH = "shaders/pointlight.frag";
+/*
+ * const char* VERTEX_SHADER_PATH = "shaders/pointlight.vert";
+ * const char* FRAGMENT_SHADER_PATH = "shaders/pointlight.frag";
+ */
+const char* VERTEX_SHADER_PATH = "shaders/phong.vert";
+const char* FRAGMENT_SHADER_PATH = "shaders/phong.frag";
 
 GLint deltaTime = 1;
 GLint prevTime = 1;
@@ -46,12 +49,12 @@ GLint prevTime = 1;
 GLint pvm_uniformId;
 GLint vm_uniformId;
 GLint normal_uniformId;
-GLint lPos_uniformId;
+GLint l_pos[8];
 
 class GameManager {
 public:
-    int WindowHandle = 0;
-    unsigned int FrameCount = 0;
+    GLint WindowHandle = 0;
+    GLint FrameCount = 0;
 
     bool isPlaying = true;
 
@@ -61,10 +64,10 @@ public:
     int pointsPerTarget = 100;
     float speedMultiplier = 1.2;
 
-    float topVerticalLimitPlayerPos = -6.0f;
-    float bottomVerticalLimitPlayerPos = 6.0f;
-    float leftHorizontalLimitPlayerPos = -6.0f;
-    float rightHorizontalLimitPlayerPos = 6.0f;
+    const float topVerticalLimitPlayerPos = -6.0f;
+    const float bottomVerticalLimitPlayerPos = 6.0f;
+    const float leftHorizontalLimitPlayerPos = -6.0f;
+    const float rightHorizontalLimitPlayerPos = 6.0f;
 
     std::vector<GameObject*> gameObjects = std::vector<GameObject*>();
     std::vector<Bus*> busses = std::vector<Bus*>();
@@ -87,13 +90,13 @@ public:
         = CameraPerspective(20, 0, 90, Vector3(0, 20, 0));
     CameraOrthogonal cameraOrthogonal
         = CameraOrthogonal(-7, 8, -8, 7);
+
     Vector3 playerInitPos =  Vector3(0, 1, 6);
     Player* player = new Player(playerInitPos);
-    Light* directionalLight = new Light(Vector3(0.0f, -0.1f, 0.0f), 0);
 
     SceneCollider* sceneCollider = new SceneCollider(Vector3(-6.0f, -1, -6));
-
     Target* target = new Target(Vector3(0.25f, 1.25f, -5.75f));
+
     Coordinates* cmin = new Coordinates(Vector3(-6, 0, -5));
     Coordinates* cmax = new Coordinates(Vector3(7, 0.8, 0));
 
@@ -103,18 +106,17 @@ public:
         gameObjects.push_back(new Road());
         gameObjects.push_back(new Ground());
         gameObjects.push_back(new Sidewalls());
-        gameObjects.push_back(new Light(Vector3(4.0f, 6.0f, 2.0f), 1));
 
-        // Custom objects with saved pointers
-        gameObjects.push_back(directionalLight);
-        directionalLight->setEnabled(false);
+        gameObjects.push_back(new Light(Vector3(-5.0f, 2.0f, -6.0f), 1, 0));
+        gameObjects.push_back(new Light(Vector3(-5.0f, 2.0f, 0.0f), 1, 1));
+        gameObjects.push_back(new Light(Vector3(-5.0f, 2.0f, 7.0f), 1, 2));
+        gameObjects.push_back(new Light(Vector3(6.0f, 2.0f, -6.0f), 1, 3));
+        gameObjects.push_back(new Light(Vector3(6.0f, 2.0f, 0.0f), 1, 4));
+        gameObjects.push_back(new Light(Vector3(6.0f, 2.0f, 7.0f), 1, 5));
 
         gameObjects.push_back(player);
-
         gameObjects.push_back(sceneCollider);
         gameObjects.push_back(target);
-        //gameObjects.push_back(cmin);
-        //gameObjects.push_back(cmax);
     }
 
     void changeSize(int w, int h)
@@ -153,7 +155,7 @@ public:
 
             // Night mode toggle
             case 'n':
-                directionalLight->setEnabled(!directionalLight->isEnabled()); break;
+                //directionalLight->setEnabled(!directionalLight->isEnabled()); break;
             // Stop/Continue game
             case 's': isPlaying = !isPlaying; break;
 
@@ -196,14 +198,21 @@ public:
 
         glLinkProgram(shader.getProgramIndex());
 
+        // Get the indexes of stuff
         pvm_uniformId = glGetUniformLocation(shader.getProgramIndex(), "m_pvm");
         vm_uniformId = glGetUniformLocation(shader.getProgramIndex(), "m_viewModel");
         normal_uniformId = glGetUniformLocation(shader.getProgramIndex(), "m_normal");
-        lPos_uniformId = glGetUniformLocation(shader.getProgramIndex(), "l_pos");
+
+        // Get the light indexes
+        for (int i = 0; i < 8; i++) {
+            std::string pos = "l_pos_" + to_string(i);
+            l_pos[i] = glGetUniformLocation(shader.getProgramIndex(), pos.c_str());
+        }
 
         printf("InfoLog for Per Fragment Phong Lightning Shader\n%s\n\n", shader.getAllInfoLogs().c_str());
         return(shader.isProgramLinked());
     }
+
     void createLogs()
     {
         Log * log;
@@ -224,8 +233,7 @@ public:
         }
     }
 
-    void randomTargetPosition(){
-
+    void randomTargetPosition() {
         int randomX = rand() % 13 - 6;
         int randomZ = rand() % 13 - 6;
 
@@ -236,7 +244,8 @@ public:
 
         target->position = Vector3(randomX + 0.25f, 1.25f, randomZ-0.75f);
     }
-    void createBus(){
+
+    void createBus() {
         Bus * bus;
         for (int i = 0; i < 3; i++){
             float randSpeed =(float)(rand() % 80 + 50) / 100.0f;
@@ -252,11 +261,13 @@ public:
             }
         }
     }
+
     void initScene(){
 
-        srand (time(NULL));
+        srand(time(NULL));
         createBus();
         createLogs();
+
         // Initialize all of the GameObjects
         for (GameObject* go : gameObjects) {
             go->init();
@@ -317,8 +328,7 @@ public:
         }
     }
 
-    void increaseSpeed(){
-
+    void increaseSpeed() {
         std::vector<Bus *>::iterator bus_obj;
         for (bus_obj = busses.begin(); bus_obj != busses.end(); bus_obj++) {
             (*bus_obj)->speed = (*bus_obj)->speed*speedMultiplier;
@@ -345,12 +355,6 @@ public:
             cameraPerspectiveFixed.view();
         } else if (currentCameraType == CAMERA_ORTHO) {
             cameraOrthogonal.view();
-        }
-
-        if(isPlaying) {
-            // Draw the testing coordinates
-            //cmax->position = player->position + player->boundingBox.vecMax;
-            //cmin->position = player->position + player->boundingBox.vecMin;
         }
 
         // use our shader

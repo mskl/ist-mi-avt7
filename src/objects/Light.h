@@ -13,9 +13,11 @@ public:
     // 0 for directional
     // 1 for point
     float lightType = 0;
+    int light_id = 0;
 
-    explicit Light(Vector3 pos, float type): GameObject(pos) {
+    explicit Light(Vector3 pos, float type, int light_id): GameObject(pos) {
         this->lightType = type;
+        this->light_id = light_id;
     }
 
     void init() override {
@@ -26,7 +28,7 @@ public:
         float res[4];
         float lightPos[4] = {position.x, position.y, position.z, lightType};
         multMatrixPoint(VIEW, lightPos, res);
-        glUniform4fv(lPos_uniformId, 1, res);
+        glUniform4fv(l_pos[light_id], 1, res);
     }
 };
 
