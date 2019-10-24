@@ -201,6 +201,7 @@ public:
                     infoString = "";
                 }
                 break;
+
             // CameraType
             case '1': selectCamera(CAMERA_PERSPECTIVE_FOLLOW); break;
             case '2': selectCamera(CAMERA_PERSPECTIVE_FIXED); break;
@@ -346,6 +347,7 @@ public:
                 checkCarCollisions(go);
                 checkLogCollisions(go);
                 checkTurtlesCollisions(go);
+
                 // Render the objects
                 go->render();
 
@@ -593,7 +595,7 @@ private:
                 int offset = rand() % 7;
 
                 Vector3 spawnPosition = Vector3(7.0f+j*3+offset, 0, -i*2-1);
-                if(j > 0){
+                if (j > 0) {
                     spawnPosition.x = logs.back()->position.x+3.5f+offset;
                 }
                 log = new Log(spawnPosition, Vector3(randSpeed, 0, 0));
@@ -679,7 +681,8 @@ private:
         target->position = Vector3(randomX + 0.25f, 1.25f, -5-0.75f);
     }
 
-    /*void initFonts(){
+    /*
+    void initFonts(){
         //cout << vsfl << endl;
         vsfl.load("fonts/couriernew10");
         vsfl.setFixedFont(true);
@@ -691,7 +694,8 @@ private:
         vsfl.prepareSentence(lifes, "Lifes: " + std::to_string(10));
         vsfl.prepareSentence(points, "Points: " + std::to_string(20));
         vsfl.prepareSentence(gameover, "GAME OVER!");
-    }*/
+    }
+    */
 };
 
 #endif //AVT7_GAMEMANAGER_H

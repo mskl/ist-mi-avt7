@@ -18,7 +18,7 @@ public:
     // One rotation revolution happens in this time
     const float waveTime = 1000.0f;
     bool isUnderWater = false;
-    Turtle(Vector3 pos, Vector3 speed)
+    Turtle (Vector3 pos, Vector3 speed)
             : DynamicGameObject(pos, Vector3(0, 0, 0), Vector3(5, 1, 1), TURTLE, speed),
               initPos(pos) {
         randomTimeOffset = (((float) rand()) / (float)RAND_MAX) * waveTime;
