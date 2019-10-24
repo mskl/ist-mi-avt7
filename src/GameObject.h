@@ -24,7 +24,7 @@ extern GLint vm_uniformId;
 extern GLint normal_uniformId;
 extern GLint l_pos_id[8];
 
-enum GameObjectType {BOUNDS, TARGET, GRASS, LOG, RIVER, GROUND, BUS,CAR, ROAD, UNKNOWN, COLLIDABLE, PLAYER};
+enum GameObjectType {BOUNDS, TARGET, GRASS, LOG, TURTLE, RIVER, GROUND, BUS,CAR, ROAD, UNKNOWN, COLLIDABLE, PLAYER};
 
 class GameObject {
 protected:

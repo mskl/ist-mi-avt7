@@ -86,7 +86,7 @@ public:
             // Wheel 1
             renderMaterials(ids[1]);
             pushMatrix(MODEL);
-                translate(MODEL, 2.5, 0, 0);
+                translate(MODEL, 2.5, 0.1, 0);
                 rotate(MODEL, angle, 0,0,1);
                 scale(MODEL,     0.3, 0.3, 0.3);
                 translate(MODEL, -0.5, -0.5, 0);
@@ -95,7 +95,7 @@ public:
             // Wheel 2
             renderMaterials(ids[2]);
             pushMatrix(MODEL);
-                translate(MODEL, 2.5, 0, 1-0.3);
+                translate(MODEL, 2.5, 0.1, 1-0.3);
                 rotate(MODEL, angle, 0,0,1);
                 scale(MODEL,     0.3, 0.3, 0.3);
                 translate(MODEL, -0.5, -0.5, 0);
@@ -105,7 +105,7 @@ public:
             // Wheel 11
             renderMaterials(ids[3]);
             pushMatrix(MODEL);
-                translate(MODEL, 2.0, 0, 0);
+                translate(MODEL, 2.0, 0.1, 0);
                 rotate(MODEL, angle, 0,0,1);
                 scale(MODEL,     0.3, 0.3, 0.3);
                 translate(MODEL, -0.5, -0.5, 0);
@@ -115,7 +115,7 @@ public:
             // Wheel 22
             renderMaterials(ids[4]);
             pushMatrix(MODEL);
-                translate(MODEL, 2.0, 0, 1-0.3);
+                translate(MODEL, 2.0, 0.1, 1-0.3);
                 rotate(MODEL, angle, 0,0,1);
                 scale(MODEL,     0.3, 0.3, 0.3);
                 translate(MODEL, -0.5, -0.5, 0);
@@ -125,7 +125,7 @@ public:
             // Wheel 3
             renderMaterials(ids[5]);
             pushMatrix(MODEL);
-                translate(MODEL, 0.2, 0, 0);
+                translate(MODEL, 0.2, 0.1, 0);
                 rotate(MODEL, angle, 0,0,1);
                 scale(MODEL,     0.3, 0.3, 0.3);
                 translate(MODEL, -0.5, -0.5, 0);
@@ -135,7 +135,7 @@ public:
             // Wheel 4
             renderMaterials(ids[6]);
             pushMatrix(MODEL);
-                translate(MODEL, 0.2, 0, 1-0.3);
+                translate(MODEL, 0.2, 0.1, 1-0.3);
                 rotate(MODEL, angle, 0,0,1);
                 scale(MODEL,     0.3, 0.3, 0.3);
                 translate(MODEL, -0.5, -0.5, 0);

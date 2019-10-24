@@ -7,7 +7,7 @@
 
 #include "../DynamicGameObject.h"
 
-enum PlayerState {JUMPING, GROUNDED, ONLOG, JUMPSTAGED};
+enum PlayerState {JUMPING, GROUNDED, ONLOG, ONTURTLE, JUMPSTAGED};
 
 class Player: public DynamicGameObject {
 protected:
@@ -34,7 +34,7 @@ public:
 
     void jump(Vector3 jumpDir, float jumpSpeed) {
         // Player is riding a log
-        if (playerState == ONLOG) {
+        if (playerState == ONLOG || playerState == ONTURTLE) {
             playerState = JUMPSTAGED;
             transitionJumpDir = jumpDir;
             transitionJumpSpeed = jumpSpeed;
@@ -104,6 +104,8 @@ public:
 
     void respawn(){
         position = initPos;
+        playerState = GROUNDED;
+        speed = Vector3(0, 0, 0);
     }
 
     void init() final {
