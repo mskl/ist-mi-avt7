@@ -324,7 +324,6 @@ VSResourceLib::loadRGBATexture(std::string filename,
 	we can release memory used by image. */
 	ilDeleteImages(1, &imageID); 
 
-
 	return textureID;
 }
 

@@ -68,6 +68,7 @@ class GameManager {
 public:
     GLint WindowHandle = 0;
     GLint FrameCount = 0;
+    string infoString = "";
 
     bool isPlaying = true;
 
@@ -75,7 +76,7 @@ public:
     int currentLives = startingLives;
     int score = 0;
     int pointsPerTarget = 100;
-    float speedMultiplier = 1.2;
+    float speedMultiplier = 1.2f;
 
     const float topVerticalLimitPlayerPos = -6.0f;
     const float bottomVerticalLimitPlayerPos = 6.0f;
@@ -108,7 +109,7 @@ public:
             = CameraOrthogonal(-7, 8, -8, 7);
 
     // Player
-    Player* player = new Player(Vector3(2, 1, 0));
+    Player* player = new Player(Vector3(0, 1, 6));
 
     SceneCollider* sceneCollider = new SceneCollider(Vector3(-6.0f, -1, -6));
     Target* target = new Target(Vector3(0.25f, 1.25f, -5.75f));
@@ -174,7 +175,7 @@ public:
             case 'q': movePlayer(0, -1); break;
             case 'a': movePlayer(0, 1); break;
                 // Respawn player
-            case 'r': player->respawn(); break;
+            case 'R': player->respawn(); break;
                 // Random target position
             case 'v': randomTargetPosition(); break;
                 // Increase speed
@@ -186,10 +187,21 @@ public:
                 for (auto &c: pointLights)
                     c->light_enabled = !c->light_enabled;
                 break;
-                // Stop/Continue game
-            case 's': isPlaying = !isPlaying; break;
-
-                // CameraType
+            // Stop/Continue game
+            case 's':
+                if (currentLives != 0) {
+                    isPlaying = !isPlaying;
+                }
+                break;
+            case 'r':
+                if (currentLives <= 0) {
+                    respawnPlayer();
+                    currentLives = 5;
+                    isPlaying = true;
+                    infoString = "";
+                }
+                break;
+            // CameraType
             case '1': selectCamera(CAMERA_PERSPECTIVE_FOLLOW); break;
             case '2': selectCamera(CAMERA_PERSPECTIVE_FIXED); break;
             case '3': selectCamera(CAMERA_ORTHO); break;
@@ -231,7 +243,6 @@ public:
 
         glLinkProgram(shader.getProgramIndex());
 
-
         texMode_uniformId = glGetUniformLocation(shader.getProgramIndex(), "texMode");
         tex_loc0 = glGetUniformLocation(shader.getProgramIndex(), "texmap0");
         // Get the indexes of stuff
@@ -254,10 +265,10 @@ public:
     }
 
     void initScene(){
-
         glGenTextures(17, TextureArray);
         TGA_Texture(TextureArray, "lightwood.tga", 0);
         srand(time(NULL));
+
         createBus();
         createLogs();
         createCars();
@@ -306,9 +317,7 @@ public:
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, TextureArray[0]);
 
-
         glUniform1i(tex_loc0, 0);
-
 
         // Update conelight position
         spotLight->position = player->position + Vector3(0.5f, 1.2f, 0.5f);
@@ -332,7 +341,7 @@ public:
                     }
                 }
 
-                // Check the colisions
+                // Check the collisions
                 checkBusCollisions(go);
                 checkCarCollisions(go);
                 checkLogCollisions(go);
@@ -342,21 +351,16 @@ public:
 
                 // Check collisions with player
                 if (!(go->position == player->position)) {
-                    /*if (go->getType() == BOUNDS){
-                        cout << player->getBoundingBox().vecMax.x << player->getBoundingBox().vecMax.y <<  player->getBoundingBox().vecMax.z<< go->getBoundingBox().vecMax.x << player->getBoundingBox().vecMax.y <<  player->getBoundingBox().vecMax.z<<endl;
-                        cout << player->isInsideOther(go)<<endl;
-                    }*/
                     if (player->collideWith(go)) {
                         if (go->getType() == BUS || go->getType() == CAR) {
                             roadDeath = true;
-                        }else if(go->getType() == TARGET){
+                        } else if(go->getType() == TARGET){
                             randomTargetPosition();
                             increaseSpeed();
                             player->respawn();
                             score += pointsPerTarget;
                         }
-                    }
-                    else if ((player->playerState == GROUNDED) && (player->collideWithBottom(go))) {
+                    } else if ((player->playerState == GROUNDED) && (player->collideWithBottom(go))) {
                         cout << "Bottom collision with " << go->getType() << endl;
                         if (go->getType() == LOG) {
                             hitLog = true;
@@ -392,6 +396,7 @@ public:
         }
 
         bool deathInRiver = hitRiver && (!hitLog) && (player->playerState != ONLOG);
+
         if (riverBorder) {
             cout << "Death in river border!" << endl;
             onDeath();
@@ -408,12 +413,23 @@ public:
         /*if(!isPlaying){
             vsfl.renderSentence(10, 50, gameover);
         }*/
+
         glutSwapBuffers();
     }
 
 private:
     void onDeath(){
         currentLives--;
+
+        if (currentLives == 0) {
+            infoString = "Player has died! The achieved score: " + to_string(score);
+            isPlaying = false;
+        }
+
+        respawnPlayer();
+    }
+
+    void respawnPlayer() {
         player->playerState = GROUNDED;
         player->speed = Vector3(0, 0, 0);
         player->respawn();
@@ -536,6 +552,7 @@ private:
             }
         }
     }
+
     void checkCarCollisions(GameObject* go){
         std::vector<Car *>::iterator it_obj;
         for (it_obj = cars.begin(); it_obj != cars.end(); it_obj++) {
@@ -567,8 +584,7 @@ private:
         }
     }
 
-    void createLogs()
-    {
+    void createLogs() {
         Log * log;
         for (int i = 0; i < 3; i++){
             float randSpeed =(float)(rand() % 60 + 20) / 100.0f;
@@ -587,8 +603,7 @@ private:
         }
     }
 
-    void createTurtles()
-    {
+    void createTurtles() {
         Turtle * turtle;
         for (int i = 0; i < 2; i++){
             float randSpeed =(float)(rand() % 30 + 20) / 100.0f;
@@ -630,6 +645,7 @@ private:
             }
         }
     }
+
     void checkTurtlesCollisions(GameObject* go){
         std::vector<Turtle *>::iterator it_obj;
         for (it_obj = turtles.begin(); it_obj != turtles.end(); it_obj++) {

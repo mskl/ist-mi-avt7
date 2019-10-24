@@ -57,7 +57,13 @@ void timer(int value)
 	oss << "Current lives: " << GameManagerWrapper::manager->currentLives <<
 	    " Current points: " << GameManagerWrapper::manager->score;
 	glutSetWindow(GameManagerWrapper::manager->WindowHandle);
-    glutSetWindowTitle(oss.str().c_str());
+
+	if (GameManagerWrapper::manager->infoString == "") {
+        glutSetWindowTitle(oss.str().c_str());
+	} else {
+        glutSetWindowTitle(GameManagerWrapper::manager->infoString.c_str());
+	}
+
     GameManagerWrapper::manager->FrameCount = 0;
     glutTimerFunc(1000, timer, 0);
 }
