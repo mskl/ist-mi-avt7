@@ -32,6 +32,8 @@
 #include "vsResourceLib.h"
 #include <stdlib.h>
 #include <vector>
+#include <math.h>
+#include "cstring"
 
 
 VSResSurfRevLib::VSResSurfRevLib()
