@@ -2,12 +2,12 @@
 // Created by skalimat on 18.10.19.
 //
 
-#ifndef AVT7_BUS_H
-#define AVT7_BUS_H
+#ifndef AVT7_CAR_H
+#define AVT7_CAR_H
 
 #include "../DynamicGameObject.h"
 
-class Bus: public DynamicGameObject {
+class Car: public DynamicGameObject {
 public:
 
     Vector3 initPos;
@@ -18,8 +18,8 @@ public:
     GLint deltaTime = 1;
     GLint prevTime = 1;
 
-    Bus(Vector3 pos, Vector3 speed, bool goingRight)
-            : DynamicGameObject(pos, Vector3(0, 0, 0), Vector3(3, 1, 1), BUS, speed) {
+    CAR(Vector3 pos, Vector3 speed, bool goingRight)
+            : DynamicGameObject(pos, Vector3(0, 0, 0), Vector3(3, 1, 1), CAR, speed) {
         initPos = pos;
         isGoingRight = goingRight;
     }
@@ -153,4 +153,4 @@ public:
 
 /**/
 
-#endif //AVT7_BUS_H
+#endif //AVT7_CAR_H

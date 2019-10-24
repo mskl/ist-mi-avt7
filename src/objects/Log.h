@@ -16,7 +16,7 @@ public:
     // Random offset of the rotation of the log
     float randomTimeOffset = 0.0f;
     // One rotation revolution happens in this time
-    const float waveTime = 2000.0f;
+    const float waveTime = 500.0f;
 
     Log(Vector3 pos, Vector3 speed)
             : DynamicGameObject(pos, Vector3(0, 0, 0), Vector3(3, 1, 1), LOG, speed),

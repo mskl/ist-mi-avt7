@@ -242,11 +242,21 @@ public:
             float randSpeed =(float)(rand() % 80 + 50) / 100.0f;
             for (int j = 0; j < 4; j++){
                 int offset = rand() % 7 + 1;
-                Vector3 spawnPosition = Vector3(7.0f + offset, 1, i*2+1);
-                if(j > 0){
-                    spawnPosition.x = busses.back()->position.x + 5.0f * i + offset;
+                bool isGoingRight = i == 1;
+                if(isGoingRight){
+                    Vector3 spawnPosition = Vector3(-7.0f - offset, 1, i*2+1);
+                    if(j > 0){
+                        spawnPosition.x = busses.back()->position.x - 5.0f * i - offset;
+                    }
+                    //bus = new Bus(spawnPosition, Vector3(randSpeed*-1, 0, 0), false);
+                    bus = new Bus(spawnPosition, Vector3(-1, 0, 0), true);
+                }else{
+                    Vector3 spawnPosition = Vector3(7.0f + offset, 1, i*2+1);
+                    if(j > 0){
+                        spawnPosition.x = busses.back()->position.x + 5.0f * i + offset;
+                    }
+                    bus = new Bus(spawnPosition, Vector3(randSpeed, 0, 0), false);
                 }
-                bus = new Bus(spawnPosition, Vector3(randSpeed, 0, 0));
                 gameObjects.push_back(bus);
                 busses.push_back(bus);
             }
@@ -275,7 +285,10 @@ public:
             if (!(go->position == (*it_obj)->position)) {
                 if (!(*it_obj)->collideWith(go)) {
                     if (go->getType() == BOUNDS) {
-                        if ((*it_obj)->position.x < go->position.x) {
+                        if ((*it_obj)->position.x < go->position.x && !(*it_obj)->isGoingRight) {
+                            (*it_obj)->respawn();
+                        }
+                        if ((*it_obj)->position.x > go->position.x && (*it_obj)->isGoingRight) {
                             (*it_obj)->respawn();
                         }
                     }
@@ -285,7 +298,11 @@ public:
                         GameObject *objA = ((*it_obj)->position.x > go->position.x) ? (*it_obj) : go;
 
                         Vector3 tempPos = objA->position;
-                        tempPos.x += (float) (rand() % 5 + 3);
+                        if((*it_obj)->isGoingRight){
+                            tempPos.x -= (float) (rand() % 5 + 3);
+                        }else{
+                            tempPos.x += (float) (rand() % 5 + 3);
+                        }
                         objA->position = tempPos;
                     }
                 }
