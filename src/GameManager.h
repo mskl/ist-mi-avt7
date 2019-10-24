@@ -20,6 +20,7 @@ using namespace std;
 #include "libs/AVTmathLib.h"
 #include "VertexAttrDef.h"
 #include "libs/vsShaderLib.h"
+#include "libs/vsFontLib.h"
 #include "Camera.h"
 #include "CameraPerspective.h"
 #include "CameraPerspectiveMoving.h"
@@ -41,6 +42,7 @@ using namespace std;
 #include "objects/Car.h"
 #include "objects/Turtle.h"
 
+#include "libs/TGA.h"
 const char* VERTEX_SHADER_PATH = "shaders/phong.vert";
 const char* FRAGMENT_SHADER_PATH = "shaders/phong.frag";
 
@@ -56,6 +58,11 @@ GLint l_pos_id[8];  // pointers to shader variables
 GLint l_enabled_id; // GLSL pointer to the boolean array
 GLint l_enabled[8] = {1, 1, 1, 1, 1, 1, 1, 1};
 GLint l_spot_dir_id;
+
+GLint texMode_uniformId;
+GLint tex_loc0, tex_loc1, tex_loc2, tex_loc3, tex_loc4;
+GLuint TextureArray[25];
+
 
 class GameManager {
 public:
@@ -85,6 +92,7 @@ public:
     GLint lastMoveTime = 0;
     GLint moveTimeout = 300;
 
+
     enum CameraType {
         CAMERA_PERSPECTIVE_FOLLOW,
         CAMERA_PERSPECTIVE_FIXED,
@@ -111,6 +119,7 @@ public:
     vector<PointLight*> pointLights = vector<PointLight*>();
 
 
+    unsigned int lifes, points, gameover;
 public:
     GameManager() {
         // Keep the pointLight in separate vector as well.
@@ -215,9 +224,16 @@ public:
         glBindFragDataLocation(shader.getProgramIndex(), 0,"colorOut");
         glBindAttribLocation(shader.getProgramIndex(), VERTEX_COORD_ATTRIB, "position");
         glBindAttribLocation(shader.getProgramIndex(), NORMAL_ATTRIB, "normal");
+        glBindAttribLocation(shader.getProgramIndex(), TEXTURE_COORD_ATTRIB, "texCoord");
+        glBindAttribLocation(shader.getProgramIndex(), VERTEX_ATTRIB1, "vVertex");
+        glBindAttribLocation(shader.getProgramIndex(), VERTEX_ATTRIB2, "vtexCoord");
+        glBindAttribLocation(shader.getProgramIndex(), TANGENT_ATTRIB, "tangent");
 
         glLinkProgram(shader.getProgramIndex());
 
+
+        texMode_uniformId = glGetUniformLocation(shader.getProgramIndex(), "texMode");
+        tex_loc0 = glGetUniformLocation(shader.getProgramIndex(), "texmap0");
         // Get the indexes of stuff
         pvm_uniformId = glGetUniformLocation(shader.getProgramIndex(), "m_pvm");
         vm_uniformId = glGetUniformLocation(shader.getProgramIndex(), "m_viewModel");
@@ -238,6 +254,9 @@ public:
     }
 
     void initScene(){
+
+        glGenTextures(17, TextureArray);
+        TGA_Texture(TextureArray, "lightwood.tga", 0);
         srand(time(NULL));
         createBus();
         createLogs();
@@ -254,9 +273,11 @@ public:
         glEnable(GL_CULL_FACE);
         glEnable(GL_MULTISAMPLE);
         glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+        //initFonts();
     }
 
     void renderScene() {
+
         GLint currentTime = glutGet(GLUT_ELAPSED_TIME);
         deltaTime = prevTime - currentTime;
         prevTime = currentTime;
@@ -281,6 +302,13 @@ public:
             printf("Program Not Valid!\n");
             exit(1);
         }
+
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, TextureArray[0]);
+
+
+        glUniform1i(tex_loc0, 0);
+
 
         // Update conelight position
         spotLight->position = player->position + Vector3(0.5f, 1.2f, 0.5f);
@@ -336,6 +364,7 @@ public:
                             player->speed = go->getSpeed();
                         } else if (go->getType() == TURTLE) {
                             Turtle* turt = (Turtle*)go;
+                            cout << turt->isUnderWater << endl;
                             if(turt->isUnderWater){
                                 hitRiver = true;
                             }else{
@@ -376,6 +405,9 @@ public:
             onDeath();
         }
 
+        /*if(!isPlaying){
+            vsfl.renderSentence(10, 50, gameover);
+        }*/
         glutSwapBuffers();
     }
 
@@ -630,6 +662,20 @@ private:
 
         target->position = Vector3(randomX + 0.25f, 1.25f, -5-0.75f);
     }
+
+    /*void initFonts(){
+        //cout << vsfl << endl;
+        vsfl.load("fonts/couriernew10");
+        vsfl.setFixedFont(true);
+        vsfl.setColor(1.0f, 0.5f, 0.25f, 1.0f);
+        lifes = vsfl.genSentence();
+        points = vsfl.genSentence();
+        gameover = vsfl.genSentence();
+
+        vsfl.prepareSentence(lifes, "Lifes: " + std::to_string(10));
+        vsfl.prepareSentence(points, "Points: " + std::to_string(20));
+        vsfl.prepareSentence(gameover, "GAME OVER!");
+    }*/
 };
 
 #endif //AVT7_GAMEMANAGER_H

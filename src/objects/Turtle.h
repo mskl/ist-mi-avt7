@@ -17,10 +17,9 @@ public:
     float randomTimeOffset = 0.0f;
     // One rotation revolution happens in this time
     const float waveTime = 1000.0f;
-
     bool isUnderWater = false;
     Turtle(Vector3 pos, Vector3 speed)
-            : DynamicGameObject(pos, Vector3(0, 0, 0), Vector3(5.1, 1.1, 1), TURTLE, speed),
+            : DynamicGameObject(pos, Vector3(0, 0, 0), Vector3(5, 1, 1), TURTLE, speed),
               initPos(pos) {
         randomTimeOffset = (((float) rand()) / (float)RAND_MAX) * waveTime;
     }
@@ -44,12 +43,14 @@ public:
 
     void render() override {
         GLint curTime = glutGet(GLUT_ELAPSED_TIME);
-        float posTurtleBodyWater = 0.2f*sin(curTime/waveTime + randomTimeOffset);
+
+        float posTurtleBodyWater = 0.2f*sin(curTime/(waveTime +randomTimeOffset));
 
         isUnderWater = posTurtleBodyWater < 0.0f;
-        //cout << posTurtleBodyWater << " " << isUnderWater << endl;
+
         pushMatrix(MODEL);
             translate(MODEL, position.x, position.y, position.z);
+
             renderMaterials(ids[0]);
             // The bus body
             pushMatrix(MODEL);

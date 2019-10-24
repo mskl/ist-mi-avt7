@@ -7,9 +7,5 @@ set(CMAKE_CXX_STANDARD 11)
 file(GLOB_RECURSE SOURCES src/*.h src/*.cpp)
 add_executable(AVT7 ${SOURCES})
 
-if (WIN64)
-    # TODO
-elseif(UNIX)
-    target_link_libraries(AVT7 -lm -lGL -L/usr/X11R6/lib -lGLU -lglut -lGLEW)
-endif(UNIX)
+target_link_libraries(AVT7 -lm -lGL -L/usr/X11R6/lib -lGLU -lglut -lGLEW)
 

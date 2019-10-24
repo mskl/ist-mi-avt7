@@ -11,6 +11,7 @@
 #include "ShaderIndices.h"
 #include "BoundingBox.h"
 #include "materials/Materials.h"
+#include "GameManager.h"
 
 
 extern struct MyMesh mesh[];
@@ -42,6 +43,9 @@ protected:
         glUniform1f(si.loc_shi, mesh[mid].mat.shininess);
     }
 
+    static void renderTexture(GLint mid){
+        glUniform1i(mid, 0);
+    }
     static void setMaterial(GLint mid, AMaterial mat) {
         memcpy(mesh[mid].mat.ambient, mat.amb, 4 * sizeof(float));
         memcpy(mesh[mid].mat.diffuse, mat.diff, 4 * sizeof(float));

@@ -10,7 +10,6 @@ using namespace std;
 #include <GL/freeglut.h> // GLUT is the toolkit to interface with the OS
 #include "GameManager.h"
 
-
 #define CAPTION "AVT Per Fragment Phong Lightning Demo"
 #define MAX_MESH_COUNT 1000
 #define WINDOW_WIDTH 1280

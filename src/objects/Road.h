@@ -6,7 +6,9 @@
 #define AVT7_ROAD_H
 
 #include "../GameObject.h"
+#include "../GameManager.h"
 
+extern GLint texMode_uniformId;
 class Road: public GameObject {
 public:
 
@@ -25,10 +27,12 @@ public:
             pushMatrix(MODEL);
                 renderMaterials(ids[0]);
                 translate(MODEL, -13 / 2, 0, 1);
+                renderTexture(texMode_uniformId);
                 scale(MODEL, 13, 1, 5);
                 buildVAO(ids[0]);
             popMatrix(MODEL);
         popMatrix(MODEL);
+
     }
 };
 
