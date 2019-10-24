@@ -196,6 +196,7 @@ public:
             case 'r':
                 if (currentLives <= 0) {
                     respawnPlayer();
+                    resetAllObjects();
                     currentLives = 5;
                     isPlaying = true;
                     infoString = "";
@@ -436,6 +437,26 @@ private:
         player->speed = Vector3(0, 0, 0);
         player->respawn();
     }
+    void resetAllObjects() {
+        std::vector<Bus *>::iterator bus_obj;
+        for (bus_obj = busses.begin(); bus_obj != busses.end(); bus_obj++) {
+            (*bus_obj)->speed = (*bus_obj)->initSpeed;
+        }
+        std::vector<Log *>::iterator log_obj;
+        for (log_obj = logs.begin(); log_obj != logs.end(); log_obj++) {
+            (*log_obj)->speed = (*log_obj)->initSpeed;
+        }
+
+        std::vector<Car *>::iterator car_obj;
+        for (car_obj = cars.begin(); car_obj != cars.end(); car_obj++) {
+            (*car_obj)->speed = (*car_obj)->initSpeed;
+        }
+        std::vector<Turtle *>::iterator turtle_obj;
+        for (turtle_obj = turtles.begin(); turtle_obj != turtles.end(); turtle_obj++) {
+            (*turtle_obj)->speed = (*turtle_obj)->initSpeed;
+        }
+    }
+
 
     void increaseSpeed() {
         std::vector<Bus *>::iterator bus_obj;
@@ -610,12 +631,12 @@ private:
         for (int i = 0; i < 2; i++){
             float randSpeed =(float)(rand() % 30 + 20) / 100.0f;
 
-            for (int j = 0; j < 3; j++){
+            for (int j = 0; j < 2; j++){
                 int offset = rand() % 7;
 
-                Vector3 spawnPosition = Vector3(-7.0f-j*3-offset, 0, -i*2-2);
+                Vector3 spawnPosition = Vector3(-9.0f-j*3-offset, 0, -i*2-2);
                 if(j > 0){
-                    spawnPosition.x = turtles.back()->position.x-3.5f-offset;
+                    spawnPosition.x = turtles.back()->position.x-5.0f-offset;
                 }
                 turtle = new Turtle(spawnPosition, Vector3(randSpeed*-1, 0, 0));
                 gameObjects.push_back(turtle);
@@ -661,7 +682,7 @@ private:
                 }
                 if ((*it_obj)->collideWith(go)) {
                     if (go->getType() == TURTLE) {
-                        GameObject *objA = ((*it_obj)->position.x > go->position.x) ? (*it_obj) : go;
+                        GameObject *objA = ((*it_obj)->position.x < go->position.x) ? (*it_obj) : go;
 
                         Vector3 tempPos = objA->position;
                         tempPos.x -= (float) (rand() % 5 + 3);

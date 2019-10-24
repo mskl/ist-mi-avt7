@@ -13,6 +13,7 @@ public:
 
     // Initial position of the player
     Vector3 initPos;
+    Vector3 initSpeed;
     // Random offset of the rotation of the log
     float randomTimeOffset = 0.0f;
     // One rotation revolution happens in this time
@@ -22,6 +23,7 @@ public:
             : DynamicGameObject(pos, Vector3(0, 0, 0), Vector3(5, 1, 1), TURTLE, speed),
               initPos(pos) {
         randomTimeOffset = (((float) rand()) / (float)RAND_MAX) * waveTime;
+        initSpeed = speed;
     }
 
     void init() override {
@@ -42,11 +44,9 @@ public:
     }
 
     void render() override {
-        GLint curTime = glutGet(GLUT_ELAPSED_TIME);
+        float posTurtleBodyWater = 0.2f;
 
-        float posTurtleBodyWater = 0.2f*sin(curTime/(waveTime +randomTimeOffset));
-
-        isUnderWater = posTurtleBodyWater < 0.0f;
+        //isUnderWater = posTurtleBodyWater < 0.0f;
 
         pushMatrix(MODEL);
             translate(MODEL, position.x, position.y, position.z);

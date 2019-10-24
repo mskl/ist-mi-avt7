@@ -15,6 +15,7 @@ public:
     float angle = 0;
 
 
+    Vector3 initSpeed;
     GLint deltaTime = 1;
     GLint prevTime = 1;
 
@@ -22,6 +23,7 @@ public:
             : DynamicGameObject(pos, Vector3(0, 0, 0), Vector3(1.5, 1, 1), CAR, speed) {
         initPos = pos;
         isGoingRight = goingRight;
+        initSpeed = speed;
     }
 
     void init() override {

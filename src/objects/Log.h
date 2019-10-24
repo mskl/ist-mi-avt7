@@ -18,10 +18,12 @@ public:
     // One rotation revolution happens in this time
     const float waveTime = 500.0f;
 
+    Vector3 initSpeed;
     Log(Vector3 pos, Vector3 speed)
             : DynamicGameObject(pos, Vector3(0, 0, 0), Vector3(3, 1, 1), LOG, speed),
               initPos(pos) {
         randomTimeOffset = (((float) rand()) / (float)RAND_MAX) * waveTime;
+        initSpeed = speed;
     }
 
     void init() override {
