@@ -7,26 +7,18 @@
 
 #include "../GameObject.h"
 
+extern GLint l_enabled_id;
+extern GLint l_enabled[8];
+
 class Light: public GameObject {
 public:
+    int light_id;
+    bool light_enabled;
 
-    // 0 for directional
-    // 1 for point
-    float lightType = 0;
-
-    explicit Light(Vector3 pos, float type): GameObject(pos) {
-        this->lightType = type;
-    }
-
-    void init() override {
-        // Do nothing
-    }
-
-    void render() override {
-        float res[4];
-        float lightPos[4] = {position.x, position.y, position.z, lightType};
-        multMatrixPoint(VIEW, lightPos, res);
-        glUniform4fv(lPos_uniformId, 1, res);
+protected:
+    explicit Light(Vector3 pos, int light_id, bool light_active = true): GameObject(pos) {
+        this->light_id = light_id;
+        this->light_enabled = light_active;
     }
 };
 

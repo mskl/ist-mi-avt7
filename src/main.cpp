@@ -55,9 +55,8 @@ GameManager* GameManagerWrapper::manager = nullptr;
 void timer(int value)
 {
 	std::ostringstream oss;
-	oss << CAPTION;
-	//": " << "GameManagerWrapper::manager->FrameCount" << " FPS @ (" << "GameManagerWrapper::manager->w"
-	//<< "x" << "GameManagerWrapper::manager->h" << ")";
+	oss << "Current lives: " << GameManagerWrapper::manager->currentLives <<
+	    " Current points: " << GameManagerWrapper::manager->score;
 	glutSetWindow(GameManagerWrapper::manager->WindowHandle);
     glutSetWindowTitle(oss.str().c_str());
     GameManagerWrapper::manager->FrameCount = 0;
