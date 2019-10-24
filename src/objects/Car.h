@@ -65,11 +65,6 @@ public:
 
     void render() override {
         float len = 3;
-        GLint currentTime = glutGet(GLUT_ELAPSED_TIME);
-        deltaTime = prevTime - currentTime;
-        prevTime = currentTime;
-
-        angle -=50*abs(speed.x)* (1.0f/(float)deltaTime);
         renderMaterials(ids[0]);
         pushMatrix(MODEL);
             if (isGoingRight){;
@@ -129,6 +124,14 @@ public:
 
     void respawn(){
         position = initPos;
+    }
+
+    void rotateWheels(){
+        GLint currentTime = glutGet(GLUT_ELAPSED_TIME);
+        deltaTime = prevTime - currentTime;
+        prevTime = currentTime;
+
+        angle -=50*abs(speed.x)* (1.0f/(float)deltaTime);
     }
 
 };

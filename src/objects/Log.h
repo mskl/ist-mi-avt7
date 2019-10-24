@@ -17,7 +17,11 @@ public:
     float randomTimeOffset = 0.0f;
     // One rotation revolution happens in this time
     const float waveTime = 500.0f;
+    float angle = 0;
 
+
+    GLint deltaTime = 1;
+    GLint prevTime = 1;
     Vector3 initSpeed;
     Log(Vector3 pos, Vector3 speed)
             : DynamicGameObject(pos, Vector3(0, 0, 0), Vector3(3, 1, 1), LOG, speed),
@@ -39,7 +43,7 @@ public:
                 renderMaterials(ids[0]);
                 pushMatrix(MODEL);
                 scale(MODEL,     3.0, 0.8, 0.8);
-                rotate(MODEL, 8.0f*sin(curTime/waveTime + randomTimeOffset), 1, 0, 0);
+                rotate(MODEL, angle, 1, 0, 0);
                 translate(MODEL, 0, 0.2, 0.2);
                 buildVAO(ids[0]);
             popMatrix(MODEL);
@@ -49,6 +53,14 @@ public:
 
     void respawn(){
         position = initPos;
+    }
+    void rockLog(){
+
+        GLint currentTime = glutGet(GLUT_ELAPSED_TIME);
+        deltaTime = prevTime - currentTime;
+        prevTime = currentTime;
+
+        angle =  8.0f*sin(currentTime/waveTime + randomTimeOffset);
     }
 };
 

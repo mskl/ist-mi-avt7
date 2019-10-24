@@ -341,6 +341,17 @@ public:
                         // TODO: put this into an update method of the Target object, there is no need to have it here
                         target->rotateCube(deltaTime);
                     }
+
+
+                    if(go->getType() == BUS){
+                        ((Bus*)go)->rotateWheels();
+                    }
+                    if(go->getType() == CAR){
+                        ((Car*)go)->rotateWheels();
+                    }
+                    if(go->getType() == LOG){
+                        ((Log*)go)->rockLog();
+                    }
                 }
 
                 // Check the collisions
