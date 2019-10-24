@@ -73,9 +73,9 @@ public:
     const float leftHorizontalLimitPlayerPos = -6.0f;
     const float rightHorizontalLimitPlayerPos = 6.0f;
 
-    std::vector<GameObject*> gameObjects = std::vector<GameObject*>();
-    std::vector<Bus*> busses = std::vector<Bus*>();
-    std::vector<Log*> logs = std::vector<Log*>();
+    vector<GameObject*> gameObjects = vector<GameObject*>();
+    vector<Bus*> busses = vector<Bus*>();
+    vector<Log*> logs = vector<Log*>();
 
     // All in microseconds
     GLint lastMoveTime = 0;
@@ -95,15 +95,13 @@ public:
     CameraOrthogonal cameraOrthogonal
         = CameraOrthogonal(-7, 8, -8, 7);
 
-    Vector3 playerInitPos =  Vector3(0, 1, 6);
-    Player* player = new Player(playerInitPos);
+    // Player
+    Player* player = new Player(Vector3(0, 1, 6));
 
     SceneCollider* sceneCollider = new SceneCollider(Vector3(-6.0f, -1, -6));
     Target* target = new Target(Vector3(0.25f, 1.25f, -5.75f));
 
-//    Coordinates* cmin = new Coordinates(Vector3(-6, 0, -5));
-//    Coordinates* cmax = new Coordinates(Vector3(7, 0.8, 0));
-
+    // Lights
     Light* directionalLight = new DirectionalLight(Vector3(0.0f, 5.0f, 0.0f), 6, false);
     SpotLight* spotLight = new SpotLight(Vector3(0, -1, 0), Vector3(0, 2, 0), 7, false);
     vector<PointLight*> pointLights = vector<PointLight*>();
@@ -476,14 +474,11 @@ private:
 
     void randomTargetPosition() {
         int randomX = rand() % 13 - 6;
-        int randomZ = rand() % 13 - 6;
 
         if (randomX == 7)
             randomX -=1;
-        if (randomZ == 7)
-            randomZ -=1;
 
-        target->position = Vector3(randomX + 0.25f, 1.25f, randomZ-0.75f);
+        target->position = Vector3(randomX + 0.25f, 1.25f, -5-0.75f);
     }
 };
 

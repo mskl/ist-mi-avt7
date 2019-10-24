@@ -7,7 +7,6 @@
 
 #include "../DynamicGameObject.h"
 
-
 enum PlayerState {JUMPING, GROUNDED, ONLOG, JUMPSTAGED};
 
 class Player: public DynamicGameObject {
@@ -25,7 +24,9 @@ protected:
 public:
     // Current state of the player
     PlayerState playerState = GROUNDED;
-    Vector3 initPos;
+    Vector3 lastJumpDir = Vector3();
+    Vector3 initPos = Vector3();
+
     Player(Vector3 pos)
         : DynamicGameObject(pos,Vector3(), Vector3(1),PLAYER, Vector3()) {
         initPos = pos;
@@ -53,6 +54,8 @@ public:
             cout << "Player pos: " << position << endl;
             cout << "Player speed: " << speed << endl;
             cout << "Staged transition pos: " << transitionPos << endl;
+
+            lastJumpDir = jumpDir;
         }
 
         // Player is grounded
@@ -60,6 +63,7 @@ public:
             playerState = JUMPING;
             jumpTargetPos = position + jumpDir;
             speed = (jumpDir * -1) / jumpSpeed;
+            lastJumpDir = jumpDir;
         }
     }
 
@@ -126,7 +130,13 @@ public:
 
     void render() final {
         float eyeSize = 0.25;
+        float rotation = 0;
 
+        if (lastJumpDir.x == 0 && lastJumpDir.z == 0) rotation = 0;
+        else if (lastJumpDir.x == -1 && lastJumpDir.z == 0) rotation = 90;
+        else if (lastJumpDir.x == 1 && lastJumpDir.z == 0) rotation = 270;
+        else if (lastJumpDir.x == 0 && lastJumpDir.z == 1) rotation = 180;
+        else if (lastJumpDir.x == 0 && lastJumpDir.z == -1) rotation = 0;
 
         pushMatrix(MODEL);
             // Body
@@ -134,8 +144,8 @@ public:
             translate(MODEL, position.x, position.y, position.z);
             translate(MODEL, 0.1, 0, 0.1);
             scale(MODEL, 0.8, 0.8, 0.8);
-            buildVAO(ids[0]);
 
+            buildVAO(ids[0]);
             // Left eye
             renderMaterials(ids[1]);
             pushMatrix(MODEL);
@@ -160,7 +170,6 @@ public:
                 buildVAO(ids[3]);
             popMatrix(MODEL);
         popMatrix(MODEL);
-
     }
 };
 
