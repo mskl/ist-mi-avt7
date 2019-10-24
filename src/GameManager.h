@@ -400,10 +400,15 @@ public:
                                 hitRiver = true;
                             }
                         }
+
+                        if(go->getType() == BOUNDS && player->playerState == ONTURTLE && !player->collideWith(go)){
+                            riverBorder = true;
+                        }
                     }else{
                         if(go->getType() == BOUNDS && player->playerState == ONLOG){
                             riverBorder = true;
                         }
+
                     }
                 }
             }
