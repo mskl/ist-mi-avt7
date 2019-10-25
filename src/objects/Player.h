@@ -27,6 +27,9 @@ public:
     Vector3 lastJumpDir = Vector3();
     Vector3 initPos = Vector3();
 
+    int startingLives = 5;
+    int currentLives = startingLives;
+
     Player(Vector3 pos)
         : DynamicGameObject(pos,Vector3(), Vector3(1),PLAYER, Vector3()) {
         initPos = pos;

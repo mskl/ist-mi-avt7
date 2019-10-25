@@ -31,6 +31,7 @@ enum GameObjectType {BOUNDS, TARGET, GRASS, LOG, TURTLE, RIVER, GROUND, BUS,CAR,
 class GameObject {
 protected:
     bool enabled = true;
+    bool animationEnabled = true;
     std::vector<int> ids = {};
 
     // Static counter of the highest assigned id
@@ -94,6 +95,14 @@ public:
 
     bool isEnabled() {
         return this->enabled;
+    }
+
+    bool getAnimationEnabled() {
+        return animationEnabled;
+    }
+
+    void setAnimationEnabled(bool newAnimationEnabledState) {
+        this->animationEnabled = newAnimationEnabledState;
     }
 
     virtual void init() { }

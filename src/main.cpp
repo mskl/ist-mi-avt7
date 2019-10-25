@@ -54,7 +54,7 @@ GameManager* GameManagerWrapper::manager = nullptr;
 void timer(int value)
 {
 	std::ostringstream oss;
-	oss << "Current lives: " << GameManagerWrapper::manager->currentLives <<
+	oss << "Current lives: " << GameManagerWrapper::manager->player->currentLives <<
 	    " Current points: " << GameManagerWrapper::manager->score;
 	glutSetWindow(GameManagerWrapper::manager->WindowHandle);
 

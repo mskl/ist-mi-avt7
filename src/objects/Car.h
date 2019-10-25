@@ -7,6 +7,8 @@
 
 #include "../DynamicGameObject.h"
 
+
+// TODO: Make bus inherit from car or vice versa, they are the same thing with different body..
 class Car: public DynamicGameObject {
 public:
 
@@ -24,6 +26,10 @@ public:
         initPos = pos;
         isGoingRight = goingRight;
         initSpeed = speed;
+    }
+
+    void respawn(){
+        position = initPos;
     }
 
     void init() override {
@@ -63,8 +69,20 @@ public:
         createCube(ids.back());
     }
 
+    void update(int deltaTime) override {
+        if (animationEnabled) {
+            // Rotate the wheels
+            GLint currentTime = glutGet(GLUT_ELAPSED_TIME);
+            deltaTime = prevTime - currentTime;
+            prevTime = currentTime;
+
+            angle -=50*abs(speed.x)* (1.0f/(float)deltaTime);
+        }
+
+        DynamicGameObject::update(deltaTime);
+    }
+
     void render() override {
-        float len = 3;
         renderMaterials(ids[0]);
         pushMatrix(MODEL);
             if (isGoingRight){;
@@ -120,20 +138,6 @@ public:
             popMatrix(MODEL);
         popMatrix(MODEL);
     }
-
-
-    void respawn(){
-        position = initPos;
-    }
-
-    void rotateWheels(){
-        GLint currentTime = glutGet(GLUT_ELAPSED_TIME);
-        deltaTime = prevTime - currentTime;
-        prevTime = currentTime;
-
-        angle -=50*abs(speed.x)* (1.0f/(float)deltaTime);
-    }
-
 };
 
 /**/
