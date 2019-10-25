@@ -9,8 +9,8 @@
 
 class Bus: public DynamicGameObject {
 public:
-
     Vector3 initPos;
+
     bool isGoingRight = false;
     float angle = 0;
 
@@ -63,7 +63,6 @@ public:
     }
 
     void render() override {
-
         renderMaterials(ids[0]);
         pushMatrix(MODEL);
             if (isGoingRight){;
