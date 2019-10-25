@@ -323,6 +323,7 @@ public:
 
         for (GameObject *go : gameObjects) {
             if (go->isEnabled()) {
+
                 // Update the physics
                 if (isPlaying){
                     go->update(deltaTime);
