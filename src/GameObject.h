@@ -31,6 +31,7 @@ enum GameObjectType {BOUNDS, TARGET, GRASS, LOG, TURTLE, RIVER, GROUND, BUS,CAR,
 class GameObject {
 protected:
     bool enabled = true;
+    bool animationEnabled = true;
     std::vector<int> ids = {};
 
     // Static counter of the highest assigned id
@@ -78,7 +79,6 @@ protected:
         glUniformMatrix3fv(normal_uniformId, 1, GL_FALSE, mNormal3x3);
         glBindVertexArray(mesh[mid].vao);
         glDrawElements(mesh[mid].type, mesh[mid].numIndexes, GL_UNSIGNED_INT, 0);
-        // glBindVertexArray(0); why is thi here? TODO: delete this
     }
 
 public:
@@ -94,6 +94,14 @@ public:
 
     bool isEnabled() {
         return this->enabled;
+    }
+
+    bool getAnimationEnabled() {
+        return animationEnabled;
+    }
+
+    void setAnimationEnabled(bool newAnimationEnabledState) {
+        this->animationEnabled = newAnimationEnabledState;
     }
 
     virtual void init() { }

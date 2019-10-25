@@ -11,6 +11,7 @@ class DynamicGameObject: public CollidableGameObject {
 public:
     Vector3 speed;
 
+
     // Applies to all of the enviremental moving objects (turtles, logs,..)
     float environmentSpeedMultiplier = 1.0f;
 

@@ -70,8 +70,6 @@ public:
 
     bool isPlaying = true;
 
-    int startingLives = 5;
-    int currentLives = startingLives;
     int score = 0;
     int pointsPerTarget = 100;
     float speedMultiplier = 1.2f;
@@ -188,15 +186,16 @@ public:
                 break;
             // Stop/Continue game
             case 's':
-                if (currentLives != 0) {
+                if (player->currentLives != 0) {
                     isPlaying = !isPlaying;
+                    changeAnimationState(isPlaying);
                 }
                 break;
             case 'r':
-                if (currentLives <= 0) {
-                    player->respawn();
+                if (player->currentLives <= 0) {
                     resetSpeedMultipliers();
-                    currentLives = 5;
+                    player->respawn();
+                    player->currentLives = player->startingLives;
                     isPlaying = true;
                     infoString = "";
                 }
@@ -324,27 +323,10 @@ public:
 
         for (GameObject *go : gameObjects) {
             if (go->isEnabled()) {
+
                 // Update the physics
                 if (isPlaying){
                     go->update(deltaTime);
-
-                    // TODO: stop rotations when the object is disabled rather than doing it here
-                    // The enable/disable can then be called to all of the GO's
-                    // Maybe put it inside DynamicGameObject and make a var like animationEnabled
-                    if(go->getType() == TARGET){
-                        // TODO: put this into an update method of the Target object, there is no need to have it here
-                        target->rotateCube(deltaTime);
-                    }
-
-                    if(go->getType() == BUS){
-                        ((Bus*)go)->rotateWheels();
-                    }
-                    if(go->getType() == CAR){
-                        ((Car*)go)->rotateWheels();
-                    }
-                    if(go->getType() == LOG){
-                        ((Log*)go)->rockLog();
-                    }
                 }
 
                 // Check the collisions
@@ -386,7 +368,7 @@ public:
                         } else if (go->getType() == RIVER) {
                             hitRiver = true;
                         }
-                    }else if (player->playerState == ONTURTLE){
+                    } else if (player->playerState == ONTURTLE){
                         if (go->getType() == TURTLE) {
                             Turtle* turt = (Turtle*) go;
                             if(turt->isUnderWater){
@@ -428,16 +410,15 @@ public:
 
 private:
     void onDeath(){
-        currentLives--;
+        player->currentLives--;
 
-        if (currentLives == 0) {
+        if (player->currentLives == 0) {
             infoString = "Player has died! The achieved score: " + to_string(score);
             isPlaying = false;
         }
 
         player->respawn();
     }
-
 
     void resetSpeedMultipliers() {
         for (auto &go: gameObjects) {
@@ -448,6 +429,12 @@ private:
     void increaseSpeedMultipliers() {
         for (auto &go: gameObjects) {
             go->setSpeedMultiplier(go->getSpeedMultiplier()*speedMultiplier);
+        }
+    }
+
+    void changeAnimationState(bool newState) {
+        for (auto &go: gameObjects) {
+            go->setAnimationEnabled(newState);
         }
     }
 

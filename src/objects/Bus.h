@@ -25,6 +25,10 @@ public:
         initSpeed = speed;
     }
 
+    void respawn(){
+        this->position = initPos;
+    }
+
     void init() override {
         // Body
         ids.push_back(idCount+=1);
@@ -60,6 +64,19 @@ public:
         ids.push_back(idCount+=1);
         setMaterial(ids.back(), mat_bus_wheel);
         createCube(ids.back());
+    }
+
+    void update(int deltaTime) final {
+        if (animationEnabled) {
+            // Rotate the wheels
+            GLint currentTime = glutGet(GLUT_ELAPSED_TIME);
+            deltaTime = prevTime - currentTime;
+            prevTime = currentTime;
+
+            angle -=50*abs(speed.x)* (1.0f/(float)deltaTime);
+        }
+
+        DynamicGameObject::update(deltaTime);
     }
 
     void render() override {
@@ -137,18 +154,6 @@ public:
                 buildVAO(ids[6]);
             popMatrix(MODEL);
         popMatrix(MODEL);
-    }
-
-    void respawn(){
-        position = initPos;
-    }
-
-    void rotateWheels(){
-        GLint currentTime = glutGet(GLUT_ELAPSED_TIME);
-        deltaTime = prevTime - currentTime;
-        prevTime = currentTime;
-
-        angle -=50*abs(speed.x)* (1.0f/(float)deltaTime);
     }
 };
 
