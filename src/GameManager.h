@@ -115,8 +115,6 @@ public:
     SpotLight* spotLight = new SpotLight(Vector3(0, -1, 0), Vector3(0, 2, 0), 7, false);
     vector<PointLight*> pointLights = vector<PointLight*>();
 
-
-    unsigned int lifes, points, gameover;
 public:
     GameManager() {
         // Keep the pointLight in separate vector as well.

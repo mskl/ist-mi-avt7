@@ -1,8 +1,5 @@
-#include <math.h>
 #include <iostream>
 #include <sstream>
-#include <string.h>
-#include "stdio.h"
 
 using namespace std;
 
