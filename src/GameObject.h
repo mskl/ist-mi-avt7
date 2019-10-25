@@ -12,6 +12,7 @@
 #include "BoundingBox.h"
 #include "materials/Materials.h"
 #include "GameManager.h"
+#include "libs/vsShaderLib.h"
 
 
 extern struct MyMesh mesh[];

@@ -20,7 +20,6 @@ using namespace std;
 #include "libs/AVTmathLib.h"
 #include "VertexAttrDef.h"
 #include "libs/vsShaderLib.h"
-#include "libs/vsFontLib.h"
 #include "Camera.h"
 #include "CameraPerspective.h"
 #include "CameraPerspectiveMoving.h"
@@ -42,7 +41,6 @@ using namespace std;
 #include "objects/Car.h"
 #include "objects/Turtle.h"
 
-#include "libs/TGA.h"
 const char* VERTEX_SHADER_PATH = "shaders/phong.vert";
 const char* FRAGMENT_SHADER_PATH = "shaders/phong.frag";
 
@@ -177,7 +175,7 @@ public:
                 // Respawn player
             case 'R': player->respawn(); break;
                 // Random target position
-            case 'v': randomTargetPosition(); break;
+            case 'v': target->setRandomPosition(); break;
                 // Increase speed
             case 'i': increaseSpeed(); break;
                 // Night lights
@@ -267,9 +265,6 @@ public:
     }
 
     void initScene(){
-        glGenTextures(17, TextureArray);
-        const char* filename = "lightwood.tga";
-        TGA_Texture(TextureArray, (char*)filename, 0);
         srand(time(NULL));
 
         createBus();
@@ -370,7 +365,7 @@ public:
                         if (go->getType() == BUS || go->getType() == CAR) {
                             roadDeath = true;
                         } else if(go->getType() == TARGET){
-                            randomTargetPosition();
+                            target->setRandomPosition();
                             increaseSpeed();
                             player->respawn();
                             score += pointsPerTarget;
@@ -709,31 +704,6 @@ private:
             }
         }
     }
-
-    void randomTargetPosition() {
-        int randomX = rand() % 13 - 6;
-
-        if (randomX == 7)
-            randomX -=1;
-
-        target->position = Vector3(randomX + 0.25f, 1.25f, -5-0.75f);
-    }
-
-    /*
-    void initFonts(){
-        //cout << vsfl << endl;
-        vsfl.load("fonts/couriernew10");
-        vsfl.setFixedFont(true);
-        vsfl.setColor(1.0f, 0.5f, 0.25f, 1.0f);
-        lifes = vsfl.genSentence();
-        points = vsfl.genSentence();
-        gameover = vsfl.genSentence();
-
-        vsfl.prepareSentence(lifes, "Lifes: " + std::to_string(10));
-        vsfl.prepareSentence(points, "Points: " + std::to_string(20));
-        vsfl.prepareSentence(gameover, "GAME OVER!");
-    }
-    */
 };
 
 #endif //AVT7_GAMEMANAGER_H

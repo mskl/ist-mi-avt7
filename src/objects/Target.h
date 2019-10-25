@@ -21,7 +21,7 @@ public:
         createCube(ids.back());
     }
 
-    void render() override {
+    void render() final {
         float len = 3;
 
         renderMaterials(ids[0]);
@@ -33,6 +33,15 @@ public:
                 buildVAO(ids[0]);
             popMatrix(MODEL);
         popMatrix(MODEL);
+    }
+
+    void setRandomPosition() {
+        int randomX = rand() % 13 - 6;
+
+        if (randomX == 7)
+            randomX -=1;
+
+        position = Vector3(float(randomX) + 0.25f, 1.25f, -5-0.75f);
     }
 
 
