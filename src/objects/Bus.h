@@ -14,7 +14,6 @@ public:
     bool isGoingRight = false;
     float angle = 0;
 
-
     Vector3 initSpeed;
     GLint deltaTime = 1;
     GLint prevTime = 1;
@@ -64,12 +63,7 @@ public:
     }
 
     void render() override {
-        float len = 3;
-        /*GLint currentTime = glutGet(GLUT_ELAPSED_TIME);
-        deltaTime = prevTime - currentTime;
-        prevTime = currentTime;
 
-        angle -=50*abs(speed.x)* (1.0f/(float)deltaTime);*/
         renderMaterials(ids[0]);
         pushMatrix(MODEL);
             if (isGoingRight){;
@@ -111,7 +105,7 @@ public:
                 rotate(MODEL, angle, 0,0,1);
                 scale(MODEL,     0.3, 0.3, 0.3);
                 translate(MODEL, -0.5, -0.5, 0);
-                buildVAO(ids[4]);
+                buildVAO(ids[3]);
             popMatrix(MODEL);
 
             // Wheel 22
@@ -146,10 +140,10 @@ public:
         popMatrix(MODEL);
     }
 
-
     void respawn(){
         position = initPos;
     }
+
     void rotateWheels(){
         GLint currentTime = glutGet(GLUT_ELAPSED_TIME);
         deltaTime = prevTime - currentTime;

@@ -118,6 +118,15 @@ public:
     virtual BoundingBox getBoundingBox() const {
         return BoundingBox(Vector3(0, 0, 0), Vector3(0, 0, 0));
     }
+
+    virtual float getSpeedMultiplier() const {
+        return -1.0f;
+    }
+
+    virtual void setSpeedMultiplier(float newSpeedMult) {
+        // Do nothing
+    }
+
     // ---------------------------------- end of the overriden methods ---------------------------------------------- //
 };
 

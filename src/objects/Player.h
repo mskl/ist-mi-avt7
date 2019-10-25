@@ -101,11 +101,14 @@ public:
         return this->bottomBox.isColliding(other->getBoundingBox(), this->position, other->position);
     }
 
-
     void respawn(){
         position = initPos;
         playerState = GROUNDED;
         speed = Vector3(0, 0, 0);
+    }
+
+    void setSpeedMultiplier(float newSpeed) final {
+        // Do nothing on the player
     }
 
     void init() final {

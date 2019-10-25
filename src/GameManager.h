@@ -469,24 +469,9 @@ private:
         }
     }
 
-
     void increaseSpeed() {
-        std::vector<Bus *>::iterator bus_obj;
-        for (bus_obj = busses.begin(); bus_obj != busses.end(); bus_obj++) {
-            (*bus_obj)->speed = (*bus_obj)->speed*speedMultiplier;
-        }
-        std::vector<Log *>::iterator log_obj;
-        for (log_obj = logs.begin(); log_obj != logs.end(); log_obj++) {
-            (*log_obj)->speed = (*log_obj)->speed*speedMultiplier;
-        }
-
-        std::vector<Car *>::iterator car_obj;
-        for (car_obj = cars.begin(); car_obj != cars.end(); car_obj++) {
-            (*car_obj)->speed = (*car_obj)->speed*speedMultiplier;
-        }
-        std::vector<Turtle *>::iterator turtle_obj;
-        for (turtle_obj = turtles.begin(); turtle_obj != turtles.end(); turtle_obj++) {
-            (*turtle_obj)->speed = (*turtle_obj)->speed*speedMultiplier;
+        for (auto &go: gameObjects) {
+            go->setSpeedMultiplier(go->getSpeedMultiplier()*speedMultiplier);
         }
     }
 
