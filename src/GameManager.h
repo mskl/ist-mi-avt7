@@ -490,28 +490,18 @@ private:
 
     void createBus(){
         Bus * bus;
-        for (int i = 0; i < 1; i++){
-            float randSpeed =(float)(rand() % 80 + 50) / 100.0f;
-            for (int j = 0; j < 4; j++){
-                int offset = rand() % 7 + 1;
-                bool isGoingRight = i == 1;
-                if(isGoingRight){
-                    Vector3 spawnPosition = Vector3(-7.0f - offset, 1, i*2+1);
-                    if(j > 0){
-                        spawnPosition.x = busses.back()->position.x - 5.0f * i - offset;
-                    }
-                    //bus = new Bus(spawnPosition, Vector3(randSpeed*-1, 0, 0), false);
-                    bus = new Bus(spawnPosition, Vector3(-1, 0, 0), true);
-                }else{
-                    Vector3 spawnPosition = Vector3(7.0f + offset, 1, i*2+1);
-                    if(j > 0){
-                        spawnPosition.x = busses.back()->position.x + 5.0f * i + offset;
-                    }
-                    bus = new Bus(spawnPosition, Vector3(randSpeed, 0, 0), false);
-                }
-                gameObjects.push_back(bus);
-                busses.push_back(bus);
+        float randSpeed =(float)(rand() % 80 + 50) / 100.0f;
+        for (int j = 0; j < 4; j++){
+            int offset = rand() % 7 + 1;
+            Vector3 spawnPosition = Vector3(-7.0f - offset, 1, 1);
+
+            if (j > 0) {
+                spawnPosition.x = busses.back()->position.x - 5.0f * 1 - offset;
             }
+
+            bus = new Bus(spawnPosition, Vector3(-1, 0, 0), true);
+            gameObjects.push_back(bus);
+            busses.push_back(bus);
         }
     }
 
