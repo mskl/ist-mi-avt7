@@ -55,7 +55,6 @@ public:
         position = initPos;
     }
     void rockLog(){
-
         GLint currentTime = glutGet(GLUT_ELAPSED_TIME);
         deltaTime = prevTime - currentTime;
         prevTime = currentTime;

@@ -65,7 +65,6 @@ class VSMathLib {
 		#define COUNT_COMPUTED_MATRICES 5
 		#define COUNT_COMPUTED_4x4_MATRICES 2
 
-
 		/// Enumeration of the matrix types
 		enum MatrixTypes{ 
 				MODEL,

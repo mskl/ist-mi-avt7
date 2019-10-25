@@ -46,6 +46,7 @@ protected:
     static void renderTexture(GLint mid){
         glUniform1i(mid, 0);
     }
+
     static void setMaterial(GLint mid, AMaterial mat) {
         memcpy(mesh[mid].mat.ambient, mat.amb, 4 * sizeof(float));
         memcpy(mesh[mid].mat.diffuse, mat.diff, 4 * sizeof(float));
@@ -76,7 +77,7 @@ protected:
         glUniformMatrix3fv(normal_uniformId, 1, GL_FALSE, mNormal3x3);
         glBindVertexArray(mesh[mid].vao);
         glDrawElements(mesh[mid].type, mesh[mid].numIndexes, GL_UNSIGNED_INT, 0);
-        glBindVertexArray(0);
+        // glBindVertexArray(0); why is thi here? TODO: delete this
     }
 
 public:

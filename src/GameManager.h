@@ -268,7 +268,8 @@ public:
 
     void initScene(){
         glGenTextures(17, TextureArray);
-        TGA_Texture(TextureArray, "lightwood.tga", 0);
+        const char* filename = "lightwood.tga";
+        TGA_Texture(TextureArray, (char*)filename, 0);
         srand(time(NULL));
 
         createBus();
