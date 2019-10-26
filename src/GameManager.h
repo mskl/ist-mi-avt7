@@ -109,7 +109,7 @@ public:
             = CameraOrthogonal(-7, 8, -8, 7);
 
     // Player
-    Player* player = new Player(Vector3(0, 1, 6));
+    Player* player = new Player(Vector3(0, 1, 0));
 
     SceneCollider* sceneCollider = new SceneCollider(Vector3(-6.0f, -1, -6));
     Target* target = new Target(Vector3(0.25f, 1.25f, -5.75f));
@@ -352,6 +352,9 @@ public:
                     if(go->getType() == LOG){
                         ((Log*)go)->rockLog();
                     }
+                    if(go->getType() == TURTLE){
+                        ((Turtle*)go)->moveTurtle();
+                    }
                 }
 
                 // Check the collisions
@@ -394,10 +397,11 @@ public:
                             hitRiver = true;
                         }
                     }else if (player->playerState == ONTURTLE){
-                        if (go->getType() == TURTLE) {
+                        if (go->getType() == TURTLE && (player->collideWithBottom(go))) {
                             Turtle* turt = (Turtle*) go;
                             if(turt->isUnderWater){
                                 hitRiver = true;
+                                player->playerState = GROUNDED;
                             }
                         }
 
@@ -444,7 +448,6 @@ private:
             infoString = "Player has died! The achieved score: " + to_string(score);
             isPlaying = false;
         }
-
         respawnPlayer();
     }
 
