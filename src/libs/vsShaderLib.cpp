@@ -40,7 +40,6 @@
 // pre conditions are established with asserts
 // if having errors using the lib switch to Debug mode
 #include <assert.h>
-#include <iostream>
 
 GLenum
         VSShaderLib::spGLShaderTypes[VSShaderLib::COUNT_SHADER_TYPE] = {

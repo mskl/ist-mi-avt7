@@ -1,8 +1,5 @@
-#include <math.h>
 #include <iostream>
 #include <sstream>
-#include <string.h>
-#include "stdio.h"
 
 using namespace std;
 
@@ -10,11 +7,11 @@ using namespace std;
 #include <GL/freeglut.h> // GLUT is the toolkit to interface with the OS
 #include "GameManager.h"
 
+
 #define CAPTION "AVT Per Fragment Phong Lightning Demo"
 #define MAX_MESH_COUNT 1000
 #define WINDOW_WIDTH 1280
 #define WINDOW_HEIGHT 1280
-
 
 VSShaderLib shader;
 struct MyMesh mesh[MAX_MESH_COUNT];
@@ -54,7 +51,7 @@ GameManager* GameManagerWrapper::manager = nullptr;
 void timer(int value)
 {
 	std::ostringstream oss;
-	oss << "Current lives: " << GameManagerWrapper::manager->currentLives <<
+	oss << "Current lives: " << GameManagerWrapper::manager->player->currentLives <<
 	    " Current points: " << GameManagerWrapper::manager->score;
 	glutSetWindow(GameManagerWrapper::manager->WindowHandle);
 

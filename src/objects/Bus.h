@@ -9,11 +9,10 @@
 
 class Bus: public DynamicGameObject {
 public:
-
     Vector3 initPos;
+
     bool isGoingRight = false;
     float angle = 0;
-
 
     Vector3 initSpeed;
     GLint deltaTime = 1;
@@ -24,6 +23,10 @@ public:
         initPos = pos;
         isGoingRight = goingRight;
         initSpeed = speed;
+    }
+
+    void respawn(){
+        this->position = initPos;
     }
 
     void init() override {
@@ -63,13 +66,20 @@ public:
         createCube(ids.back());
     }
 
-    void render() override {
-        float len = 3;
-        /*GLint currentTime = glutGet(GLUT_ELAPSED_TIME);
-        deltaTime = prevTime - currentTime;
-        prevTime = currentTime;
+    void update(int deltaTime) final {
+        if (animationEnabled) {
+            // Rotate the wheels
+            GLint currentTime = glutGet(GLUT_ELAPSED_TIME);
+            deltaTime = prevTime - currentTime;
+            prevTime = currentTime;
 
-        angle -=50*abs(speed.x)* (1.0f/(float)deltaTime);*/
+            angle -=50*abs(speed.x)* (1.0f/(float)deltaTime);
+        }
+
+        DynamicGameObject::update(deltaTime);
+    }
+
+    void render() override {
         renderMaterials(ids[0]);
         pushMatrix(MODEL);
             if (isGoingRight){;
@@ -111,7 +121,7 @@ public:
                 rotate(MODEL, angle, 0,0,1);
                 scale(MODEL,     0.3, 0.3, 0.3);
                 translate(MODEL, -0.5, -0.5, 0);
-                buildVAO(ids[4]);
+                buildVAO(ids[3]);
             popMatrix(MODEL);
 
             // Wheel 22
@@ -144,18 +154,6 @@ public:
                 buildVAO(ids[6]);
             popMatrix(MODEL);
         popMatrix(MODEL);
-    }
-
-
-    void respawn(){
-        position = initPos;
-    }
-    void rotateWheels(){
-        GLint currentTime = glutGet(GLUT_ELAPSED_TIME);
-        deltaTime = prevTime - currentTime;
-        prevTime = currentTime;
-
-        angle -=50*abs(speed.x)* (1.0f/(float)deltaTime);
     }
 };
 

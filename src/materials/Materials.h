@@ -14,11 +14,11 @@ float spec_matte[4] = {0.0f, 0.0f, 0.0f, 1.0f};
 
 float red[4]        = {1.0f, 0.0f, 0.0f, 1.0f};
 float green[4]      = {0.0f, 1.0f, 0.0f, 1.0f};
-float green_dark[4]      = {0.1f, 1.0f, 0.1f, 1.0f};
+float green_dark[4] = {0.1f, 1.0f, 0.1f, 1.0f};
 float blue[4]       = {0.0f, 0.0f, 1.0f, 1.0f};
 float yellow[4]     = {1.0f, 1.0f, 0.0f, 1.0f};
 float grey[4]       = {0.8f, 0.8f, 0.8f, 1.0f};
-float brown[4]      = {0.6f, 0.3f, 0.00f, 1.0f};
+float brown[4]      = {0.6f, 0.3f, 0.0f, 1.0f};
 float black[4]      = {0.0f, 0.0f, 0.0f, 1.0f};
 float bluelight[4]  = {0.6f, 1.0f, 1.0f, 1.0f};
 float frog_green[4] = {0.0f, 1.0f, 0.5f, 1.0f};

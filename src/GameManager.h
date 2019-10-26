@@ -20,7 +20,6 @@ using namespace std;
 #include "libs/AVTmathLib.h"
 #include "VertexAttrDef.h"
 #include "libs/vsShaderLib.h"
-#include "libs/vsFontLib.h"
 #include "Camera.h"
 #include "CameraPerspective.h"
 #include "CameraPerspectiveMoving.h"
@@ -42,7 +41,6 @@ using namespace std;
 #include "objects/Car.h"
 #include "objects/Turtle.h"
 
-#include "libs/TGA.h"
 const char* VERTEX_SHADER_PATH = "shaders/phong.vert";
 const char* FRAGMENT_SHADER_PATH = "shaders/phong.frag";
 
@@ -72,8 +70,6 @@ public:
 
     bool isPlaying = true;
 
-    int startingLives = 5;
-    int currentLives = startingLives;
     int score = 0;
     int pointsPerTarget = 100;
     float speedMultiplier = 1.2f;
@@ -119,8 +115,6 @@ public:
     SpotLight* spotLight = new SpotLight(Vector3(0, -1, 0), Vector3(0, 2, 0), 7, false);
     vector<PointLight*> pointLights = vector<PointLight*>();
 
-
-    unsigned int lifes, points, gameover;
 public:
     GameManager() {
         // Keep the pointLight in separate vector as well.
@@ -177,9 +171,10 @@ public:
                 // Respawn player
             case 'R': player->respawn(); break;
                 // Random target position
-            case 'v': randomTargetPosition(); break;
+            case 'v': target->setRandomPosition(); break;
                 // Increase speed
-            case 'i': increaseSpeed(); break;
+            case 'i':
+                increaseSpeedMultipliers(); break;
                 // Night lights
             case 'n': directionalLight->light_enabled = !directionalLight->light_enabled; break;
             case 'h': spotLight->light_enabled = !spotLight->light_enabled; break;
@@ -189,15 +184,16 @@ public:
                 break;
             // Stop/Continue game
             case 's':
-                if (currentLives != 0) {
+                if (player->currentLives != 0) {
                     isPlaying = !isPlaying;
+                    changeAnimationState(isPlaying);
                 }
                 break;
             case 'r':
-                if (currentLives <= 0) {
-                    respawnPlayer();
-                    resetAllObjects();
-                    currentLives = 5;
+                if (player->currentLives <= 0) {
+                    resetSpeedMultipliers();
+                    player->respawn();
+                    player->currentLives = player->startingLives;
                     isPlaying = true;
                     infoString = "";
                 }
@@ -266,12 +262,10 @@ public:
         return(shader.isProgramLinked());
     }
 
-    void initScene(){
-        glGenTextures(17, TextureArray);
-        TGA_Texture(TextureArray, "lightwood.tga", 0);
+    void initScene() {
         srand(time(NULL));
 
-        createBus();
+        createBusses();
         createLogs();
         createCars();
         createTurtles();
@@ -285,8 +279,9 @@ public:
         glEnable(GL_DEPTH_TEST);
         glEnable(GL_CULL_FACE);
         glEnable(GL_MULTISAMPLE);
+
+        // Sets the background color of the game
         glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
-        //initFonts();
     }
 
     void renderScene() {
@@ -308,18 +303,12 @@ public:
             cameraOrthogonal.view();
         }
 
-        // use our shader
+        // Use the ShaderLib and print a debug string if needed
         glUseProgram(shader.getProgramIndex());
-
         if (!shader.isProgramValid()) {
             printf("Program Not Valid!\n");
             exit(1);
         }
-
-        glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, TextureArray[0]);
-
-        glUniform1i(tex_loc0, 0);
 
         // Update conelight position
         spotLight->position = player->position + Vector3(0.5f, 1.2f, 0.5f);
@@ -336,25 +325,6 @@ public:
                 // Update the physics
                 if (isPlaying){
                     go->update(deltaTime);
-
-                    if(go->getType() == TARGET){
-                        // TODO: put this into an update method of the Target object, there is no need to have it here
-                        target->rotateCube(deltaTime);
-                    }
-
-
-                    if(go->getType() == BUS){
-                        ((Bus*)go)->rotateWheels();
-                    }
-                    if(go->getType() == CAR){
-                        ((Car*)go)->rotateWheels();
-                    }
-                    if(go->getType() == LOG){
-                        ((Log*)go)->rockLog();
-                    }
-                    if(go->getType() == TURTLE){
-                        ((Turtle*)go)->moveTurtle();
-                    }
                 }
 
                 // Check the collisions
@@ -372,8 +342,8 @@ public:
                         if (go->getType() == BUS || go->getType() == CAR) {
                             roadDeath = true;
                         } else if(go->getType() == TARGET){
-                            randomTargetPosition();
-                            increaseSpeed();
+                            target->setRandomPosition();
+                            increaseSpeedMultipliers();
                             player->respawn();
                             score += pointsPerTarget;
                         }
@@ -433,67 +403,36 @@ public:
             onDeath();
         }
 
-        /*if(!isPlaying){
-            vsfl.renderSentence(10, 50, gameover);
-        }*/
-
+        // Swap the back and front buffer
         glutSwapBuffers();
     }
 
 private:
     void onDeath(){
-        currentLives--;
+        player->currentLives--;
 
-        if (currentLives == 0) {
+        if (player->currentLives == 0) {
             infoString = "Player has died! The achieved score: " + to_string(score);
             isPlaying = false;
         }
-        respawnPlayer();
-    }
-
-    void respawnPlayer() {
-        player->playerState = GROUNDED;
-        player->speed = Vector3(0, 0, 0);
         player->respawn();
     }
-    void resetAllObjects() {
-        std::vector<Bus *>::iterator bus_obj;
-        for (bus_obj = busses.begin(); bus_obj != busses.end(); bus_obj++) {
-            (*bus_obj)->speed = (*bus_obj)->initSpeed;
-        }
-        std::vector<Log *>::iterator log_obj;
-        for (log_obj = logs.begin(); log_obj != logs.end(); log_obj++) {
-            (*log_obj)->speed = (*log_obj)->initSpeed;
-        }
 
-        std::vector<Car *>::iterator car_obj;
-        for (car_obj = cars.begin(); car_obj != cars.end(); car_obj++) {
-            (*car_obj)->speed = (*car_obj)->initSpeed;
-        }
-        std::vector<Turtle *>::iterator turtle_obj;
-        for (turtle_obj = turtles.begin(); turtle_obj != turtles.end(); turtle_obj++) {
-            (*turtle_obj)->speed = (*turtle_obj)->initSpeed;
+    void resetSpeedMultipliers() {
+        for (auto &go: gameObjects) {
+            go->setSpeedMultiplier(1.0f);
         }
     }
 
+    void increaseSpeedMultipliers() {
+        for (auto &go: gameObjects) {
+            go->setSpeedMultiplier(go->getSpeedMultiplier()*speedMultiplier);
+        }
+    }
 
-    void increaseSpeed() {
-        std::vector<Bus *>::iterator bus_obj;
-        for (bus_obj = busses.begin(); bus_obj != busses.end(); bus_obj++) {
-            (*bus_obj)->speed = (*bus_obj)->speed*speedMultiplier;
-        }
-        std::vector<Log *>::iterator log_obj;
-        for (log_obj = logs.begin(); log_obj != logs.end(); log_obj++) {
-            (*log_obj)->speed = (*log_obj)->speed*speedMultiplier;
-        }
-
-        std::vector<Car *>::iterator car_obj;
-        for (car_obj = cars.begin(); car_obj != cars.end(); car_obj++) {
-            (*car_obj)->speed = (*car_obj)->speed*speedMultiplier;
-        }
-        std::vector<Turtle *>::iterator turtle_obj;
-        for (turtle_obj = turtles.begin(); turtle_obj != turtles.end(); turtle_obj++) {
-            (*turtle_obj)->speed = (*turtle_obj)->speed*speedMultiplier;
+    void changeAnimationState(bool newState) {
+        for (auto &go: gameObjects) {
+            go->setAnimationEnabled(newState);
         }
     }
 
@@ -510,30 +449,21 @@ private:
         }
     }
 
-    void createBus(){
+    // TODO: createBusses and createCars methods do the same thing. The code should not be repeated.
+    void createBusses(){
         Bus * bus;
-        for (int i = 0; i < 1; i++){
-            float randSpeed =(float)(rand() % 80 + 50) / 100.0f;
-            for (int j = 0; j < 4; j++){
-                int offset = rand() % 7 + 1;
-                bool isGoingRight = i == 1;
-                if(isGoingRight){
-                    Vector3 spawnPosition = Vector3(-7.0f - offset, 1, i*2+1);
-                    if(j > 0){
-                        spawnPosition.x = busses.back()->position.x - 5.0f * i - offset;
-                    }
-                    //bus = new Bus(spawnPosition, Vector3(randSpeed*-1, 0, 0), false);
-                    bus = new Bus(spawnPosition, Vector3(-1, 0, 0), true);
-                }else{
-                    Vector3 spawnPosition = Vector3(7.0f + offset, 1, i*2+1);
-                    if(j > 0){
-                        spawnPosition.x = busses.back()->position.x + 5.0f * i + offset;
-                    }
-                    bus = new Bus(spawnPosition, Vector3(randSpeed, 0, 0), false);
-                }
-                gameObjects.push_back(bus);
-                busses.push_back(bus);
+        float randSpeed =(float)(rand() % 80 + 50) / 100.0f;
+        for (int j = 0; j < 4; j++){
+            int offset = rand() % 7 + 1;
+            Vector3 spawnPosition = Vector3(-7.0f - offset, 1, 1);
+
+            if (j > 0) {
+                spawnPosition.x = busses.back()->position.x - 5.0f * 1 - offset;
             }
+
+            bus = new Bus(spawnPosition, Vector3(-1, 0, 0), true);
+            gameObjects.push_back(bus);
+            busses.push_back(bus);
         }
     }
 
@@ -711,31 +641,6 @@ private:
             }
         }
     }
-
-    void randomTargetPosition() {
-        int randomX = rand() % 13 - 6;
-
-        if (randomX == 7)
-            randomX -=1;
-
-        target->position = Vector3(randomX + 0.25f, 1.25f, -5-0.75f);
-    }
-
-    /*
-    void initFonts(){
-        //cout << vsfl << endl;
-        vsfl.load("fonts/couriernew10");
-        vsfl.setFixedFont(true);
-        vsfl.setColor(1.0f, 0.5f, 0.25f, 1.0f);
-        lifes = vsfl.genSentence();
-        points = vsfl.genSentence();
-        gameover = vsfl.genSentence();
-
-        vsfl.prepareSentence(lifes, "Lifes: " + std::to_string(10));
-        vsfl.prepareSentence(points, "Points: " + std::to_string(20));
-        vsfl.prepareSentence(gameover, "GAME OVER!");
-    }
-    */
 };
 
 #endif //AVT7_GAMEMANAGER_H

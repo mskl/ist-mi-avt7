@@ -27,6 +27,9 @@ public:
     Vector3 lastJumpDir = Vector3();
     Vector3 initPos = Vector3();
 
+    int startingLives = 5;
+    int currentLives = startingLives;
+
     Player(Vector3 pos)
         : DynamicGameObject(pos,Vector3(), Vector3(1),PLAYER, Vector3()) {
         initPos = pos;
@@ -101,11 +104,14 @@ public:
         return this->bottomBox.isColliding(other->getBoundingBox(), this->position, other->position);
     }
 
-
     void respawn(){
         position = initPos;
         playerState = GROUNDED;
         speed = Vector3(0, 0, 0);
+    }
+
+    void setSpeedMultiplier(float newSpeed) final {
+        // Do nothing on the player
     }
 
     void init() final {

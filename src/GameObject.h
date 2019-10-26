@@ -12,6 +12,7 @@
 #include "BoundingBox.h"
 #include "materials/Materials.h"
 #include "GameManager.h"
+#include "libs/vsShaderLib.h"
 
 
 extern struct MyMesh mesh[];
@@ -30,6 +31,7 @@ enum GameObjectType {BOUNDS, TARGET, GRASS, LOG, TURTLE, RIVER, GROUND, BUS,CAR,
 class GameObject {
 protected:
     bool enabled = true;
+    bool animationEnabled = true;
     std::vector<int> ids = {};
 
     // Static counter of the highest assigned id
@@ -46,6 +48,7 @@ protected:
     static void renderTexture(GLint mid){
         glUniform1i(mid, 0);
     }
+
     static void setMaterial(GLint mid, AMaterial mat) {
         memcpy(mesh[mid].mat.ambient, mat.amb, 4 * sizeof(float));
         memcpy(mesh[mid].mat.diffuse, mat.diff, 4 * sizeof(float));
@@ -76,7 +79,6 @@ protected:
         glUniformMatrix3fv(normal_uniformId, 1, GL_FALSE, mNormal3x3);
         glBindVertexArray(mesh[mid].vao);
         glDrawElements(mesh[mid].type, mesh[mid].numIndexes, GL_UNSIGNED_INT, 0);
-        glBindVertexArray(0);
     }
 
 public:
@@ -92,6 +94,14 @@ public:
 
     bool isEnabled() {
         return this->enabled;
+    }
+
+    bool getAnimationEnabled() {
+        return animationEnabled;
+    }
+
+    void setAnimationEnabled(bool newAnimationEnabledState) {
+        this->animationEnabled = newAnimationEnabledState;
     }
 
     virtual void init() { }
@@ -116,6 +126,15 @@ public:
     virtual BoundingBox getBoundingBox() const {
         return BoundingBox(Vector3(0, 0, 0), Vector3(0, 0, 0));
     }
+
+    virtual float getSpeedMultiplier() const {
+        return -1.0f;
+    }
+
+    virtual void setSpeedMultiplier(float newSpeedMult) {
+        // Do nothing
+    }
+
     // ---------------------------------- end of the overriden methods ---------------------------------------------- //
 };
 

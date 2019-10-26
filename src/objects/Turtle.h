@@ -207,13 +207,14 @@ public:
     void respawn(){
         position = initPos;
     }
-
-    void moveTurtle(){
-        GLint currentTime = glutGet(GLUT_ELAPSED_TIME);
-        GLint deltaTime = prevTime - currentTime;
-        prevTime = currentTime;
-        posTurtleBodyWater =  0.2f*sin(currentTime/waveTime + randomTimeOffset);
-        isUnderWater = posTurtleBodyWater < 0.0f;
+    void update(int deltaTime) override {
+        if (animationEnabled) {
+            GLint currentTime = glutGet(GLUT_ELAPSED_TIME);
+            prevTime = currentTime;
+            posTurtleBodyWater = 0.2f * sin(currentTime / waveTime + randomTimeOffset);
+            isUnderWater = posTurtleBodyWater < 0.0f;
+        }
+        DynamicGameObject::update(deltaTime);
     }
 };
 

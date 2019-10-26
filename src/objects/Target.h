@@ -21,9 +21,16 @@ public:
         createCube(ids.back());
     }
 
-    void render() override {
-        float len = 3;
+    void update(int deltaTime) final {
+        if (animationEnabled) {
+            // Rotate the cube
+            angle +=50* (1.0f/(float)deltaTime);
+        }
 
+        DynamicGameObject::update(deltaTime);
+    }
+
+    void render() final {
         renderMaterials(ids[0]);
         pushMatrix(MODEL);
             translate(MODEL, position.x, position.y, position.z);
@@ -35,11 +42,14 @@ public:
         popMatrix(MODEL);
     }
 
+    void setRandomPosition() {
+        int randomX = rand() % 13 - 6;
 
-    void rotateCube(int deltaTime) {
-        angle +=50* (1.0f/(float)deltaTime);
+        if (randomX == 7)
+            randomX -=1;
+
+        position = Vector3(float(randomX) + 0.25f, 1.25f, -5-0.75f);
     }
-
 };
 
 /**/
