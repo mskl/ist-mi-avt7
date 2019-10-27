@@ -9,23 +9,16 @@
 
 class Bus: public DynamicGameObject {
 public:
-    Vector3 initPos;
-
     bool isGoingRight = false;
     float angle = 0;
 
-    Vector3 initSpeed;
-    GLint deltaTime = 1;
-    GLint prevTime = 1;
-
-    Bus(Vector3 pos, Vector3 speed, bool goingRight)
-            : DynamicGameObject(pos, Vector3(0, 0, 0), Vector3(3, 1, 1), BUS, speed) {
-        initPos = pos;
+    Bus(Vector3 pos, Vector3 speed, bool goingRight, GameObjectType type=BUS,
+            Vector3 min = Vector3(0, 0, 0), Vector3 max = Vector3(3, 1, 1))
+            : DynamicGameObject(pos, min, max, type, speed) {
         isGoingRight = goingRight;
-        initSpeed = speed;
     }
 
-    void respawn(){
+    virtual void respawn(){
         this->position = initPos;
     }
 
@@ -68,11 +61,6 @@ public:
 
     void update(int deltaTime) final {
         if (animationEnabled) {
-            // Rotate the wheels
-            GLint currentTime = glutGet(GLUT_ELAPSED_TIME);
-            deltaTime = prevTime - currentTime;
-            prevTime = currentTime;
-
             angle -=50*abs(speed.x)* (1.0f/(float)deltaTime);
         }
 

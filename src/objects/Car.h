@@ -5,31 +5,13 @@
 #ifndef AVT7_CAR_H
 #define AVT7_CAR_H
 
-#include "../DynamicGameObject.h"
+#include "Bus.h"
 
-
-// TODO: Make bus inherit from car or vice versa, they are the same thing with different body..
-class Car: public DynamicGameObject {
+class Car: public Bus {
 public:
-
-    Vector3 initPos;
-    bool isGoingRight = false;
-    float angle = 0;
-
-
-    Vector3 initSpeed;
-    GLint deltaTime = 1;
-    GLint prevTime = 1;
-
-    Car(Vector3 pos, Vector3 speed, bool goingRight)
-            : DynamicGameObject(pos, Vector3(0, 0, 0), Vector3(1.5, 1, 1), CAR, speed) {
-        initPos = pos;
+    Car (Vector3 pos, Vector3 speed, bool goingRight)
+            : Bus(pos, speed, goingRight, CAR, Vector3(0, 0, 0), Vector3(1.5, 1, 1)) {
         isGoingRight = goingRight;
-        initSpeed = speed;
-    }
-
-    void respawn(){
-        position = initPos;
     }
 
     void init() override {
@@ -67,19 +49,6 @@ public:
         ids.push_back(idCount+=1);
         setMaterial(ids.back(), mat_car_wheel);
         createCube(ids.back());
-    }
-
-    void update(int deltaTime) override {
-        if (animationEnabled) {
-            // Rotate the wheels
-            GLint currentTime = glutGet(GLUT_ELAPSED_TIME);
-            deltaTime = prevTime - currentTime;
-            prevTime = currentTime;
-
-            angle -=50*abs(speed.x)* (1.0f/(float)deltaTime);
-        }
-
-        DynamicGameObject::update(deltaTime);
     }
 
     void render() override {

@@ -10,7 +10,8 @@
 class DynamicGameObject: public CollidableGameObject {
 public:
     Vector3 speed;
-
+    Vector3 initSpeed;
+    Vector3 initPos;
 
     // Applies to all of the enviremental moving objects (turtles, logs,..)
     float environmentSpeedMultiplier = 1.0f;
@@ -18,7 +19,8 @@ public:
 
     DynamicGameObject(Vector3 pos, Vector3 min, Vector3 max, GameObjectType type, Vector3 speed)
             : CollidableGameObject(pos, min, max, type), speed(speed) {
-
+        initSpeed = speed;
+        initPos = pos;
     }
 
     Vector3 getSpeed() final {
