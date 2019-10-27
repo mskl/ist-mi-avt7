@@ -37,8 +37,8 @@ public:
                             aVecMin.y < bVecMax.y &&
                             aVecMax.z > bVecMin.z &&
                             aVecMin.z < bVecMax.z;
-        bool is_inside = isInside(b, deltaA, deltaB);
-        return is_colliding || is_inside;
+        //bool is_inside = isInside(b, deltaA, deltaB);
+        return is_colliding;
     }
 
     bool isInside(const BoundingBox b, Vector3 deltaA = Vector3(), Vector3 deltaB = Vector3()) const {
@@ -47,13 +47,19 @@ public:
 
         Vector3 bVecMax = b.vecMax + deltaB;
         Vector3 bVecMin = b.vecMin + deltaB;
+        /*cout << aVecMax << endl;
+        cout << bVecMax << endl;
 
-        return(aVecMax.x <= bVecMax.x &&
-               aVecMax.y <= bVecMax.y &&
-               aVecMax.z <= bVecMax.z &&
-               aVecMin.x >= bVecMin.x &&
-               aVecMin.y >= bVecMin.y &&
-               aVecMin.z >= bVecMin.z);
+        cout << aVecMin << endl;
+        cout << bVecMin << endl;
+        cout << (aVecMax.x < bVecMax.x && aVecMax.y < bVecMax.y && aVecMax.z < bVecMax.z) << endl;
+        cout << (aVecMin.x > bVecMin.x && aVecMin.y > bVecMin.y && aVecMin.z > bVecMin.z) << endl;*/
+        return(aVecMax.x < bVecMax.x &&
+               aVecMax.y < bVecMax.y &&
+               aVecMax.z < bVecMax.z &&
+               aVecMin.x > bVecMin.x &&
+               aVecMin.y > bVecMin.y &&
+               aVecMin.z > bVecMin.z);
     }
 };
 #endif //AVT7_BOUNDINGBOX_H

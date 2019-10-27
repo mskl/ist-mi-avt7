@@ -212,7 +212,8 @@ public:
             GLint currentTime = glutGet(GLUT_ELAPSED_TIME);
             prevTime = currentTime;
             posTurtleBodyWater = 0.2f * sin(currentTime / waveTime + randomTimeOffset);
-            isUnderWater = posTurtleBodyWater < 0.0f;
+            // The values are to compensate for the hump
+            isUnderWater = (std::min(posTurtleBodyWater*2.2f, posTurtleBodyWater)) <= -0.2f;
         }
         DynamicGameObject::update(deltaTime);
     }

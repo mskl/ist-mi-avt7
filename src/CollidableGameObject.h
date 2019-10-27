@@ -30,7 +30,7 @@ public:
         return this->boundingBox.isColliding(other->getBoundingBox(), position, other->position);
     }
     virtual bool isInsideOther(const GameObject* other) const {
-        return this->boundingBox.isInside(other->getBoundingBox());
+        return this->boundingBox.isInside(other->getBoundingBox(), position, other->position);
     }
 };
 
