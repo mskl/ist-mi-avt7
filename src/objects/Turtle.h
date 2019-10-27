@@ -12,23 +12,20 @@
 
 class Turtle: public DynamicGameObject {
 public:
-
-    // Initial position of the player
-    Vector3 initPos;
-    Vector3 initSpeed;
     // Random offset of the rotation of the log
     float randomTimeOffset = 0.0f;
     // One rotation revolution happens in this time
     const float waveTime = 1000.0f;
 
+    bool isGoingRight;
     GLint prevTime = 1;
+
     bool isUnderWater = false;
     float posTurtleBodyWater = 0.2f;
-    Turtle (Vector3 pos, Vector3 speed)
+    Turtle (Vector3 pos, Vector3 speed, bool isGoingRight)
             : DynamicGameObject(pos, Vector3(0, 0, 0), Vector3(5, 1, 1), TURTLE, speed),
-              initPos(pos) {
+            isGoingRight(isGoingRight) {
         randomTimeOffset = (((float) rand()) / (float)RAND_MAX) * waveTime;
-        initSpeed = speed;
     }
 
     void init() override {
@@ -57,10 +54,8 @@ public:
     }
 
     void render() override {
-
         pushMatrix(MODEL);
             translate(MODEL, position.x, position.y, position.z);
-
             renderMaterials(ids[0]);
             // The turtle body
             pushMatrix(MODEL);
@@ -201,12 +196,12 @@ public:
                 buildVAO(ids[0]);
             popMatrix(MODEL);
         popMatrix(MODEL);
-
     }
 
     void respawn(){
         position = initPos;
     }
+
     void update(int deltaTime) override {
         if (animationEnabled) {
             GLint currentTime = glutGet(GLUT_ELAPSED_TIME);

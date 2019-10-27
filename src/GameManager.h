@@ -126,7 +126,7 @@ public:
         gameObjects.push_back(new River());
         gameObjects.push_back(new Road());
         gameObjects.push_back(new Ground());
-        gameObjects.push_back(new Sidewalls());
+        //gameObjects.push_back(new Sidewalls());
 
         // The empty side colliders
         gameObjects.push_back(new SideCollider(LEFT));
@@ -260,11 +260,14 @@ public:
     void initScene() {
         srand(time(NULL));
 
-        createBusses();
-        //createRoadVehicles<Bus>(4, 1);
-        createLogs();
-        createCars();
-        createTurtles();
+        createVehicles<Bus>(busses, 4, 1, 1, true, 80, 50);
+        createVehicles<Car>(cars, 5, 3, 1, false, 80, 50);
+        createVehicles<Car>(cars, 5, 5, 1, true, 80, 50);
+        createVehicles<Log>(logs, 4, -1, 0, false, 60, 20);
+        createVehicles<Log>(logs, 4, -3, 0, false, 60, 20);
+        createVehicles<Log>(logs, 4, -5, 0, false, 60, 20);
+        createVehicles<Turtle>(turtles, 2, -2, 0, true, 30, 20);
+        createVehicles<Turtle>(turtles, 2, -4, 0, true, 30, 20);
 
         // Initialize all of the GameObjects
         for (GameObject* go : gameObjects) {
@@ -322,11 +325,11 @@ public:
                     go->update(deltaTime);
                 }
 
-                // Check the collisions
-                checkBusCollisions(go);
-                checkCarCollisions(go);
-                checkLogCollisions(go);
-                checkTurtlesCollisions(go);
+                // Check the moving objects bound collisions
+                checkVehicleCollisions<Bus>(busses, go);
+                checkVehicleCollisions<Car>(cars, go);
+                checkVehicleCollisions<Log>(logs, go);
+                checkVehicleCollisions<Turtle>(turtles, go);
 
                 if (go->position != player->position) {
                     checkPlayerCollisions(go, riverBorder, roadDeath, hitRiver, hitLog);
@@ -459,199 +462,57 @@ private:
         }
     }
 
-    /*
     template <typename T>
-    void createRoadVehicles(int n, float zPos) {
-        float randSpeed = (float)(rand() % 80 + 50) / 100.0f;
+    void createVehicles(vector<T*> vehicleVector, int n, float zPos, float yPos, bool isGoingRight, int randMod, int randConst) {
+        float randSpeed = (float)(rand() % randMod + randConst) / 100.0f;
         for (int j = 0; j < n; j++) {
             int offset = rand() % 7 + 1;
-            Vector3 spawnPosition = Vector3(-7.0f - offset, 1, zPos);
 
-            // If not back of the Vector, add an offset so it does not collide
-            if (j > 0) spawnPosition.x = busses.back()->position.x - 5.0f * 1 - offset;
+            Vector3 spawnPosition;
+            Vector3 spawnSpeed;
 
-            T* vehicle = new T(spawnPosition, Vector3(-1, 0, 0), true);
-            gameObjects.push_back(vehicle);
-
-            if (typeid(T) == typeid(Bus)) {
-                busses.push_back(vehicle);
-            }
-        }
-    }*/
-
-    // TODO: createBusses and createCars methods do the same thing. The code should not be repeated.
-    void createBusses(){
-        Bus * bus;
-        float randSpeed =(float)(rand() % 80 + 50) / 100.0f;
-        for (int j = 0; j < 4; j++) {
-            int offset = rand() % 7 + 1;
-            Vector3 spawnPosition = Vector3(-7.0f - offset, 1, 1);
-
-            if (j > 0) {
-                spawnPosition.x = busses.back()->position.x - 5.0f * 1 - offset;
-            }
-
-            bus = new Bus(spawnPosition, Vector3(-1, 0, 0), true);
-            gameObjects.push_back(bus);
-            busses.push_back(bus);
-        }
-    }
-
-    void createCars(){
-        Car * car;
-        for (int i = 0; i < 2; i++){
-            float randSpeed =(float)(rand() % 80 + 50) / 100.0f;
-            for (int j = 0; j < 5; j++){
-                int offset = rand() % 4 + 1;
-                bool isGoingRight = i == 1;
-                if(isGoingRight){
-                    Vector3 spawnPosition = Vector3(-7.0f - offset, 1, 2+i*2+1);
-                    if(j > 0){
-                        spawnPosition.x = cars.back()->position.x - 2.0f * i - offset;
-                    }
-                    // cout << spawnPosition.x << endl;
-                    car = new Car(spawnPosition, Vector3(-1, 0, 0), true);
-                }else{
-                    Vector3 spawnPosition = Vector3(7.0f + offset, 1, 2+i*2+1);
-                    if(j > 0){
-                        spawnPosition.x = cars.back()->position.x + 5.0f * i + offset;
-                    }
-                    car = new Car(spawnPosition, Vector3(randSpeed, 0, 0), false);
+            if (isGoingRight){
+                spawnPosition = Vector3(-7.0f - offset, yPos, zPos);
+                spawnSpeed = Vector3(-randSpeed, 0, 0);
+                if (j > 0){
+                    spawnPosition.x = vehicleVector.back()->position.x - 2.0f - offset;
                 }
-                gameObjects.push_back(car);
-                cars.push_back(car);
-            }
-        }
-    }
-
-    void checkBusCollisions(GameObject* go) {
-        for (Bus* bus: busses) {
-            if (bus->position != go->position) {
-                if (bus->collideWith(go) && go->getType() == BOUNDS) {
-                    if ((bus->position.x < go->position.x) && (!bus->isGoingRight)) {
-                        bus->respawn();
-                    }
-                    else if ((bus->position.x > go->position.x) && (bus->isGoingRight)) {
-                        bus ->respawn();
-                    }
-                }
-            }
-
-//             if ((*it_obj)->collideWith(go)) {
-//                if (go->getType() == BUS) {
-//                    GameObject *objA = ((*it_obj)->position.x > go->position.x) ? (*it_obj) : go;
-//
-//                    Vector3 tempPos = objA->position;
-//                    if((*it_obj)->isGoingRight){
-//                        tempPos.x -= (float) (rand() % 5 + 3);
-//                    }else{
-//                        tempPos.x += (float) (rand() % 5 + 3);
-//                    }
-//                    objA->position = tempPos;
-//                }
-//            }
-
-        }
-    }
-
-    void checkCarCollisions(GameObject* go) {
-        for (Car* car: cars) {
-            if (car->position != go->position) {
-                if (car->collideWith(go) && go->getType() == BOUNDS) {
-                    if ((car->position.x < go->position.x) && (!car->isGoingRight)) {
-                        car->respawn();
-                    }
-                    else if ((car->position.x > go->position.x) && (car->isGoingRight)) {
-                        car ->respawn();
-                    }
-                }
-            }
-        }
-    }
-
-
-
-    void createLogs() {
-        Log * log;
-        for (int i = 0; i < 3; i++){
-            float randSpeed =(float)(rand() % 60 + 20) / 100.0f;
-
-            for (int j = 0; j < 4; j++){
-                int offset = rand() % 7;
-
-                Vector3 spawnPosition = Vector3(7.0f+j*3+offset, 0, -i*2-1);
-                if (j > 0) {
-                    spawnPosition.x = logs.back()->position.x+3.5f+offset;
-                }
-                log = new Log(spawnPosition, Vector3(randSpeed, 0, 0));
-                gameObjects.push_back(log);
-                logs.push_back(log);
-            }
-        }
-    }
-
-    void createTurtles() {
-        Turtle * turtle;
-        for (int i = 0; i < 2; i++){
-            float randSpeed =(float)(rand() % 30 + 20) / 100.0f;
-
-            for (int j = 0; j < 2; j++){
-                int offset = rand() % 7;
-
-                Vector3 spawnPosition = Vector3(-9.0f-j*3-offset, 0, -i*2-2);
+            } else {
+                spawnPosition = Vector3(7.0f + offset, yPos, zPos);
+                spawnSpeed = Vector3(randSpeed, 0, 0);
                 if(j > 0){
-                    spawnPosition.x = turtles.back()->position.x-5.0f-offset;
+                    spawnPosition.x = vehicleVector.back()->position.x + 5.0f + offset;
                 }
-                turtle = new Turtle(spawnPosition, Vector3(randSpeed*-1, 0, 0));
-                gameObjects.push_back(turtle);
-                turtles.push_back(turtle);
             }
+
+            T* vehicle = new T(spawnPosition, spawnSpeed, isGoingRight);
+
+            // Add the vehicle to both the GameObjects vector as well as the vehicle-specific vector vehicleVector
+            vehicleVector.push_back(vehicle);
+            gameObjects.push_back(vehicle);
         }
     }
 
-    void checkLogCollisions(GameObject* go){
-        std::vector<Log *>::iterator it_obj;
-        for (it_obj = logs.begin(); it_obj != logs.end(); it_obj++) {
-            if (!(go->position == (*it_obj)->position)) {
-                if (!(*it_obj)->collideWith(go)) {
-                    if (go->getType() == BOUNDS) {
-                        if ((*it_obj)->position.x < go->position.x) {
-                            (*it_obj)->respawn();
-                        }
+    template <typename T>
+    void checkVehicleCollisions(vector<T*> vehicleVector, GameObject* go) {
+        for (T* vehicle: vehicleVector) {
+            if (vehicle->position != go->position) {
+                if (vehicle->collideWith(go) && go->getType() == BOUNDS) {
+                    if ((vehicle->position.x < go->position.x) && (!vehicle->isGoingRight)) {
+                        vehicle->respawn();
+                    } else if ((vehicle->position.x > go->position.x) && (vehicle->isGoingRight)) {
+                        vehicle->respawn();
                     }
-                }
-                if ((*it_obj)->collideWith(go)) {
-                    if (go->getType() == LOG) {
-                        GameObject *objA = ((*it_obj)->position.x > go->position.x) ? (*it_obj) : go;
+                } else if (go->getType() == vehicle->getType()) {
+                    GameObject *objA = (vehicle->position.x > go->position.x) ? vehicle : go;
 
-                        Vector3 tempPos = objA->position;
-                        tempPos.x += (float) (rand() % 5 + 3);
-                        objA->position = tempPos;
-                    }
-                }
-            }
-        }
-    }
-
-    void checkTurtlesCollisions(GameObject* go){
-        std::vector<Turtle *>::iterator it_obj;
-        for (it_obj = turtles.begin(); it_obj != turtles.end(); it_obj++) {
-            if (!(go->position == (*it_obj)->position)) {
-                if (!(*it_obj)->collideWith(go)) {
-                    if (go->getType() == BOUNDS) {
-                        if ((*it_obj)->position.x > go->position.x) {
-                            (*it_obj)->respawn();
-                        }
-                    }
-                }
-                if ((*it_obj)->collideWith(go)) {
-                    if (go->getType() == TURTLE) {
-                        GameObject *objA = ((*it_obj)->position.x < go->position.x) ? (*it_obj) : go;
-
-                        Vector3 tempPos = objA->position;
+                    Vector3 tempPos = objA->position;
+                    if (vehicle->isGoingRight){
                         tempPos.x -= (float) (rand() % 5 + 3);
-                        objA->position = tempPos;
+                    } else {
+                        tempPos.x += (float) (rand() % 5 + 3);
                     }
+                    objA->position = tempPos;
                 }
             }
         }
