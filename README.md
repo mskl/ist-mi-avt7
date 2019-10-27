@@ -1,6 +1,11 @@
 # AVT7
 Three-Dimensional Vizualization and Animation at IST
 
+## Deadlines
+- Checkpoint 1 (20%) - 23 October
+- Checkpoint 2 (30%) - 20 November
+- Checkpoint 3 (30%)  - 11 December
+
 ## Projects from previous years
 - https://github.com/carboned4/AVT_2016_1
 - https://github.com/carboned4/CeGue
