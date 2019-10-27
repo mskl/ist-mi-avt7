@@ -11,6 +11,7 @@ using namespace std;
 #define MAX_MESH_COUNT 1000
 #define WINDOW_WIDTH 1280
 #define WINDOW_HEIGHT 1280
+#define FPS 60
 
 VSShaderLib shader;
 struct MyMesh mesh[MAX_MESH_COUNT];
@@ -51,7 +52,8 @@ void timer(int value)
 {
 	std::ostringstream oss;
 	oss << "Current lives: " << GameManagerWrapper::manager->player->currentLives <<
-	    " Current points: " << GameManagerWrapper::manager->score;
+	    " Current points: " << GameManagerWrapper::manager->score <<
+	    " (" << GameManagerWrapper::manager->FrameCount << " FPS)";
 	glutSetWindow(GameManagerWrapper::manager->WindowHandle);
 
 	if (GameManagerWrapper::manager->infoString == "") {
@@ -67,7 +69,7 @@ void timer(int value)
 void refresh(int value)
 {
 	glutPostRedisplay();
-	glutTimerFunc(1000/60, refresh, 0);
+	glutTimerFunc(1000/float(FPS), refresh, 0);
 }
 
 void initialiseGlut(int argc, char **argv) {
