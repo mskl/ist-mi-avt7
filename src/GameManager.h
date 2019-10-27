@@ -524,67 +524,52 @@ private:
         }
     }
 
-    void checkBusCollisions(GameObject* go){
-        std::vector<Bus *>::iterator it_obj;
-        for (it_obj = busses.begin(); it_obj != busses.end(); it_obj++) {
-            if (!(go->position == (*it_obj)->position)) {
-                if (!(*it_obj)->collideWith(go)) {
-                    if (go->getType() == BOUNDS) {
-                        if ((*it_obj)->position.x < go->position.x && !(*it_obj)->isGoingRight) {
-                            (*it_obj)->respawn();
-                        }
-                        if ((*it_obj)->position.x > go->position.x && (*it_obj)->isGoingRight) {
-                            (*it_obj)->respawn();
-                        }
+    void checkBusCollisions(GameObject* go) {
+        for (Bus* bus: busses) {
+            if (bus->position != go->position) {
+                if (bus->collideWith(go) && go->getType() == BOUNDS) {
+                    if ((bus->position.x < go->position.x) && (!bus->isGoingRight)) {
+                        bus->respawn();
+                    }
+                    else if ((bus->position.x > go->position.x) && (bus->isGoingRight)) {
+                        bus ->respawn();
                     }
                 }
-                if ((*it_obj)->collideWith(go)) {
-                    if (go->getType() == BUS) {
-                        GameObject *objA = ((*it_obj)->position.x > go->position.x) ? (*it_obj) : go;
+            }
 
-                        Vector3 tempPos = objA->position;
-                        if((*it_obj)->isGoingRight){
-                            tempPos.x -= (float) (rand() % 5 + 3);
-                        }else{
-                            tempPos.x += (float) (rand() % 5 + 3);
-                        }
-                        objA->position = tempPos;
+//             if ((*it_obj)->collideWith(go)) {
+//                if (go->getType() == BUS) {
+//                    GameObject *objA = ((*it_obj)->position.x > go->position.x) ? (*it_obj) : go;
+//
+//                    Vector3 tempPos = objA->position;
+//                    if((*it_obj)->isGoingRight){
+//                        tempPos.x -= (float) (rand() % 5 + 3);
+//                    }else{
+//                        tempPos.x += (float) (rand() % 5 + 3);
+//                    }
+//                    objA->position = tempPos;
+//                }
+//            }
+
+        }
+    }
+
+    void checkCarCollisions(GameObject* go) {
+        for (Car* car: cars) {
+            if (car->position != go->position) {
+                if (car->collideWith(go) && go->getType() == BOUNDS) {
+                    if ((car->position.x < go->position.x) && (!car->isGoingRight)) {
+                        car->respawn();
+                    }
+                    else if ((car->position.x > go->position.x) && (car->isGoingRight)) {
+                        car ->respawn();
                     }
                 }
             }
         }
     }
 
-    void checkCarCollisions(GameObject* go){
-        std::vector<Car *>::iterator it_obj;
-        for (it_obj = cars.begin(); it_obj != cars.end(); it_obj++) {
-            if (!(go->position == (*it_obj)->position)) {
-                if (!(*it_obj)->collideWith(go)) {
-                    if (go->getType() == BOUNDS) {
-                        if ((*it_obj)->position.x < go->position.x && !(*it_obj)->isGoingRight) {
-                            (*it_obj)->respawn();
-                        }
-                        if ((*it_obj)->position.x > go->position.x && (*it_obj)->isGoingRight) {
-                            (*it_obj)->respawn();
-                        }
-                    }
-                }
-                if ((*it_obj)->collideWith(go)) {
-                    if (go->getType() == CAR) {
-                        GameObject *objA = ((*it_obj)->position.x > go->position.x) ? (*it_obj) : go;
 
-                        Vector3 tempPos = objA->position;
-                        if((*it_obj)->isGoingRight){
-                            tempPos.x -= (float) (rand() % 5 + 3);
-                        }else{
-                            tempPos.x += (float) (rand() % 5 + 3);
-                        }
-                        objA->position = tempPos;
-                    }
-                }
-            }
-        }
-    }
 
     void createLogs() {
         Log * log;
