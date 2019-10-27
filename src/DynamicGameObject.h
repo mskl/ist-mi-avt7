@@ -24,7 +24,7 @@ public:
     }
 
     Vector3 getSpeed() final {
-        return speed;
+        return speed * environmentSpeedMultiplier;
     }
 
     void update(int deltaTime) override {

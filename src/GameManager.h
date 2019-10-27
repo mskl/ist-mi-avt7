@@ -9,10 +9,8 @@
 #include <iostream>
 #include <sstream>
 #include <string.h>
-#include "stdio.h"
-
-using namespace std;
-
+#include <stdio.h>
+#include <iostream>
 #include <GL/glew.h>     // include GLEW to access OpenGL 3.3 functions
 #include <GL/freeglut.h> // GLUT is the toolkit to interface with the OS
 
@@ -45,6 +43,7 @@ using namespace std;
 #define mycout std::cout <<  __FILE__  << "(" << __LINE__ << ") "
 #define cout mycout
 
+using namespace std;
 
 const char* VERTEX_SHADER_PATH = "shaders/phong.vert";
 const char* FRAGMENT_SHADER_PATH = "shaders/phong.frag";
@@ -211,21 +210,23 @@ public:
     }
 
     void movePlayer(float x, float z) {
+        // Check the player movement timeout
         GLint curTime = glutGet(GLUT_ELAPSED_TIME);
-
-        if (curTime - lastMoveTime < moveTimeout)
+        if (curTime - lastMoveTime < moveTimeout) {
             return;
-        else if(!isPlaying)
+        } else if(!isPlaying) {
             return;
+        }
 
         Vector3 moveVec = Vector3(x, 0, z);
         Vector3 tempPos = player->position + moveVec;
-        if(tempPos.z < topVerticalLimitPlayerPos || tempPos.z > bottomVerticalLimitPlayerPos ||
-           tempPos.x > rightHorizontalLimitPlayerPos || tempPos.x < leftHorizontalLimitPlayerPos)
+        if (tempPos.z < topVerticalLimitPlayerPos || tempPos.z > bottomVerticalLimitPlayerPos ||
+           tempPos.x > rightHorizontalLimitPlayerPos || tempPos.x < leftHorizontalLimitPlayerPos) {
             return;
+        }
 
-        player->jump(moveVec, 0.5f);
         lastMoveTime = curTime;
+        player->jump(moveVec, 0.5f);
     }
 
     GLuint setupShaders() {
@@ -271,6 +272,7 @@ public:
         srand(time(NULL));
 
         createBusses();
+        //createRoadVehicles<Bus>(4, 1);
         createLogs();
         createCars();
         createTurtles();
@@ -291,9 +293,9 @@ public:
 
     void renderScene() {
         FrameCount++;
-
         genDeltaTime();
 
+        // Clear the buffer and load indentity into VIEW and MODEL matrix
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         loadIdentity(VIEW);
         loadIdentity(MODEL);
@@ -314,10 +316,11 @@ public:
             exit(1);
         }
 
-        // Update conelight position
+        // Update SpotLight position
         spotLight->position = player->position + Vector3(0.5f, 1.2f, 0.5f);
         spotLight->light_dir = Vector3(0, 0, -1);
 
+        // Types of collision determine whether the player has died or not
         bool riverBorder = false;
         bool roadDeath = false;
         bool hitRiver = false;
@@ -460,11 +463,31 @@ private:
         }
     }
 
+    /*
+    template <typename T>
+    void createRoadVehicles(int n, float zPos) {
+        float randSpeed = (float)(rand() % 80 + 50) / 100.0f;
+        for (int j = 0; j < n; j++) {
+            int offset = rand() % 7 + 1;
+            Vector3 spawnPosition = Vector3(-7.0f - offset, 1, zPos);
+
+            // If not back of the Vector, add an offset so it does not collide
+            if (j > 0) spawnPosition.x = busses.back()->position.x - 5.0f * 1 - offset;
+
+            T* vehicle = new T(spawnPosition, Vector3(-1, 0, 0), true);
+            gameObjects.push_back(vehicle);
+
+            if (typeid(T) == typeid(Bus)) {
+                busses.push_back(vehicle);
+            }
+        }
+    }*/
+
     // TODO: createBusses and createCars methods do the same thing. The code should not be repeated.
     void createBusses(){
         Bus * bus;
         float randSpeed =(float)(rand() % 80 + 50) / 100.0f;
-        for (int j = 0; j < 4; j++){
+        for (int j = 0; j < 4; j++) {
             int offset = rand() % 7 + 1;
             Vector3 spawnPosition = Vector3(-7.0f - offset, 1, 1);
 
