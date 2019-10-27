@@ -21,13 +21,14 @@ protected:
 
     // The bottomBoundingBox check for collisions with river and (or) a log
     BoundingBox bottomBox = BoundingBox(Vector3(0.1, -1, 0.1), Vector3(0.9, 0, 0.9));
+
 public:
     // Current state of the player
     PlayerState playerState = GROUNDED;
     Vector3 lastJumpDir = Vector3();
     Vector3 initPos = Vector3();
 
-    int startingLives = 5;
+    const int startingLives = 5;
     int currentLives = startingLives;
 
     Player(Vector3 pos)

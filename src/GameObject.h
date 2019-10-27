@@ -14,6 +14,10 @@
 #include "GameManager.h"
 #include "libs/vsShaderLib.h"
 
+// Macro to print filename shen using cout
+#define mycout std::cout <<  __FILE__  << "(" << __LINE__ << ") "
+#define cout mycout
+
 
 extern struct MyMesh mesh[];
 extern VSShaderLib shader;
