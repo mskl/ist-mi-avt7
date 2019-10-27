@@ -290,10 +290,9 @@ public:
     }
 
     void renderScene() {
+        FrameCount++;
 
-        GLint currentTime = glutGet(GLUT_ELAPSED_TIME);
-        deltaTime = prevTime - currentTime;
-        prevTime = currentTime;
+        genDeltaTime();
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         loadIdentity(VIEW);
@@ -412,6 +411,7 @@ public:
         glutSwapBuffers();
     }
 
+
 private:
     void onDeath(){
         player->currentLives--;
@@ -421,6 +421,12 @@ private:
             isPlaying = false;
         }
         player->respawn();
+    }
+
+    void genDeltaTime() const {
+        GLint currentTime = glutGet(GLUT_ELAPSED_TIME);
+        deltaTime = prevTime - currentTime;
+        prevTime = currentTime;
     }
 
     void resetSpeedMultipliers() {
