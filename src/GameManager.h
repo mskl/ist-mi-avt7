@@ -41,6 +41,11 @@ using namespace std;
 #include "objects/Car.h"
 #include "objects/Turtle.h"
 
+// Macro to print filename shen using cout
+#define mycout std::cout <<  __FILE__  << "(" << __LINE__ << ") "
+#define cout mycout
+
+
 const char* VERTEX_SHADER_PATH = "shaders/phong.vert";
 const char* FRAGMENT_SHADER_PATH = "shaders/phong.frag";
 
@@ -176,11 +181,11 @@ public:
             case 'i':
                 increaseSpeedMultipliers(); break;
                 // Night lights
-            case 'n': directionalLight->light_enabled = !directionalLight->light_enabled; break;
-            case 'h': spotLight->light_enabled = !spotLight->light_enabled; break;
+            case 'n': directionalLight->toggleLight(); break;
+            case 'h': spotLight->toggleLight(); break;
             case 'c':
                 for (auto &c: pointLights)
-                    c->light_enabled = !c->light_enabled;
+                    c->toggleLight();
                 break;
             // Stop/Continue game
             case 's':
@@ -192,8 +197,7 @@ public:
             case 'r':
                 if (player->currentLives <= 0) {
                     resetSpeedMultipliers();
-                    player->respawn();
-                    player->currentLives = player->startingLives;
+                    player->restartGame();
                     isPlaying = true;
                     infoString = "";
                 }
@@ -231,6 +235,7 @@ public:
         shader.loadShader(VSShaderLib::FRAGMENT_SHADER, FRAGMENT_SHADER_PATH);
 
         // set semantics for the shader variables
+        // TODO: Use either BindAttrib or GetUniformLocation for all of the GLSL variables
         glBindFragDataLocation(shader.getProgramIndex(), 0,"colorOut");
         glBindAttribLocation(shader.getProgramIndex(), VERTEX_COORD_ATTRIB, "position");
         glBindAttribLocation(shader.getProgramIndex(), NORMAL_ATTRIB, "normal");
@@ -238,11 +243,11 @@ public:
         glBindAttribLocation(shader.getProgramIndex(), VERTEX_ATTRIB1, "vVertex");
         glBindAttribLocation(shader.getProgramIndex(), VERTEX_ATTRIB2, "vtexCoord");
         glBindAttribLocation(shader.getProgramIndex(), TANGENT_ATTRIB, "tangent");
-
         glLinkProgram(shader.getProgramIndex());
 
         texMode_uniformId = glGetUniformLocation(shader.getProgramIndex(), "texMode");
         tex_loc0 = glGetUniformLocation(shader.getProgramIndex(), "texmap0");
+
         // Get the indexes of stuff
         pvm_uniformId = glGetUniformLocation(shader.getProgramIndex(), "m_pvm");
         vm_uniformId = glGetUniformLocation(shader.getProgramIndex(), "m_viewModel");
@@ -479,7 +484,7 @@ private:
                     if(j > 0){
                         spawnPosition.x = cars.back()->position.x - 2.0f * i - offset;
                     }
-                    cout << spawnPosition.x << endl;
+                    // cout << spawnPosition.x << endl;
                     car = new Car(spawnPosition, Vector3(-1, 0, 0), true);
                 }else{
                     Vector3 spawnPosition = Vector3(7.0f + offset, 1, 2+i*2+1);

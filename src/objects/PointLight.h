@@ -20,9 +20,7 @@ public:
         multMatrixPoint(VIEW, lightPos, res);
         glUniform4fv(l_pos_id[light_id], 1, res);
 
-        // Set the light on or off and send the whole matrix to the GLSL
-        l_enabled[light_id] = light_enabled;
-        glUniform1iv(l_enabled_id, 8, l_enabled);
+        setLightEnabled(light_enabled);
     }
 };
 

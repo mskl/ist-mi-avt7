@@ -110,6 +110,11 @@ public:
         speed = Vector3(0, 0, 0);
     }
 
+    void restartGame() {
+        this->respawn();
+        this->currentLives = this->startingLives;
+    }
+
     void setSpeedMultiplier(float newSpeed) final {
         // Do nothing on the player
     }
