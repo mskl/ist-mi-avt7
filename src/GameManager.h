@@ -109,7 +109,7 @@ public:
             = CameraOrthogonal(-7, 8, -8, 7);
 
     // Player
-    Player* player = new Player(Vector3(0, 1, 0));
+    Player* player = new Player(Vector3(-5.0f, 1, 0));
 
     SceneCollider* sceneCollider = new SceneCollider(Vector3(-6.0f, -1, -6));
     Target* target = new Target(Vector3(0.25f, 1.25f, -5.75f));
