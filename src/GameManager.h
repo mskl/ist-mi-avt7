@@ -344,54 +344,7 @@ public:
                 go->render();
 
                 // Check collisions with player
-                if (!(go->position == player->position)) {
-                    if (player->collideWith(go)) {
-                        if (go->getType() == BUS || go->getType() == CAR) {
-                            roadDeath = true;
-                        } else if(go->getType() == TARGET){
-                            target->setRandomPosition();
-                            increaseSpeedMultipliers();
-                            player->respawn();
-                            score += pointsPerTarget;
-                        }
-                    } else if ((player->playerState == GROUNDED) && (player->collideWithBottom(go))) {
-                        cout << "Bottom collision with " << go->getType() << endl;
-                        if (go->getType() == LOG) {
-                            hitLog = true;
-                            player->playerState = ONLOG;
-                            player->speed = go->getSpeed();
-                        } else if (go->getType() == TURTLE) {
-                            Turtle* turt = (Turtle*)go;
-                            cout << turt->isUnderWater << endl;
-                            if(turt->isUnderWater){
-                                hitRiver = true;
-                            }else{
-                                hitLog = true;
-                                player->playerState = ONTURTLE;
-                                player->speed = go->getSpeed();
-                            }
-                        } else if (go->getType() == RIVER) {
-                            hitRiver = true;
-                        }
-                    }else if (player->playerState == ONTURTLE){
-                        if (go->getType() == TURTLE && (player->collideWithBottom(go))) {
-                            Turtle* turt = (Turtle*) go;
-                            if(turt->isUnderWater){
-                                hitRiver = true;
-                                player->playerState = GROUNDED;
-                            }
-                        }
-
-                        if(go->getType() == BOUNDS && player->playerState == ONTURTLE && !player->collideWith(go)){
-                            riverBorder = true;
-                        }
-                    }else{
-                        if(go->getType() == BOUNDS && player->playerState == ONLOG){
-                            riverBorder = true;
-                        }
-
-                    }
-                }
+                checkPlayerCollisions(go, riverBorder, roadDeath, hitRiver, hitLog);
             }
         }
 
@@ -400,12 +353,10 @@ public:
         if (riverBorder) {
             cout << "Death in river border!" << endl;
             onDeath();
-        }
-        if (deathInRiver) {
+        } else if (deathInRiver) {
             cout << "Death in river!" << endl;
             onDeath();
-        }
-        if (roadDeath) {
+        } else if (roadDeath) {
             cout << "Death on the road!" << endl;
             onDeath();
         }
@@ -414,8 +365,58 @@ public:
         glutSwapBuffers();
     }
 
-
 private:
+    void checkPlayerCollisions(GameObject *go, bool &riverBorder, bool &roadDeath, bool &hitRiver, bool &hitLog) {
+        if (!(go->position == player->position)) {
+            if (player->collideWith(go)) {
+                if (go->getType() == BUS || go->getType() == CAR) {
+                    roadDeath = true;
+                } else if(go->getType() == TARGET){
+                    target->setRandomPosition();
+                    increaseSpeedMultipliers();
+                    player->respawn();
+                    score += pointsPerTarget;
+                }
+            } else if ((player->playerState == GROUNDED) && (player->collideWithBottom(go))) {
+                cout << "Bottom collision with " << go->getType() << endl;
+                if (go->getType() == LOG) {
+                    hitLog = true;
+                    player->playerState = ONLOG;
+                    player->speed = go->getSpeed();
+                } else if (go->getType() == TURTLE) {
+                    Turtle* turt = (Turtle*)go;
+                    cout << turt->isUnderWater << endl;
+                    if(turt->isUnderWater){
+                        hitRiver = true;
+                    }else{
+                        hitLog = true;
+                        player->playerState = ONTURTLE;
+                        player->speed = go->getSpeed();
+                    }
+                } else if (go->getType() == RIVER) {
+                    hitRiver = true;
+                }
+            }else if (player->playerState == ONTURTLE){
+                if (go->getType() == TURTLE && (player->collideWithBottom(go))) {
+                    Turtle* turt = (Turtle*) go;
+                    if(turt->isUnderWater){
+                        hitRiver = true;
+                        player->playerState = GROUNDED;
+                    }
+                }
+
+                if(go->getType() == BOUNDS && player->playerState == ONTURTLE && !player->collideWith(go)){
+                    riverBorder = true;
+                }
+            }else{
+                if(go->getType() == BOUNDS && player->playerState == ONLOG){
+                    riverBorder = true;
+                }
+
+            }
+        }
+    }
+
     void onDeath(){
         player->currentLives--;
 
