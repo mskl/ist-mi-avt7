@@ -27,10 +27,6 @@ public:
         return ((vec.x == this->x) && (vec.y == this->y) && (vec.z == this->z));
     }
 
-    inline bool operator!=(const Vector3& vec) const {
-        return ((vec.x != this->x) || (vec.y != this->y) || (vec.z != this->z));
-    }
-
     inline Vector3 operator+(const Vector3& vec) const {
         return {this->x + vec.x, this->y + vec.y, this->z + vec.z};
     }

@@ -31,13 +31,17 @@
 #include "objects/Coordinates.h"
 #include "objects/Log.h"
 #include "objects/Sidewalls.h"
-#include "objects/SideCollider.h"
+#include "objects/SceneCollider.h"
 #include "objects/Target.h"
 #include "objects/SpotLight.h"
 #include "objects/DirectionalLight.h"
 #include "objects/PointLight.h"
 #include "objects/Car.h"
 #include "objects/Turtle.h"
+
+// Macro to print filename shen using cout
+#define mycout std::cout <<  __FILE__  << "(" << __LINE__ << ") "
+#define cout mycout
 
 using namespace std;
 
@@ -106,6 +110,8 @@ public:
 
     // Player
     Player* player = new Player(Vector3(-5.0f, 1, 0));
+
+    SceneCollider* sceneCollider = new SceneCollider(Vector3(-6.0f, -1, -6));
     Target* target = new Target(Vector3(0.25f, 1.25f, -5.75f));
 
     // Lights
@@ -128,10 +134,6 @@ public:
         gameObjects.push_back(new Ground());
         gameObjects.push_back(new Sidewalls());
 
-        // The empty side colliders
-        gameObjects.push_back(new SideCollider(LEFT));
-        gameObjects.push_back(new SideCollider(RIGHT));
-
         // Save the lights to gameObjects
         for (auto &pl : pointLights)
             gameObjects.push_back(pl);
@@ -140,6 +142,7 @@ public:
         gameObjects.push_back(spotLight);
 
         gameObjects.push_back(player);
+        gameObjects.push_back(sceneCollider);
         gameObjects.push_back(target);
     }
 
@@ -169,28 +172,36 @@ public:
             case 'o': movePlayer(-1, 0); break;
             case 'q': movePlayer(0, -1); break;
             case 'a': movePlayer(0, 1); break;
-            // Respawn player
+                // Respawn player
             case 'R': player->respawn(); break;
-            // Random target position
+                // Random target position
             case 'v': target->setRandomPosition(); break;
-            // Increase speed
-            case 'i': increaseSpeedMultipliers(); break;
-            // Toggle the lights
+                // Increase speed
+            case 'i':
+                increaseSpeedMultipliers(); break;
+                // Night lights
             case 'n': directionalLight->toggleLight(); break;
             case 'h': spotLight->toggleLight(); break;
-            case 'c': for (auto &c: pointLights) c->toggleLight(); break;
+            case 'c':
+                for (auto &c: pointLights)
+                    c->toggleLight();
+                break;
+            // Stop/Continue game
             case 's':
                 if (player->currentLives != 0) {
                     isPlaying = !isPlaying;
                     changeAnimationState(isPlaying);
-                } break;
+                }
+                break;
             case 'r':
                 if (player->currentLives <= 0) {
                     resetSpeedMultipliers();
                     player->restartGame();
                     isPlaying = true;
                     infoString = "";
-                } break;
+                }
+                break;
+
             // CameraType
             case '1': selectCamera(CAMERA_PERSPECTIVE_FOLLOW); break;
             case '2': selectCamera(CAMERA_PERSPECTIVE_FIXED); break;
@@ -317,6 +328,7 @@ public:
 
         for (GameObject *go : gameObjects) {
             if (go->isEnabled()) {
+
                 // Update the physics
                 if (isPlaying){
                     go->update(deltaTime);
@@ -328,12 +340,11 @@ public:
                 checkLogCollisions(go);
                 checkTurtlesCollisions(go);
 
-                if (go->position != player->position) {
-                    checkPlayerCollisions(go, riverBorder, roadDeath, hitRiver, hitLog);
-                }
-
-                // Render the objects ()
+                // Render the objects
                 go->render();
+
+                // Check collisions with player
+                checkPlayerCollisions(go, riverBorder, roadDeath, hitRiver, hitLog);
             }
         }
 
@@ -356,60 +367,54 @@ public:
 
 private:
     void checkPlayerCollisions(GameObject *go, bool &riverBorder, bool &roadDeath, bool &hitRiver, bool &hitLog) {
-        // Top collisions (bus or car). If riding a turtle or a log, then also check bounds
-        if (player->collideWith(go)) {
-            if (go->getType() == BUS || go->getType() == CAR) {
-                roadDeath = true;
-            } else if(go->getType() == TARGET) {
-                targetReached();
-            } else if (go->getType() == BOUNDS) {
-                cout << "Player hit the bounds at " << player->position << endl;
-                if (player->playerState == ONLOG || player->playerState == ONTURTLE) {
-                    riverBorder = true;
+        if (!(go->position == player->position)) {
+            if (player->collideWith(go)) {
+                if (go->getType() == BUS || go->getType() == CAR) {
+                    roadDeath = true;
+                } else if(go->getType() == TARGET){
+                    target->setRandomPosition();
+                    increaseSpeedMultipliers();
+                    player->respawn();
+                    score += pointsPerTarget;
                 }
-            }
-        }
-
-        // Bottom collision
-        if (player->collideWithBottom(go)) {
-            if (player->playerState == GROUNDED) {
-                // Just hit the LOG or TURTLE
+            } else if ((player->playerState == GROUNDED) && (player->collideWithBottom(go))) {
+                cout << "Bottom collision with " << go->getType() << endl;
                 if (go->getType() == LOG) {
                     hitLog = true;
                     player->playerState = ONLOG;
                     player->speed = go->getSpeed();
                 } else if (go->getType() == TURTLE) {
-                    Turtle *turt = (Turtle *) go;
-                    if (!turt->isUnderWater) {
+                    Turtle* turt = (Turtle*)go;
+                    cout << turt->isUnderWater << endl;
+                    if(turt->isUnderWater){
+                        hitRiver = true;
+                    }else{
                         hitLog = true;
                         player->playerState = ONTURTLE;
                         player->speed = go->getSpeed();
                     }
-                }
-
-                // Is in the river
-                if (go->getType() == RIVER) {
+                } else if (go->getType() == RIVER) {
                     hitRiver = true;
                 }
-            } else if (player->playerState == ONTURTLE) {
-                // Turtle might get under the water, so we need to check for that.
-                // Get the turtle which the player is riding
-                if (go->getType() == TURTLE) {
+            }else if (player->playerState == ONTURTLE){
+                if (go->getType() == TURTLE && (player->collideWithBottom(go))) {
                     Turtle* turt = (Turtle*) go;
                     if(turt->isUnderWater){
                         hitRiver = true;
                         player->playerState = GROUNDED;
                     }
                 }
+
+                if(go->getType() == BOUNDS && player->playerState == ONTURTLE && !player->collideWith(go)){
+                    riverBorder = true;
+                }
+            }else{
+                if(go->getType() == BOUNDS && player->playerState == ONLOG){
+                    riverBorder = true;
+                }
+
             }
         }
-    }
-
-    void targetReached() {
-        target->setRandomPosition();
-        increaseSpeedMultipliers();
-        player->respawn();
-        score += pointsPerTarget;
     }
 
     void onDeath(){
