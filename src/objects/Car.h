@@ -11,7 +11,6 @@ class Car: public Bus {
 public:
     Car (Vector3 pos, Vector3 speed, bool goingRight)
             : Bus(pos, speed, goingRight, CAR, Vector3(0, 0, 0), Vector3(1.5, 1, 1)) {
-        isGoingRight = goingRight;
     }
 
     void init() override {

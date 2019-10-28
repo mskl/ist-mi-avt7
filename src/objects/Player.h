@@ -32,7 +32,7 @@ public:
     int currentLives = startingLives;
 
     Player(Vector3 pos)
-        : DynamicGameObject(pos,Vector3(), Vector3(1),PLAYER, Vector3()) {
+        : DynamicGameObject(pos,Vector3(), Vector3(1),PLAYER, Vector3(), false) {
         initPos = pos;
     }
 

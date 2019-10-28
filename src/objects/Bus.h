@@ -9,17 +9,11 @@
 
 class Bus: public DynamicGameObject {
 public:
-    bool isGoingRight = false;
     float angle = 0;
 
     Bus(Vector3 pos, Vector3 speed, bool goingRight, GameObjectType type=BUS,
             Vector3 min = Vector3(0, 0, 0), Vector3 max = Vector3(3, 1, 1))
-            : DynamicGameObject(pos, min, max, type, speed) {
-        isGoingRight = goingRight;
-    }
-
-    virtual void respawn(){
-        this->position = initPos;
+            : DynamicGameObject(pos, min, max, type, speed, goingRight) {
     }
 
     void init() override {

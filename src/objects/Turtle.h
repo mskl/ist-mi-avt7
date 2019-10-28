@@ -23,8 +23,7 @@ public:
     bool isUnderWater = false;
     float posTurtleBodyWater = 0.2f;
     Turtle (Vector3 pos, Vector3 speed, bool isGoingRight)
-            : DynamicGameObject(pos, Vector3(0, 0, 0), Vector3(5, 1, 1), TURTLE, speed),
-            isGoingRight(isGoingRight) {
+            : DynamicGameObject(pos, Vector3(0, 0, 0), Vector3(5, 1, 1), TURTLE, speed, isGoingRight){
         randomTimeOffset = (((float) rand()) / (float)RAND_MAX) * waveTime;
     }
 
@@ -196,10 +195,6 @@ public:
                 buildVAO(ids[0]);
             popMatrix(MODEL);
         popMatrix(MODEL);
-    }
-
-    void respawn(){
-        position = initPos;
     }
 
     void update(int deltaTime) override {

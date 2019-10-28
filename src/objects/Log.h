@@ -17,11 +17,9 @@ public:
     float angle = 0;
 
     GLint prevTime = 1;
-    bool isGoingRight;
 
     Log(Vector3 pos, Vector3 speed, bool isGoingRight)
-            : DynamicGameObject(pos, Vector3(0, 0, 0), Vector3(3, 1, 1), LOG, speed),
-            isGoingRight(isGoingRight)  {
+            : DynamicGameObject(pos, Vector3(0, 0, 0), Vector3(3, 1, 1), LOG, speed, isGoingRight){
         randomTimeOffset = (((float) rand()) / (float)RAND_MAX) * waveTime;
     }
 

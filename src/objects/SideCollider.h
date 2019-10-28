@@ -12,7 +12,7 @@ enum SideColliderSide {LEFT, RIGHT};
 class SideCollider: public DynamicGameObject {
 public:
     explicit SideCollider(SideColliderSide side)
-            : DynamicGameObject(Vector3(), Vector3(), Vector3(), BOUNDS,  Vector3()){
+            : DynamicGameObject(Vector3(), Vector3(), Vector3(), BOUNDS,  Vector3(), false){
         if (side == LEFT) {
             boundingBox.vecMin = Vector3(-7, -3, -7);
             boundingBox.vecMax = Vector3(-6, 3, -6);
