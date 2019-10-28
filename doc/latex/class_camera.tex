@@ -1,0 +1,88 @@
+\hypertarget{class_camera}{}\section{Camera Class Reference}
+\label{class_camera}\index{Camera@{Camera}}
+
+
+{\ttfamily \#include $<$Camera.\+h$>$}
+
+Inheritance diagram for Camera\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_camera}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_camera_a92eff4b0c0b15b38222318840552d27b}{Camera} (\hyperlink{class_vector3}{Vector3} \hyperlink{class_camera_a2c4c5bcf8f5885968d4e5ebc28074846}{pos})
+\item 
+virtual void \hyperlink{class_camera_a151cbf3898d114f0a8bf079a3e90e7f4}{view} ()=0
+\item 
+virtual void \hyperlink{class_camera_a5b50ba31455a712ec09561105c12c7c2}{project} (int w, int h)=0
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+float \hyperlink{class_camera_a838139083987e3ede449183558e2bd61}{nearp} = 0.\+1f
+\item 
+float \hyperlink{class_camera_ae19883a49359025f85d96d20c774fe4b}{farp} = 1000.\+0f
+\item 
+\hyperlink{class_vector3}{Vector3} \hyperlink{class_camera_a2c4c5bcf8f5885968d4e5ebc28074846}{pos}
+\end{DoxyCompactItemize}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_camera_a92eff4b0c0b15b38222318840552d27b}\label{class_camera_a92eff4b0c0b15b38222318840552d27b}} 
+\index{Camera@{Camera}!Camera@{Camera}}
+\index{Camera@{Camera}!Camera@{Camera}}
+\subsubsection{\texorpdfstring{Camera()}{Camera()}}
+{\footnotesize\ttfamily Camera\+::\+Camera (\begin{DoxyParamCaption}\item[{\hyperlink{class_vector3}{Vector3}}]{pos }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [explicit]}}
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_camera_a5b50ba31455a712ec09561105c12c7c2}\label{class_camera_a5b50ba31455a712ec09561105c12c7c2}} 
+\index{Camera@{Camera}!project@{project}}
+\index{project@{project}!Camera@{Camera}}
+\subsubsection{\texorpdfstring{project()}{project()}}
+{\footnotesize\ttfamily virtual void Camera\+::project (\begin{DoxyParamCaption}\item[{int}]{w,  }\item[{int}]{h }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Implemented in \hyperlink{class_camera_perspective_a841f648f4131897ec632cfcb55facf97}{Camera\+Perspective}, and \hyperlink{class_camera_orthogonal_a593df7d7b84de30d312e31ffed831d9c}{Camera\+Orthogonal}.
+
+\mbox{\Hypertarget{class_camera_a151cbf3898d114f0a8bf079a3e90e7f4}\label{class_camera_a151cbf3898d114f0a8bf079a3e90e7f4}} 
+\index{Camera@{Camera}!view@{view}}
+\index{view@{view}!Camera@{Camera}}
+\subsubsection{\texorpdfstring{view()}{view()}}
+{\footnotesize\ttfamily virtual void Camera\+::view (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Implemented in \hyperlink{class_camera_perspective_a6605f8288ea01b0d647213df88d2a45b}{Camera\+Perspective}, and \hyperlink{class_camera_orthogonal_aba42e2f1ce347576e6ab83e45a8d7ed9}{Camera\+Orthogonal}.
+
+
+
+\subsection{Member Data Documentation}
+\mbox{\Hypertarget{class_camera_ae19883a49359025f85d96d20c774fe4b}\label{class_camera_ae19883a49359025f85d96d20c774fe4b}} 
+\index{Camera@{Camera}!farp@{farp}}
+\index{farp@{farp}!Camera@{Camera}}
+\subsubsection{\texorpdfstring{farp}{farp}}
+{\footnotesize\ttfamily float Camera\+::farp = 1000.\+0f}
+
+\mbox{\Hypertarget{class_camera_a838139083987e3ede449183558e2bd61}\label{class_camera_a838139083987e3ede449183558e2bd61}} 
+\index{Camera@{Camera}!nearp@{nearp}}
+\index{nearp@{nearp}!Camera@{Camera}}
+\subsubsection{\texorpdfstring{nearp}{nearp}}
+{\footnotesize\ttfamily float Camera\+::nearp = 0.\+1f}
+
+\mbox{\Hypertarget{class_camera_a2c4c5bcf8f5885968d4e5ebc28074846}\label{class_camera_a2c4c5bcf8f5885968d4e5ebc28074846}} 
+\index{Camera@{Camera}!pos@{pos}}
+\index{pos@{pos}!Camera@{Camera}}
+\subsubsection{\texorpdfstring{pos}{pos}}
+{\footnotesize\ttfamily \hyperlink{class_vector3}{Vector3} Camera\+::pos}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/\+Users/matya/\+A\+V\+T7/src/\hyperlink{_camera_8h}{Camera.\+h}\end{DoxyCompactItemize}

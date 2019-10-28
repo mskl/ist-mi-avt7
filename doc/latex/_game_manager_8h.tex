@@ -1,0 +1,209 @@
+\hypertarget{_game_manager_8h}{}\section{/\+Users/matya/\+A\+V\+T7/src/\+Game\+Manager.h File Reference}
+\label{_game_manager_8h}\index{/\+Users/matya/\+A\+V\+T7/src/\+Game\+Manager.\+h@{/\+Users/matya/\+A\+V\+T7/src/\+Game\+Manager.\+h}}
+{\ttfamily \#include $<$math.\+h$>$}\newline
+{\ttfamily \#include $<$iostream$>$}\newline
+{\ttfamily \#include $<$sstream$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$G\+L/glew.\+h$>$}\newline
+{\ttfamily \#include $<$G\+L/freeglut.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}libs/\+A\+V\+Tmath\+Lib.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}Vertex\+Attr\+Def.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}libs/vs\+Shader\+Lib.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}Camera.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}Camera\+Perspective.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}Camera\+Perspective\+Moving.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}Camera\+Orthogonal.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}objects/\+River.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}objects/\+Ground.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}objects/\+Player.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}objects/\+Road.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}objects/\+Light.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}objects/\+Bus.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}objects/\+Coordinates.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}objects/\+Log.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}objects/\+Sidewalls.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}objects/\+Scene\+Collider.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}objects/\+Target.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}objects/\+Spot\+Light.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}objects/\+Directional\+Light.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}objects/\+Point\+Light.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}objects/\+Car.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}objects/\+Turtle.\+h\char`\"{}}\newline
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{class_game_manager}{Game\+Manager}
+\end{DoxyCompactItemize}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{_game_manager_8h_aff8e47aee615006f1c6af699f2c16129}{mycout}~\hyperlink{_game_manager_8h_a101fd144d7d407e15633eba37102f1ed}{std\+::cout} $<$$<$  \+\_\+\+\_\+\+F\+I\+L\+E\+\_\+\+\_\+  $<$$<$ \char`\"{}(\char`\"{} $<$$<$ \+\_\+\+\_\+\+L\+I\+N\+E\+\_\+\+\_\+ $<$$<$ \char`\"{}) \char`\"{}
+\item 
+\#define \hyperlink{_game_manager_8h_a101fd144d7d407e15633eba37102f1ed}{cout}~\hyperlink{_game_manager_8h_aff8e47aee615006f1c6af699f2c16129}{mycout}
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+const char $\ast$ \hyperlink{_game_manager_8h_a1ffff15fed7af9fa7f4a4bc3dab03dea}{V\+E\+R\+T\+E\+X\+\_\+\+S\+H\+A\+D\+E\+R\+\_\+\+P\+A\+TH} = \char`\"{}shaders/phong.\+vert\char`\"{}
+\item 
+const char $\ast$ \hyperlink{_game_manager_8h_a69bb1f156e18c9d16f215d533e46efda}{F\+R\+A\+G\+M\+E\+N\+T\+\_\+\+S\+H\+A\+D\+E\+R\+\_\+\+P\+A\+TH} = \char`\"{}shaders/phong.\+frag\char`\"{}
+\item 
+G\+Lint \hyperlink{_game_manager_8h_afea6a95c7a1c119b7106a4c735eb259d}{delta\+Time} = 1
+\item 
+G\+Lint \hyperlink{_game_manager_8h_aaceda45f8a6fbf228a739bb9c31dcd4d}{prev\+Time} = 1
+\item 
+G\+Lint \hyperlink{_game_manager_8h_a82872ecfb8a3e01920a465884b3c3410}{pvm\+\_\+uniform\+Id}
+\item 
+G\+Lint \hyperlink{_game_manager_8h_ab240e11dbb233cbbb8e9fe141b5733b7}{vm\+\_\+uniform\+Id}
+\item 
+G\+Lint \hyperlink{_game_manager_8h_a65c0d2a61eed036157fadd9d12c8b3b5}{normal\+\_\+uniform\+Id}
+\item 
+G\+Lint \hyperlink{_game_manager_8h_ade703681f439c6cbc3c1f384caec6444}{l\+\_\+pos\+\_\+id} \mbox{[}8\mbox{]}
+\item 
+G\+Lint \hyperlink{_game_manager_8h_a9716857280550b64bc35a221d0b4da20}{l\+\_\+enabled\+\_\+id}
+\item 
+G\+Lint \hyperlink{_game_manager_8h_a6ab7caf5552a8a3110e28897e658f6a2}{l\+\_\+enabled} \mbox{[}8\mbox{]} = \{1, 1, 1, 1, 1, 1, 1, 1\}
+\item 
+G\+Lint \hyperlink{_game_manager_8h_adc65ed29ddf22e7e216337a192d5468e}{l\+\_\+spot\+\_\+dir\+\_\+id}
+\item 
+G\+Lint \hyperlink{_game_manager_8h_a9cf98f4bf781468e4337cc440a5f90ed}{tex\+Mode\+\_\+uniform\+Id}
+\item 
+G\+Lint \hyperlink{_game_manager_8h_ae5cf450f60c289bbdc7159c5217bab48}{tex\+\_\+loc0}
+\item 
+G\+Lint \hyperlink{_game_manager_8h_ac6e1ac7b16cad04048d56fd59bc456e2}{tex\+\_\+loc1}
+\item 
+G\+Lint \hyperlink{_game_manager_8h_a03bebd892e10759787ba1a5177363bb7}{tex\+\_\+loc2}
+\item 
+G\+Lint \hyperlink{_game_manager_8h_a4a7ceb626c72d8afcb5c45fd8baca498}{tex\+\_\+loc3}
+\item 
+G\+Lint \hyperlink{_game_manager_8h_a69e2f5370c1434984eef245400fec538}{tex\+\_\+loc4}
+\item 
+G\+Luint \hyperlink{_game_manager_8h_aeba6efbb6e884918f8fba4d6ad11e743}{Texture\+Array} \mbox{[}25\mbox{]}
+\end{DoxyCompactItemize}
+
+
+\subsection{Macro Definition Documentation}
+\mbox{\Hypertarget{_game_manager_8h_a101fd144d7d407e15633eba37102f1ed}\label{_game_manager_8h_a101fd144d7d407e15633eba37102f1ed}} 
+\index{Game\+Manager.\+h@{Game\+Manager.\+h}!cout@{cout}}
+\index{cout@{cout}!Game\+Manager.\+h@{Game\+Manager.\+h}}
+\subsubsection{\texorpdfstring{cout}{cout}}
+{\footnotesize\ttfamily \#define cout~\hyperlink{_game_manager_8h_aff8e47aee615006f1c6af699f2c16129}{mycout}}
+
+\mbox{\Hypertarget{_game_manager_8h_aff8e47aee615006f1c6af699f2c16129}\label{_game_manager_8h_aff8e47aee615006f1c6af699f2c16129}} 
+\index{Game\+Manager.\+h@{Game\+Manager.\+h}!mycout@{mycout}}
+\index{mycout@{mycout}!Game\+Manager.\+h@{Game\+Manager.\+h}}
+\subsubsection{\texorpdfstring{mycout}{mycout}}
+{\footnotesize\ttfamily \#define mycout~\hyperlink{_game_manager_8h_a101fd144d7d407e15633eba37102f1ed}{std\+::cout} $<$$<$  \+\_\+\+\_\+\+F\+I\+L\+E\+\_\+\+\_\+  $<$$<$ \char`\"{}(\char`\"{} $<$$<$ \+\_\+\+\_\+\+L\+I\+N\+E\+\_\+\+\_\+ $<$$<$ \char`\"{}) \char`\"{}}
+
+
+
+\subsection{Variable Documentation}
+\mbox{\Hypertarget{_game_manager_8h_afea6a95c7a1c119b7106a4c735eb259d}\label{_game_manager_8h_afea6a95c7a1c119b7106a4c735eb259d}} 
+\index{Game\+Manager.\+h@{Game\+Manager.\+h}!delta\+Time@{delta\+Time}}
+\index{delta\+Time@{delta\+Time}!Game\+Manager.\+h@{Game\+Manager.\+h}}
+\subsubsection{\texorpdfstring{delta\+Time}{deltaTime}}
+{\footnotesize\ttfamily G\+Lint delta\+Time = 1}
+
+\mbox{\Hypertarget{_game_manager_8h_a69bb1f156e18c9d16f215d533e46efda}\label{_game_manager_8h_a69bb1f156e18c9d16f215d533e46efda}} 
+\index{Game\+Manager.\+h@{Game\+Manager.\+h}!F\+R\+A\+G\+M\+E\+N\+T\+\_\+\+S\+H\+A\+D\+E\+R\+\_\+\+P\+A\+TH@{F\+R\+A\+G\+M\+E\+N\+T\+\_\+\+S\+H\+A\+D\+E\+R\+\_\+\+P\+A\+TH}}
+\index{F\+R\+A\+G\+M\+E\+N\+T\+\_\+\+S\+H\+A\+D\+E\+R\+\_\+\+P\+A\+TH@{F\+R\+A\+G\+M\+E\+N\+T\+\_\+\+S\+H\+A\+D\+E\+R\+\_\+\+P\+A\+TH}!Game\+Manager.\+h@{Game\+Manager.\+h}}
+\subsubsection{\texorpdfstring{F\+R\+A\+G\+M\+E\+N\+T\+\_\+\+S\+H\+A\+D\+E\+R\+\_\+\+P\+A\+TH}{FRAGMENT\_SHADER\_PATH}}
+{\footnotesize\ttfamily const char$\ast$ F\+R\+A\+G\+M\+E\+N\+T\+\_\+\+S\+H\+A\+D\+E\+R\+\_\+\+P\+A\+TH = \char`\"{}shaders/phong.\+frag\char`\"{}}
+
+\mbox{\Hypertarget{_game_manager_8h_a6ab7caf5552a8a3110e28897e658f6a2}\label{_game_manager_8h_a6ab7caf5552a8a3110e28897e658f6a2}} 
+\index{Game\+Manager.\+h@{Game\+Manager.\+h}!l\+\_\+enabled@{l\+\_\+enabled}}
+\index{l\+\_\+enabled@{l\+\_\+enabled}!Game\+Manager.\+h@{Game\+Manager.\+h}}
+\subsubsection{\texorpdfstring{l\+\_\+enabled}{l\_enabled}}
+{\footnotesize\ttfamily G\+Lint l\+\_\+enabled\mbox{[}8\mbox{]} = \{1, 1, 1, 1, 1, 1, 1, 1\}}
+
+\mbox{\Hypertarget{_game_manager_8h_a9716857280550b64bc35a221d0b4da20}\label{_game_manager_8h_a9716857280550b64bc35a221d0b4da20}} 
+\index{Game\+Manager.\+h@{Game\+Manager.\+h}!l\+\_\+enabled\+\_\+id@{l\+\_\+enabled\+\_\+id}}
+\index{l\+\_\+enabled\+\_\+id@{l\+\_\+enabled\+\_\+id}!Game\+Manager.\+h@{Game\+Manager.\+h}}
+\subsubsection{\texorpdfstring{l\+\_\+enabled\+\_\+id}{l\_enabled\_id}}
+{\footnotesize\ttfamily G\+Lint l\+\_\+enabled\+\_\+id}
+
+\mbox{\Hypertarget{_game_manager_8h_ade703681f439c6cbc3c1f384caec6444}\label{_game_manager_8h_ade703681f439c6cbc3c1f384caec6444}} 
+\index{Game\+Manager.\+h@{Game\+Manager.\+h}!l\+\_\+pos\+\_\+id@{l\+\_\+pos\+\_\+id}}
+\index{l\+\_\+pos\+\_\+id@{l\+\_\+pos\+\_\+id}!Game\+Manager.\+h@{Game\+Manager.\+h}}
+\subsubsection{\texorpdfstring{l\+\_\+pos\+\_\+id}{l\_pos\_id}}
+{\footnotesize\ttfamily G\+Lint l\+\_\+pos\+\_\+id\mbox{[}8\mbox{]}}
+
+\mbox{\Hypertarget{_game_manager_8h_adc65ed29ddf22e7e216337a192d5468e}\label{_game_manager_8h_adc65ed29ddf22e7e216337a192d5468e}} 
+\index{Game\+Manager.\+h@{Game\+Manager.\+h}!l\+\_\+spot\+\_\+dir\+\_\+id@{l\+\_\+spot\+\_\+dir\+\_\+id}}
+\index{l\+\_\+spot\+\_\+dir\+\_\+id@{l\+\_\+spot\+\_\+dir\+\_\+id}!Game\+Manager.\+h@{Game\+Manager.\+h}}
+\subsubsection{\texorpdfstring{l\+\_\+spot\+\_\+dir\+\_\+id}{l\_spot\_dir\_id}}
+{\footnotesize\ttfamily G\+Lint l\+\_\+spot\+\_\+dir\+\_\+id}
+
+\mbox{\Hypertarget{_game_manager_8h_a65c0d2a61eed036157fadd9d12c8b3b5}\label{_game_manager_8h_a65c0d2a61eed036157fadd9d12c8b3b5}} 
+\index{Game\+Manager.\+h@{Game\+Manager.\+h}!normal\+\_\+uniform\+Id@{normal\+\_\+uniform\+Id}}
+\index{normal\+\_\+uniform\+Id@{normal\+\_\+uniform\+Id}!Game\+Manager.\+h@{Game\+Manager.\+h}}
+\subsubsection{\texorpdfstring{normal\+\_\+uniform\+Id}{normal\_uniformId}}
+{\footnotesize\ttfamily G\+Lint normal\+\_\+uniform\+Id}
+
+\mbox{\Hypertarget{_game_manager_8h_aaceda45f8a6fbf228a739bb9c31dcd4d}\label{_game_manager_8h_aaceda45f8a6fbf228a739bb9c31dcd4d}} 
+\index{Game\+Manager.\+h@{Game\+Manager.\+h}!prev\+Time@{prev\+Time}}
+\index{prev\+Time@{prev\+Time}!Game\+Manager.\+h@{Game\+Manager.\+h}}
+\subsubsection{\texorpdfstring{prev\+Time}{prevTime}}
+{\footnotesize\ttfamily G\+Lint prev\+Time = 1}
+
+\mbox{\Hypertarget{_game_manager_8h_a82872ecfb8a3e01920a465884b3c3410}\label{_game_manager_8h_a82872ecfb8a3e01920a465884b3c3410}} 
+\index{Game\+Manager.\+h@{Game\+Manager.\+h}!pvm\+\_\+uniform\+Id@{pvm\+\_\+uniform\+Id}}
+\index{pvm\+\_\+uniform\+Id@{pvm\+\_\+uniform\+Id}!Game\+Manager.\+h@{Game\+Manager.\+h}}
+\subsubsection{\texorpdfstring{pvm\+\_\+uniform\+Id}{pvm\_uniformId}}
+{\footnotesize\ttfamily G\+Lint pvm\+\_\+uniform\+Id}
+
+\mbox{\Hypertarget{_game_manager_8h_ae5cf450f60c289bbdc7159c5217bab48}\label{_game_manager_8h_ae5cf450f60c289bbdc7159c5217bab48}} 
+\index{Game\+Manager.\+h@{Game\+Manager.\+h}!tex\+\_\+loc0@{tex\+\_\+loc0}}
+\index{tex\+\_\+loc0@{tex\+\_\+loc0}!Game\+Manager.\+h@{Game\+Manager.\+h}}
+\subsubsection{\texorpdfstring{tex\+\_\+loc0}{tex\_loc0}}
+{\footnotesize\ttfamily G\+Lint tex\+\_\+loc0}
+
+\mbox{\Hypertarget{_game_manager_8h_ac6e1ac7b16cad04048d56fd59bc456e2}\label{_game_manager_8h_ac6e1ac7b16cad04048d56fd59bc456e2}} 
+\index{Game\+Manager.\+h@{Game\+Manager.\+h}!tex\+\_\+loc1@{tex\+\_\+loc1}}
+\index{tex\+\_\+loc1@{tex\+\_\+loc1}!Game\+Manager.\+h@{Game\+Manager.\+h}}
+\subsubsection{\texorpdfstring{tex\+\_\+loc1}{tex\_loc1}}
+{\footnotesize\ttfamily G\+Lint tex\+\_\+loc1}
+
+\mbox{\Hypertarget{_game_manager_8h_a03bebd892e10759787ba1a5177363bb7}\label{_game_manager_8h_a03bebd892e10759787ba1a5177363bb7}} 
+\index{Game\+Manager.\+h@{Game\+Manager.\+h}!tex\+\_\+loc2@{tex\+\_\+loc2}}
+\index{tex\+\_\+loc2@{tex\+\_\+loc2}!Game\+Manager.\+h@{Game\+Manager.\+h}}
+\subsubsection{\texorpdfstring{tex\+\_\+loc2}{tex\_loc2}}
+{\footnotesize\ttfamily G\+Lint tex\+\_\+loc2}
+
+\mbox{\Hypertarget{_game_manager_8h_a4a7ceb626c72d8afcb5c45fd8baca498}\label{_game_manager_8h_a4a7ceb626c72d8afcb5c45fd8baca498}} 
+\index{Game\+Manager.\+h@{Game\+Manager.\+h}!tex\+\_\+loc3@{tex\+\_\+loc3}}
+\index{tex\+\_\+loc3@{tex\+\_\+loc3}!Game\+Manager.\+h@{Game\+Manager.\+h}}
+\subsubsection{\texorpdfstring{tex\+\_\+loc3}{tex\_loc3}}
+{\footnotesize\ttfamily G\+Lint tex\+\_\+loc3}
+
+\mbox{\Hypertarget{_game_manager_8h_a69e2f5370c1434984eef245400fec538}\label{_game_manager_8h_a69e2f5370c1434984eef245400fec538}} 
+\index{Game\+Manager.\+h@{Game\+Manager.\+h}!tex\+\_\+loc4@{tex\+\_\+loc4}}
+\index{tex\+\_\+loc4@{tex\+\_\+loc4}!Game\+Manager.\+h@{Game\+Manager.\+h}}
+\subsubsection{\texorpdfstring{tex\+\_\+loc4}{tex\_loc4}}
+{\footnotesize\ttfamily G\+Lint tex\+\_\+loc4}
+
+\mbox{\Hypertarget{_game_manager_8h_a9cf98f4bf781468e4337cc440a5f90ed}\label{_game_manager_8h_a9cf98f4bf781468e4337cc440a5f90ed}} 
+\index{Game\+Manager.\+h@{Game\+Manager.\+h}!tex\+Mode\+\_\+uniform\+Id@{tex\+Mode\+\_\+uniform\+Id}}
+\index{tex\+Mode\+\_\+uniform\+Id@{tex\+Mode\+\_\+uniform\+Id}!Game\+Manager.\+h@{Game\+Manager.\+h}}
+\subsubsection{\texorpdfstring{tex\+Mode\+\_\+uniform\+Id}{texMode\_uniformId}}
+{\footnotesize\ttfamily G\+Lint tex\+Mode\+\_\+uniform\+Id}
+
+\mbox{\Hypertarget{_game_manager_8h_aeba6efbb6e884918f8fba4d6ad11e743}\label{_game_manager_8h_aeba6efbb6e884918f8fba4d6ad11e743}} 
+\index{Game\+Manager.\+h@{Game\+Manager.\+h}!Texture\+Array@{Texture\+Array}}
+\index{Texture\+Array@{Texture\+Array}!Game\+Manager.\+h@{Game\+Manager.\+h}}
+\subsubsection{\texorpdfstring{Texture\+Array}{TextureArray}}
+{\footnotesize\ttfamily G\+Luint Texture\+Array\mbox{[}25\mbox{]}}
+
+\mbox{\Hypertarget{_game_manager_8h_a1ffff15fed7af9fa7f4a4bc3dab03dea}\label{_game_manager_8h_a1ffff15fed7af9fa7f4a4bc3dab03dea}} 
+\index{Game\+Manager.\+h@{Game\+Manager.\+h}!V\+E\+R\+T\+E\+X\+\_\+\+S\+H\+A\+D\+E\+R\+\_\+\+P\+A\+TH@{V\+E\+R\+T\+E\+X\+\_\+\+S\+H\+A\+D\+E\+R\+\_\+\+P\+A\+TH}}
+\index{V\+E\+R\+T\+E\+X\+\_\+\+S\+H\+A\+D\+E\+R\+\_\+\+P\+A\+TH@{V\+E\+R\+T\+E\+X\+\_\+\+S\+H\+A\+D\+E\+R\+\_\+\+P\+A\+TH}!Game\+Manager.\+h@{Game\+Manager.\+h}}
+\subsubsection{\texorpdfstring{V\+E\+R\+T\+E\+X\+\_\+\+S\+H\+A\+D\+E\+R\+\_\+\+P\+A\+TH}{VERTEX\_SHADER\_PATH}}
+{\footnotesize\ttfamily const char$\ast$ V\+E\+R\+T\+E\+X\+\_\+\+S\+H\+A\+D\+E\+R\+\_\+\+P\+A\+TH = \char`\"{}shaders/phong.\+vert\char`\"{}}
+
+\mbox{\Hypertarget{_game_manager_8h_ab240e11dbb233cbbb8e9fe141b5733b7}\label{_game_manager_8h_ab240e11dbb233cbbb8e9fe141b5733b7}} 
+\index{Game\+Manager.\+h@{Game\+Manager.\+h}!vm\+\_\+uniform\+Id@{vm\+\_\+uniform\+Id}}
+\index{vm\+\_\+uniform\+Id@{vm\+\_\+uniform\+Id}!Game\+Manager.\+h@{Game\+Manager.\+h}}
+\subsubsection{\texorpdfstring{vm\+\_\+uniform\+Id}{vm\_uniformId}}
+{\footnotesize\ttfamily G\+Lint vm\+\_\+uniform\+Id}
+

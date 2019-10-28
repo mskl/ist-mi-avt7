@@ -1,0 +1,186 @@
+\hypertarget{_game_object_8h}{}\section{/\+Users/matya/\+A\+V\+T7/src/\+Game\+Object.h File Reference}
+\label{_game_object_8h}\index{/\+Users/matya/\+A\+V\+T7/src/\+Game\+Object.\+h@{/\+Users/matya/\+A\+V\+T7/src/\+Game\+Object.\+h}}
+{\ttfamily \#include \char`\"{}libs/basic\+\_\+geometry.\+h\char`\"{}}\newline
+{\ttfamily \#include $<$tuple$>$}\newline
+{\ttfamily \#include \char`\"{}Vector3.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}Shader\+Indices.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}Bounding\+Box.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}materials/\+Materials.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}Game\+Manager.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}libs/vs\+Shader\+Lib.\+h\char`\"{}}\newline
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{class_game_object}{Game\+Object}
+\end{DoxyCompactItemize}
+\subsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{_game_object_8h_a57678b60d65afb213d04a6b090c64a08}{Game\+Object\+Type} \{ \newline
+\hyperlink{_game_object_8h_a57678b60d65afb213d04a6b090c64a08acdca9e1e320e757d0a058b49a833072d}{B\+O\+U\+N\+DS}, 
+\hyperlink{_game_object_8h_a57678b60d65afb213d04a6b090c64a08a09aa9e75617e9d8719738ca163c09137}{T\+A\+R\+G\+ET}, 
+\hyperlink{_game_object_8h_a57678b60d65afb213d04a6b090c64a08adbed8401e35adba25dab2e1729ee55fa}{G\+R\+A\+SS}, 
+\hyperlink{_game_object_8h_a57678b60d65afb213d04a6b090c64a08acd7ffe737ad5fb21fbd7499886934910}{L\+OG}, 
+\newline
+\hyperlink{_game_object_8h_a57678b60d65afb213d04a6b090c64a08af0aa368be02d6d2aba1047491d29605b}{T\+U\+R\+T\+LE}, 
+\hyperlink{_game_object_8h_a57678b60d65afb213d04a6b090c64a08a5f1a4df6ed0c2b7e1aa187f9eb43409f}{R\+I\+V\+ER}, 
+\hyperlink{_game_object_8h_a57678b60d65afb213d04a6b090c64a08a77353523aa43282a05d23c037e67bbda}{G\+R\+O\+U\+ND}, 
+\hyperlink{_game_object_8h_a57678b60d65afb213d04a6b090c64a08a885a6a40e3fde5dfec3db7fefea61f9b}{B\+US}, 
+\newline
+\hyperlink{_game_object_8h_a57678b60d65afb213d04a6b090c64a08a5fc54ebcb1dd4bf1e1b93cbc77b57b40}{C\+AR}, 
+\hyperlink{_game_object_8h_a57678b60d65afb213d04a6b090c64a08aa57edeeb1dd2c77d5b8afca80b14e9aa}{R\+O\+AD}, 
+\hyperlink{_game_object_8h_a57678b60d65afb213d04a6b090c64a08a6ce26a62afab55d7606ad4e92428b30c}{U\+N\+K\+N\+O\+WN}, 
+\hyperlink{_game_object_8h_a57678b60d65afb213d04a6b090c64a08a6c58ce9e21653a393c0accb740035936}{C\+O\+L\+L\+I\+D\+A\+B\+LE}, 
+\newline
+\hyperlink{_game_object_8h_a57678b60d65afb213d04a6b090c64a08ade5dc3e0dbd007d995ed3e37bde5ce7e}{P\+L\+A\+Y\+ER}
+ \}
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{struct_my_mesh}{My\+Mesh} \hyperlink{_game_object_8h_ad0bd95ad0dfc1df90b80b6bc983d9c69}{mesh} \mbox{[}$\,$\mbox{]}
+\item 
+\hyperlink{class_v_s_shader_lib}{V\+S\+Shader\+Lib} \hyperlink{_game_object_8h_ac47a0fc488d784ac7b790ab3e9922b76}{shader}
+\item 
+float \hyperlink{_game_object_8h_a46a58020d2ae91e1eb39e054695366e7}{m\+Matrix} \mbox{[}\hyperlink{_a_v_tmath_lib_8h_a23f8816edcf0756ce7f839df8a73b7a8}{C\+O\+U\+N\+T\+\_\+\+M\+A\+T\+R\+I\+C\+ES}\mbox{]}\mbox{[}16\mbox{]}
+\begin{DoxyCompactList}\small\item\em The storage for matrices. \end{DoxyCompactList}\item 
+float \hyperlink{_game_object_8h_a59eef4869e380049cd1840f72443b906}{m\+Comp\+Matrix} \mbox{[}\hyperlink{_a_v_tmath_lib_8h_ad3539500c1afc42324a25b54a3367f02}{C\+O\+U\+N\+T\+\_\+\+C\+O\+M\+P\+U\+T\+E\+D\+\_\+\+M\+A\+T\+R\+I\+C\+ES}\mbox{]}\mbox{[}16\mbox{]}
+\item 
+float \hyperlink{_game_object_8h_a6a0432b9158d64a3dd153b99056eec29}{m\+Normal3x3} \mbox{[}9\mbox{]}
+\begin{DoxyCompactList}\small\item\em The normal matrix. \end{DoxyCompactList}\item 
+G\+Lint \hyperlink{_game_object_8h_a82872ecfb8a3e01920a465884b3c3410}{pvm\+\_\+uniform\+Id}
+\item 
+G\+Lint \hyperlink{_game_object_8h_ab240e11dbb233cbbb8e9fe141b5733b7}{vm\+\_\+uniform\+Id}
+\item 
+G\+Lint \hyperlink{_game_object_8h_a65c0d2a61eed036157fadd9d12c8b3b5}{normal\+\_\+uniform\+Id}
+\item 
+G\+Lint \hyperlink{_game_object_8h_ade703681f439c6cbc3c1f384caec6444}{l\+\_\+pos\+\_\+id} \mbox{[}8\mbox{]}
+\end{DoxyCompactItemize}
+
+
+\subsection{Enumeration Type Documentation}
+\mbox{\Hypertarget{_game_object_8h_a57678b60d65afb213d04a6b090c64a08}\label{_game_object_8h_a57678b60d65afb213d04a6b090c64a08}} 
+\index{Game\+Object.\+h@{Game\+Object.\+h}!Game\+Object\+Type@{Game\+Object\+Type}}
+\index{Game\+Object\+Type@{Game\+Object\+Type}!Game\+Object.\+h@{Game\+Object.\+h}}
+\subsubsection{\texorpdfstring{Game\+Object\+Type}{GameObjectType}}
+{\footnotesize\ttfamily enum \hyperlink{_game_object_8h_a57678b60d65afb213d04a6b090c64a08}{Game\+Object\+Type}}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{B\+O\+U\+N\+DS@{B\+O\+U\+N\+DS}!Game\+Object.\+h@{Game\+Object.\+h}}\index{Game\+Object.\+h@{Game\+Object.\+h}!B\+O\+U\+N\+DS@{B\+O\+U\+N\+DS}}}\mbox{\Hypertarget{_game_object_8h_a57678b60d65afb213d04a6b090c64a08acdca9e1e320e757d0a058b49a833072d}\label{_game_object_8h_a57678b60d65afb213d04a6b090c64a08acdca9e1e320e757d0a058b49a833072d}} 
+B\+O\+U\+N\+DS&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{T\+A\+R\+G\+ET@{T\+A\+R\+G\+ET}!Game\+Object.\+h@{Game\+Object.\+h}}\index{Game\+Object.\+h@{Game\+Object.\+h}!T\+A\+R\+G\+ET@{T\+A\+R\+G\+ET}}}\mbox{\Hypertarget{_game_object_8h_a57678b60d65afb213d04a6b090c64a08a09aa9e75617e9d8719738ca163c09137}\label{_game_object_8h_a57678b60d65afb213d04a6b090c64a08a09aa9e75617e9d8719738ca163c09137}} 
+T\+A\+R\+G\+ET&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{G\+R\+A\+SS@{G\+R\+A\+SS}!Game\+Object.\+h@{Game\+Object.\+h}}\index{Game\+Object.\+h@{Game\+Object.\+h}!G\+R\+A\+SS@{G\+R\+A\+SS}}}\mbox{\Hypertarget{_game_object_8h_a57678b60d65afb213d04a6b090c64a08adbed8401e35adba25dab2e1729ee55fa}\label{_game_object_8h_a57678b60d65afb213d04a6b090c64a08adbed8401e35adba25dab2e1729ee55fa}} 
+G\+R\+A\+SS&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{L\+OG@{L\+OG}!Game\+Object.\+h@{Game\+Object.\+h}}\index{Game\+Object.\+h@{Game\+Object.\+h}!L\+OG@{L\+OG}}}\mbox{\Hypertarget{_game_object_8h_a57678b60d65afb213d04a6b090c64a08acd7ffe737ad5fb21fbd7499886934910}\label{_game_object_8h_a57678b60d65afb213d04a6b090c64a08acd7ffe737ad5fb21fbd7499886934910}} 
+L\+OG&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{T\+U\+R\+T\+LE@{T\+U\+R\+T\+LE}!Game\+Object.\+h@{Game\+Object.\+h}}\index{Game\+Object.\+h@{Game\+Object.\+h}!T\+U\+R\+T\+LE@{T\+U\+R\+T\+LE}}}\mbox{\Hypertarget{_game_object_8h_a57678b60d65afb213d04a6b090c64a08af0aa368be02d6d2aba1047491d29605b}\label{_game_object_8h_a57678b60d65afb213d04a6b090c64a08af0aa368be02d6d2aba1047491d29605b}} 
+T\+U\+R\+T\+LE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{R\+I\+V\+ER@{R\+I\+V\+ER}!Game\+Object.\+h@{Game\+Object.\+h}}\index{Game\+Object.\+h@{Game\+Object.\+h}!R\+I\+V\+ER@{R\+I\+V\+ER}}}\mbox{\Hypertarget{_game_object_8h_a57678b60d65afb213d04a6b090c64a08a5f1a4df6ed0c2b7e1aa187f9eb43409f}\label{_game_object_8h_a57678b60d65afb213d04a6b090c64a08a5f1a4df6ed0c2b7e1aa187f9eb43409f}} 
+R\+I\+V\+ER&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{G\+R\+O\+U\+ND@{G\+R\+O\+U\+ND}!Game\+Object.\+h@{Game\+Object.\+h}}\index{Game\+Object.\+h@{Game\+Object.\+h}!G\+R\+O\+U\+ND@{G\+R\+O\+U\+ND}}}\mbox{\Hypertarget{_game_object_8h_a57678b60d65afb213d04a6b090c64a08a77353523aa43282a05d23c037e67bbda}\label{_game_object_8h_a57678b60d65afb213d04a6b090c64a08a77353523aa43282a05d23c037e67bbda}} 
+G\+R\+O\+U\+ND&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{B\+US@{B\+US}!Game\+Object.\+h@{Game\+Object.\+h}}\index{Game\+Object.\+h@{Game\+Object.\+h}!B\+US@{B\+US}}}\mbox{\Hypertarget{_game_object_8h_a57678b60d65afb213d04a6b090c64a08a885a6a40e3fde5dfec3db7fefea61f9b}\label{_game_object_8h_a57678b60d65afb213d04a6b090c64a08a885a6a40e3fde5dfec3db7fefea61f9b}} 
+B\+US&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{C\+AR@{C\+AR}!Game\+Object.\+h@{Game\+Object.\+h}}\index{Game\+Object.\+h@{Game\+Object.\+h}!C\+AR@{C\+AR}}}\mbox{\Hypertarget{_game_object_8h_a57678b60d65afb213d04a6b090c64a08a5fc54ebcb1dd4bf1e1b93cbc77b57b40}\label{_game_object_8h_a57678b60d65afb213d04a6b090c64a08a5fc54ebcb1dd4bf1e1b93cbc77b57b40}} 
+C\+AR&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{R\+O\+AD@{R\+O\+AD}!Game\+Object.\+h@{Game\+Object.\+h}}\index{Game\+Object.\+h@{Game\+Object.\+h}!R\+O\+AD@{R\+O\+AD}}}\mbox{\Hypertarget{_game_object_8h_a57678b60d65afb213d04a6b090c64a08aa57edeeb1dd2c77d5b8afca80b14e9aa}\label{_game_object_8h_a57678b60d65afb213d04a6b090c64a08aa57edeeb1dd2c77d5b8afca80b14e9aa}} 
+R\+O\+AD&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{U\+N\+K\+N\+O\+WN@{U\+N\+K\+N\+O\+WN}!Game\+Object.\+h@{Game\+Object.\+h}}\index{Game\+Object.\+h@{Game\+Object.\+h}!U\+N\+K\+N\+O\+WN@{U\+N\+K\+N\+O\+WN}}}\mbox{\Hypertarget{_game_object_8h_a57678b60d65afb213d04a6b090c64a08a6ce26a62afab55d7606ad4e92428b30c}\label{_game_object_8h_a57678b60d65afb213d04a6b090c64a08a6ce26a62afab55d7606ad4e92428b30c}} 
+U\+N\+K\+N\+O\+WN&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{C\+O\+L\+L\+I\+D\+A\+B\+LE@{C\+O\+L\+L\+I\+D\+A\+B\+LE}!Game\+Object.\+h@{Game\+Object.\+h}}\index{Game\+Object.\+h@{Game\+Object.\+h}!C\+O\+L\+L\+I\+D\+A\+B\+LE@{C\+O\+L\+L\+I\+D\+A\+B\+LE}}}\mbox{\Hypertarget{_game_object_8h_a57678b60d65afb213d04a6b090c64a08a6c58ce9e21653a393c0accb740035936}\label{_game_object_8h_a57678b60d65afb213d04a6b090c64a08a6c58ce9e21653a393c0accb740035936}} 
+C\+O\+L\+L\+I\+D\+A\+B\+LE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{P\+L\+A\+Y\+ER@{P\+L\+A\+Y\+ER}!Game\+Object.\+h@{Game\+Object.\+h}}\index{Game\+Object.\+h@{Game\+Object.\+h}!P\+L\+A\+Y\+ER@{P\+L\+A\+Y\+ER}}}\mbox{\Hypertarget{_game_object_8h_a57678b60d65afb213d04a6b090c64a08ade5dc3e0dbd007d995ed3e37bde5ce7e}\label{_game_object_8h_a57678b60d65afb213d04a6b090c64a08ade5dc3e0dbd007d995ed3e37bde5ce7e}} 
+P\+L\+A\+Y\+ER&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+\subsection{Variable Documentation}
+\mbox{\Hypertarget{_game_object_8h_ade703681f439c6cbc3c1f384caec6444}\label{_game_object_8h_ade703681f439c6cbc3c1f384caec6444}} 
+\index{Game\+Object.\+h@{Game\+Object.\+h}!l\+\_\+pos\+\_\+id@{l\+\_\+pos\+\_\+id}}
+\index{l\+\_\+pos\+\_\+id@{l\+\_\+pos\+\_\+id}!Game\+Object.\+h@{Game\+Object.\+h}}
+\subsubsection{\texorpdfstring{l\+\_\+pos\+\_\+id}{l\_pos\_id}}
+{\footnotesize\ttfamily G\+Lint l\+\_\+pos\+\_\+id\mbox{[}8\mbox{]}}
+
+\mbox{\Hypertarget{_game_object_8h_a59eef4869e380049cd1840f72443b906}\label{_game_object_8h_a59eef4869e380049cd1840f72443b906}} 
+\index{Game\+Object.\+h@{Game\+Object.\+h}!m\+Comp\+Matrix@{m\+Comp\+Matrix}}
+\index{m\+Comp\+Matrix@{m\+Comp\+Matrix}!Game\+Object.\+h@{Game\+Object.\+h}}
+\subsubsection{\texorpdfstring{m\+Comp\+Matrix}{mCompMatrix}}
+{\footnotesize\ttfamily float m\+Comp\+Matrix\mbox{[}\hyperlink{_a_v_tmath_lib_8h_ad3539500c1afc42324a25b54a3367f02}{C\+O\+U\+N\+T\+\_\+\+C\+O\+M\+P\+U\+T\+E\+D\+\_\+\+M\+A\+T\+R\+I\+C\+ES}\mbox{]}\mbox{[}16\mbox{]}}
+
+\mbox{\Hypertarget{_game_object_8h_ad0bd95ad0dfc1df90b80b6bc983d9c69}\label{_game_object_8h_ad0bd95ad0dfc1df90b80b6bc983d9c69}} 
+\index{Game\+Object.\+h@{Game\+Object.\+h}!mesh@{mesh}}
+\index{mesh@{mesh}!Game\+Object.\+h@{Game\+Object.\+h}}
+\subsubsection{\texorpdfstring{mesh}{mesh}}
+{\footnotesize\ttfamily struct \hyperlink{struct_my_mesh}{My\+Mesh} mesh\mbox{[}$\,$\mbox{]}}
+
+\mbox{\Hypertarget{_game_object_8h_a46a58020d2ae91e1eb39e054695366e7}\label{_game_object_8h_a46a58020d2ae91e1eb39e054695366e7}} 
+\index{Game\+Object.\+h@{Game\+Object.\+h}!m\+Matrix@{m\+Matrix}}
+\index{m\+Matrix@{m\+Matrix}!Game\+Object.\+h@{Game\+Object.\+h}}
+\subsubsection{\texorpdfstring{m\+Matrix}{mMatrix}}
+{\footnotesize\ttfamily float m\+Matrix\mbox{[}\hyperlink{_a_v_tmath_lib_8h_a23f8816edcf0756ce7f839df8a73b7a8}{C\+O\+U\+N\+T\+\_\+\+M\+A\+T\+R\+I\+C\+ES}\mbox{]}\mbox{[}16\mbox{]}}
+
+
+
+The storage for matrices. 
+
+\mbox{\Hypertarget{_game_object_8h_a6a0432b9158d64a3dd153b99056eec29}\label{_game_object_8h_a6a0432b9158d64a3dd153b99056eec29}} 
+\index{Game\+Object.\+h@{Game\+Object.\+h}!m\+Normal3x3@{m\+Normal3x3}}
+\index{m\+Normal3x3@{m\+Normal3x3}!Game\+Object.\+h@{Game\+Object.\+h}}
+\subsubsection{\texorpdfstring{m\+Normal3x3}{mNormal3x3}}
+{\footnotesize\ttfamily float m\+Normal3x3\mbox{[}9\mbox{]}}
+
+
+
+The normal matrix. 
+
+\mbox{\Hypertarget{_game_object_8h_a65c0d2a61eed036157fadd9d12c8b3b5}\label{_game_object_8h_a65c0d2a61eed036157fadd9d12c8b3b5}} 
+\index{Game\+Object.\+h@{Game\+Object.\+h}!normal\+\_\+uniform\+Id@{normal\+\_\+uniform\+Id}}
+\index{normal\+\_\+uniform\+Id@{normal\+\_\+uniform\+Id}!Game\+Object.\+h@{Game\+Object.\+h}}
+\subsubsection{\texorpdfstring{normal\+\_\+uniform\+Id}{normal\_uniformId}}
+{\footnotesize\ttfamily G\+Lint normal\+\_\+uniform\+Id}
+
+\mbox{\Hypertarget{_game_object_8h_a82872ecfb8a3e01920a465884b3c3410}\label{_game_object_8h_a82872ecfb8a3e01920a465884b3c3410}} 
+\index{Game\+Object.\+h@{Game\+Object.\+h}!pvm\+\_\+uniform\+Id@{pvm\+\_\+uniform\+Id}}
+\index{pvm\+\_\+uniform\+Id@{pvm\+\_\+uniform\+Id}!Game\+Object.\+h@{Game\+Object.\+h}}
+\subsubsection{\texorpdfstring{pvm\+\_\+uniform\+Id}{pvm\_uniformId}}
+{\footnotesize\ttfamily G\+Lint pvm\+\_\+uniform\+Id}
+
+\mbox{\Hypertarget{_game_object_8h_ac47a0fc488d784ac7b790ab3e9922b76}\label{_game_object_8h_ac47a0fc488d784ac7b790ab3e9922b76}} 
+\index{Game\+Object.\+h@{Game\+Object.\+h}!shader@{shader}}
+\index{shader@{shader}!Game\+Object.\+h@{Game\+Object.\+h}}
+\subsubsection{\texorpdfstring{shader}{shader}}
+{\footnotesize\ttfamily \hyperlink{class_v_s_shader_lib}{V\+S\+Shader\+Lib} shader}
+
+\mbox{\Hypertarget{_game_object_8h_ab240e11dbb233cbbb8e9fe141b5733b7}\label{_game_object_8h_ab240e11dbb233cbbb8e9fe141b5733b7}} 
+\index{Game\+Object.\+h@{Game\+Object.\+h}!vm\+\_\+uniform\+Id@{vm\+\_\+uniform\+Id}}
+\index{vm\+\_\+uniform\+Id@{vm\+\_\+uniform\+Id}!Game\+Object.\+h@{Game\+Object.\+h}}
+\subsubsection{\texorpdfstring{vm\+\_\+uniform\+Id}{vm\_uniformId}}
+{\footnotesize\ttfamily G\+Lint vm\+\_\+uniform\+Id}
+

@@ -1,0 +1,120 @@
+\hypertarget{class_camera_perspective}{}\section{Camera\+Perspective Class Reference}
+\label{class_camera_perspective}\index{Camera\+Perspective@{Camera\+Perspective}}
+
+
+{\ttfamily \#include $<$Camera\+Perspective.\+h$>$}
+
+Inheritance diagram for Camera\+Perspective\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_camera_perspective}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_camera_perspective_a44735f45c240e39cd10dcae59dc752d3}{Camera\+Perspective} (float \hyperlink{class_camera_perspective_adb49aa14a62f537f810038351b141a36}{r}, float \hyperlink{class_camera_perspective_a93009a48069d0d671317c5d9f7d66963}{alpha}, float \hyperlink{class_camera_perspective_a3545402762e444abd3cb90ea9d2e72ca}{beta}, \hyperlink{class_vector3}{Vector3} \hyperlink{class_camera_a2c4c5bcf8f5885968d4e5ebc28074846}{pos})
+\item 
+void \hyperlink{class_camera_perspective_aaaa30cbae530a2d4716a3f333df2d240}{mouse\+Update} (float \hyperlink{class_camera_perspective_adb49aa14a62f537f810038351b141a36}{r}, float \hyperlink{class_camera_perspective_a93009a48069d0d671317c5d9f7d66963}{alpha}, float \hyperlink{class_camera_perspective_a3545402762e444abd3cb90ea9d2e72ca}{beta})
+\item 
+void \hyperlink{class_camera_perspective_a6605f8288ea01b0d647213df88d2a45b}{view} () override
+\item 
+void \hyperlink{class_camera_perspective_a841f648f4131897ec632cfcb55facf97}{project} (int w, int h) override
+\item 
+void \hyperlink{class_camera_perspective_a3e3875dbaf831674e33e5aee8d179224}{print\+Coordinates} ()
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+float \hyperlink{class_camera_perspective_a53ed75a72568390a0a42c217baf07221}{fov} = 53.\+13f
+\item 
+float \hyperlink{class_camera_perspective_adb49aa14a62f537f810038351b141a36}{r} = 20.\+0f
+\item 
+float \hyperlink{class_camera_perspective_a93009a48069d0d671317c5d9f7d66963}{alpha} = 0.\+0f
+\item 
+float \hyperlink{class_camera_perspective_a3545402762e444abd3cb90ea9d2e72ca}{beta} = 40.\+0f
+\item 
+\hyperlink{class_vector3}{Vector3} \hyperlink{class_camera_perspective_afe2ca37c029acb558350b2fe1025e9c5}{local\+Pos} = \hyperlink{class_vector3}{Vector3}()
+\end{DoxyCompactItemize}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_camera_perspective_a44735f45c240e39cd10dcae59dc752d3}\label{class_camera_perspective_a44735f45c240e39cd10dcae59dc752d3}} 
+\index{Camera\+Perspective@{Camera\+Perspective}!Camera\+Perspective@{Camera\+Perspective}}
+\index{Camera\+Perspective@{Camera\+Perspective}!Camera\+Perspective@{Camera\+Perspective}}
+\subsubsection{\texorpdfstring{Camera\+Perspective()}{CameraPerspective()}}
+{\footnotesize\ttfamily Camera\+Perspective\+::\+Camera\+Perspective (\begin{DoxyParamCaption}\item[{float}]{r,  }\item[{float}]{alpha,  }\item[{float}]{beta,  }\item[{\hyperlink{class_vector3}{Vector3}}]{pos }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_camera_perspective_aaaa30cbae530a2d4716a3f333df2d240}\label{class_camera_perspective_aaaa30cbae530a2d4716a3f333df2d240}} 
+\index{Camera\+Perspective@{Camera\+Perspective}!mouse\+Update@{mouse\+Update}}
+\index{mouse\+Update@{mouse\+Update}!Camera\+Perspective@{Camera\+Perspective}}
+\subsubsection{\texorpdfstring{mouse\+Update()}{mouseUpdate()}}
+{\footnotesize\ttfamily void Camera\+Perspective\+::mouse\+Update (\begin{DoxyParamCaption}\item[{float}]{r,  }\item[{float}]{alpha,  }\item[{float}]{beta }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{class_camera_perspective_a3e3875dbaf831674e33e5aee8d179224}\label{class_camera_perspective_a3e3875dbaf831674e33e5aee8d179224}} 
+\index{Camera\+Perspective@{Camera\+Perspective}!print\+Coordinates@{print\+Coordinates}}
+\index{print\+Coordinates@{print\+Coordinates}!Camera\+Perspective@{Camera\+Perspective}}
+\subsubsection{\texorpdfstring{print\+Coordinates()}{printCoordinates()}}
+{\footnotesize\ttfamily void Camera\+Perspective\+::print\+Coordinates (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{class_camera_perspective_a841f648f4131897ec632cfcb55facf97}\label{class_camera_perspective_a841f648f4131897ec632cfcb55facf97}} 
+\index{Camera\+Perspective@{Camera\+Perspective}!project@{project}}
+\index{project@{project}!Camera\+Perspective@{Camera\+Perspective}}
+\subsubsection{\texorpdfstring{project()}{project()}}
+{\footnotesize\ttfamily void Camera\+Perspective\+::project (\begin{DoxyParamCaption}\item[{int}]{w,  }\item[{int}]{h }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \hyperlink{class_camera_a5b50ba31455a712ec09561105c12c7c2}{Camera}.
+
+\mbox{\Hypertarget{class_camera_perspective_a6605f8288ea01b0d647213df88d2a45b}\label{class_camera_perspective_a6605f8288ea01b0d647213df88d2a45b}} 
+\index{Camera\+Perspective@{Camera\+Perspective}!view@{view}}
+\index{view@{view}!Camera\+Perspective@{Camera\+Perspective}}
+\subsubsection{\texorpdfstring{view()}{view()}}
+{\footnotesize\ttfamily void Camera\+Perspective\+::view (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \hyperlink{class_camera_a151cbf3898d114f0a8bf079a3e90e7f4}{Camera}.
+
+
+
+\subsection{Member Data Documentation}
+\mbox{\Hypertarget{class_camera_perspective_a93009a48069d0d671317c5d9f7d66963}\label{class_camera_perspective_a93009a48069d0d671317c5d9f7d66963}} 
+\index{Camera\+Perspective@{Camera\+Perspective}!alpha@{alpha}}
+\index{alpha@{alpha}!Camera\+Perspective@{Camera\+Perspective}}
+\subsubsection{\texorpdfstring{alpha}{alpha}}
+{\footnotesize\ttfamily float Camera\+Perspective\+::alpha = 0.\+0f}
+
+\mbox{\Hypertarget{class_camera_perspective_a3545402762e444abd3cb90ea9d2e72ca}\label{class_camera_perspective_a3545402762e444abd3cb90ea9d2e72ca}} 
+\index{Camera\+Perspective@{Camera\+Perspective}!beta@{beta}}
+\index{beta@{beta}!Camera\+Perspective@{Camera\+Perspective}}
+\subsubsection{\texorpdfstring{beta}{beta}}
+{\footnotesize\ttfamily float Camera\+Perspective\+::beta = 40.\+0f}
+
+\mbox{\Hypertarget{class_camera_perspective_a53ed75a72568390a0a42c217baf07221}\label{class_camera_perspective_a53ed75a72568390a0a42c217baf07221}} 
+\index{Camera\+Perspective@{Camera\+Perspective}!fov@{fov}}
+\index{fov@{fov}!Camera\+Perspective@{Camera\+Perspective}}
+\subsubsection{\texorpdfstring{fov}{fov}}
+{\footnotesize\ttfamily float Camera\+Perspective\+::fov = 53.\+13f}
+
+\mbox{\Hypertarget{class_camera_perspective_afe2ca37c029acb558350b2fe1025e9c5}\label{class_camera_perspective_afe2ca37c029acb558350b2fe1025e9c5}} 
+\index{Camera\+Perspective@{Camera\+Perspective}!local\+Pos@{local\+Pos}}
+\index{local\+Pos@{local\+Pos}!Camera\+Perspective@{Camera\+Perspective}}
+\subsubsection{\texorpdfstring{local\+Pos}{localPos}}
+{\footnotesize\ttfamily \hyperlink{class_vector3}{Vector3} Camera\+Perspective\+::local\+Pos = \hyperlink{class_vector3}{Vector3}()}
+
+\mbox{\Hypertarget{class_camera_perspective_adb49aa14a62f537f810038351b141a36}\label{class_camera_perspective_adb49aa14a62f537f810038351b141a36}} 
+\index{Camera\+Perspective@{Camera\+Perspective}!r@{r}}
+\index{r@{r}!Camera\+Perspective@{Camera\+Perspective}}
+\subsubsection{\texorpdfstring{r}{r}}
+{\footnotesize\ttfamily float Camera\+Perspective\+::r = 20.\+0f}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/\+Users/matya/\+A\+V\+T7/src/\hyperlink{_camera_perspective_8h}{Camera\+Perspective.\+h}\end{DoxyCompactItemize}

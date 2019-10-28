@@ -1,0 +1,204 @@
+\hypertarget{class_player}{}\section{Player Class Reference}
+\label{class_player}\index{Player@{Player}}
+
+
+{\ttfamily \#include $<$Player.\+h$>$}
+
+Inheritance diagram for Player\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=4.000000cm]{class_player}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_player_a764ad06a52c68d38a95f61a731369c86}{Player} (\hyperlink{class_vector3}{Vector3} pos)
+\item 
+void \hyperlink{class_player_a72cc16348453f3a4b871eb2486c91497}{jump} (\hyperlink{class_vector3}{Vector3} jump\+Dir, float jump\+Speed)
+\item 
+void \hyperlink{class_player_a51e705a6ad3628144e02832d1839b360}{update} (int \hyperlink{_game_manager_8h_afea6a95c7a1c119b7106a4c735eb259d}{delta\+Time}) final
+\item 
+bool \hyperlink{class_player_a476948950b48fde97113707c1b6e6195}{collide\+With\+Bottom} (const \hyperlink{class_game_object}{Game\+Object} $\ast$other) const
+\item 
+void \hyperlink{class_player_a038a74bd768b6eec8fbe57cb2bacf811}{respawn} ()
+\item 
+void \hyperlink{class_player_a41f9e4a4e55ee3fc38614dcb965193a1}{restart\+Game} ()
+\item 
+void \hyperlink{class_player_a9098e6b411ea9102b02bb911eca6515b}{set\+Speed\+Multiplier} (float new\+Speed) final
+\item 
+void \hyperlink{class_player_a1fb512423a77eee4ed0dea7cb7179c83}{init} () final
+\item 
+void \hyperlink{class_player_a4da76233f59ad0254aa6ec533f9badcc}{render} () final
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_player_8h_a3c730f37b1b3a893159bada67637fdb1}{Player\+State} \hyperlink{class_player_aea87fbb086b0cc358db8adf47bfa7369}{player\+State} = \hyperlink{_player_8h_a3c730f37b1b3a893159bada67637fdb1aefa0f3ce09b7d810dde1e3cde60f7c4f}{G\+R\+O\+U\+N\+D\+ED}
+\item 
+\hyperlink{class_vector3}{Vector3} \hyperlink{class_player_afef6386ca5fe8974bcc3d807b2261a09}{last\+Jump\+Dir} = \hyperlink{class_vector3}{Vector3}()
+\item 
+\hyperlink{class_vector3}{Vector3} \hyperlink{class_player_a6d0fe16db54a42ab13f0b8ed1ca0632c}{init\+Pos} = \hyperlink{class_vector3}{Vector3}()
+\item 
+int \hyperlink{class_player_a11d9ba38b586f5acfac4f2cd5233cbb4}{starting\+Lives} = 5
+\item 
+int \hyperlink{class_player_a6638b814a2cb74674b554d51a3e8a256}{current\+Lives} = \hyperlink{class_player_a11d9ba38b586f5acfac4f2cd5233cbb4}{starting\+Lives}
+\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_vector3}{Vector3} \hyperlink{class_player_a9df1cbdc480439b69d82068b287ed071}{jump\+Target\+Pos} = \hyperlink{class_vector3}{Vector3}()
+\item 
+\hyperlink{class_vector3}{Vector3} \hyperlink{class_player_a6c51347e4c397febebd559c19d7969b9}{transition\+Pos} = \hyperlink{class_vector3}{Vector3}()
+\item 
+\hyperlink{class_vector3}{Vector3} \hyperlink{class_player_ab85f1fa829960281bfdf1171ecdbead7}{transition\+Jump\+Dir} = \hyperlink{class_vector3}{Vector3}()
+\item 
+float \hyperlink{class_player_af7711712d6bd0b3185f8a38f769ff3c8}{transition\+Jump\+Speed} = 0
+\item 
+\hyperlink{class_bounding_box}{Bounding\+Box} \hyperlink{class_player_ae86b1de018c7db9a201935a1a67e9ce0}{bottom\+Box} = \hyperlink{class_bounding_box}{Bounding\+Box}(\hyperlink{class_vector3}{Vector3}(0.\+1, -\/1, 0.\+1), \hyperlink{class_vector3}{Vector3}(0.\+9, 0, 0.\+9))
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_player_a764ad06a52c68d38a95f61a731369c86}\label{class_player_a764ad06a52c68d38a95f61a731369c86}} 
+\index{Player@{Player}!Player@{Player}}
+\index{Player@{Player}!Player@{Player}}
+\subsubsection{\texorpdfstring{Player()}{Player()}}
+{\footnotesize\ttfamily Player\+::\+Player (\begin{DoxyParamCaption}\item[{\hyperlink{class_vector3}{Vector3}}]{pos }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_player_a476948950b48fde97113707c1b6e6195}\label{class_player_a476948950b48fde97113707c1b6e6195}} 
+\index{Player@{Player}!collide\+With\+Bottom@{collide\+With\+Bottom}}
+\index{collide\+With\+Bottom@{collide\+With\+Bottom}!Player@{Player}}
+\subsubsection{\texorpdfstring{collide\+With\+Bottom()}{collideWithBottom()}}
+{\footnotesize\ttfamily bool Player\+::collide\+With\+Bottom (\begin{DoxyParamCaption}\item[{const \hyperlink{class_game_object}{Game\+Object} $\ast$}]{other }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{class_player_a1fb512423a77eee4ed0dea7cb7179c83}\label{class_player_a1fb512423a77eee4ed0dea7cb7179c83}} 
+\index{Player@{Player}!init@{init}}
+\index{init@{init}!Player@{Player}}
+\subsubsection{\texorpdfstring{init()}{init()}}
+{\footnotesize\ttfamily void Player\+::init (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [final]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \hyperlink{class_game_object_aecb2c1b9f69715d854f7604d5d7978ec}{Game\+Object}.
+
+\mbox{\Hypertarget{class_player_a72cc16348453f3a4b871eb2486c91497}\label{class_player_a72cc16348453f3a4b871eb2486c91497}} 
+\index{Player@{Player}!jump@{jump}}
+\index{jump@{jump}!Player@{Player}}
+\subsubsection{\texorpdfstring{jump()}{jump()}}
+{\footnotesize\ttfamily void Player\+::jump (\begin{DoxyParamCaption}\item[{\hyperlink{class_vector3}{Vector3}}]{jump\+Dir,  }\item[{float}]{jump\+Speed }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{class_player_a4da76233f59ad0254aa6ec533f9badcc}\label{class_player_a4da76233f59ad0254aa6ec533f9badcc}} 
+\index{Player@{Player}!render@{render}}
+\index{render@{render}!Player@{Player}}
+\subsubsection{\texorpdfstring{render()}{render()}}
+{\footnotesize\ttfamily void Player\+::render (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [final]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \hyperlink{class_game_object_a484efb66a7a27c101e84c11d9905d7a6}{Game\+Object}.
+
+\mbox{\Hypertarget{class_player_a038a74bd768b6eec8fbe57cb2bacf811}\label{class_player_a038a74bd768b6eec8fbe57cb2bacf811}} 
+\index{Player@{Player}!respawn@{respawn}}
+\index{respawn@{respawn}!Player@{Player}}
+\subsubsection{\texorpdfstring{respawn()}{respawn()}}
+{\footnotesize\ttfamily void Player\+::respawn (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{class_player_a41f9e4a4e55ee3fc38614dcb965193a1}\label{class_player_a41f9e4a4e55ee3fc38614dcb965193a1}} 
+\index{Player@{Player}!restart\+Game@{restart\+Game}}
+\index{restart\+Game@{restart\+Game}!Player@{Player}}
+\subsubsection{\texorpdfstring{restart\+Game()}{restartGame()}}
+{\footnotesize\ttfamily void Player\+::restart\+Game (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{class_player_a9098e6b411ea9102b02bb911eca6515b}\label{class_player_a9098e6b411ea9102b02bb911eca6515b}} 
+\index{Player@{Player}!set\+Speed\+Multiplier@{set\+Speed\+Multiplier}}
+\index{set\+Speed\+Multiplier@{set\+Speed\+Multiplier}!Player@{Player}}
+\subsubsection{\texorpdfstring{set\+Speed\+Multiplier()}{setSpeedMultiplier()}}
+{\footnotesize\ttfamily void Player\+::set\+Speed\+Multiplier (\begin{DoxyParamCaption}\item[{float}]{new\+Speed }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [final]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \hyperlink{class_dynamic_game_object_a7bf254357b0d2491044d175afdc36ca4}{Dynamic\+Game\+Object}.
+
+\mbox{\Hypertarget{class_player_a51e705a6ad3628144e02832d1839b360}\label{class_player_a51e705a6ad3628144e02832d1839b360}} 
+\index{Player@{Player}!update@{update}}
+\index{update@{update}!Player@{Player}}
+\subsubsection{\texorpdfstring{update()}{update()}}
+{\footnotesize\ttfamily void Player\+::update (\begin{DoxyParamCaption}\item[{int}]{delta\+Time }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [final]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \hyperlink{class_dynamic_game_object_aaa505b57d131bbbce44d500ec2ca0e83}{Dynamic\+Game\+Object}.
+
+
+
+\subsection{Member Data Documentation}
+\mbox{\Hypertarget{class_player_ae86b1de018c7db9a201935a1a67e9ce0}\label{class_player_ae86b1de018c7db9a201935a1a67e9ce0}} 
+\index{Player@{Player}!bottom\+Box@{bottom\+Box}}
+\index{bottom\+Box@{bottom\+Box}!Player@{Player}}
+\subsubsection{\texorpdfstring{bottom\+Box}{bottomBox}}
+{\footnotesize\ttfamily \hyperlink{class_bounding_box}{Bounding\+Box} Player\+::bottom\+Box = \hyperlink{class_bounding_box}{Bounding\+Box}(\hyperlink{class_vector3}{Vector3}(0.\+1, -\/1, 0.\+1), \hyperlink{class_vector3}{Vector3}(0.\+9, 0, 0.\+9))\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{class_player_a6638b814a2cb74674b554d51a3e8a256}\label{class_player_a6638b814a2cb74674b554d51a3e8a256}} 
+\index{Player@{Player}!current\+Lives@{current\+Lives}}
+\index{current\+Lives@{current\+Lives}!Player@{Player}}
+\subsubsection{\texorpdfstring{current\+Lives}{currentLives}}
+{\footnotesize\ttfamily int Player\+::current\+Lives = \hyperlink{class_player_a11d9ba38b586f5acfac4f2cd5233cbb4}{starting\+Lives}}
+
+\mbox{\Hypertarget{class_player_a6d0fe16db54a42ab13f0b8ed1ca0632c}\label{class_player_a6d0fe16db54a42ab13f0b8ed1ca0632c}} 
+\index{Player@{Player}!init\+Pos@{init\+Pos}}
+\index{init\+Pos@{init\+Pos}!Player@{Player}}
+\subsubsection{\texorpdfstring{init\+Pos}{initPos}}
+{\footnotesize\ttfamily \hyperlink{class_vector3}{Vector3} Player\+::init\+Pos = \hyperlink{class_vector3}{Vector3}()}
+
+\mbox{\Hypertarget{class_player_a9df1cbdc480439b69d82068b287ed071}\label{class_player_a9df1cbdc480439b69d82068b287ed071}} 
+\index{Player@{Player}!jump\+Target\+Pos@{jump\+Target\+Pos}}
+\index{jump\+Target\+Pos@{jump\+Target\+Pos}!Player@{Player}}
+\subsubsection{\texorpdfstring{jump\+Target\+Pos}{jumpTargetPos}}
+{\footnotesize\ttfamily \hyperlink{class_vector3}{Vector3} Player\+::jump\+Target\+Pos = \hyperlink{class_vector3}{Vector3}()\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{class_player_afef6386ca5fe8974bcc3d807b2261a09}\label{class_player_afef6386ca5fe8974bcc3d807b2261a09}} 
+\index{Player@{Player}!last\+Jump\+Dir@{last\+Jump\+Dir}}
+\index{last\+Jump\+Dir@{last\+Jump\+Dir}!Player@{Player}}
+\subsubsection{\texorpdfstring{last\+Jump\+Dir}{lastJumpDir}}
+{\footnotesize\ttfamily \hyperlink{class_vector3}{Vector3} Player\+::last\+Jump\+Dir = \hyperlink{class_vector3}{Vector3}()}
+
+\mbox{\Hypertarget{class_player_aea87fbb086b0cc358db8adf47bfa7369}\label{class_player_aea87fbb086b0cc358db8adf47bfa7369}} 
+\index{Player@{Player}!player\+State@{player\+State}}
+\index{player\+State@{player\+State}!Player@{Player}}
+\subsubsection{\texorpdfstring{player\+State}{playerState}}
+{\footnotesize\ttfamily \hyperlink{_player_8h_a3c730f37b1b3a893159bada67637fdb1}{Player\+State} Player\+::player\+State = \hyperlink{_player_8h_a3c730f37b1b3a893159bada67637fdb1aefa0f3ce09b7d810dde1e3cde60f7c4f}{G\+R\+O\+U\+N\+D\+ED}}
+
+\mbox{\Hypertarget{class_player_a11d9ba38b586f5acfac4f2cd5233cbb4}\label{class_player_a11d9ba38b586f5acfac4f2cd5233cbb4}} 
+\index{Player@{Player}!starting\+Lives@{starting\+Lives}}
+\index{starting\+Lives@{starting\+Lives}!Player@{Player}}
+\subsubsection{\texorpdfstring{starting\+Lives}{startingLives}}
+{\footnotesize\ttfamily int Player\+::starting\+Lives = 5}
+
+\mbox{\Hypertarget{class_player_ab85f1fa829960281bfdf1171ecdbead7}\label{class_player_ab85f1fa829960281bfdf1171ecdbead7}} 
+\index{Player@{Player}!transition\+Jump\+Dir@{transition\+Jump\+Dir}}
+\index{transition\+Jump\+Dir@{transition\+Jump\+Dir}!Player@{Player}}
+\subsubsection{\texorpdfstring{transition\+Jump\+Dir}{transitionJumpDir}}
+{\footnotesize\ttfamily \hyperlink{class_vector3}{Vector3} Player\+::transition\+Jump\+Dir = \hyperlink{class_vector3}{Vector3}()\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{class_player_af7711712d6bd0b3185f8a38f769ff3c8}\label{class_player_af7711712d6bd0b3185f8a38f769ff3c8}} 
+\index{Player@{Player}!transition\+Jump\+Speed@{transition\+Jump\+Speed}}
+\index{transition\+Jump\+Speed@{transition\+Jump\+Speed}!Player@{Player}}
+\subsubsection{\texorpdfstring{transition\+Jump\+Speed}{transitionJumpSpeed}}
+{\footnotesize\ttfamily float Player\+::transition\+Jump\+Speed = 0\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{class_player_a6c51347e4c397febebd559c19d7969b9}\label{class_player_a6c51347e4c397febebd559c19d7969b9}} 
+\index{Player@{Player}!transition\+Pos@{transition\+Pos}}
+\index{transition\+Pos@{transition\+Pos}!Player@{Player}}
+\subsubsection{\texorpdfstring{transition\+Pos}{transitionPos}}
+{\footnotesize\ttfamily \hyperlink{class_vector3}{Vector3} Player\+::transition\+Pos = \hyperlink{class_vector3}{Vector3}()\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/\+Users/matya/\+A\+V\+T7/src/objects/\hyperlink{_player_8h}{Player.\+h}\end{DoxyCompactItemize}

@@ -1,0 +1,69 @@
+\hypertarget{basic__geometry_8h}{}\section{/\+Users/matya/\+A\+V\+T7/src/libs/basic\+\_\+geometry.h File Reference}
+\label{basic__geometry_8h}\index{/\+Users/matya/\+A\+V\+T7/src/libs/basic\+\_\+geometry.\+h@{/\+Users/matya/\+A\+V\+T7/src/libs/basic\+\_\+geometry.\+h}}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{struct_material}{Material}
+\item 
+struct \hyperlink{struct_my_mesh}{My\+Mesh}
+\end{DoxyCompactItemize}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{basic__geometry_8h_ab5ca8e84cfd9b7c93955bc48faa7930c}{M\+A\+X\+I\+M\+U\+M\+\_\+\+T\+E\+X\+T\+U\+R\+ES}~4
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{basic__geometry_8h_a98dc06f751f2cc6efe00ea9c84ff84bd}{create\+Cube} (G\+Lint id)
+\item 
+void \hyperlink{basic__geometry_8h_aaa9a785c789dbe5696feda09e61b8dc8}{create\+Sphere} (float radius, int divisions)
+\item 
+void \hyperlink{basic__geometry_8h_ad846c9f6fe5436a0202e6f492f259df7}{create\+Rectangle} (float \hyperlink{_a_v_tmath_lib_8cpp_a863a7384c513eb74681e79ba7b480076}{length}, float height, float width, G\+Lint mid)
+\item 
+int \hyperlink{basic__geometry_8h_abcf93e5ae9661b6fffaf7fda50e3afa5}{rev\+Smooth\+Normal2} (float $\ast$p, float $\ast$nx, float $\ast$ny, float smooth\+Cos, int begin\+End)
+\item 
+float $\ast$ \hyperlink{basic__geometry_8h_a5424daddc873f76bc0d4f304546fb4a8}{circular\+Profile} (float min\+Angle, float max\+Angle, float radius, int divisions, float transX=0.\+0f, float trans\+Y=0.\+0f)
+\end{DoxyCompactItemize}
+
+
+\subsection{Macro Definition Documentation}
+\mbox{\Hypertarget{basic__geometry_8h_ab5ca8e84cfd9b7c93955bc48faa7930c}\label{basic__geometry_8h_ab5ca8e84cfd9b7c93955bc48faa7930c}} 
+\index{basic\+\_\+geometry.\+h@{basic\+\_\+geometry.\+h}!M\+A\+X\+I\+M\+U\+M\+\_\+\+T\+E\+X\+T\+U\+R\+ES@{M\+A\+X\+I\+M\+U\+M\+\_\+\+T\+E\+X\+T\+U\+R\+ES}}
+\index{M\+A\+X\+I\+M\+U\+M\+\_\+\+T\+E\+X\+T\+U\+R\+ES@{M\+A\+X\+I\+M\+U\+M\+\_\+\+T\+E\+X\+T\+U\+R\+ES}!basic\+\_\+geometry.\+h@{basic\+\_\+geometry.\+h}}
+\subsubsection{\texorpdfstring{M\+A\+X\+I\+M\+U\+M\+\_\+\+T\+E\+X\+T\+U\+R\+ES}{MAXIMUM\_TEXTURES}}
+{\footnotesize\ttfamily \#define M\+A\+X\+I\+M\+U\+M\+\_\+\+T\+E\+X\+T\+U\+R\+ES~4}
+
+
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{basic__geometry_8h_a5424daddc873f76bc0d4f304546fb4a8}\label{basic__geometry_8h_a5424daddc873f76bc0d4f304546fb4a8}} 
+\index{basic\+\_\+geometry.\+h@{basic\+\_\+geometry.\+h}!circular\+Profile@{circular\+Profile}}
+\index{circular\+Profile@{circular\+Profile}!basic\+\_\+geometry.\+h@{basic\+\_\+geometry.\+h}}
+\subsubsection{\texorpdfstring{circular\+Profile()}{circularProfile()}}
+{\footnotesize\ttfamily float$\ast$ circular\+Profile (\begin{DoxyParamCaption}\item[{float}]{min\+Angle,  }\item[{float}]{max\+Angle,  }\item[{float}]{radius,  }\item[{int}]{divisions,  }\item[{float}]{transX = {\ttfamily 0.0f},  }\item[{float}]{transY = {\ttfamily 0.0f} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{basic__geometry_8h_a98dc06f751f2cc6efe00ea9c84ff84bd}\label{basic__geometry_8h_a98dc06f751f2cc6efe00ea9c84ff84bd}} 
+\index{basic\+\_\+geometry.\+h@{basic\+\_\+geometry.\+h}!create\+Cube@{create\+Cube}}
+\index{create\+Cube@{create\+Cube}!basic\+\_\+geometry.\+h@{basic\+\_\+geometry.\+h}}
+\subsubsection{\texorpdfstring{create\+Cube()}{createCube()}}
+{\footnotesize\ttfamily void create\+Cube (\begin{DoxyParamCaption}\item[{G\+Lint}]{id }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{basic__geometry_8h_ad846c9f6fe5436a0202e6f492f259df7}\label{basic__geometry_8h_ad846c9f6fe5436a0202e6f492f259df7}} 
+\index{basic\+\_\+geometry.\+h@{basic\+\_\+geometry.\+h}!create\+Rectangle@{create\+Rectangle}}
+\index{create\+Rectangle@{create\+Rectangle}!basic\+\_\+geometry.\+h@{basic\+\_\+geometry.\+h}}
+\subsubsection{\texorpdfstring{create\+Rectangle()}{createRectangle()}}
+{\footnotesize\ttfamily void create\+Rectangle (\begin{DoxyParamCaption}\item[{float}]{length,  }\item[{float}]{height,  }\item[{float}]{width,  }\item[{G\+Lint}]{mid }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{basic__geometry_8h_aaa9a785c789dbe5696feda09e61b8dc8}\label{basic__geometry_8h_aaa9a785c789dbe5696feda09e61b8dc8}} 
+\index{basic\+\_\+geometry.\+h@{basic\+\_\+geometry.\+h}!create\+Sphere@{create\+Sphere}}
+\index{create\+Sphere@{create\+Sphere}!basic\+\_\+geometry.\+h@{basic\+\_\+geometry.\+h}}
+\subsubsection{\texorpdfstring{create\+Sphere()}{createSphere()}}
+{\footnotesize\ttfamily void create\+Sphere (\begin{DoxyParamCaption}\item[{float}]{radius,  }\item[{int}]{divisions }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{basic__geometry_8h_abcf93e5ae9661b6fffaf7fda50e3afa5}\label{basic__geometry_8h_abcf93e5ae9661b6fffaf7fda50e3afa5}} 
+\index{basic\+\_\+geometry.\+h@{basic\+\_\+geometry.\+h}!rev\+Smooth\+Normal2@{rev\+Smooth\+Normal2}}
+\index{rev\+Smooth\+Normal2@{rev\+Smooth\+Normal2}!basic\+\_\+geometry.\+h@{basic\+\_\+geometry.\+h}}
+\subsubsection{\texorpdfstring{rev\+Smooth\+Normal2()}{revSmoothNormal2()}}
+{\footnotesize\ttfamily int rev\+Smooth\+Normal2 (\begin{DoxyParamCaption}\item[{float $\ast$}]{p,  }\item[{float $\ast$}]{nx,  }\item[{float $\ast$}]{ny,  }\item[{float}]{smooth\+Cos,  }\item[{int}]{begin\+End }\end{DoxyParamCaption})}
+

@@ -1,0 +1,337 @@
+\hypertarget{class_game_manager}{}\section{Game\+Manager Class Reference}
+\label{class_game_manager}\index{Game\+Manager@{Game\+Manager}}
+
+
+{\ttfamily \#include $<$Game\+Manager.\+h$>$}
+
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{class_game_manager_a3f3a18cdc6b3c7c7565927e895eea247}{Camera\+Type} \{ \hyperlink{class_game_manager_a3f3a18cdc6b3c7c7565927e895eea247a2e83b11bc593230f7f30214b50fd6cae}{C\+A\+M\+E\+R\+A\+\_\+\+P\+E\+R\+S\+P\+E\+C\+T\+I\+V\+E\+\_\+\+F\+O\+L\+L\+OW}, 
+\hyperlink{class_game_manager_a3f3a18cdc6b3c7c7565927e895eea247a1bdebab59d48229c3066fa423ca789cc}{C\+A\+M\+E\+R\+A\+\_\+\+P\+E\+R\+S\+P\+E\+C\+T\+I\+V\+E\+\_\+\+F\+I\+X\+ED}, 
+\hyperlink{class_game_manager_a3f3a18cdc6b3c7c7565927e895eea247a767d4e04d0898c8eb3f53a3b25be0194}{C\+A\+M\+E\+R\+A\+\_\+\+O\+R\+T\+HO}
+ \}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_game_manager_aa0e2424dc1a39d380e5b6605b179bf05}{Game\+Manager} ()
+\item 
+void \hyperlink{class_game_manager_a7552e5b78753f1e78847ef1ac7bd0596}{change\+Size} (int w, int h)
+\item 
+void \hyperlink{class_game_manager_a1d22955ef38d38ee720432a0d56f33ae}{process\+Keys} (unsigned char key, int xx, int yy)
+\item 
+void \hyperlink{class_game_manager_ae51ce09e93fed12b8e45d6669c3975cd}{move\+Player} (float x, float z)
+\item 
+G\+Luint \hyperlink{class_game_manager_a88396466f77d0013a1bb085a6d19aad8}{setup\+Shaders} ()
+\item 
+void \hyperlink{class_game_manager_af98f6eb4ebe36b9405700cc95a6771be}{init\+Scene} ()
+\item 
+void \hyperlink{class_game_manager_aef819f3b139bc195db44a49299768eee}{render\+Scene} ()
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+G\+Lint \hyperlink{class_game_manager_a7292d1f46ee4141dbb1b6a7a8cc134f2}{Window\+Handle} = 0
+\item 
+G\+Lint \hyperlink{class_game_manager_a0d7672e0e14f75901291a62862d7eb60}{Frame\+Count} = 0
+\item 
+string \hyperlink{class_game_manager_a8e65d4c5dca91cb6af25bf6c25d2a009}{info\+String} = \char`\"{}\char`\"{}
+\item 
+bool \hyperlink{class_game_manager_a8faf5fabfe8174f79f449b60065b8048}{is\+Playing} = true
+\item 
+int \hyperlink{class_game_manager_aceb9f59354267d31fc6dfb023a695854}{score} = 0
+\item 
+int \hyperlink{class_game_manager_ab2ed8869ac478caf69ea29e6de26ea80}{points\+Per\+Target} = 100
+\item 
+float \hyperlink{class_game_manager_ac6d13a816358fd7c754f4ef1fb82f7e4}{speed\+Multiplier} = 1.\+2f
+\item 
+const float \hyperlink{class_game_manager_a34e763c41e51dccf7241b784de62e381}{top\+Vertical\+Limit\+Player\+Pos} = -\/6.\+0f
+\item 
+const float \hyperlink{class_game_manager_aac2d3978ba280076a75ba8863c2da9ac}{bottom\+Vertical\+Limit\+Player\+Pos} = 6.\+0f
+\item 
+const float \hyperlink{class_game_manager_af27090b5d1db50311f0453de5df095bc}{left\+Horizontal\+Limit\+Player\+Pos} = -\/6.\+0f
+\item 
+const float \hyperlink{class_game_manager_ad0bc4e5fd9c85e9b25bd4579a508151f}{right\+Horizontal\+Limit\+Player\+Pos} = 6.\+0f
+\item 
+vector$<$ \hyperlink{class_game_object}{Game\+Object} $\ast$ $>$ \hyperlink{class_game_manager_a8b02c0a19f162a651041cddb4821a82c}{game\+Objects} = vector$<$\hyperlink{class_game_object}{Game\+Object}$\ast$$>$()
+\item 
+vector$<$ \hyperlink{class_bus}{Bus} $\ast$ $>$ \hyperlink{class_game_manager_aaca42616afec776da2bf0ccd0641f8e0}{busses} = vector$<$\hyperlink{class_bus}{Bus}$\ast$$>$()
+\item 
+vector$<$ \hyperlink{class_car}{Car} $\ast$ $>$ \hyperlink{class_game_manager_af6d97ab7a3c0df3c4999aa60c7dcc083}{cars} = vector$<$\hyperlink{class_car}{Car}$\ast$$>$()
+\item 
+vector$<$ \hyperlink{class_log}{Log} $\ast$ $>$ \hyperlink{class_game_manager_a02676ea2e67ce2773e32844ac2ffc64e}{logs} = vector$<$\hyperlink{class_log}{Log}$\ast$$>$()
+\item 
+vector$<$ \hyperlink{class_turtle}{Turtle} $\ast$ $>$ \hyperlink{class_game_manager_a47719947c503583906c085b293759de2}{turtles} = vector$<$\hyperlink{class_turtle}{Turtle}$\ast$$>$()
+\item 
+G\+Lint \hyperlink{class_game_manager_a6e1ed3a2dc585e518b007abebd0a8fdc}{last\+Move\+Time} = 0
+\item 
+G\+Lint \hyperlink{class_game_manager_adce6a582e4f8ddaa5d341d2ba91e551a}{move\+Timeout} = 300
+\item 
+\hyperlink{class_game_manager_a3f3a18cdc6b3c7c7565927e895eea247}{Camera\+Type} \hyperlink{class_game_manager_a9384497e205b12a342442aae07d729b5}{current\+Camera\+Type} = \hyperlink{class_game_manager_a3f3a18cdc6b3c7c7565927e895eea247a2e83b11bc593230f7f30214b50fd6cae}{C\+A\+M\+E\+R\+A\+\_\+\+P\+E\+R\+S\+P\+E\+C\+T\+I\+V\+E\+\_\+\+F\+O\+L\+L\+OW}
+\item 
+\hyperlink{class_camera_perspective_moving}{Camera\+Perspective\+Moving} \hyperlink{class_game_manager_acc870ff353939b5b7970e85d536b10c7}{camera\+Perspective\+Moving} = \hyperlink{class_camera_perspective_moving}{Camera\+Perspective\+Moving}(20, 0, 40, \hyperlink{class_vector3}{Vector3}(0, 20, 0))
+\item 
+\hyperlink{class_camera_perspective}{Camera\+Perspective} \hyperlink{class_game_manager_a06fd04f0626f7ff640804e4506fa6015}{camera\+Perspective\+Fixed} = \hyperlink{class_camera_perspective}{Camera\+Perspective}(20, 0, 90, \hyperlink{class_vector3}{Vector3}(0, 20, 0))
+\item 
+\hyperlink{class_camera_orthogonal}{Camera\+Orthogonal} \hyperlink{class_game_manager_a151b31ac1969c0e3723b7aec3a20c4b0}{camera\+Orthogonal} = \hyperlink{class_camera_orthogonal}{Camera\+Orthogonal}(-\/7, 8, -\/8, 7)
+\item 
+\hyperlink{class_player}{Player} $\ast$ \hyperlink{class_game_manager_a22f47dea61789d0a10d9967d9084c5d9}{player} = new \hyperlink{class_player}{Player}(\hyperlink{class_vector3}{Vector3}(-\/5.\+0f, 1, 0))
+\item 
+\hyperlink{class_scene_collider}{Scene\+Collider} $\ast$ \hyperlink{class_game_manager_acc9cc8586b0c42ac76ffccfbb7b6aaa6}{scene\+Collider} = new \hyperlink{class_scene_collider}{Scene\+Collider}(\hyperlink{class_vector3}{Vector3}(-\/6.\+0f, -\/1, -\/6))
+\item 
+\hyperlink{class_target}{Target} $\ast$ \hyperlink{class_game_manager_a4989ddffb424aa668ac66107e6a0eb6f}{target} = new \hyperlink{class_target}{Target}(\hyperlink{class_vector3}{Vector3}(0.\+25f, 1.\+25f, -\/5.\+75f))
+\item 
+\hyperlink{class_light}{Light} $\ast$ \hyperlink{class_game_manager_a61953f70df310072a821385a7f768f99}{directional\+Light} = new \hyperlink{class_directional_light}{Directional\+Light}(\hyperlink{class_vector3}{Vector3}(0.\+0f, 5.\+0f, 0.\+0f), 6, false)
+\item 
+\hyperlink{class_spot_light}{Spot\+Light} $\ast$ \hyperlink{class_game_manager_a88429d344ac8ceb5a5a65ccc86105655}{spot\+Light} = new \hyperlink{class_spot_light}{Spot\+Light}(\hyperlink{class_vector3}{Vector3}(0, -\/1, 0), \hyperlink{class_vector3}{Vector3}(0, 2, 0), 7, false)
+\item 
+vector$<$ \hyperlink{class_point_light}{Point\+Light} $\ast$ $>$ \hyperlink{class_game_manager_a67b33597f0667606cbcf088f8381df10}{point\+Lights} = vector$<$\hyperlink{class_point_light}{Point\+Light}$\ast$$>$()
+\end{DoxyCompactItemize}
+
+
+\subsection{Member Enumeration Documentation}
+\mbox{\Hypertarget{class_game_manager_a3f3a18cdc6b3c7c7565927e895eea247}\label{class_game_manager_a3f3a18cdc6b3c7c7565927e895eea247}} 
+\index{Game\+Manager@{Game\+Manager}!Camera\+Type@{Camera\+Type}}
+\index{Camera\+Type@{Camera\+Type}!Game\+Manager@{Game\+Manager}}
+\subsubsection{\texorpdfstring{Camera\+Type}{CameraType}}
+{\footnotesize\ttfamily enum \hyperlink{class_game_manager_a3f3a18cdc6b3c7c7565927e895eea247}{Game\+Manager\+::\+Camera\+Type}}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{C\+A\+M\+E\+R\+A\+\_\+\+P\+E\+R\+S\+P\+E\+C\+T\+I\+V\+E\+\_\+\+F\+O\+L\+L\+OW@{C\+A\+M\+E\+R\+A\+\_\+\+P\+E\+R\+S\+P\+E\+C\+T\+I\+V\+E\+\_\+\+F\+O\+L\+L\+OW}!Game\+Manager@{Game\+Manager}}\index{Game\+Manager@{Game\+Manager}!C\+A\+M\+E\+R\+A\+\_\+\+P\+E\+R\+S\+P\+E\+C\+T\+I\+V\+E\+\_\+\+F\+O\+L\+L\+OW@{C\+A\+M\+E\+R\+A\+\_\+\+P\+E\+R\+S\+P\+E\+C\+T\+I\+V\+E\+\_\+\+F\+O\+L\+L\+OW}}}\mbox{\Hypertarget{class_game_manager_a3f3a18cdc6b3c7c7565927e895eea247a2e83b11bc593230f7f30214b50fd6cae}\label{class_game_manager_a3f3a18cdc6b3c7c7565927e895eea247a2e83b11bc593230f7f30214b50fd6cae}} 
+C\+A\+M\+E\+R\+A\+\_\+\+P\+E\+R\+S\+P\+E\+C\+T\+I\+V\+E\+\_\+\+F\+O\+L\+L\+OW&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{C\+A\+M\+E\+R\+A\+\_\+\+P\+E\+R\+S\+P\+E\+C\+T\+I\+V\+E\+\_\+\+F\+I\+X\+ED@{C\+A\+M\+E\+R\+A\+\_\+\+P\+E\+R\+S\+P\+E\+C\+T\+I\+V\+E\+\_\+\+F\+I\+X\+ED}!Game\+Manager@{Game\+Manager}}\index{Game\+Manager@{Game\+Manager}!C\+A\+M\+E\+R\+A\+\_\+\+P\+E\+R\+S\+P\+E\+C\+T\+I\+V\+E\+\_\+\+F\+I\+X\+ED@{C\+A\+M\+E\+R\+A\+\_\+\+P\+E\+R\+S\+P\+E\+C\+T\+I\+V\+E\+\_\+\+F\+I\+X\+ED}}}\mbox{\Hypertarget{class_game_manager_a3f3a18cdc6b3c7c7565927e895eea247a1bdebab59d48229c3066fa423ca789cc}\label{class_game_manager_a3f3a18cdc6b3c7c7565927e895eea247a1bdebab59d48229c3066fa423ca789cc}} 
+C\+A\+M\+E\+R\+A\+\_\+\+P\+E\+R\+S\+P\+E\+C\+T\+I\+V\+E\+\_\+\+F\+I\+X\+ED&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{C\+A\+M\+E\+R\+A\+\_\+\+O\+R\+T\+HO@{C\+A\+M\+E\+R\+A\+\_\+\+O\+R\+T\+HO}!Game\+Manager@{Game\+Manager}}\index{Game\+Manager@{Game\+Manager}!C\+A\+M\+E\+R\+A\+\_\+\+O\+R\+T\+HO@{C\+A\+M\+E\+R\+A\+\_\+\+O\+R\+T\+HO}}}\mbox{\Hypertarget{class_game_manager_a3f3a18cdc6b3c7c7565927e895eea247a767d4e04d0898c8eb3f53a3b25be0194}\label{class_game_manager_a3f3a18cdc6b3c7c7565927e895eea247a767d4e04d0898c8eb3f53a3b25be0194}} 
+C\+A\+M\+E\+R\+A\+\_\+\+O\+R\+T\+HO&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_game_manager_aa0e2424dc1a39d380e5b6605b179bf05}\label{class_game_manager_aa0e2424dc1a39d380e5b6605b179bf05}} 
+\index{Game\+Manager@{Game\+Manager}!Game\+Manager@{Game\+Manager}}
+\index{Game\+Manager@{Game\+Manager}!Game\+Manager@{Game\+Manager}}
+\subsubsection{\texorpdfstring{Game\+Manager()}{GameManager()}}
+{\footnotesize\ttfamily Game\+Manager\+::\+Game\+Manager (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_game_manager_a7552e5b78753f1e78847ef1ac7bd0596}\label{class_game_manager_a7552e5b78753f1e78847ef1ac7bd0596}} 
+\index{Game\+Manager@{Game\+Manager}!change\+Size@{change\+Size}}
+\index{change\+Size@{change\+Size}!Game\+Manager@{Game\+Manager}}
+\subsubsection{\texorpdfstring{change\+Size()}{changeSize()}}
+{\footnotesize\ttfamily void Game\+Manager\+::change\+Size (\begin{DoxyParamCaption}\item[{int}]{w,  }\item[{int}]{h }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{class_game_manager_af98f6eb4ebe36b9405700cc95a6771be}\label{class_game_manager_af98f6eb4ebe36b9405700cc95a6771be}} 
+\index{Game\+Manager@{Game\+Manager}!init\+Scene@{init\+Scene}}
+\index{init\+Scene@{init\+Scene}!Game\+Manager@{Game\+Manager}}
+\subsubsection{\texorpdfstring{init\+Scene()}{initScene()}}
+{\footnotesize\ttfamily void Game\+Manager\+::init\+Scene (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{class_game_manager_ae51ce09e93fed12b8e45d6669c3975cd}\label{class_game_manager_ae51ce09e93fed12b8e45d6669c3975cd}} 
+\index{Game\+Manager@{Game\+Manager}!move\+Player@{move\+Player}}
+\index{move\+Player@{move\+Player}!Game\+Manager@{Game\+Manager}}
+\subsubsection{\texorpdfstring{move\+Player()}{movePlayer()}}
+{\footnotesize\ttfamily void Game\+Manager\+::move\+Player (\begin{DoxyParamCaption}\item[{float}]{x,  }\item[{float}]{z }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{class_game_manager_a1d22955ef38d38ee720432a0d56f33ae}\label{class_game_manager_a1d22955ef38d38ee720432a0d56f33ae}} 
+\index{Game\+Manager@{Game\+Manager}!process\+Keys@{process\+Keys}}
+\index{process\+Keys@{process\+Keys}!Game\+Manager@{Game\+Manager}}
+\subsubsection{\texorpdfstring{process\+Keys()}{processKeys()}}
+{\footnotesize\ttfamily void Game\+Manager\+::process\+Keys (\begin{DoxyParamCaption}\item[{unsigned char}]{key,  }\item[{int}]{xx,  }\item[{int}]{yy }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{class_game_manager_aef819f3b139bc195db44a49299768eee}\label{class_game_manager_aef819f3b139bc195db44a49299768eee}} 
+\index{Game\+Manager@{Game\+Manager}!render\+Scene@{render\+Scene}}
+\index{render\+Scene@{render\+Scene}!Game\+Manager@{Game\+Manager}}
+\subsubsection{\texorpdfstring{render\+Scene()}{renderScene()}}
+{\footnotesize\ttfamily void Game\+Manager\+::render\+Scene (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{class_game_manager_a88396466f77d0013a1bb085a6d19aad8}\label{class_game_manager_a88396466f77d0013a1bb085a6d19aad8}} 
+\index{Game\+Manager@{Game\+Manager}!setup\+Shaders@{setup\+Shaders}}
+\index{setup\+Shaders@{setup\+Shaders}!Game\+Manager@{Game\+Manager}}
+\subsubsection{\texorpdfstring{setup\+Shaders()}{setupShaders()}}
+{\footnotesize\ttfamily G\+Luint Game\+Manager\+::setup\+Shaders (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+\subsection{Member Data Documentation}
+\mbox{\Hypertarget{class_game_manager_aac2d3978ba280076a75ba8863c2da9ac}\label{class_game_manager_aac2d3978ba280076a75ba8863c2da9ac}} 
+\index{Game\+Manager@{Game\+Manager}!bottom\+Vertical\+Limit\+Player\+Pos@{bottom\+Vertical\+Limit\+Player\+Pos}}
+\index{bottom\+Vertical\+Limit\+Player\+Pos@{bottom\+Vertical\+Limit\+Player\+Pos}!Game\+Manager@{Game\+Manager}}
+\subsubsection{\texorpdfstring{bottom\+Vertical\+Limit\+Player\+Pos}{bottomVerticalLimitPlayerPos}}
+{\footnotesize\ttfamily const float Game\+Manager\+::bottom\+Vertical\+Limit\+Player\+Pos = 6.\+0f}
+
+\mbox{\Hypertarget{class_game_manager_aaca42616afec776da2bf0ccd0641f8e0}\label{class_game_manager_aaca42616afec776da2bf0ccd0641f8e0}} 
+\index{Game\+Manager@{Game\+Manager}!busses@{busses}}
+\index{busses@{busses}!Game\+Manager@{Game\+Manager}}
+\subsubsection{\texorpdfstring{busses}{busses}}
+{\footnotesize\ttfamily vector$<$\hyperlink{class_bus}{Bus}$\ast$$>$ Game\+Manager\+::busses = vector$<$\hyperlink{class_bus}{Bus}$\ast$$>$()}
+
+\mbox{\Hypertarget{class_game_manager_a151b31ac1969c0e3723b7aec3a20c4b0}\label{class_game_manager_a151b31ac1969c0e3723b7aec3a20c4b0}} 
+\index{Game\+Manager@{Game\+Manager}!camera\+Orthogonal@{camera\+Orthogonal}}
+\index{camera\+Orthogonal@{camera\+Orthogonal}!Game\+Manager@{Game\+Manager}}
+\subsubsection{\texorpdfstring{camera\+Orthogonal}{cameraOrthogonal}}
+{\footnotesize\ttfamily \hyperlink{class_camera_orthogonal}{Camera\+Orthogonal} Game\+Manager\+::camera\+Orthogonal = \hyperlink{class_camera_orthogonal}{Camera\+Orthogonal}(-\/7, 8, -\/8, 7)}
+
+\mbox{\Hypertarget{class_game_manager_a06fd04f0626f7ff640804e4506fa6015}\label{class_game_manager_a06fd04f0626f7ff640804e4506fa6015}} 
+\index{Game\+Manager@{Game\+Manager}!camera\+Perspective\+Fixed@{camera\+Perspective\+Fixed}}
+\index{camera\+Perspective\+Fixed@{camera\+Perspective\+Fixed}!Game\+Manager@{Game\+Manager}}
+\subsubsection{\texorpdfstring{camera\+Perspective\+Fixed}{cameraPerspectiveFixed}}
+{\footnotesize\ttfamily \hyperlink{class_camera_perspective}{Camera\+Perspective} Game\+Manager\+::camera\+Perspective\+Fixed = \hyperlink{class_camera_perspective}{Camera\+Perspective}(20, 0, 90, \hyperlink{class_vector3}{Vector3}(0, 20, 0))}
+
+\mbox{\Hypertarget{class_game_manager_acc870ff353939b5b7970e85d536b10c7}\label{class_game_manager_acc870ff353939b5b7970e85d536b10c7}} 
+\index{Game\+Manager@{Game\+Manager}!camera\+Perspective\+Moving@{camera\+Perspective\+Moving}}
+\index{camera\+Perspective\+Moving@{camera\+Perspective\+Moving}!Game\+Manager@{Game\+Manager}}
+\subsubsection{\texorpdfstring{camera\+Perspective\+Moving}{cameraPerspectiveMoving}}
+{\footnotesize\ttfamily \hyperlink{class_camera_perspective_moving}{Camera\+Perspective\+Moving} Game\+Manager\+::camera\+Perspective\+Moving = \hyperlink{class_camera_perspective_moving}{Camera\+Perspective\+Moving}(20, 0, 40, \hyperlink{class_vector3}{Vector3}(0, 20, 0))}
+
+\mbox{\Hypertarget{class_game_manager_af6d97ab7a3c0df3c4999aa60c7dcc083}\label{class_game_manager_af6d97ab7a3c0df3c4999aa60c7dcc083}} 
+\index{Game\+Manager@{Game\+Manager}!cars@{cars}}
+\index{cars@{cars}!Game\+Manager@{Game\+Manager}}
+\subsubsection{\texorpdfstring{cars}{cars}}
+{\footnotesize\ttfamily vector$<$\hyperlink{class_car}{Car}$\ast$$>$ Game\+Manager\+::cars = vector$<$\hyperlink{class_car}{Car}$\ast$$>$()}
+
+\mbox{\Hypertarget{class_game_manager_a9384497e205b12a342442aae07d729b5}\label{class_game_manager_a9384497e205b12a342442aae07d729b5}} 
+\index{Game\+Manager@{Game\+Manager}!current\+Camera\+Type@{current\+Camera\+Type}}
+\index{current\+Camera\+Type@{current\+Camera\+Type}!Game\+Manager@{Game\+Manager}}
+\subsubsection{\texorpdfstring{current\+Camera\+Type}{currentCameraType}}
+{\footnotesize\ttfamily \hyperlink{class_game_manager_a3f3a18cdc6b3c7c7565927e895eea247}{Camera\+Type} Game\+Manager\+::current\+Camera\+Type = \hyperlink{class_game_manager_a3f3a18cdc6b3c7c7565927e895eea247a2e83b11bc593230f7f30214b50fd6cae}{C\+A\+M\+E\+R\+A\+\_\+\+P\+E\+R\+S\+P\+E\+C\+T\+I\+V\+E\+\_\+\+F\+O\+L\+L\+OW}}
+
+\mbox{\Hypertarget{class_game_manager_a61953f70df310072a821385a7f768f99}\label{class_game_manager_a61953f70df310072a821385a7f768f99}} 
+\index{Game\+Manager@{Game\+Manager}!directional\+Light@{directional\+Light}}
+\index{directional\+Light@{directional\+Light}!Game\+Manager@{Game\+Manager}}
+\subsubsection{\texorpdfstring{directional\+Light}{directionalLight}}
+{\footnotesize\ttfamily \hyperlink{class_light}{Light}$\ast$ Game\+Manager\+::directional\+Light = new \hyperlink{class_directional_light}{Directional\+Light}(\hyperlink{class_vector3}{Vector3}(0.\+0f, 5.\+0f, 0.\+0f), 6, false)}
+
+\mbox{\Hypertarget{class_game_manager_a0d7672e0e14f75901291a62862d7eb60}\label{class_game_manager_a0d7672e0e14f75901291a62862d7eb60}} 
+\index{Game\+Manager@{Game\+Manager}!Frame\+Count@{Frame\+Count}}
+\index{Frame\+Count@{Frame\+Count}!Game\+Manager@{Game\+Manager}}
+\subsubsection{\texorpdfstring{Frame\+Count}{FrameCount}}
+{\footnotesize\ttfamily G\+Lint Game\+Manager\+::\+Frame\+Count = 0}
+
+\mbox{\Hypertarget{class_game_manager_a8b02c0a19f162a651041cddb4821a82c}\label{class_game_manager_a8b02c0a19f162a651041cddb4821a82c}} 
+\index{Game\+Manager@{Game\+Manager}!game\+Objects@{game\+Objects}}
+\index{game\+Objects@{game\+Objects}!Game\+Manager@{Game\+Manager}}
+\subsubsection{\texorpdfstring{game\+Objects}{gameObjects}}
+{\footnotesize\ttfamily vector$<$\hyperlink{class_game_object}{Game\+Object}$\ast$$>$ Game\+Manager\+::game\+Objects = vector$<$\hyperlink{class_game_object}{Game\+Object}$\ast$$>$()}
+
+\mbox{\Hypertarget{class_game_manager_a8e65d4c5dca91cb6af25bf6c25d2a009}\label{class_game_manager_a8e65d4c5dca91cb6af25bf6c25d2a009}} 
+\index{Game\+Manager@{Game\+Manager}!info\+String@{info\+String}}
+\index{info\+String@{info\+String}!Game\+Manager@{Game\+Manager}}
+\subsubsection{\texorpdfstring{info\+String}{infoString}}
+{\footnotesize\ttfamily string Game\+Manager\+::info\+String = \char`\"{}\char`\"{}}
+
+\mbox{\Hypertarget{class_game_manager_a8faf5fabfe8174f79f449b60065b8048}\label{class_game_manager_a8faf5fabfe8174f79f449b60065b8048}} 
+\index{Game\+Manager@{Game\+Manager}!is\+Playing@{is\+Playing}}
+\index{is\+Playing@{is\+Playing}!Game\+Manager@{Game\+Manager}}
+\subsubsection{\texorpdfstring{is\+Playing}{isPlaying}}
+{\footnotesize\ttfamily bool Game\+Manager\+::is\+Playing = true}
+
+\mbox{\Hypertarget{class_game_manager_a6e1ed3a2dc585e518b007abebd0a8fdc}\label{class_game_manager_a6e1ed3a2dc585e518b007abebd0a8fdc}} 
+\index{Game\+Manager@{Game\+Manager}!last\+Move\+Time@{last\+Move\+Time}}
+\index{last\+Move\+Time@{last\+Move\+Time}!Game\+Manager@{Game\+Manager}}
+\subsubsection{\texorpdfstring{last\+Move\+Time}{lastMoveTime}}
+{\footnotesize\ttfamily G\+Lint Game\+Manager\+::last\+Move\+Time = 0}
+
+\mbox{\Hypertarget{class_game_manager_af27090b5d1db50311f0453de5df095bc}\label{class_game_manager_af27090b5d1db50311f0453de5df095bc}} 
+\index{Game\+Manager@{Game\+Manager}!left\+Horizontal\+Limit\+Player\+Pos@{left\+Horizontal\+Limit\+Player\+Pos}}
+\index{left\+Horizontal\+Limit\+Player\+Pos@{left\+Horizontal\+Limit\+Player\+Pos}!Game\+Manager@{Game\+Manager}}
+\subsubsection{\texorpdfstring{left\+Horizontal\+Limit\+Player\+Pos}{leftHorizontalLimitPlayerPos}}
+{\footnotesize\ttfamily const float Game\+Manager\+::left\+Horizontal\+Limit\+Player\+Pos = -\/6.\+0f}
+
+\mbox{\Hypertarget{class_game_manager_a02676ea2e67ce2773e32844ac2ffc64e}\label{class_game_manager_a02676ea2e67ce2773e32844ac2ffc64e}} 
+\index{Game\+Manager@{Game\+Manager}!logs@{logs}}
+\index{logs@{logs}!Game\+Manager@{Game\+Manager}}
+\subsubsection{\texorpdfstring{logs}{logs}}
+{\footnotesize\ttfamily vector$<$\hyperlink{class_log}{Log}$\ast$$>$ Game\+Manager\+::logs = vector$<$\hyperlink{class_log}{Log}$\ast$$>$()}
+
+\mbox{\Hypertarget{class_game_manager_adce6a582e4f8ddaa5d341d2ba91e551a}\label{class_game_manager_adce6a582e4f8ddaa5d341d2ba91e551a}} 
+\index{Game\+Manager@{Game\+Manager}!move\+Timeout@{move\+Timeout}}
+\index{move\+Timeout@{move\+Timeout}!Game\+Manager@{Game\+Manager}}
+\subsubsection{\texorpdfstring{move\+Timeout}{moveTimeout}}
+{\footnotesize\ttfamily G\+Lint Game\+Manager\+::move\+Timeout = 300}
+
+\mbox{\Hypertarget{class_game_manager_a22f47dea61789d0a10d9967d9084c5d9}\label{class_game_manager_a22f47dea61789d0a10d9967d9084c5d9}} 
+\index{Game\+Manager@{Game\+Manager}!player@{player}}
+\index{player@{player}!Game\+Manager@{Game\+Manager}}
+\subsubsection{\texorpdfstring{player}{player}}
+{\footnotesize\ttfamily \hyperlink{class_player}{Player}$\ast$ Game\+Manager\+::player = new \hyperlink{class_player}{Player}(\hyperlink{class_vector3}{Vector3}(-\/5.\+0f, 1, 0))}
+
+\mbox{\Hypertarget{class_game_manager_a67b33597f0667606cbcf088f8381df10}\label{class_game_manager_a67b33597f0667606cbcf088f8381df10}} 
+\index{Game\+Manager@{Game\+Manager}!point\+Lights@{point\+Lights}}
+\index{point\+Lights@{point\+Lights}!Game\+Manager@{Game\+Manager}}
+\subsubsection{\texorpdfstring{point\+Lights}{pointLights}}
+{\footnotesize\ttfamily vector$<$\hyperlink{class_point_light}{Point\+Light}$\ast$$>$ Game\+Manager\+::point\+Lights = vector$<$\hyperlink{class_point_light}{Point\+Light}$\ast$$>$()}
+
+\mbox{\Hypertarget{class_game_manager_ab2ed8869ac478caf69ea29e6de26ea80}\label{class_game_manager_ab2ed8869ac478caf69ea29e6de26ea80}} 
+\index{Game\+Manager@{Game\+Manager}!points\+Per\+Target@{points\+Per\+Target}}
+\index{points\+Per\+Target@{points\+Per\+Target}!Game\+Manager@{Game\+Manager}}
+\subsubsection{\texorpdfstring{points\+Per\+Target}{pointsPerTarget}}
+{\footnotesize\ttfamily int Game\+Manager\+::points\+Per\+Target = 100}
+
+\mbox{\Hypertarget{class_game_manager_ad0bc4e5fd9c85e9b25bd4579a508151f}\label{class_game_manager_ad0bc4e5fd9c85e9b25bd4579a508151f}} 
+\index{Game\+Manager@{Game\+Manager}!right\+Horizontal\+Limit\+Player\+Pos@{right\+Horizontal\+Limit\+Player\+Pos}}
+\index{right\+Horizontal\+Limit\+Player\+Pos@{right\+Horizontal\+Limit\+Player\+Pos}!Game\+Manager@{Game\+Manager}}
+\subsubsection{\texorpdfstring{right\+Horizontal\+Limit\+Player\+Pos}{rightHorizontalLimitPlayerPos}}
+{\footnotesize\ttfamily const float Game\+Manager\+::right\+Horizontal\+Limit\+Player\+Pos = 6.\+0f}
+
+\mbox{\Hypertarget{class_game_manager_acc9cc8586b0c42ac76ffccfbb7b6aaa6}\label{class_game_manager_acc9cc8586b0c42ac76ffccfbb7b6aaa6}} 
+\index{Game\+Manager@{Game\+Manager}!scene\+Collider@{scene\+Collider}}
+\index{scene\+Collider@{scene\+Collider}!Game\+Manager@{Game\+Manager}}
+\subsubsection{\texorpdfstring{scene\+Collider}{sceneCollider}}
+{\footnotesize\ttfamily \hyperlink{class_scene_collider}{Scene\+Collider}$\ast$ Game\+Manager\+::scene\+Collider = new \hyperlink{class_scene_collider}{Scene\+Collider}(\hyperlink{class_vector3}{Vector3}(-\/6.\+0f, -\/1, -\/6))}
+
+\mbox{\Hypertarget{class_game_manager_aceb9f59354267d31fc6dfb023a695854}\label{class_game_manager_aceb9f59354267d31fc6dfb023a695854}} 
+\index{Game\+Manager@{Game\+Manager}!score@{score}}
+\index{score@{score}!Game\+Manager@{Game\+Manager}}
+\subsubsection{\texorpdfstring{score}{score}}
+{\footnotesize\ttfamily int Game\+Manager\+::score = 0}
+
+\mbox{\Hypertarget{class_game_manager_ac6d13a816358fd7c754f4ef1fb82f7e4}\label{class_game_manager_ac6d13a816358fd7c754f4ef1fb82f7e4}} 
+\index{Game\+Manager@{Game\+Manager}!speed\+Multiplier@{speed\+Multiplier}}
+\index{speed\+Multiplier@{speed\+Multiplier}!Game\+Manager@{Game\+Manager}}
+\subsubsection{\texorpdfstring{speed\+Multiplier}{speedMultiplier}}
+{\footnotesize\ttfamily float Game\+Manager\+::speed\+Multiplier = 1.\+2f}
+
+\mbox{\Hypertarget{class_game_manager_a88429d344ac8ceb5a5a65ccc86105655}\label{class_game_manager_a88429d344ac8ceb5a5a65ccc86105655}} 
+\index{Game\+Manager@{Game\+Manager}!spot\+Light@{spot\+Light}}
+\index{spot\+Light@{spot\+Light}!Game\+Manager@{Game\+Manager}}
+\subsubsection{\texorpdfstring{spot\+Light}{spotLight}}
+{\footnotesize\ttfamily \hyperlink{class_spot_light}{Spot\+Light}$\ast$ Game\+Manager\+::spot\+Light = new \hyperlink{class_spot_light}{Spot\+Light}(\hyperlink{class_vector3}{Vector3}(0, -\/1, 0), \hyperlink{class_vector3}{Vector3}(0, 2, 0), 7, false)}
+
+\mbox{\Hypertarget{class_game_manager_a4989ddffb424aa668ac66107e6a0eb6f}\label{class_game_manager_a4989ddffb424aa668ac66107e6a0eb6f}} 
+\index{Game\+Manager@{Game\+Manager}!target@{target}}
+\index{target@{target}!Game\+Manager@{Game\+Manager}}
+\subsubsection{\texorpdfstring{target}{target}}
+{\footnotesize\ttfamily \hyperlink{class_target}{Target}$\ast$ Game\+Manager\+::target = new \hyperlink{class_target}{Target}(\hyperlink{class_vector3}{Vector3}(0.\+25f, 1.\+25f, -\/5.\+75f))}
+
+\mbox{\Hypertarget{class_game_manager_a34e763c41e51dccf7241b784de62e381}\label{class_game_manager_a34e763c41e51dccf7241b784de62e381}} 
+\index{Game\+Manager@{Game\+Manager}!top\+Vertical\+Limit\+Player\+Pos@{top\+Vertical\+Limit\+Player\+Pos}}
+\index{top\+Vertical\+Limit\+Player\+Pos@{top\+Vertical\+Limit\+Player\+Pos}!Game\+Manager@{Game\+Manager}}
+\subsubsection{\texorpdfstring{top\+Vertical\+Limit\+Player\+Pos}{topVerticalLimitPlayerPos}}
+{\footnotesize\ttfamily const float Game\+Manager\+::top\+Vertical\+Limit\+Player\+Pos = -\/6.\+0f}
+
+\mbox{\Hypertarget{class_game_manager_a47719947c503583906c085b293759de2}\label{class_game_manager_a47719947c503583906c085b293759de2}} 
+\index{Game\+Manager@{Game\+Manager}!turtles@{turtles}}
+\index{turtles@{turtles}!Game\+Manager@{Game\+Manager}}
+\subsubsection{\texorpdfstring{turtles}{turtles}}
+{\footnotesize\ttfamily vector$<$\hyperlink{class_turtle}{Turtle}$\ast$$>$ Game\+Manager\+::turtles = vector$<$\hyperlink{class_turtle}{Turtle}$\ast$$>$()}
+
+\mbox{\Hypertarget{class_game_manager_a7292d1f46ee4141dbb1b6a7a8cc134f2}\label{class_game_manager_a7292d1f46ee4141dbb1b6a7a8cc134f2}} 
+\index{Game\+Manager@{Game\+Manager}!Window\+Handle@{Window\+Handle}}
+\index{Window\+Handle@{Window\+Handle}!Game\+Manager@{Game\+Manager}}
+\subsubsection{\texorpdfstring{Window\+Handle}{WindowHandle}}
+{\footnotesize\ttfamily G\+Lint Game\+Manager\+::\+Window\+Handle = 0}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/\+Users/matya/\+A\+V\+T7/src/\hyperlink{_game_manager_8h}{Game\+Manager.\+h}\end{DoxyCompactItemize}

@@ -1,0 +1,12 @@
+\hypertarget{_bounding_box_8h}{}\section{/\+Users/matya/\+A\+V\+T7/src/\+Bounding\+Box.h File Reference}
+\label{_bounding_box_8h}\index{/\+Users/matya/\+A\+V\+T7/src/\+Bounding\+Box.\+h@{/\+Users/matya/\+A\+V\+T7/src/\+Bounding\+Box.\+h}}
+{\ttfamily \#include \char`\"{}Vector3.\+h\char`\"{}}\newline
+Include dependency graph for Bounding\+Box.\+h\+:
+% FIG 0
+This graph shows which files directly or indirectly include this file\+:
+% FIG 1
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{class_bounding_box}{Bounding\+Box}
+\end{DoxyCompactItemize}

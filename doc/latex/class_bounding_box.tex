@@ -1,0 +1,82 @@
+\hypertarget{class_bounding_box}{}\section{Bounding\+Box Class Reference}
+\label{class_bounding_box}\index{Bounding\+Box@{Bounding\+Box}}
+
+
+{\ttfamily \#include $<$Bounding\+Box.\+h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_bounding_box_a06eeefc2e788138dc5e9f5da7a7c8a94}{Bounding\+Box} (\hyperlink{class_vector3}{Vector3} min, \hyperlink{class_vector3}{Vector3} max)
+\item 
+void \hyperlink{class_bounding_box_a49c72d3d0840294305fbf498050147db}{set\+Min} (\hyperlink{class_vector3}{Vector3} pos)
+\item 
+void \hyperlink{class_bounding_box_aa219028cad7432dcee337418bc4af118}{set\+Max} (\hyperlink{class_vector3}{Vector3} pos)
+\item 
+bool \hyperlink{class_bounding_box_ad8d240571651b64a2965f202d8ed99bd}{is\+Colliding} (const \hyperlink{class_bounding_box}{Bounding\+Box} b, \hyperlink{class_vector3}{Vector3} deltaA=\hyperlink{class_vector3}{Vector3}(), \hyperlink{class_vector3}{Vector3} deltaB=\hyperlink{class_vector3}{Vector3}()) const
+\item 
+bool \hyperlink{class_bounding_box_a7b9ce0524d009475a0616e96288b5f11}{is\+Inside} (const \hyperlink{class_bounding_box}{Bounding\+Box} b, \hyperlink{class_vector3}{Vector3} deltaA=\hyperlink{class_vector3}{Vector3}(), \hyperlink{class_vector3}{Vector3} deltaB=\hyperlink{class_vector3}{Vector3}()) const
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_vector3}{Vector3} \hyperlink{class_bounding_box_aa8c7acb6b1bd2ddb83473cf35e53156e}{vec\+Min}
+\item 
+\hyperlink{class_vector3}{Vector3} \hyperlink{class_bounding_box_a989d472955b679844ea9e48e888c5136}{vec\+Max}
+\end{DoxyCompactItemize}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_bounding_box_a06eeefc2e788138dc5e9f5da7a7c8a94}\label{class_bounding_box_a06eeefc2e788138dc5e9f5da7a7c8a94}} 
+\index{Bounding\+Box@{Bounding\+Box}!Bounding\+Box@{Bounding\+Box}}
+\index{Bounding\+Box@{Bounding\+Box}!Bounding\+Box@{Bounding\+Box}}
+\subsubsection{\texorpdfstring{Bounding\+Box()}{BoundingBox()}}
+{\footnotesize\ttfamily Bounding\+Box\+::\+Bounding\+Box (\begin{DoxyParamCaption}\item[{\hyperlink{class_vector3}{Vector3}}]{min,  }\item[{\hyperlink{class_vector3}{Vector3}}]{max }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_bounding_box_ad8d240571651b64a2965f202d8ed99bd}\label{class_bounding_box_ad8d240571651b64a2965f202d8ed99bd}} 
+\index{Bounding\+Box@{Bounding\+Box}!is\+Colliding@{is\+Colliding}}
+\index{is\+Colliding@{is\+Colliding}!Bounding\+Box@{Bounding\+Box}}
+\subsubsection{\texorpdfstring{is\+Colliding()}{isColliding()}}
+{\footnotesize\ttfamily bool Bounding\+Box\+::is\+Colliding (\begin{DoxyParamCaption}\item[{const \hyperlink{class_bounding_box}{Bounding\+Box}}]{b,  }\item[{\hyperlink{class_vector3}{Vector3}}]{deltaA = {\ttfamily \hyperlink{class_vector3}{Vector3}()},  }\item[{\hyperlink{class_vector3}{Vector3}}]{deltaB = {\ttfamily \hyperlink{class_vector3}{Vector3}()} }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{class_bounding_box_a7b9ce0524d009475a0616e96288b5f11}\label{class_bounding_box_a7b9ce0524d009475a0616e96288b5f11}} 
+\index{Bounding\+Box@{Bounding\+Box}!is\+Inside@{is\+Inside}}
+\index{is\+Inside@{is\+Inside}!Bounding\+Box@{Bounding\+Box}}
+\subsubsection{\texorpdfstring{is\+Inside()}{isInside()}}
+{\footnotesize\ttfamily bool Bounding\+Box\+::is\+Inside (\begin{DoxyParamCaption}\item[{const \hyperlink{class_bounding_box}{Bounding\+Box}}]{b,  }\item[{\hyperlink{class_vector3}{Vector3}}]{deltaA = {\ttfamily \hyperlink{class_vector3}{Vector3}()},  }\item[{\hyperlink{class_vector3}{Vector3}}]{deltaB = {\ttfamily \hyperlink{class_vector3}{Vector3}()} }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{class_bounding_box_aa219028cad7432dcee337418bc4af118}\label{class_bounding_box_aa219028cad7432dcee337418bc4af118}} 
+\index{Bounding\+Box@{Bounding\+Box}!set\+Max@{set\+Max}}
+\index{set\+Max@{set\+Max}!Bounding\+Box@{Bounding\+Box}}
+\subsubsection{\texorpdfstring{set\+Max()}{setMax()}}
+{\footnotesize\ttfamily void Bounding\+Box\+::set\+Max (\begin{DoxyParamCaption}\item[{\hyperlink{class_vector3}{Vector3}}]{pos }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{class_bounding_box_a49c72d3d0840294305fbf498050147db}\label{class_bounding_box_a49c72d3d0840294305fbf498050147db}} 
+\index{Bounding\+Box@{Bounding\+Box}!set\+Min@{set\+Min}}
+\index{set\+Min@{set\+Min}!Bounding\+Box@{Bounding\+Box}}
+\subsubsection{\texorpdfstring{set\+Min()}{setMin()}}
+{\footnotesize\ttfamily void Bounding\+Box\+::set\+Min (\begin{DoxyParamCaption}\item[{\hyperlink{class_vector3}{Vector3}}]{pos }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+\subsection{Member Data Documentation}
+\mbox{\Hypertarget{class_bounding_box_a989d472955b679844ea9e48e888c5136}\label{class_bounding_box_a989d472955b679844ea9e48e888c5136}} 
+\index{Bounding\+Box@{Bounding\+Box}!vec\+Max@{vec\+Max}}
+\index{vec\+Max@{vec\+Max}!Bounding\+Box@{Bounding\+Box}}
+\subsubsection{\texorpdfstring{vec\+Max}{vecMax}}
+{\footnotesize\ttfamily \hyperlink{class_vector3}{Vector3} Bounding\+Box\+::vec\+Max}
+
+\mbox{\Hypertarget{class_bounding_box_aa8c7acb6b1bd2ddb83473cf35e53156e}\label{class_bounding_box_aa8c7acb6b1bd2ddb83473cf35e53156e}} 
+\index{Bounding\+Box@{Bounding\+Box}!vec\+Min@{vec\+Min}}
+\index{vec\+Min@{vec\+Min}!Bounding\+Box@{Bounding\+Box}}
+\subsubsection{\texorpdfstring{vec\+Min}{vecMin}}
+{\footnotesize\ttfamily \hyperlink{class_vector3}{Vector3} Bounding\+Box\+::vec\+Min}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/\+Users/matya/\+A\+V\+T7/src/\hyperlink{_bounding_box_8h}{Bounding\+Box.\+h}\end{DoxyCompactItemize}

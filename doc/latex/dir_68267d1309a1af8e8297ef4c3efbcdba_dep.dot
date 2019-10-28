@@ -1,0 +1,17 @@
+digraph "/Users/matya/AVT7/src" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_68267d1309a1af8e8297ef4c3efbcdba {
+    graph [ bgcolor="#eeeeff", pencolor="black", label="" URL="dir_68267d1309a1af8e8297ef4c3efbcdba.html"];
+    dir_68267d1309a1af8e8297ef4c3efbcdba [shape=plaintext label="src"];
+    dir_87a455bccb09a92130c26a11a880c98a [shape=box label="libs" color="black" fillcolor="white" style="filled" URL="dir_87a455bccb09a92130c26a11a880c98a.html"];
+    dir_79fa9b12a48436e6d1fb80a586e19af1 [shape=box label="materials" color="black" fillcolor="white" style="filled" URL="dir_79fa9b12a48436e6d1fb80a586e19af1.html"];
+    dir_a7fa5847c07dc92c5227f8a150238560 [shape=box label="objects" color="black" fillcolor="white" style="filled" URL="dir_a7fa5847c07dc92c5227f8a150238560.html"];
+    dir_bbf56bce9985720f86fc476f3812db24 [shape=box label="primitives" color="black" fillcolor="white" style="filled" URL="dir_bbf56bce9985720f86fc476f3812db24.html"];
+  }
+  dir_68267d1309a1af8e8297ef4c3efbcdba->dir_a7fa5847c07dc92c5227f8a150238560 [headlabel="16", labeldistance=1.5 headhref="dir_000000_000003.html"];
+  dir_68267d1309a1af8e8297ef4c3efbcdba->dir_79fa9b12a48436e6d1fb80a586e19af1 [headlabel="1", labeldistance=1.5 headhref="dir_000000_000002.html"];
+  dir_87a455bccb09a92130c26a11a880c98a->dir_bbf56bce9985720f86fc476f3812db24 [headlabel="1", labeldistance=1.5 headhref="dir_000001_000004.html"];
+  dir_a7fa5847c07dc92c5227f8a150238560->dir_87a455bccb09a92130c26a11a880c98a [headlabel="5", labeldistance=1.5 headhref="dir_000003_000001.html"];
+}

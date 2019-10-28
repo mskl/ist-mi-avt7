@@ -1,0 +1,16 @@
+digraph "DynamicGameObject"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node11 [label="DynamicGameObject",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node12 -> Node11 [dir="back",color="midnightblue",fontsize="10",style="solid"];
+  Node12 [label="CollidableGameObject",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_collidable_game_object.html"];
+  Node13 -> Node12 [dir="back",color="midnightblue",fontsize="10",style="solid"];
+  Node13 [label="GameObject",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_game_object.html"];
+  Node14 -> Node13 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" position" ];
+  Node14 [label="Vector3",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_vector3.html"];
+  Node15 -> Node12 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" boundingBox" ];
+  Node15 [label="BoundingBox",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_bounding_box.html"];
+  Node14 -> Node15 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" vecMin\nvecMax" ];
+  Node14 -> Node11 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" initSpeed\nspeed\ninitPos" ];
+}

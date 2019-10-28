@@ -1,0 +1,48 @@
+digraph "GameManager"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1 [label="GameManager",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node2 -> Node1 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" target" ];
+  Node2 [label="Target",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_target.html"];
+  Node3 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid"];
+  Node3 [label="DynamicGameObject",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_dynamic_game_object.html"];
+  Node4 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid"];
+  Node4 [label="CollidableGameObject",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_collidable_game_object.html"];
+  Node5 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid"];
+  Node5 [label="GameObject",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_game_object.html"];
+  Node6 -> Node5 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" position" ];
+  Node6 [label="Vector3",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_vector3.html"];
+  Node7 -> Node4 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" boundingBox" ];
+  Node7 [label="BoundingBox",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_bounding_box.html"];
+  Node6 -> Node7 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" vecMin\nvecMax" ];
+  Node6 -> Node3 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" initSpeed\nspeed\ninitPos" ];
+  Node8 -> Node1 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" cameraPerspectiveFixed" ];
+  Node8 [label="CameraPerspective",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_camera_perspective.html"];
+  Node9 -> Node8 [dir="back",color="midnightblue",fontsize="10",style="solid"];
+  Node9 [label="Camera",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_camera.html"];
+  Node6 -> Node9 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" pos" ];
+  Node6 -> Node8 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" localPos" ];
+  Node10 -> Node1 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" directionalLight" ];
+  Node10 [label="Light",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_light.html"];
+  Node5 -> Node10 [dir="back",color="midnightblue",fontsize="10",style="solid"];
+  Node11 -> Node1 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" sceneCollider" ];
+  Node11 [label="SceneCollider",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_scene_collider.html"];
+  Node3 -> Node11 [dir="back",color="midnightblue",fontsize="10",style="solid"];
+  Node12 -> Node1 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" spotLight" ];
+  Node12 [label="SpotLight",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_spot_light.html"];
+  Node10 -> Node12 [dir="back",color="midnightblue",fontsize="10",style="solid"];
+  Node6 -> Node12 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" light_dir" ];
+  Node13 -> Node1 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" cameraPerspectiveMoving" ];
+  Node13 [label="CameraPerspectiveMoving",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_camera_perspective_moving.html"];
+  Node8 -> Node13 [dir="back",color="midnightblue",fontsize="10",style="solid"];
+  Node14 -> Node1 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" player" ];
+  Node14 [label="Player",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_player.html"];
+  Node3 -> Node14 [dir="back",color="midnightblue",fontsize="10",style="solid"];
+  Node7 -> Node14 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" bottomBox" ];
+  Node6 -> Node14 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" transitionJumpDir\nlastJumpDir\njumpTargetPos\ninitPos\ntransitionPos" ];
+  Node15 -> Node1 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" cameraOrthogonal" ];
+  Node15 [label="CameraOrthogonal",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_camera_orthogonal.html"];
+  Node9 -> Node15 [dir="back",color="midnightblue",fontsize="10",style="solid"];
+}

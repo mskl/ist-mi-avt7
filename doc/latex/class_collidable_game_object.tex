@@ -1,0 +1,101 @@
+\hypertarget{class_collidable_game_object}{}\section{Collidable\+Game\+Object Class Reference}
+\label{class_collidable_game_object}\index{Collidable\+Game\+Object@{Collidable\+Game\+Object}}
+
+
+{\ttfamily \#include $<$Collidable\+Game\+Object.\+h$>$}
+
+Inheritance diagram for Collidable\+Game\+Object\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.758621cm]{class_collidable_game_object}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_collidable_game_object_af19a7e3e12239a38cbc076eeafcafff6}{Collidable\+Game\+Object} (\hyperlink{class_vector3}{Vector3} pos, \hyperlink{class_vector3}{Vector3} min, \hyperlink{class_vector3}{Vector3} max, \hyperlink{_game_object_8h_a57678b60d65afb213d04a6b090c64a08}{Game\+Object\+Type} type=\hyperlink{_game_object_8h_a57678b60d65afb213d04a6b090c64a08a6ce26a62afab55d7606ad4e92428b30c}{U\+N\+K\+N\+O\+WN})
+\item 
+virtual \hyperlink{_game_object_8h_a57678b60d65afb213d04a6b090c64a08}{Game\+Object\+Type} \hyperlink{class_collidable_game_object_a9890003d579d6318a4da31a0d540ab2f}{get\+Type} () override
+\item 
+virtual \hyperlink{class_bounding_box}{Bounding\+Box} \hyperlink{class_collidable_game_object_a7998e4aabd23263212e72f6a40d42036}{get\+Bounding\+Box} () const override
+\item 
+virtual bool \hyperlink{class_collidable_game_object_aabc837db5ee83847ad55a5f95cb106a6}{collide\+With} (const \hyperlink{class_game_object}{Game\+Object} $\ast$other) const override
+\item 
+virtual bool \hyperlink{class_collidable_game_object_ae972d5d27b0f9bb54e9d20f9e6c205b6}{is\+Inside\+Other} (const \hyperlink{class_game_object}{Game\+Object} $\ast$other) const
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_bounding_box}{Bounding\+Box} \hyperlink{class_collidable_game_object_a19d723799fa054bf174be196541c5f57}{bounding\+Box}
+\item 
+\hyperlink{_game_object_8h_a57678b60d65afb213d04a6b090c64a08}{Game\+Object\+Type} \hyperlink{class_collidable_game_object_a5c79dc25d987f169a79c2c161e1a79dd}{game\+Object\+Type}
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_collidable_game_object_af19a7e3e12239a38cbc076eeafcafff6}\label{class_collidable_game_object_af19a7e3e12239a38cbc076eeafcafff6}} 
+\index{Collidable\+Game\+Object@{Collidable\+Game\+Object}!Collidable\+Game\+Object@{Collidable\+Game\+Object}}
+\index{Collidable\+Game\+Object@{Collidable\+Game\+Object}!Collidable\+Game\+Object@{Collidable\+Game\+Object}}
+\subsubsection{\texorpdfstring{Collidable\+Game\+Object()}{CollidableGameObject()}}
+{\footnotesize\ttfamily Collidable\+Game\+Object\+::\+Collidable\+Game\+Object (\begin{DoxyParamCaption}\item[{\hyperlink{class_vector3}{Vector3}}]{pos,  }\item[{\hyperlink{class_vector3}{Vector3}}]{min,  }\item[{\hyperlink{class_vector3}{Vector3}}]{max,  }\item[{\hyperlink{_game_object_8h_a57678b60d65afb213d04a6b090c64a08}{Game\+Object\+Type}}]{type = {\ttfamily \hyperlink{_game_object_8h_a57678b60d65afb213d04a6b090c64a08a6ce26a62afab55d7606ad4e92428b30c}{U\+N\+K\+N\+O\+WN}} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_collidable_game_object_aabc837db5ee83847ad55a5f95cb106a6}\label{class_collidable_game_object_aabc837db5ee83847ad55a5f95cb106a6}} 
+\index{Collidable\+Game\+Object@{Collidable\+Game\+Object}!collide\+With@{collide\+With}}
+\index{collide\+With@{collide\+With}!Collidable\+Game\+Object@{Collidable\+Game\+Object}}
+\subsubsection{\texorpdfstring{collide\+With()}{collideWith()}}
+{\footnotesize\ttfamily virtual bool Collidable\+Game\+Object\+::collide\+With (\begin{DoxyParamCaption}\item[{const \hyperlink{class_game_object}{Game\+Object} $\ast$}]{other }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \hyperlink{class_game_object_a9ab7d2e2beff3e91ccdc87c9fbca019e}{Game\+Object}.
+
+\mbox{\Hypertarget{class_collidable_game_object_a7998e4aabd23263212e72f6a40d42036}\label{class_collidable_game_object_a7998e4aabd23263212e72f6a40d42036}} 
+\index{Collidable\+Game\+Object@{Collidable\+Game\+Object}!get\+Bounding\+Box@{get\+Bounding\+Box}}
+\index{get\+Bounding\+Box@{get\+Bounding\+Box}!Collidable\+Game\+Object@{Collidable\+Game\+Object}}
+\subsubsection{\texorpdfstring{get\+Bounding\+Box()}{getBoundingBox()}}
+{\footnotesize\ttfamily virtual \hyperlink{class_bounding_box}{Bounding\+Box} Collidable\+Game\+Object\+::get\+Bounding\+Box (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \hyperlink{class_game_object_a64b37bea01266aea52a47f4a48a9cc84}{Game\+Object}.
+
+\mbox{\Hypertarget{class_collidable_game_object_a9890003d579d6318a4da31a0d540ab2f}\label{class_collidable_game_object_a9890003d579d6318a4da31a0d540ab2f}} 
+\index{Collidable\+Game\+Object@{Collidable\+Game\+Object}!get\+Type@{get\+Type}}
+\index{get\+Type@{get\+Type}!Collidable\+Game\+Object@{Collidable\+Game\+Object}}
+\subsubsection{\texorpdfstring{get\+Type()}{getType()}}
+{\footnotesize\ttfamily virtual \hyperlink{_game_object_8h_a57678b60d65afb213d04a6b090c64a08}{Game\+Object\+Type} Collidable\+Game\+Object\+::get\+Type (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \hyperlink{class_game_object_ab7ee421293a4bbe47b4102180185fbaa}{Game\+Object}.
+
+\mbox{\Hypertarget{class_collidable_game_object_ae972d5d27b0f9bb54e9d20f9e6c205b6}\label{class_collidable_game_object_ae972d5d27b0f9bb54e9d20f9e6c205b6}} 
+\index{Collidable\+Game\+Object@{Collidable\+Game\+Object}!is\+Inside\+Other@{is\+Inside\+Other}}
+\index{is\+Inside\+Other@{is\+Inside\+Other}!Collidable\+Game\+Object@{Collidable\+Game\+Object}}
+\subsubsection{\texorpdfstring{is\+Inside\+Other()}{isInsideOther()}}
+{\footnotesize\ttfamily virtual bool Collidable\+Game\+Object\+::is\+Inside\+Other (\begin{DoxyParamCaption}\item[{const \hyperlink{class_game_object}{Game\+Object} $\ast$}]{other }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+\subsection{Member Data Documentation}
+\mbox{\Hypertarget{class_collidable_game_object_a19d723799fa054bf174be196541c5f57}\label{class_collidable_game_object_a19d723799fa054bf174be196541c5f57}} 
+\index{Collidable\+Game\+Object@{Collidable\+Game\+Object}!bounding\+Box@{bounding\+Box}}
+\index{bounding\+Box@{bounding\+Box}!Collidable\+Game\+Object@{Collidable\+Game\+Object}}
+\subsubsection{\texorpdfstring{bounding\+Box}{boundingBox}}
+{\footnotesize\ttfamily \hyperlink{class_bounding_box}{Bounding\+Box} Collidable\+Game\+Object\+::bounding\+Box}
+
+\mbox{\Hypertarget{class_collidable_game_object_a5c79dc25d987f169a79c2c161e1a79dd}\label{class_collidable_game_object_a5c79dc25d987f169a79c2c161e1a79dd}} 
+\index{Collidable\+Game\+Object@{Collidable\+Game\+Object}!game\+Object\+Type@{game\+Object\+Type}}
+\index{game\+Object\+Type@{game\+Object\+Type}!Collidable\+Game\+Object@{Collidable\+Game\+Object}}
+\subsubsection{\texorpdfstring{game\+Object\+Type}{gameObjectType}}
+{\footnotesize\ttfamily \hyperlink{_game_object_8h_a57678b60d65afb213d04a6b090c64a08}{Game\+Object\+Type} Collidable\+Game\+Object\+::game\+Object\+Type}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/\+Users/matya/\+A\+V\+T7/src/\hyperlink{_collidable_game_object_8h}{Collidable\+Game\+Object.\+h}\end{DoxyCompactItemize}

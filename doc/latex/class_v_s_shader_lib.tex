@@ -1,0 +1,718 @@
+\hypertarget{class_v_s_shader_lib}{}\section{V\+S\+Shader\+Lib Class Reference}
+\label{class_v_s_shader_lib}\index{V\+S\+Shader\+Lib@{V\+S\+Shader\+Lib}}
+
+
+{\ttfamily \#include $<$vs\+Shader\+Lib.\+h$>$}
+
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{struct_v_s_shader_lib_1_1block_uniforms}{block\+Uniforms}
+\begin{DoxyCompactList}\small\item\em stores information for block uniforms \end{DoxyCompactList}\item 
+class \hyperlink{class_v_s_shader_lib_1_1_uniform_block}{Uniform\+Block}
+\begin{DoxyCompactList}\small\item\em stores information for a block and its uniforms \end{DoxyCompactList}\item 
+struct \hyperlink{struct_v_s_shader_lib_1_1uniforms}{uniforms}
+\begin{DoxyCompactList}\small\item\em stores information for uniforms \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{class_v_s_shader_lib_ac4141d01d0c856c9ca456e51afd9a2c5}{Attrib\+Type} \{ \newline
+\hyperlink{class_v_s_shader_lib_ac4141d01d0c856c9ca456e51afd9a2c5a9adc5774466f06e6e83d5b1707a61fe9}{V\+E\+R\+T\+E\+X\+\_\+\+C\+O\+O\+R\+D\+\_\+\+A\+T\+T\+R\+IB}, 
+\hyperlink{class_v_s_shader_lib_ac4141d01d0c856c9ca456e51afd9a2c5a304bb5e3d74bb4cb155a196257a30537}{N\+O\+R\+M\+A\+L\+\_\+\+A\+T\+T\+R\+IB}, 
+\hyperlink{class_v_s_shader_lib_ac4141d01d0c856c9ca456e51afd9a2c5a04a13d475dac56d907d91b3b83716f7c}{T\+E\+X\+T\+U\+R\+E\+\_\+\+C\+O\+O\+R\+D\+\_\+\+A\+T\+T\+R\+IB}, 
+\hyperlink{class_v_s_shader_lib_ac4141d01d0c856c9ca456e51afd9a2c5a8e68bb5453394576315cbf1746329d03}{T\+A\+N\+G\+E\+N\+T\+\_\+\+A\+T\+T\+R\+IB}, 
+\newline
+\hyperlink{class_v_s_shader_lib_ac4141d01d0c856c9ca456e51afd9a2c5a81b3e69ecdf66a4055e0e4d9bdeff925}{B\+I\+T\+A\+N\+G\+E\+N\+T\+\_\+\+A\+T\+T\+R\+IB}, 
+\hyperlink{class_v_s_shader_lib_ac4141d01d0c856c9ca456e51afd9a2c5a7c5ac849bee1e3bc9cdfc2fa5b3c1ef9}{V\+E\+R\+T\+E\+X\+\_\+\+A\+T\+T\+R\+I\+B1}, 
+\hyperlink{class_v_s_shader_lib_ac4141d01d0c856c9ca456e51afd9a2c5a7972df7badb744b5b5d15ac883640388}{V\+E\+R\+T\+E\+X\+\_\+\+A\+T\+T\+R\+I\+B2}, 
+\hyperlink{class_v_s_shader_lib_ac4141d01d0c856c9ca456e51afd9a2c5a6b376ad4c543bd6f58bd2832a6437f80}{V\+E\+R\+T\+E\+X\+\_\+\+A\+T\+T\+R\+I\+B3}, 
+\newline
+\hyperlink{class_v_s_shader_lib_ac4141d01d0c856c9ca456e51afd9a2c5ad4da5630118ca31069776593bb421e79}{V\+E\+R\+T\+E\+X\+\_\+\+A\+T\+T\+R\+I\+B4}
+ \}\begin{DoxyCompactList}\small\item\em Types of Vertex Attributes. \end{DoxyCompactList}
+\item 
+enum \hyperlink{class_v_s_shader_lib_ae8a4410569faa6d4df9760e998a9706a}{Shader\+Type} \{ \newline
+\hyperlink{class_v_s_shader_lib_ae8a4410569faa6d4df9760e998a9706aa97fde952dc65938f66a7252d4c1ef744}{V\+E\+R\+T\+E\+X\+\_\+\+S\+H\+A\+D\+ER}, 
+\hyperlink{class_v_s_shader_lib_ae8a4410569faa6d4df9760e998a9706aa2c065e10e03889e16c41904de80b9484}{G\+E\+O\+M\+E\+T\+R\+Y\+\_\+\+S\+H\+A\+D\+ER}, 
+\hyperlink{class_v_s_shader_lib_ae8a4410569faa6d4df9760e998a9706aae13b432537fa8dca71da3cd69ebcbe85}{T\+E\+S\+S\+\_\+\+C\+O\+N\+T\+R\+O\+L\+\_\+\+S\+H\+A\+D\+ER}, 
+\hyperlink{class_v_s_shader_lib_ae8a4410569faa6d4df9760e998a9706aa739147ed432c1e1d34aed0c3f0161cf4}{T\+E\+S\+S\+\_\+\+E\+V\+A\+L\+\_\+\+S\+H\+A\+D\+ER}, 
+\newline
+\hyperlink{class_v_s_shader_lib_ae8a4410569faa6d4df9760e998a9706aadffaa9eef2ac65da746c880c7438939e}{F\+R\+A\+G\+M\+E\+N\+T\+\_\+\+S\+H\+A\+D\+ER}, 
+\hyperlink{class_v_s_shader_lib_ae8a4410569faa6d4df9760e998a9706aa112e7924ef9a87ad0d894fe216f84e39}{C\+O\+U\+N\+T\+\_\+\+S\+H\+A\+D\+E\+R\+\_\+\+T\+Y\+PE}
+ \}\begin{DoxyCompactList}\small\item\em Types of Shaders. \end{DoxyCompactList}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_v_s_shader_lib_ab21764358bc78b36b46985acc269f1f8}{V\+S\+Shader\+Lib} ()
+\item 
+\hyperlink{class_v_s_shader_lib_a6353bc0119a5b0a3a3f68d1880aa1688}{$\sim$\+V\+S\+Shader\+Lib} ()
+\item 
+void \hyperlink{class_v_s_shader_lib_ad505b7bf7748f8ef6089b4f9d5c516b1}{init} ()
+\item 
+void \hyperlink{class_v_s_shader_lib_ab83a3a93954f8c8b02363e3975e306ef}{load\+Shader} (\hyperlink{class_v_s_shader_lib_ae8a4410569faa6d4df9760e998a9706a}{V\+S\+Shader\+Lib\+::\+Shader\+Type} st, std\+::string file\+Name)
+\item 
+void \hyperlink{class_v_s_shader_lib_ae08e31c02a625d9c1c82bd77797a62d7}{load\+Shader\+From\+String} (\hyperlink{class_v_s_shader_lib_ae8a4410569faa6d4df9760e998a9706a}{Shader\+Type} st, const char $\ast$s)
+\item 
+void \hyperlink{class_v_s_shader_lib_a6e2ba341bb680d14e39b632bace85bd3}{set\+Program\+Output} (int index, std\+::string name)
+\item 
+G\+Lint \hyperlink{class_v_s_shader_lib_ae13982d7353dfb94442286d2dcac532f}{get\+Program\+Output} (std\+::string name)
+\item 
+void \hyperlink{class_v_s_shader_lib_a94ab5e49d1e850f28c3a466f90a5be40}{set\+Vertex\+Attrib\+Name} (\hyperlink{class_v_s_shader_lib_ac4141d01d0c856c9ca456e51afd9a2c5}{V\+S\+Shader\+Lib\+::\+Attrib\+Type} at, std\+::string name)
+\item 
+void \hyperlink{class_v_s_shader_lib_ae320649bc8d42fdadaedc115bd60e671}{prepare\+Program} ()
+\item 
+void \hyperlink{class_v_s_shader_lib_a8126bd520baadedd4d892a30c4efa9da}{set\+Uniform} (std\+::string name, void $\ast$value)
+\begin{DoxyCompactList}\small\item\em generic function to set the uniform $<$name$>$ to value \end{DoxyCompactList}\item 
+void \hyperlink{class_v_s_shader_lib_a6d0aa9cc7add41f1d6f30d29efbea0ec}{set\+Uniform} (std\+::string name, int value)
+\begin{DoxyCompactList}\small\item\em For int and bool uniforms. Sets the uniform $<$name$>$ to the int value. \end{DoxyCompactList}\item 
+void \hyperlink{class_v_s_shader_lib_a0ce1b5965910417965d321286ee552b7}{set\+Uniform} (std\+::string name, float value)
+\begin{DoxyCompactList}\small\item\em For float uniforms. Sets the uniform $<$name$>$ to the float value. \end{DoxyCompactList}\item 
+G\+Luint \hyperlink{class_v_s_shader_lib_af57f630bc05ce6e3144229ae681b9f8d}{get\+Program\+Index} ()
+\begin{DoxyCompactList}\small\item\em returns the program index \end{DoxyCompactList}\item 
+G\+Luint \hyperlink{class_v_s_shader_lib_a7391982c3a9878a36edf6c433b8ffa06}{get\+Shader\+Index} (\hyperlink{class_v_s_shader_lib_ae8a4410569faa6d4df9760e998a9706a}{V\+S\+Shader\+Lib\+::\+Shader\+Type})
+\begin{DoxyCompactList}\small\item\em returns a shader index \end{DoxyCompactList}\item 
+std\+::string \hyperlink{class_v_s_shader_lib_a8ea26f77b36ed6c6402738c118c5f8e1}{get\+Shader\+Info\+Log} (\hyperlink{class_v_s_shader_lib_ae8a4410569faa6d4df9760e998a9706a}{V\+S\+Shader\+Lib\+::\+Shader\+Type})
+\begin{DoxyCompactList}\small\item\em returns a string with a shader\textquotesingle{}s infolog \end{DoxyCompactList}\item 
+std\+::string \hyperlink{class_v_s_shader_lib_a1d201eb508747e8d223d9e2030af274b}{get\+Program\+Info\+Log} ()
+\begin{DoxyCompactList}\small\item\em returns a string with the program\textquotesingle{}s infolog \end{DoxyCompactList}\item 
+std\+::string \hyperlink{class_v_s_shader_lib_ad3017d7299373b0295ad6ec2cdff93f3}{get\+All\+Info\+Logs} ()
+\begin{DoxyCompactList}\small\item\em returns a string will all info logs \end{DoxyCompactList}\item 
+bool \hyperlink{class_v_s_shader_lib_a141ac8a185556cdc20615472d1645d79}{is\+Program\+Valid} ()
+\begin{DoxyCompactList}\small\item\em returns G\+L\+\_\+\+V\+A\+L\+I\+D\+A\+T\+E\+\_\+\+S\+T\+A\+T\+US for the program \end{DoxyCompactList}\item 
+bool \hyperlink{class_v_s_shader_lib_a734b05e49e117f678cdfeb6f34001c1c}{is\+Shader\+Compiled} (\hyperlink{class_v_s_shader_lib_ae8a4410569faa6d4df9760e998a9706a}{V\+S\+Shader\+Lib\+::\+Shader\+Type})
+\begin{DoxyCompactList}\small\item\em returns true if compiled, false otherwise \end{DoxyCompactList}\item 
+bool \hyperlink{class_v_s_shader_lib_ae60f0930d5a3b7377bf732deae0e8eea}{is\+Program\+Linked} ()
+\begin{DoxyCompactList}\small\item\em returns true if linked, false otherwise \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static void \hyperlink{class_v_s_shader_lib_a4dded68b0735edf595dd5dbf56c956b1}{set\+Block} (std\+::string name, void $\ast$value)
+\begin{DoxyCompactList}\small\item\em sets a uniform block as a whole \end{DoxyCompactList}\item 
+static void \hyperlink{class_v_s_shader_lib_a456c9e16b026780dfa62d669b495b877}{set\+Block\+Uniform} (std\+::string block\+Name, std\+::string uniform\+Name, void $\ast$value)
+\begin{DoxyCompactList}\small\item\em sets a uniform inside a named block \end{DoxyCompactList}\item 
+static void \hyperlink{class_v_s_shader_lib_a91bc939218a7718b9dbb7e13cb9d842d}{set\+Block\+Uniform\+Array\+Element} (std\+::string block\+Name, std\+::string uniform\+Name, int array\+Index, void $\ast$value)
+\begin{DoxyCompactList}\small\item\em sets an element of an array of uniforms inside a block \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static const int \hyperlink{class_v_s_shader_lib_a36238c6b408901ce134d224f27138813}{M\+A\+X\+\_\+\+T\+E\+X\+T\+U\+R\+ES} = 8
+\begin{DoxyCompactList}\small\item\em Just a helper define. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Types}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \hyperlink{struct_v_s_shader_lib_1_1uniforms}{V\+S\+Shader\+Lib\+::uniforms} \hyperlink{class_v_s_shader_lib_a3302b287e0686235d57404bd4587c1e6}{my\+Uniforms}
+\begin{DoxyCompactList}\small\item\em stores information for uniforms \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_v_s_shader_lib_1_1block_uniforms}{V\+S\+Shader\+Lib\+::block\+Uniforms} \hyperlink{class_v_s_shader_lib_a0543003357c93b57bfe99a9aa3e0898d}{my\+Block\+Uniform}
+\begin{DoxyCompactList}\small\item\em stores information for block uniforms \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{class_v_s_shader_lib_abc505e5c5799a80a1752e645647fcb1e}{add\+Uniforms} ()
+\begin{DoxyCompactList}\small\item\em aux function to get info on the uniforms referenced by the shaders \end{DoxyCompactList}\item 
+void \hyperlink{class_v_s_shader_lib_a402dabee8554c65017c23661a9ab77a5}{add\+Uniform} (std\+::string name, G\+Lenum type, unsigned int size)
+\begin{DoxyCompactList}\small\item\em aux function to store the info of a uniform \end{DoxyCompactList}\item 
+void \hyperlink{class_v_s_shader_lib_aa3d473e3e859d33743afcaeba5b74603}{add\+Blocks} ()
+\begin{DoxyCompactList}\small\item\em aux function to get info on the blocks referenced by the shaders \end{DoxyCompactList}\item 
+int \hyperlink{class_v_s_shader_lib_a23d7f374028eeb02cd6df8019eaa7a6f}{type\+Size} (int type)
+\begin{DoxyCompactList}\small\item\em determines the size in bytes based on the Open\+GL type \end{DoxyCompactList}\item 
+char $\ast$ \hyperlink{class_v_s_shader_lib_a7e9e011a122f2c0956ba6c885864b00b}{text\+File\+Read} (std\+::string file\+Name)
+\begin{DoxyCompactList}\small\item\em aux function to read the shader\textquotesingle{}s source code from file \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+bool \hyperlink{class_v_s_shader_lib_a78735f3968c53215f2ce5a196ef5f7bd}{p\+Inited}
+\begin{DoxyCompactList}\small\item\em stores if init has been called \end{DoxyCompactList}\item 
+std\+::string \hyperlink{class_v_s_shader_lib_ac8d4786561bfd4110897a2e2ba7feaf2}{p\+Result}
+\begin{DoxyCompactList}\small\item\em aux string used to return the shaders infologs \end{DoxyCompactList}\item 
+G\+Luint \hyperlink{class_v_s_shader_lib_aa3f9bd5334ab5901209d30d6060bc971}{p\+Shader} \mbox{[}\hyperlink{class_v_s_shader_lib_ae8a4410569faa6d4df9760e998a9706aa112e7924ef9a87ad0d894fe216f84e39}{V\+S\+Shader\+Lib\+::\+C\+O\+U\+N\+T\+\_\+\+S\+H\+A\+D\+E\+R\+\_\+\+T\+Y\+PE}\mbox{]}
+\begin{DoxyCompactList}\small\item\em stores the shaders and program indices \end{DoxyCompactList}\item 
+G\+Luint \hyperlink{class_v_s_shader_lib_a34bc8659f8480ebb03639ed8f61f2b06}{p\+Program}
+\item 
+std\+::map$<$ std\+::string, \hyperlink{class_v_s_shader_lib_a3302b287e0686235d57404bd4587c1e6}{my\+Uniforms} $>$ \hyperlink{class_v_s_shader_lib_a24c8f833871e02d217b04bc7305917ea}{p\+Uniforms}
+\begin{DoxyCompactList}\small\item\em stores info on the uniforms \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static int \hyperlink{class_v_s_shader_lib_a1b796c1a75d72e11024f7a4060f4053d}{sp\+Block\+Count} = 1
+\begin{DoxyCompactList}\small\item\em block\+Count is used to assign binding indexes \end{DoxyCompactList}\item 
+static std\+::map$<$ std\+::string, \hyperlink{class_v_s_shader_lib_1_1_uniform_block}{Uniform\+Block} $>$ \hyperlink{class_v_s_shader_lib_a9d8ab63d3b8e5471c9e6d7ffe08b9921}{sp\+Blocks}
+\begin{DoxyCompactList}\small\item\em Stores info on all blocks found. \end{DoxyCompactList}\item 
+static G\+Lenum \hyperlink{class_v_s_shader_lib_af7466a4cd23698356bb9447ab46802ba}{sp\+G\+L\+Shader\+Types} \mbox{[}\hyperlink{class_v_s_shader_lib_ae8a4410569faa6d4df9760e998a9706aa112e7924ef9a87ad0d894fe216f84e39}{V\+S\+Shader\+Lib\+::\+C\+O\+U\+N\+T\+\_\+\+S\+H\+A\+D\+E\+R\+\_\+\+T\+Y\+PE}\mbox{]}
+\begin{DoxyCompactList}\small\item\em stores the Open\+GL shader types \end{DoxyCompactList}\item 
+static std\+::string \hyperlink{class_v_s_shader_lib_adc3642d9640776a69f60d8a050aace90}{sp\+String\+Shader\+Types} \mbox{[}\hyperlink{class_v_s_shader_lib_ae8a4410569faa6d4df9760e998a9706aa112e7924ef9a87ad0d894fe216f84e39}{V\+S\+Shader\+Lib\+::\+C\+O\+U\+N\+T\+\_\+\+S\+H\+A\+D\+E\+R\+\_\+\+T\+Y\+PE}\mbox{]}
+\begin{DoxyCompactList}\small\item\em stores the text string related to each type \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+
+
+Lighthouse3D
+
+\hyperlink{class_v_s_shader_lib}{V\+S\+Shader\+Lib} -\/ Very Simple Shader Library
+
+Full documentation at \href{http://www.lighthouse3d.com/very-simple-libs}{\tt http\+://www.\+lighthouse3d.\+com/very-\/simple-\/libs}
+
+This class aims at making life simpler when using shaders and uniforms
+
+\begin{DoxyVersion}{Version}
+0.\+2.\+2 Added the possibility ot use instance names in a uniform block 
+
+0.\+2.\+1 Added more attrib defs, namely tangents, bi tangents, and 4 custom
+\end{DoxyVersion}
+version 0.\+2.\+0 Added methods to set uniforms Added methods to set blocks Renamed to \hyperlink{class_v_s_shader_lib}{V\+S\+Shader\+Lib}
+
+version 0.\+1.\+0 Initial Release
+
+This lib requires\+:
+
+G\+L\+EW (\href{http://glew.sourceforge.net/}{\tt http\+://glew.\+sourceforge.\+net/}) 
+
+
+
+
+
+
+
+Lighthouse3D
+
+\hyperlink{class_v_s_shader_lib}{V\+S\+Shader\+Lib} -\/ Very Simple Shader Library
+
+Full documentation at \href{http://www.lighthouse3d.com/very-simple-libs}{\tt http\+://www.\+lighthouse3d.\+com/very-\/simple-\/libs}
+
+This class aims at making life simpler when using shaders and uniforms
+
+\begin{DoxyVersion}{Version}
+0.\+2.\+1 Added more attrib defs, namely tangents, bi tangents, and 4 custom
+\end{DoxyVersion}
+version 0.\+2.\+0 Added methods to set uniforms Added methods to set blocks Renamed to \hyperlink{class_v_s_shader_lib}{V\+S\+Shader\+Lib}
+
+version 0.\+1.\+0 Initial Release
+
+This lib requires\+:
+
+G\+L\+EW (\href{http://glew.sourceforge.net/}{\tt http\+://glew.\+sourceforge.\+net/}) 
+
+ 
+
+\subsection{Member Typedef Documentation}
+\mbox{\Hypertarget{class_v_s_shader_lib_a0543003357c93b57bfe99a9aa3e0898d}\label{class_v_s_shader_lib_a0543003357c93b57bfe99a9aa3e0898d}} 
+\index{V\+S\+Shader\+Lib@{V\+S\+Shader\+Lib}!my\+Block\+Uniform@{my\+Block\+Uniform}}
+\index{my\+Block\+Uniform@{my\+Block\+Uniform}!V\+S\+Shader\+Lib@{V\+S\+Shader\+Lib}}
+\subsubsection{\texorpdfstring{my\+Block\+Uniform}{myBlockUniform}}
+{\footnotesize\ttfamily typedef struct \hyperlink{struct_v_s_shader_lib_1_1block_uniforms}{V\+S\+Shader\+Lib\+::block\+Uniforms}  \hyperlink{class_v_s_shader_lib_a0543003357c93b57bfe99a9aa3e0898d}{V\+S\+Shader\+Lib\+::my\+Block\+Uniform}\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+stores information for block uniforms 
+
+\mbox{\Hypertarget{class_v_s_shader_lib_a3302b287e0686235d57404bd4587c1e6}\label{class_v_s_shader_lib_a3302b287e0686235d57404bd4587c1e6}} 
+\index{V\+S\+Shader\+Lib@{V\+S\+Shader\+Lib}!my\+Uniforms@{my\+Uniforms}}
+\index{my\+Uniforms@{my\+Uniforms}!V\+S\+Shader\+Lib@{V\+S\+Shader\+Lib}}
+\subsubsection{\texorpdfstring{my\+Uniforms}{myUniforms}}
+{\footnotesize\ttfamily typedef struct \hyperlink{struct_v_s_shader_lib_1_1uniforms}{V\+S\+Shader\+Lib\+::uniforms} \hyperlink{class_v_s_shader_lib_a3302b287e0686235d57404bd4587c1e6}{V\+S\+Shader\+Lib\+::my\+Uniforms}\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+stores information for uniforms 
+
+
+
+\subsection{Member Enumeration Documentation}
+\mbox{\Hypertarget{class_v_s_shader_lib_ac4141d01d0c856c9ca456e51afd9a2c5}\label{class_v_s_shader_lib_ac4141d01d0c856c9ca456e51afd9a2c5}} 
+\index{V\+S\+Shader\+Lib@{V\+S\+Shader\+Lib}!Attrib\+Type@{Attrib\+Type}}
+\index{Attrib\+Type@{Attrib\+Type}!V\+S\+Shader\+Lib@{V\+S\+Shader\+Lib}}
+\subsubsection{\texorpdfstring{Attrib\+Type}{AttribType}}
+{\footnotesize\ttfamily enum \hyperlink{class_v_s_shader_lib_ac4141d01d0c856c9ca456e51afd9a2c5}{V\+S\+Shader\+Lib\+::\+Attrib\+Type}}
+
+
+
+Types of Vertex Attributes. 
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{V\+E\+R\+T\+E\+X\+\_\+\+C\+O\+O\+R\+D\+\_\+\+A\+T\+T\+R\+IB@{V\+E\+R\+T\+E\+X\+\_\+\+C\+O\+O\+R\+D\+\_\+\+A\+T\+T\+R\+IB}!V\+S\+Shader\+Lib@{V\+S\+Shader\+Lib}}\index{V\+S\+Shader\+Lib@{V\+S\+Shader\+Lib}!V\+E\+R\+T\+E\+X\+\_\+\+C\+O\+O\+R\+D\+\_\+\+A\+T\+T\+R\+IB@{V\+E\+R\+T\+E\+X\+\_\+\+C\+O\+O\+R\+D\+\_\+\+A\+T\+T\+R\+IB}}}\mbox{\Hypertarget{class_v_s_shader_lib_ac4141d01d0c856c9ca456e51afd9a2c5a9adc5774466f06e6e83d5b1707a61fe9}\label{class_v_s_shader_lib_ac4141d01d0c856c9ca456e51afd9a2c5a9adc5774466f06e6e83d5b1707a61fe9}} 
+V\+E\+R\+T\+E\+X\+\_\+\+C\+O\+O\+R\+D\+\_\+\+A\+T\+T\+R\+IB&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{N\+O\+R\+M\+A\+L\+\_\+\+A\+T\+T\+R\+IB@{N\+O\+R\+M\+A\+L\+\_\+\+A\+T\+T\+R\+IB}!V\+S\+Shader\+Lib@{V\+S\+Shader\+Lib}}\index{V\+S\+Shader\+Lib@{V\+S\+Shader\+Lib}!N\+O\+R\+M\+A\+L\+\_\+\+A\+T\+T\+R\+IB@{N\+O\+R\+M\+A\+L\+\_\+\+A\+T\+T\+R\+IB}}}\mbox{\Hypertarget{class_v_s_shader_lib_ac4141d01d0c856c9ca456e51afd9a2c5a304bb5e3d74bb4cb155a196257a30537}\label{class_v_s_shader_lib_ac4141d01d0c856c9ca456e51afd9a2c5a304bb5e3d74bb4cb155a196257a30537}} 
+N\+O\+R\+M\+A\+L\+\_\+\+A\+T\+T\+R\+IB&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{T\+E\+X\+T\+U\+R\+E\+\_\+\+C\+O\+O\+R\+D\+\_\+\+A\+T\+T\+R\+IB@{T\+E\+X\+T\+U\+R\+E\+\_\+\+C\+O\+O\+R\+D\+\_\+\+A\+T\+T\+R\+IB}!V\+S\+Shader\+Lib@{V\+S\+Shader\+Lib}}\index{V\+S\+Shader\+Lib@{V\+S\+Shader\+Lib}!T\+E\+X\+T\+U\+R\+E\+\_\+\+C\+O\+O\+R\+D\+\_\+\+A\+T\+T\+R\+IB@{T\+E\+X\+T\+U\+R\+E\+\_\+\+C\+O\+O\+R\+D\+\_\+\+A\+T\+T\+R\+IB}}}\mbox{\Hypertarget{class_v_s_shader_lib_ac4141d01d0c856c9ca456e51afd9a2c5a04a13d475dac56d907d91b3b83716f7c}\label{class_v_s_shader_lib_ac4141d01d0c856c9ca456e51afd9a2c5a04a13d475dac56d907d91b3b83716f7c}} 
+T\+E\+X\+T\+U\+R\+E\+\_\+\+C\+O\+O\+R\+D\+\_\+\+A\+T\+T\+R\+IB&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{T\+A\+N\+G\+E\+N\+T\+\_\+\+A\+T\+T\+R\+IB@{T\+A\+N\+G\+E\+N\+T\+\_\+\+A\+T\+T\+R\+IB}!V\+S\+Shader\+Lib@{V\+S\+Shader\+Lib}}\index{V\+S\+Shader\+Lib@{V\+S\+Shader\+Lib}!T\+A\+N\+G\+E\+N\+T\+\_\+\+A\+T\+T\+R\+IB@{T\+A\+N\+G\+E\+N\+T\+\_\+\+A\+T\+T\+R\+IB}}}\mbox{\Hypertarget{class_v_s_shader_lib_ac4141d01d0c856c9ca456e51afd9a2c5a8e68bb5453394576315cbf1746329d03}\label{class_v_s_shader_lib_ac4141d01d0c856c9ca456e51afd9a2c5a8e68bb5453394576315cbf1746329d03}} 
+T\+A\+N\+G\+E\+N\+T\+\_\+\+A\+T\+T\+R\+IB&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{B\+I\+T\+A\+N\+G\+E\+N\+T\+\_\+\+A\+T\+T\+R\+IB@{B\+I\+T\+A\+N\+G\+E\+N\+T\+\_\+\+A\+T\+T\+R\+IB}!V\+S\+Shader\+Lib@{V\+S\+Shader\+Lib}}\index{V\+S\+Shader\+Lib@{V\+S\+Shader\+Lib}!B\+I\+T\+A\+N\+G\+E\+N\+T\+\_\+\+A\+T\+T\+R\+IB@{B\+I\+T\+A\+N\+G\+E\+N\+T\+\_\+\+A\+T\+T\+R\+IB}}}\mbox{\Hypertarget{class_v_s_shader_lib_ac4141d01d0c856c9ca456e51afd9a2c5a81b3e69ecdf66a4055e0e4d9bdeff925}\label{class_v_s_shader_lib_ac4141d01d0c856c9ca456e51afd9a2c5a81b3e69ecdf66a4055e0e4d9bdeff925}} 
+B\+I\+T\+A\+N\+G\+E\+N\+T\+\_\+\+A\+T\+T\+R\+IB&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{V\+E\+R\+T\+E\+X\+\_\+\+A\+T\+T\+R\+I\+B1@{V\+E\+R\+T\+E\+X\+\_\+\+A\+T\+T\+R\+I\+B1}!V\+S\+Shader\+Lib@{V\+S\+Shader\+Lib}}\index{V\+S\+Shader\+Lib@{V\+S\+Shader\+Lib}!V\+E\+R\+T\+E\+X\+\_\+\+A\+T\+T\+R\+I\+B1@{V\+E\+R\+T\+E\+X\+\_\+\+A\+T\+T\+R\+I\+B1}}}\mbox{\Hypertarget{class_v_s_shader_lib_ac4141d01d0c856c9ca456e51afd9a2c5a7c5ac849bee1e3bc9cdfc2fa5b3c1ef9}\label{class_v_s_shader_lib_ac4141d01d0c856c9ca456e51afd9a2c5a7c5ac849bee1e3bc9cdfc2fa5b3c1ef9}} 
+V\+E\+R\+T\+E\+X\+\_\+\+A\+T\+T\+R\+I\+B1&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{V\+E\+R\+T\+E\+X\+\_\+\+A\+T\+T\+R\+I\+B2@{V\+E\+R\+T\+E\+X\+\_\+\+A\+T\+T\+R\+I\+B2}!V\+S\+Shader\+Lib@{V\+S\+Shader\+Lib}}\index{V\+S\+Shader\+Lib@{V\+S\+Shader\+Lib}!V\+E\+R\+T\+E\+X\+\_\+\+A\+T\+T\+R\+I\+B2@{V\+E\+R\+T\+E\+X\+\_\+\+A\+T\+T\+R\+I\+B2}}}\mbox{\Hypertarget{class_v_s_shader_lib_ac4141d01d0c856c9ca456e51afd9a2c5a7972df7badb744b5b5d15ac883640388}\label{class_v_s_shader_lib_ac4141d01d0c856c9ca456e51afd9a2c5a7972df7badb744b5b5d15ac883640388}} 
+V\+E\+R\+T\+E\+X\+\_\+\+A\+T\+T\+R\+I\+B2&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{V\+E\+R\+T\+E\+X\+\_\+\+A\+T\+T\+R\+I\+B3@{V\+E\+R\+T\+E\+X\+\_\+\+A\+T\+T\+R\+I\+B3}!V\+S\+Shader\+Lib@{V\+S\+Shader\+Lib}}\index{V\+S\+Shader\+Lib@{V\+S\+Shader\+Lib}!V\+E\+R\+T\+E\+X\+\_\+\+A\+T\+T\+R\+I\+B3@{V\+E\+R\+T\+E\+X\+\_\+\+A\+T\+T\+R\+I\+B3}}}\mbox{\Hypertarget{class_v_s_shader_lib_ac4141d01d0c856c9ca456e51afd9a2c5a6b376ad4c543bd6f58bd2832a6437f80}\label{class_v_s_shader_lib_ac4141d01d0c856c9ca456e51afd9a2c5a6b376ad4c543bd6f58bd2832a6437f80}} 
+V\+E\+R\+T\+E\+X\+\_\+\+A\+T\+T\+R\+I\+B3&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{V\+E\+R\+T\+E\+X\+\_\+\+A\+T\+T\+R\+I\+B4@{V\+E\+R\+T\+E\+X\+\_\+\+A\+T\+T\+R\+I\+B4}!V\+S\+Shader\+Lib@{V\+S\+Shader\+Lib}}\index{V\+S\+Shader\+Lib@{V\+S\+Shader\+Lib}!V\+E\+R\+T\+E\+X\+\_\+\+A\+T\+T\+R\+I\+B4@{V\+E\+R\+T\+E\+X\+\_\+\+A\+T\+T\+R\+I\+B4}}}\mbox{\Hypertarget{class_v_s_shader_lib_ac4141d01d0c856c9ca456e51afd9a2c5ad4da5630118ca31069776593bb421e79}\label{class_v_s_shader_lib_ac4141d01d0c856c9ca456e51afd9a2c5ad4da5630118ca31069776593bb421e79}} 
+V\+E\+R\+T\+E\+X\+\_\+\+A\+T\+T\+R\+I\+B4&\\
+\hline
+
+\end{DoxyEnumFields}
+\mbox{\Hypertarget{class_v_s_shader_lib_ae8a4410569faa6d4df9760e998a9706a}\label{class_v_s_shader_lib_ae8a4410569faa6d4df9760e998a9706a}} 
+\index{V\+S\+Shader\+Lib@{V\+S\+Shader\+Lib}!Shader\+Type@{Shader\+Type}}
+\index{Shader\+Type@{Shader\+Type}!V\+S\+Shader\+Lib@{V\+S\+Shader\+Lib}}
+\subsubsection{\texorpdfstring{Shader\+Type}{ShaderType}}
+{\footnotesize\ttfamily enum \hyperlink{class_v_s_shader_lib_ae8a4410569faa6d4df9760e998a9706a}{V\+S\+Shader\+Lib\+::\+Shader\+Type}}
+
+
+
+Types of Shaders. 
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{V\+E\+R\+T\+E\+X\+\_\+\+S\+H\+A\+D\+ER@{V\+E\+R\+T\+E\+X\+\_\+\+S\+H\+A\+D\+ER}!V\+S\+Shader\+Lib@{V\+S\+Shader\+Lib}}\index{V\+S\+Shader\+Lib@{V\+S\+Shader\+Lib}!V\+E\+R\+T\+E\+X\+\_\+\+S\+H\+A\+D\+ER@{V\+E\+R\+T\+E\+X\+\_\+\+S\+H\+A\+D\+ER}}}\mbox{\Hypertarget{class_v_s_shader_lib_ae8a4410569faa6d4df9760e998a9706aa97fde952dc65938f66a7252d4c1ef744}\label{class_v_s_shader_lib_ae8a4410569faa6d4df9760e998a9706aa97fde952dc65938f66a7252d4c1ef744}} 
+V\+E\+R\+T\+E\+X\+\_\+\+S\+H\+A\+D\+ER&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{G\+E\+O\+M\+E\+T\+R\+Y\+\_\+\+S\+H\+A\+D\+ER@{G\+E\+O\+M\+E\+T\+R\+Y\+\_\+\+S\+H\+A\+D\+ER}!V\+S\+Shader\+Lib@{V\+S\+Shader\+Lib}}\index{V\+S\+Shader\+Lib@{V\+S\+Shader\+Lib}!G\+E\+O\+M\+E\+T\+R\+Y\+\_\+\+S\+H\+A\+D\+ER@{G\+E\+O\+M\+E\+T\+R\+Y\+\_\+\+S\+H\+A\+D\+ER}}}\mbox{\Hypertarget{class_v_s_shader_lib_ae8a4410569faa6d4df9760e998a9706aa2c065e10e03889e16c41904de80b9484}\label{class_v_s_shader_lib_ae8a4410569faa6d4df9760e998a9706aa2c065e10e03889e16c41904de80b9484}} 
+G\+E\+O\+M\+E\+T\+R\+Y\+\_\+\+S\+H\+A\+D\+ER&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{T\+E\+S\+S\+\_\+\+C\+O\+N\+T\+R\+O\+L\+\_\+\+S\+H\+A\+D\+ER@{T\+E\+S\+S\+\_\+\+C\+O\+N\+T\+R\+O\+L\+\_\+\+S\+H\+A\+D\+ER}!V\+S\+Shader\+Lib@{V\+S\+Shader\+Lib}}\index{V\+S\+Shader\+Lib@{V\+S\+Shader\+Lib}!T\+E\+S\+S\+\_\+\+C\+O\+N\+T\+R\+O\+L\+\_\+\+S\+H\+A\+D\+ER@{T\+E\+S\+S\+\_\+\+C\+O\+N\+T\+R\+O\+L\+\_\+\+S\+H\+A\+D\+ER}}}\mbox{\Hypertarget{class_v_s_shader_lib_ae8a4410569faa6d4df9760e998a9706aae13b432537fa8dca71da3cd69ebcbe85}\label{class_v_s_shader_lib_ae8a4410569faa6d4df9760e998a9706aae13b432537fa8dca71da3cd69ebcbe85}} 
+T\+E\+S\+S\+\_\+\+C\+O\+N\+T\+R\+O\+L\+\_\+\+S\+H\+A\+D\+ER&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{T\+E\+S\+S\+\_\+\+E\+V\+A\+L\+\_\+\+S\+H\+A\+D\+ER@{T\+E\+S\+S\+\_\+\+E\+V\+A\+L\+\_\+\+S\+H\+A\+D\+ER}!V\+S\+Shader\+Lib@{V\+S\+Shader\+Lib}}\index{V\+S\+Shader\+Lib@{V\+S\+Shader\+Lib}!T\+E\+S\+S\+\_\+\+E\+V\+A\+L\+\_\+\+S\+H\+A\+D\+ER@{T\+E\+S\+S\+\_\+\+E\+V\+A\+L\+\_\+\+S\+H\+A\+D\+ER}}}\mbox{\Hypertarget{class_v_s_shader_lib_ae8a4410569faa6d4df9760e998a9706aa739147ed432c1e1d34aed0c3f0161cf4}\label{class_v_s_shader_lib_ae8a4410569faa6d4df9760e998a9706aa739147ed432c1e1d34aed0c3f0161cf4}} 
+T\+E\+S\+S\+\_\+\+E\+V\+A\+L\+\_\+\+S\+H\+A\+D\+ER&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{F\+R\+A\+G\+M\+E\+N\+T\+\_\+\+S\+H\+A\+D\+ER@{F\+R\+A\+G\+M\+E\+N\+T\+\_\+\+S\+H\+A\+D\+ER}!V\+S\+Shader\+Lib@{V\+S\+Shader\+Lib}}\index{V\+S\+Shader\+Lib@{V\+S\+Shader\+Lib}!F\+R\+A\+G\+M\+E\+N\+T\+\_\+\+S\+H\+A\+D\+ER@{F\+R\+A\+G\+M\+E\+N\+T\+\_\+\+S\+H\+A\+D\+ER}}}\mbox{\Hypertarget{class_v_s_shader_lib_ae8a4410569faa6d4df9760e998a9706aadffaa9eef2ac65da746c880c7438939e}\label{class_v_s_shader_lib_ae8a4410569faa6d4df9760e998a9706aadffaa9eef2ac65da746c880c7438939e}} 
+F\+R\+A\+G\+M\+E\+N\+T\+\_\+\+S\+H\+A\+D\+ER&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{C\+O\+U\+N\+T\+\_\+\+S\+H\+A\+D\+E\+R\+\_\+\+T\+Y\+PE@{C\+O\+U\+N\+T\+\_\+\+S\+H\+A\+D\+E\+R\+\_\+\+T\+Y\+PE}!V\+S\+Shader\+Lib@{V\+S\+Shader\+Lib}}\index{V\+S\+Shader\+Lib@{V\+S\+Shader\+Lib}!C\+O\+U\+N\+T\+\_\+\+S\+H\+A\+D\+E\+R\+\_\+\+T\+Y\+PE@{C\+O\+U\+N\+T\+\_\+\+S\+H\+A\+D\+E\+R\+\_\+\+T\+Y\+PE}}}\mbox{\Hypertarget{class_v_s_shader_lib_ae8a4410569faa6d4df9760e998a9706aa112e7924ef9a87ad0d894fe216f84e39}\label{class_v_s_shader_lib_ae8a4410569faa6d4df9760e998a9706aa112e7924ef9a87ad0d894fe216f84e39}} 
+C\+O\+U\+N\+T\+\_\+\+S\+H\+A\+D\+E\+R\+\_\+\+T\+Y\+PE&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_v_s_shader_lib_ab21764358bc78b36b46985acc269f1f8}\label{class_v_s_shader_lib_ab21764358bc78b36b46985acc269f1f8}} 
+\index{V\+S\+Shader\+Lib@{V\+S\+Shader\+Lib}!V\+S\+Shader\+Lib@{V\+S\+Shader\+Lib}}
+\index{V\+S\+Shader\+Lib@{V\+S\+Shader\+Lib}!V\+S\+Shader\+Lib@{V\+S\+Shader\+Lib}}
+\subsubsection{\texorpdfstring{V\+S\+Shader\+Lib()}{VSShaderLib()}}
+{\footnotesize\ttfamily V\+S\+Shader\+Lib\+::\+V\+S\+Shader\+Lib (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_v_s_shader_lib_a6353bc0119a5b0a3a3f68d1880aa1688}\label{class_v_s_shader_lib_a6353bc0119a5b0a3a3f68d1880aa1688}} 
+\index{V\+S\+Shader\+Lib@{V\+S\+Shader\+Lib}!````~V\+S\+Shader\+Lib@{$\sim$\+V\+S\+Shader\+Lib}}
+\index{````~V\+S\+Shader\+Lib@{$\sim$\+V\+S\+Shader\+Lib}!V\+S\+Shader\+Lib@{V\+S\+Shader\+Lib}}
+\subsubsection{\texorpdfstring{$\sim$\+V\+S\+Shader\+Lib()}{~VSShaderLib()}}
+{\footnotesize\ttfamily V\+S\+Shader\+Lib\+::$\sim$\+V\+S\+Shader\+Lib (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_v_s_shader_lib_aa3d473e3e859d33743afcaeba5b74603}\label{class_v_s_shader_lib_aa3d473e3e859d33743afcaeba5b74603}} 
+\index{V\+S\+Shader\+Lib@{V\+S\+Shader\+Lib}!add\+Blocks@{add\+Blocks}}
+\index{add\+Blocks@{add\+Blocks}!V\+S\+Shader\+Lib@{V\+S\+Shader\+Lib}}
+\subsubsection{\texorpdfstring{add\+Blocks()}{addBlocks()}}
+{\footnotesize\ttfamily void V\+S\+Shader\+Lib\+::add\+Blocks (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+aux function to get info on the blocks referenced by the shaders 
+
+\mbox{\Hypertarget{class_v_s_shader_lib_a402dabee8554c65017c23661a9ab77a5}\label{class_v_s_shader_lib_a402dabee8554c65017c23661a9ab77a5}} 
+\index{V\+S\+Shader\+Lib@{V\+S\+Shader\+Lib}!add\+Uniform@{add\+Uniform}}
+\index{add\+Uniform@{add\+Uniform}!V\+S\+Shader\+Lib@{V\+S\+Shader\+Lib}}
+\subsubsection{\texorpdfstring{add\+Uniform()}{addUniform()}}
+{\footnotesize\ttfamily void V\+S\+Shader\+Lib\+::add\+Uniform (\begin{DoxyParamCaption}\item[{std\+::string}]{name,  }\item[{G\+Lenum}]{type,  }\item[{unsigned int}]{size }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+aux function to store the info of a uniform 
+
+\mbox{\Hypertarget{class_v_s_shader_lib_abc505e5c5799a80a1752e645647fcb1e}\label{class_v_s_shader_lib_abc505e5c5799a80a1752e645647fcb1e}} 
+\index{V\+S\+Shader\+Lib@{V\+S\+Shader\+Lib}!add\+Uniforms@{add\+Uniforms}}
+\index{add\+Uniforms@{add\+Uniforms}!V\+S\+Shader\+Lib@{V\+S\+Shader\+Lib}}
+\subsubsection{\texorpdfstring{add\+Uniforms()}{addUniforms()}}
+{\footnotesize\ttfamily void V\+S\+Shader\+Lib\+::add\+Uniforms (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+aux function to get info on the uniforms referenced by the shaders 
+
+\mbox{\Hypertarget{class_v_s_shader_lib_ad3017d7299373b0295ad6ec2cdff93f3}\label{class_v_s_shader_lib_ad3017d7299373b0295ad6ec2cdff93f3}} 
+\index{V\+S\+Shader\+Lib@{V\+S\+Shader\+Lib}!get\+All\+Info\+Logs@{get\+All\+Info\+Logs}}
+\index{get\+All\+Info\+Logs@{get\+All\+Info\+Logs}!V\+S\+Shader\+Lib@{V\+S\+Shader\+Lib}}
+\subsubsection{\texorpdfstring{get\+All\+Info\+Logs()}{getAllInfoLogs()}}
+{\footnotesize\ttfamily std\+::string V\+S\+Shader\+Lib\+::get\+All\+Info\+Logs (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+returns a string will all info logs 
+
+\mbox{\Hypertarget{class_v_s_shader_lib_af57f630bc05ce6e3144229ae681b9f8d}\label{class_v_s_shader_lib_af57f630bc05ce6e3144229ae681b9f8d}} 
+\index{V\+S\+Shader\+Lib@{V\+S\+Shader\+Lib}!get\+Program\+Index@{get\+Program\+Index}}
+\index{get\+Program\+Index@{get\+Program\+Index}!V\+S\+Shader\+Lib@{V\+S\+Shader\+Lib}}
+\subsubsection{\texorpdfstring{get\+Program\+Index()}{getProgramIndex()}}
+{\footnotesize\ttfamily G\+Luint V\+S\+Shader\+Lib\+::get\+Program\+Index (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+returns the program index 
+
+\mbox{\Hypertarget{class_v_s_shader_lib_a1d201eb508747e8d223d9e2030af274b}\label{class_v_s_shader_lib_a1d201eb508747e8d223d9e2030af274b}} 
+\index{V\+S\+Shader\+Lib@{V\+S\+Shader\+Lib}!get\+Program\+Info\+Log@{get\+Program\+Info\+Log}}
+\index{get\+Program\+Info\+Log@{get\+Program\+Info\+Log}!V\+S\+Shader\+Lib@{V\+S\+Shader\+Lib}}
+\subsubsection{\texorpdfstring{get\+Program\+Info\+Log()}{getProgramInfoLog()}}
+{\footnotesize\ttfamily std\+::string V\+S\+Shader\+Lib\+::get\+Program\+Info\+Log (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+returns a string with the program\textquotesingle{}s infolog 
+
+\mbox{\Hypertarget{class_v_s_shader_lib_ae13982d7353dfb94442286d2dcac532f}\label{class_v_s_shader_lib_ae13982d7353dfb94442286d2dcac532f}} 
+\index{V\+S\+Shader\+Lib@{V\+S\+Shader\+Lib}!get\+Program\+Output@{get\+Program\+Output}}
+\index{get\+Program\+Output@{get\+Program\+Output}!V\+S\+Shader\+Lib@{V\+S\+Shader\+Lib}}
+\subsubsection{\texorpdfstring{get\+Program\+Output()}{getProgramOutput()}}
+{\footnotesize\ttfamily G\+Lint V\+S\+Shader\+Lib\+::get\+Program\+Output (\begin{DoxyParamCaption}\item[{std\+::string}]{name }\end{DoxyParamCaption})}
+
+returns the fragment shader color number bound to a user-\/defined varying out variable
+
+Note\+: linking is required for this operation to take effect (call method prepare\+Program afterwards)
+
+
+\begin{DoxyParams}{Parameters}
+{\em the} & name of the fragment\textquotesingle{}s shader variable \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the fragment colour number 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_v_s_shader_lib_a7391982c3a9878a36edf6c433b8ffa06}\label{class_v_s_shader_lib_a7391982c3a9878a36edf6c433b8ffa06}} 
+\index{V\+S\+Shader\+Lib@{V\+S\+Shader\+Lib}!get\+Shader\+Index@{get\+Shader\+Index}}
+\index{get\+Shader\+Index@{get\+Shader\+Index}!V\+S\+Shader\+Lib@{V\+S\+Shader\+Lib}}
+\subsubsection{\texorpdfstring{get\+Shader\+Index()}{getShaderIndex()}}
+{\footnotesize\ttfamily G\+Luint V\+S\+Shader\+Lib\+::get\+Shader\+Index (\begin{DoxyParamCaption}\item[{\hyperlink{class_v_s_shader_lib_ae8a4410569faa6d4df9760e998a9706a}{V\+S\+Shader\+Lib\+::\+Shader\+Type}}]{a\+Type }\end{DoxyParamCaption})}
+
+
+
+returns a shader index 
+
+\mbox{\Hypertarget{class_v_s_shader_lib_a8ea26f77b36ed6c6402738c118c5f8e1}\label{class_v_s_shader_lib_a8ea26f77b36ed6c6402738c118c5f8e1}} 
+\index{V\+S\+Shader\+Lib@{V\+S\+Shader\+Lib}!get\+Shader\+Info\+Log@{get\+Shader\+Info\+Log}}
+\index{get\+Shader\+Info\+Log@{get\+Shader\+Info\+Log}!V\+S\+Shader\+Lib@{V\+S\+Shader\+Lib}}
+\subsubsection{\texorpdfstring{get\+Shader\+Info\+Log()}{getShaderInfoLog()}}
+{\footnotesize\ttfamily std\+::string V\+S\+Shader\+Lib\+::get\+Shader\+Info\+Log (\begin{DoxyParamCaption}\item[{\hyperlink{class_v_s_shader_lib_ae8a4410569faa6d4df9760e998a9706a}{V\+S\+Shader\+Lib\+::\+Shader\+Type}}]{st }\end{DoxyParamCaption})}
+
+
+
+returns a string with a shader\textquotesingle{}s infolog 
+
+\mbox{\Hypertarget{class_v_s_shader_lib_ad505b7bf7748f8ef6089b4f9d5c516b1}\label{class_v_s_shader_lib_ad505b7bf7748f8ef6089b4f9d5c516b1}} 
+\index{V\+S\+Shader\+Lib@{V\+S\+Shader\+Lib}!init@{init}}
+\index{init@{init}!V\+S\+Shader\+Lib@{V\+S\+Shader\+Lib}}
+\subsubsection{\texorpdfstring{init()}{init()}}
+{\footnotesize\ttfamily void V\+S\+Shader\+Lib\+::init (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Init should be called for every shader instance prior to any other function \mbox{\Hypertarget{class_v_s_shader_lib_ae60f0930d5a3b7377bf732deae0e8eea}\label{class_v_s_shader_lib_ae60f0930d5a3b7377bf732deae0e8eea}} 
+\index{V\+S\+Shader\+Lib@{V\+S\+Shader\+Lib}!is\+Program\+Linked@{is\+Program\+Linked}}
+\index{is\+Program\+Linked@{is\+Program\+Linked}!V\+S\+Shader\+Lib@{V\+S\+Shader\+Lib}}
+\subsubsection{\texorpdfstring{is\+Program\+Linked()}{isProgramLinked()}}
+{\footnotesize\ttfamily bool V\+S\+Shader\+Lib\+::is\+Program\+Linked (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+returns true if linked, false otherwise 
+
+\mbox{\Hypertarget{class_v_s_shader_lib_a141ac8a185556cdc20615472d1645d79}\label{class_v_s_shader_lib_a141ac8a185556cdc20615472d1645d79}} 
+\index{V\+S\+Shader\+Lib@{V\+S\+Shader\+Lib}!is\+Program\+Valid@{is\+Program\+Valid}}
+\index{is\+Program\+Valid@{is\+Program\+Valid}!V\+S\+Shader\+Lib@{V\+S\+Shader\+Lib}}
+\subsubsection{\texorpdfstring{is\+Program\+Valid()}{isProgramValid()}}
+{\footnotesize\ttfamily bool V\+S\+Shader\+Lib\+::is\+Program\+Valid (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+returns G\+L\+\_\+\+V\+A\+L\+I\+D\+A\+T\+E\+\_\+\+S\+T\+A\+T\+US for the program 
+
+\mbox{\Hypertarget{class_v_s_shader_lib_a734b05e49e117f678cdfeb6f34001c1c}\label{class_v_s_shader_lib_a734b05e49e117f678cdfeb6f34001c1c}} 
+\index{V\+S\+Shader\+Lib@{V\+S\+Shader\+Lib}!is\+Shader\+Compiled@{is\+Shader\+Compiled}}
+\index{is\+Shader\+Compiled@{is\+Shader\+Compiled}!V\+S\+Shader\+Lib@{V\+S\+Shader\+Lib}}
+\subsubsection{\texorpdfstring{is\+Shader\+Compiled()}{isShaderCompiled()}}
+{\footnotesize\ttfamily bool V\+S\+Shader\+Lib\+::is\+Shader\+Compiled (\begin{DoxyParamCaption}\item[{\hyperlink{class_v_s_shader_lib_ae8a4410569faa6d4df9760e998a9706a}{V\+S\+Shader\+Lib\+::\+Shader\+Type}}]{a\+Type }\end{DoxyParamCaption})}
+
+
+
+returns true if compiled, false otherwise 
+
+\mbox{\Hypertarget{class_v_s_shader_lib_ab83a3a93954f8c8b02363e3975e306ef}\label{class_v_s_shader_lib_ab83a3a93954f8c8b02363e3975e306ef}} 
+\index{V\+S\+Shader\+Lib@{V\+S\+Shader\+Lib}!load\+Shader@{load\+Shader}}
+\index{load\+Shader@{load\+Shader}!V\+S\+Shader\+Lib@{V\+S\+Shader\+Lib}}
+\subsubsection{\texorpdfstring{load\+Shader()}{loadShader()}}
+{\footnotesize\ttfamily void V\+S\+Shader\+Lib\+::load\+Shader (\begin{DoxyParamCaption}\item[{\hyperlink{class_v_s_shader_lib_ae8a4410569faa6d4df9760e998a9706a}{V\+S\+Shader\+Lib\+::\+Shader\+Type}}]{st,  }\item[{std\+::string}]{file\+Name }\end{DoxyParamCaption})}
+
+Loads the text in the file to the source of the specified shader
+
+
+\begin{DoxyParams}{Parameters}
+{\em st} & one of the enum values of Shader\+Type \\
+\hline
+{\em filename} & the file where the source is to be found \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_v_s_shader_lib_ae08e31c02a625d9c1c82bd77797a62d7}\label{class_v_s_shader_lib_ae08e31c02a625d9c1c82bd77797a62d7}} 
+\index{V\+S\+Shader\+Lib@{V\+S\+Shader\+Lib}!load\+Shader\+From\+String@{load\+Shader\+From\+String}}
+\index{load\+Shader\+From\+String@{load\+Shader\+From\+String}!V\+S\+Shader\+Lib@{V\+S\+Shader\+Lib}}
+\subsubsection{\texorpdfstring{load\+Shader\+From\+String()}{loadShaderFromString()}}
+{\footnotesize\ttfamily void V\+S\+Shader\+Lib\+::load\+Shader\+From\+String (\begin{DoxyParamCaption}\item[{\hyperlink{class_v_s_shader_lib_ae8a4410569faa6d4df9760e998a9706a}{V\+S\+Shader\+Lib\+::\+Shader\+Type}}]{st,  }\item[{const char $\ast$}]{s }\end{DoxyParamCaption})}
+
+bind a user-\/defined varying out variable to a fragment shader color number Note\+: linking is required for this operation to take effect (call method prepare\+Program afterwards)
+
+
+\begin{DoxyParams}{Parameters}
+{\em index} & the fragment colour number \\
+\hline
+{\em the} & name of the fragment\textquotesingle{}s shader variable \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_v_s_shader_lib_ae320649bc8d42fdadaedc115bd60e671}\label{class_v_s_shader_lib_ae320649bc8d42fdadaedc115bd60e671}} 
+\index{V\+S\+Shader\+Lib@{V\+S\+Shader\+Lib}!prepare\+Program@{prepare\+Program}}
+\index{prepare\+Program@{prepare\+Program}!V\+S\+Shader\+Lib@{V\+S\+Shader\+Lib}}
+\subsubsection{\texorpdfstring{prepare\+Program()}{prepareProgram()}}
+{\footnotesize\ttfamily void V\+S\+Shader\+Lib\+::prepare\+Program (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Prepares program for usage. Links it and collects information about uniform variables and uniform blocks \mbox{\Hypertarget{class_v_s_shader_lib_a4dded68b0735edf595dd5dbf56c956b1}\label{class_v_s_shader_lib_a4dded68b0735edf595dd5dbf56c956b1}} 
+\index{V\+S\+Shader\+Lib@{V\+S\+Shader\+Lib}!set\+Block@{set\+Block}}
+\index{set\+Block@{set\+Block}!V\+S\+Shader\+Lib@{V\+S\+Shader\+Lib}}
+\subsubsection{\texorpdfstring{set\+Block()}{setBlock()}}
+{\footnotesize\ttfamily void V\+S\+Shader\+Lib\+::set\+Block (\begin{DoxyParamCaption}\item[{std\+::string}]{name,  }\item[{void $\ast$}]{value }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+sets a uniform block as a whole 
+
+\mbox{\Hypertarget{class_v_s_shader_lib_a456c9e16b026780dfa62d669b495b877}\label{class_v_s_shader_lib_a456c9e16b026780dfa62d669b495b877}} 
+\index{V\+S\+Shader\+Lib@{V\+S\+Shader\+Lib}!set\+Block\+Uniform@{set\+Block\+Uniform}}
+\index{set\+Block\+Uniform@{set\+Block\+Uniform}!V\+S\+Shader\+Lib@{V\+S\+Shader\+Lib}}
+\subsubsection{\texorpdfstring{set\+Block\+Uniform()}{setBlockUniform()}}
+{\footnotesize\ttfamily void V\+S\+Shader\+Lib\+::set\+Block\+Uniform (\begin{DoxyParamCaption}\item[{std\+::string}]{block\+Name,  }\item[{std\+::string}]{uniform\+Name,  }\item[{void $\ast$}]{value }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+sets a uniform inside a named block 
+
+\mbox{\Hypertarget{class_v_s_shader_lib_a91bc939218a7718b9dbb7e13cb9d842d}\label{class_v_s_shader_lib_a91bc939218a7718b9dbb7e13cb9d842d}} 
+\index{V\+S\+Shader\+Lib@{V\+S\+Shader\+Lib}!set\+Block\+Uniform\+Array\+Element@{set\+Block\+Uniform\+Array\+Element}}
+\index{set\+Block\+Uniform\+Array\+Element@{set\+Block\+Uniform\+Array\+Element}!V\+S\+Shader\+Lib@{V\+S\+Shader\+Lib}}
+\subsubsection{\texorpdfstring{set\+Block\+Uniform\+Array\+Element()}{setBlockUniformArrayElement()}}
+{\footnotesize\ttfamily void V\+S\+Shader\+Lib\+::set\+Block\+Uniform\+Array\+Element (\begin{DoxyParamCaption}\item[{std\+::string}]{block\+Name,  }\item[{std\+::string}]{uniform\+Name,  }\item[{int}]{array\+Index,  }\item[{void $\ast$}]{value }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+sets an element of an array of uniforms inside a block 
+
+\mbox{\Hypertarget{class_v_s_shader_lib_a6e2ba341bb680d14e39b632bace85bd3}\label{class_v_s_shader_lib_a6e2ba341bb680d14e39b632bace85bd3}} 
+\index{V\+S\+Shader\+Lib@{V\+S\+Shader\+Lib}!set\+Program\+Output@{set\+Program\+Output}}
+\index{set\+Program\+Output@{set\+Program\+Output}!V\+S\+Shader\+Lib@{V\+S\+Shader\+Lib}}
+\subsubsection{\texorpdfstring{set\+Program\+Output()}{setProgramOutput()}}
+{\footnotesize\ttfamily void V\+S\+Shader\+Lib\+::set\+Program\+Output (\begin{DoxyParamCaption}\item[{int}]{index,  }\item[{std\+::string}]{name }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_v_s_shader_lib_a8126bd520baadedd4d892a30c4efa9da}\label{class_v_s_shader_lib_a8126bd520baadedd4d892a30c4efa9da}} 
+\index{V\+S\+Shader\+Lib@{V\+S\+Shader\+Lib}!set\+Uniform@{set\+Uniform}}
+\index{set\+Uniform@{set\+Uniform}!V\+S\+Shader\+Lib@{V\+S\+Shader\+Lib}}
+\subsubsection{\texorpdfstring{set\+Uniform()}{setUniform()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily void V\+S\+Shader\+Lib\+::set\+Uniform (\begin{DoxyParamCaption}\item[{std\+::string}]{name,  }\item[{void $\ast$}]{value }\end{DoxyParamCaption})}
+
+
+
+generic function to set the uniform $<$name$>$ to value 
+
+\mbox{\Hypertarget{class_v_s_shader_lib_a6d0aa9cc7add41f1d6f30d29efbea0ec}\label{class_v_s_shader_lib_a6d0aa9cc7add41f1d6f30d29efbea0ec}} 
+\index{V\+S\+Shader\+Lib@{V\+S\+Shader\+Lib}!set\+Uniform@{set\+Uniform}}
+\index{set\+Uniform@{set\+Uniform}!V\+S\+Shader\+Lib@{V\+S\+Shader\+Lib}}
+\subsubsection{\texorpdfstring{set\+Uniform()}{setUniform()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily void V\+S\+Shader\+Lib\+::set\+Uniform (\begin{DoxyParamCaption}\item[{std\+::string}]{name,  }\item[{int}]{value }\end{DoxyParamCaption})}
+
+
+
+For int and bool uniforms. Sets the uniform $<$name$>$ to the int value. 
+
+\mbox{\Hypertarget{class_v_s_shader_lib_a0ce1b5965910417965d321286ee552b7}\label{class_v_s_shader_lib_a0ce1b5965910417965d321286ee552b7}} 
+\index{V\+S\+Shader\+Lib@{V\+S\+Shader\+Lib}!set\+Uniform@{set\+Uniform}}
+\index{set\+Uniform@{set\+Uniform}!V\+S\+Shader\+Lib@{V\+S\+Shader\+Lib}}
+\subsubsection{\texorpdfstring{set\+Uniform()}{setUniform()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily void V\+S\+Shader\+Lib\+::set\+Uniform (\begin{DoxyParamCaption}\item[{std\+::string}]{name,  }\item[{float}]{value }\end{DoxyParamCaption})}
+
+
+
+For float uniforms. Sets the uniform $<$name$>$ to the float value. 
+
+\mbox{\Hypertarget{class_v_s_shader_lib_a94ab5e49d1e850f28c3a466f90a5be40}\label{class_v_s_shader_lib_a94ab5e49d1e850f28c3a466f90a5be40}} 
+\index{V\+S\+Shader\+Lib@{V\+S\+Shader\+Lib}!set\+Vertex\+Attrib\+Name@{set\+Vertex\+Attrib\+Name}}
+\index{set\+Vertex\+Attrib\+Name@{set\+Vertex\+Attrib\+Name}!V\+S\+Shader\+Lib@{V\+S\+Shader\+Lib}}
+\subsubsection{\texorpdfstring{set\+Vertex\+Attrib\+Name()}{setVertexAttribName()}}
+{\footnotesize\ttfamily void V\+S\+Shader\+Lib\+::set\+Vertex\+Attrib\+Name (\begin{DoxyParamCaption}\item[{\hyperlink{class_v_s_shader_lib_ac4141d01d0c856c9ca456e51afd9a2c5}{V\+S\+Shader\+Lib\+::\+Attrib\+Type}}]{at,  }\item[{std\+::string}]{name }\end{DoxyParamCaption})}
+
+Defines semantics for the input vertex attributes. This is required for other libraries to know how to send data to the shader Note\+: linking is required for this operation to take effect (call method prepare\+Program)
+
+
+\begin{DoxyParams}{Parameters}
+{\em the} & semantic of the attribute \\
+\hline
+{\em the} & name of the vertex attribute \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_v_s_shader_lib_a7e9e011a122f2c0956ba6c885864b00b}\label{class_v_s_shader_lib_a7e9e011a122f2c0956ba6c885864b00b}} 
+\index{V\+S\+Shader\+Lib@{V\+S\+Shader\+Lib}!text\+File\+Read@{text\+File\+Read}}
+\index{text\+File\+Read@{text\+File\+Read}!V\+S\+Shader\+Lib@{V\+S\+Shader\+Lib}}
+\subsubsection{\texorpdfstring{text\+File\+Read()}{textFileRead()}}
+{\footnotesize\ttfamily char $\ast$ V\+S\+Shader\+Lib\+::text\+File\+Read (\begin{DoxyParamCaption}\item[{std\+::string}]{file\+Name }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+aux function to read the shader\textquotesingle{}s source code from file 
+
+\mbox{\Hypertarget{class_v_s_shader_lib_a23d7f374028eeb02cd6df8019eaa7a6f}\label{class_v_s_shader_lib_a23d7f374028eeb02cd6df8019eaa7a6f}} 
+\index{V\+S\+Shader\+Lib@{V\+S\+Shader\+Lib}!type\+Size@{type\+Size}}
+\index{type\+Size@{type\+Size}!V\+S\+Shader\+Lib@{V\+S\+Shader\+Lib}}
+\subsubsection{\texorpdfstring{type\+Size()}{typeSize()}}
+{\footnotesize\ttfamily int V\+S\+Shader\+Lib\+::type\+Size (\begin{DoxyParamCaption}\item[{int}]{type }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+determines the size in bytes based on the Open\+GL type 
+
+
+
+\subsection{Member Data Documentation}
+\mbox{\Hypertarget{class_v_s_shader_lib_a36238c6b408901ce134d224f27138813}\label{class_v_s_shader_lib_a36238c6b408901ce134d224f27138813}} 
+\index{V\+S\+Shader\+Lib@{V\+S\+Shader\+Lib}!M\+A\+X\+\_\+\+T\+E\+X\+T\+U\+R\+ES@{M\+A\+X\+\_\+\+T\+E\+X\+T\+U\+R\+ES}}
+\index{M\+A\+X\+\_\+\+T\+E\+X\+T\+U\+R\+ES@{M\+A\+X\+\_\+\+T\+E\+X\+T\+U\+R\+ES}!V\+S\+Shader\+Lib@{V\+S\+Shader\+Lib}}
+\subsubsection{\texorpdfstring{M\+A\+X\+\_\+\+T\+E\+X\+T\+U\+R\+ES}{MAX\_TEXTURES}}
+{\footnotesize\ttfamily const int V\+S\+Shader\+Lib\+::\+M\+A\+X\+\_\+\+T\+E\+X\+T\+U\+R\+ES = 8\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Just a helper define. 
+
+\mbox{\Hypertarget{class_v_s_shader_lib_a78735f3968c53215f2ce5a196ef5f7bd}\label{class_v_s_shader_lib_a78735f3968c53215f2ce5a196ef5f7bd}} 
+\index{V\+S\+Shader\+Lib@{V\+S\+Shader\+Lib}!p\+Inited@{p\+Inited}}
+\index{p\+Inited@{p\+Inited}!V\+S\+Shader\+Lib@{V\+S\+Shader\+Lib}}
+\subsubsection{\texorpdfstring{p\+Inited}{pInited}}
+{\footnotesize\ttfamily bool V\+S\+Shader\+Lib\+::p\+Inited\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+stores if init has been called 
+
+\mbox{\Hypertarget{class_v_s_shader_lib_a34bc8659f8480ebb03639ed8f61f2b06}\label{class_v_s_shader_lib_a34bc8659f8480ebb03639ed8f61f2b06}} 
+\index{V\+S\+Shader\+Lib@{V\+S\+Shader\+Lib}!p\+Program@{p\+Program}}
+\index{p\+Program@{p\+Program}!V\+S\+Shader\+Lib@{V\+S\+Shader\+Lib}}
+\subsubsection{\texorpdfstring{p\+Program}{pProgram}}
+{\footnotesize\ttfamily G\+Luint V\+S\+Shader\+Lib\+::p\+Program\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{class_v_s_shader_lib_ac8d4786561bfd4110897a2e2ba7feaf2}\label{class_v_s_shader_lib_ac8d4786561bfd4110897a2e2ba7feaf2}} 
+\index{V\+S\+Shader\+Lib@{V\+S\+Shader\+Lib}!p\+Result@{p\+Result}}
+\index{p\+Result@{p\+Result}!V\+S\+Shader\+Lib@{V\+S\+Shader\+Lib}}
+\subsubsection{\texorpdfstring{p\+Result}{pResult}}
+{\footnotesize\ttfamily std\+::string V\+S\+Shader\+Lib\+::p\+Result\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+aux string used to return the shaders infologs 
+
+\mbox{\Hypertarget{class_v_s_shader_lib_aa3f9bd5334ab5901209d30d6060bc971}\label{class_v_s_shader_lib_aa3f9bd5334ab5901209d30d6060bc971}} 
+\index{V\+S\+Shader\+Lib@{V\+S\+Shader\+Lib}!p\+Shader@{p\+Shader}}
+\index{p\+Shader@{p\+Shader}!V\+S\+Shader\+Lib@{V\+S\+Shader\+Lib}}
+\subsubsection{\texorpdfstring{p\+Shader}{pShader}}
+{\footnotesize\ttfamily G\+Luint V\+S\+Shader\+Lib\+::p\+Shader\mbox{[}\hyperlink{class_v_s_shader_lib_ae8a4410569faa6d4df9760e998a9706aa112e7924ef9a87ad0d894fe216f84e39}{V\+S\+Shader\+Lib\+::\+C\+O\+U\+N\+T\+\_\+\+S\+H\+A\+D\+E\+R\+\_\+\+T\+Y\+PE}\mbox{]}\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+stores the shaders and program indices 
+
+\mbox{\Hypertarget{class_v_s_shader_lib_a24c8f833871e02d217b04bc7305917ea}\label{class_v_s_shader_lib_a24c8f833871e02d217b04bc7305917ea}} 
+\index{V\+S\+Shader\+Lib@{V\+S\+Shader\+Lib}!p\+Uniforms@{p\+Uniforms}}
+\index{p\+Uniforms@{p\+Uniforms}!V\+S\+Shader\+Lib@{V\+S\+Shader\+Lib}}
+\subsubsection{\texorpdfstring{p\+Uniforms}{pUniforms}}
+{\footnotesize\ttfamily std\+::map$<$std\+::string, \hyperlink{class_v_s_shader_lib_a3302b287e0686235d57404bd4587c1e6}{my\+Uniforms}$>$ V\+S\+Shader\+Lib\+::p\+Uniforms\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+stores info on the uniforms 
+
+\mbox{\Hypertarget{class_v_s_shader_lib_a1b796c1a75d72e11024f7a4060f4053d}\label{class_v_s_shader_lib_a1b796c1a75d72e11024f7a4060f4053d}} 
+\index{V\+S\+Shader\+Lib@{V\+S\+Shader\+Lib}!sp\+Block\+Count@{sp\+Block\+Count}}
+\index{sp\+Block\+Count@{sp\+Block\+Count}!V\+S\+Shader\+Lib@{V\+S\+Shader\+Lib}}
+\subsubsection{\texorpdfstring{sp\+Block\+Count}{spBlockCount}}
+{\footnotesize\ttfamily int V\+S\+Shader\+Lib\+::sp\+Block\+Count = 1\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [protected]}}
+
+
+
+block\+Count is used to assign binding indexes 
+
+\mbox{\Hypertarget{class_v_s_shader_lib_a9d8ab63d3b8e5471c9e6d7ffe08b9921}\label{class_v_s_shader_lib_a9d8ab63d3b8e5471c9e6d7ffe08b9921}} 
+\index{V\+S\+Shader\+Lib@{V\+S\+Shader\+Lib}!sp\+Blocks@{sp\+Blocks}}
+\index{sp\+Blocks@{sp\+Blocks}!V\+S\+Shader\+Lib@{V\+S\+Shader\+Lib}}
+\subsubsection{\texorpdfstring{sp\+Blocks}{spBlocks}}
+{\footnotesize\ttfamily std\+::map$<$ std\+::string, \hyperlink{class_v_s_shader_lib_1_1_uniform_block}{V\+S\+Shader\+Lib\+::\+Uniform\+Block} $>$ V\+S\+Shader\+Lib\+::sp\+Blocks\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [protected]}}
+
+
+
+Stores info on all blocks found. 
+
+\mbox{\Hypertarget{class_v_s_shader_lib_af7466a4cd23698356bb9447ab46802ba}\label{class_v_s_shader_lib_af7466a4cd23698356bb9447ab46802ba}} 
+\index{V\+S\+Shader\+Lib@{V\+S\+Shader\+Lib}!sp\+G\+L\+Shader\+Types@{sp\+G\+L\+Shader\+Types}}
+\index{sp\+G\+L\+Shader\+Types@{sp\+G\+L\+Shader\+Types}!V\+S\+Shader\+Lib@{V\+S\+Shader\+Lib}}
+\subsubsection{\texorpdfstring{sp\+G\+L\+Shader\+Types}{spGLShaderTypes}}
+{\footnotesize\ttfamily G\+Lenum V\+S\+Shader\+Lib\+::sp\+G\+L\+Shader\+Types\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [protected]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}
+= \{
+        GL\_VERTEX\_SHADER,
+        GL\_GEOMETRY\_SHADER,
+        GL\_TESS\_CONTROL\_SHADER,
+        GL\_TESS\_EVALUATION\_SHADER,
+        GL\_FRAGMENT\_SHADER\}
+\end{DoxyCode}
+
+
+stores the Open\+GL shader types 
+
+\mbox{\Hypertarget{class_v_s_shader_lib_adc3642d9640776a69f60d8a050aace90}\label{class_v_s_shader_lib_adc3642d9640776a69f60d8a050aace90}} 
+\index{V\+S\+Shader\+Lib@{V\+S\+Shader\+Lib}!sp\+String\+Shader\+Types@{sp\+String\+Shader\+Types}}
+\index{sp\+String\+Shader\+Types@{sp\+String\+Shader\+Types}!V\+S\+Shader\+Lib@{V\+S\+Shader\+Lib}}
+\subsubsection{\texorpdfstring{sp\+String\+Shader\+Types}{spStringShaderTypes}}
+{\footnotesize\ttfamily std\+::string V\+S\+Shader\+Lib\+::sp\+String\+Shader\+Types\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [protected]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}
+= \{
+        \textcolor{stringliteral}{"Vertex Shader"},
+        \textcolor{stringliteral}{"Geometry Shader"},
+        \textcolor{stringliteral}{"Tesselation Control Shader"},
+        \textcolor{stringliteral}{"Tesselation Evaluation Shader"},
+        \textcolor{stringliteral}{"Fragment Shader"}\}
+\end{DoxyCode}
+
+
+stores the text string related to each type 
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/\+Users/matya/\+A\+V\+T7/src/libs/\hyperlink{vs_shader_lib_8h}{vs\+Shader\+Lib.\+h}\item 
+/\+Users/matya/\+A\+V\+T7/src/libs/\hyperlink{vs_shader_lib_8cpp}{vs\+Shader\+Lib.\+cpp}\end{DoxyCompactItemize}

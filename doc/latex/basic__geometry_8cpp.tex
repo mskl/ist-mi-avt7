@@ -1,0 +1,72 @@
+\hypertarget{basic__geometry_8cpp}{}\section{/\+Users/matya/\+A\+V\+T7/src/libs/basic\+\_\+geometry.cpp File Reference}
+\label{basic__geometry_8cpp}\index{/\+Users/matya/\+A\+V\+T7/src/libs/basic\+\_\+geometry.\+cpp@{/\+Users/matya/\+A\+V\+T7/src/libs/basic\+\_\+geometry.\+cpp}}
+{\ttfamily \#include $<$assert.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$vector$>$}\newline
+{\ttfamily \#include $<$cstring$>$}\newline
+{\ttfamily \#include $<$math.\+h$>$}\newline
+{\ttfamily \#include $<$G\+L/glew.\+h$>$}\newline
+{\ttfamily \#include $<$G\+L/freeglut.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}../\+Vertex\+Attr\+Def.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}basic\+\_\+geometry.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}../primitives/cube.\+h\char`\"{}}\newline
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{basic__geometry_8cpp_a69d02cfd5497a3687ed4d6eb28a94900}{create\+Cube} (G\+Lint \+\_\+obj\+Id)
+\item 
+void \hyperlink{basic__geometry_8cpp_ad9da0c8c60b0a0a9072a6a3e0e4fc0b5}{compute\+V\+A\+O\+Square} (float $\ast$p, G\+Lint \+\_\+obj\+Id)
+\item 
+void \hyperlink{basic__geometry_8cpp_ad846c9f6fe5436a0202e6f492f259df7}{create\+Rectangle} (float \hyperlink{_a_v_tmath_lib_8cpp_a863a7384c513eb74681e79ba7b480076}{length}, float height, float width, G\+Lint mid)
+\item 
+void \hyperlink{basic__geometry_8cpp_aea18dc6002da8b34f7ac8467660a9250}{create\+Cube} (float size, G\+Lint mid)
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{struct_my_mesh}{My\+Mesh} \hyperlink{basic__geometry_8cpp_ad0bd95ad0dfc1df90b80b6bc983d9c69}{mesh} \mbox{[}$\,$\mbox{]}
+\item 
+G\+Luint \hyperlink{basic__geometry_8cpp_ad516319f30cc7593b13cf272b3fbdfdc}{Vbo\+Id} \mbox{[}2\mbox{]}
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{basic__geometry_8cpp_ad9da0c8c60b0a0a9072a6a3e0e4fc0b5}\label{basic__geometry_8cpp_ad9da0c8c60b0a0a9072a6a3e0e4fc0b5}} 
+\index{basic\+\_\+geometry.\+cpp@{basic\+\_\+geometry.\+cpp}!compute\+V\+A\+O\+Square@{compute\+V\+A\+O\+Square}}
+\index{compute\+V\+A\+O\+Square@{compute\+V\+A\+O\+Square}!basic\+\_\+geometry.\+cpp@{basic\+\_\+geometry.\+cpp}}
+\subsubsection{\texorpdfstring{compute\+V\+A\+O\+Square()}{computeVAOSquare()}}
+{\footnotesize\ttfamily void compute\+V\+A\+O\+Square (\begin{DoxyParamCaption}\item[{float $\ast$}]{p,  }\item[{G\+Lint}]{\+\_\+obj\+Id }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{basic__geometry_8cpp_a69d02cfd5497a3687ed4d6eb28a94900}\label{basic__geometry_8cpp_a69d02cfd5497a3687ed4d6eb28a94900}} 
+\index{basic\+\_\+geometry.\+cpp@{basic\+\_\+geometry.\+cpp}!create\+Cube@{create\+Cube}}
+\index{create\+Cube@{create\+Cube}!basic\+\_\+geometry.\+cpp@{basic\+\_\+geometry.\+cpp}}
+\subsubsection{\texorpdfstring{create\+Cube()}{createCube()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void create\+Cube (\begin{DoxyParamCaption}\item[{G\+Lint}]{\+\_\+obj\+Id }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{basic__geometry_8cpp_aea18dc6002da8b34f7ac8467660a9250}\label{basic__geometry_8cpp_aea18dc6002da8b34f7ac8467660a9250}} 
+\index{basic\+\_\+geometry.\+cpp@{basic\+\_\+geometry.\+cpp}!create\+Cube@{create\+Cube}}
+\index{create\+Cube@{create\+Cube}!basic\+\_\+geometry.\+cpp@{basic\+\_\+geometry.\+cpp}}
+\subsubsection{\texorpdfstring{create\+Cube()}{createCube()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void create\+Cube (\begin{DoxyParamCaption}\item[{float}]{size,  }\item[{G\+Lint}]{mid }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{basic__geometry_8cpp_ad846c9f6fe5436a0202e6f492f259df7}\label{basic__geometry_8cpp_ad846c9f6fe5436a0202e6f492f259df7}} 
+\index{basic\+\_\+geometry.\+cpp@{basic\+\_\+geometry.\+cpp}!create\+Rectangle@{create\+Rectangle}}
+\index{create\+Rectangle@{create\+Rectangle}!basic\+\_\+geometry.\+cpp@{basic\+\_\+geometry.\+cpp}}
+\subsubsection{\texorpdfstring{create\+Rectangle()}{createRectangle()}}
+{\footnotesize\ttfamily void create\+Rectangle (\begin{DoxyParamCaption}\item[{float}]{length,  }\item[{float}]{height,  }\item[{float}]{width,  }\item[{G\+Lint}]{mid }\end{DoxyParamCaption})}
+
+
+
+\subsection{Variable Documentation}
+\mbox{\Hypertarget{basic__geometry_8cpp_ad0bd95ad0dfc1df90b80b6bc983d9c69}\label{basic__geometry_8cpp_ad0bd95ad0dfc1df90b80b6bc983d9c69}} 
+\index{basic\+\_\+geometry.\+cpp@{basic\+\_\+geometry.\+cpp}!mesh@{mesh}}
+\index{mesh@{mesh}!basic\+\_\+geometry.\+cpp@{basic\+\_\+geometry.\+cpp}}
+\subsubsection{\texorpdfstring{mesh}{mesh}}
+{\footnotesize\ttfamily struct \hyperlink{struct_my_mesh}{My\+Mesh} mesh\mbox{[}$\,$\mbox{]}}
+
+\mbox{\Hypertarget{basic__geometry_8cpp_ad516319f30cc7593b13cf272b3fbdfdc}\label{basic__geometry_8cpp_ad516319f30cc7593b13cf272b3fbdfdc}} 
+\index{basic\+\_\+geometry.\+cpp@{basic\+\_\+geometry.\+cpp}!Vbo\+Id@{Vbo\+Id}}
+\index{Vbo\+Id@{Vbo\+Id}!basic\+\_\+geometry.\+cpp@{basic\+\_\+geometry.\+cpp}}
+\subsubsection{\texorpdfstring{Vbo\+Id}{VboId}}
+{\footnotesize\ttfamily G\+Luint Vbo\+Id\mbox{[}2\mbox{]}}
+

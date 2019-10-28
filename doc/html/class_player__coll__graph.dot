@@ -1,0 +1,20 @@
+digraph "Player"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node4 [label="Player",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node5 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="DynamicGameObject",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_dynamic_game_object.html"];
+  Node6 -> Node5 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6 [label="CollidableGameObject",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_collidable_game_object.html"];
+  Node7 -> Node6 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7 [label="GameObject",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_game_object.html"];
+  Node8 -> Node7 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" position" ,fontname="Helvetica"];
+  Node8 [label="Vector3",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_vector3.html"];
+  Node9 -> Node6 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" boundingBox" ,fontname="Helvetica"];
+  Node9 [label="BoundingBox",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_bounding_box.html"];
+  Node8 -> Node9 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" vecMin\nvecMax" ,fontname="Helvetica"];
+  Node8 -> Node5 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" initSpeed\nspeed\ninitPos" ,fontname="Helvetica"];
+  Node9 -> Node4 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" bottomBox" ,fontname="Helvetica"];
+  Node8 -> Node4 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" transitionJumpDir\nlastJumpDir\njumpTargetPos\ninitPos\ntransitionPos" ,fontname="Helvetica"];
+}
