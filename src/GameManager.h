@@ -475,13 +475,13 @@ private:
                 spawnPosition = Vector3(-7.0f - offset, yPos, zPos);
                 spawnSpeed = Vector3(-randSpeed, 0, 0);
                 if (j > 0){
-                    spawnPosition.x = vehicleVector.back()->position.x - 2.0f - offset;
+                    spawnPosition.x = vehicleVector.back()->position.x - vehicleVector.back()->boundingBox.vecMax.x - 0.5f - offset;
                 }
             } else {
                 spawnPosition = Vector3(7.0f + offset, yPos, zPos);
                 spawnSpeed = Vector3(randSpeed, 0, 0);
                 if (j > 0){
-                    spawnPosition.x = vehicleVector.back()->position.x + 5.0f + offset;
+                    spawnPosition.x = vehicleVector.back()->position.x + vehicleVector.back()->boundingBox.vecMax.x  +0.5f + offset;
                 }
             }
 
@@ -504,14 +504,37 @@ private:
                 if (((vehicle->position.x + vehicle->boundingBox.vecMin.x) > maxX)
                     && ((vehicle->position.x + vehicle->boundingBox.vecMax.x) > maxX)) {
                     vehicle->respawn();
+                    int offset = rand() % 3 + 1;
+                    vehicle->position.x -= offset;
+
+                    while(checkVehicleCollision(vehicle, vehicleVector)){
+                        vehicle->position.x -= (vehicle->boundingBox.vecMax.x + 0.5);
+                    }
                 }
             } else if (!vehicle->isGoingRight) {
                 if (((vehicle->position.x + vehicle->boundingBox.vecMin.x) < minX)
                     && ((vehicle->position.x + vehicle->boundingBox.vecMax.x) < minX)) {
                     vehicle->respawn();
+                    int offset = rand() % 3 + 1;
+                    vehicle->position.x += offset;
+                    while(checkVehicleCollision(vehicle, vehicleVector)){
+                        vehicle->position.x += vehicle->boundingBox.vecMax.x + 0.5;
+                    }
                 }
             }
         }
+    }
+
+    template <typename T>
+    bool checkVehicleCollision(T* primeVehicle, vector<T*> &vehicleVector){
+        for (T* vehicle: vehicleVector) {
+            if (vehicle->position != primeVehicle->position) {
+                if(primeVehicle->collideWith(vehicle)){
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     /* TODO: Does not work
