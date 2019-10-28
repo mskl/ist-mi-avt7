@@ -6,6 +6,11 @@ Three-Dimensional Vizualization and Animation at IST
 - Checkpoint 2 (30%) - 20 November
 - Checkpoint 3 (30%)  - 11 December
 
+### Checkpoint 1 - report
+> https://docs.google.com/document/d/1rkXQaROGKIX4Ta0yZ8-9AtvbB1GJwyIsKsaNrxcWtLQ/edit#
+
+The technical report for Assignment 1 should be delivered by email to jap@inesc-id.pt till the beginning of the next lab class. It should contain at maximum 4 pages and pictures are welcome in order to illustrate the graphical capabilities of your Frogger3D application.
+
 ## Projects from previous years
 - https://github.com/carboned4/AVT_2016_1
 - https://github.com/carboned4/CeGue
