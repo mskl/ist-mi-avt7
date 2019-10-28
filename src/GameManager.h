@@ -89,6 +89,7 @@ public:
     GLint lastMoveTime = 0;
     GLint moveTimeout = 300;
 
+
     enum CameraType {
         CAMERA_PERSPECTIVE_FOLLOW,
         CAMERA_PERSPECTIVE_FIXED,
@@ -142,7 +143,8 @@ public:
         gameObjects.push_back(target);
     }
 
-    void changeSize(int w, int h) {
+    void changeSize(int w, int h)
+    {
         float ratio;
         // Prevent a divide by zero, when window is too short
         if (h == 0) h = 1;
@@ -154,7 +156,8 @@ public:
         selectCamera(currentCameraType);
     }
 
-    void processKeys(unsigned char key, int xx, int yy) {
+    void processKeys(unsigned char key, int xx, int yy)
+    {
         switch(key) {
             // Escape exits the game
             case 27: glutLeaveMainLoop(); break;
@@ -257,14 +260,14 @@ public:
     void initScene() {
         srand(time(NULL));
 
-        createVehicles<Bus>(busses, 4, 1, 1, true, 80, 50, 3.0f);
-        createVehicles<Car>(cars, 5, 3, 1, false, 80, 50, 1.5f);
-        createVehicles<Car>(cars, 5, 5, 1, true, 80, 50, 1.5f);
-        createVehicles<Log>(logs, 4, -1, 0, false, 60, 30, 3.0f);
-        createVehicles<Log>(logs, 4, -3, 0, false, 60, 30, 3.0f);
-        createVehicles<Log>(logs, 4, -5, 0, false, 60, 30, 3.0f);
-        createVehicles<Turtle>(turtles, 2, -2, 0, true, 30, 20, 5.0f);
-        createVehicles<Turtle>(turtles, 2, -4, 0, true, 30, 20, 5.0f);
+        createVehicles<Bus>(busses, 4, 1, 1, true, 80, 50);
+        createVehicles<Car>(cars, 5, 3, 1, false, 80, 50);
+        createVehicles<Car>(cars, 5, 5, 1, true, 80, 50);
+        createVehicles<Log>(logs, 4, -1, 0, false, 60, 30);
+        createVehicles<Log>(logs, 4, -3, 0, false, 60, 30);
+        createVehicles<Log>(logs, 4, -5, 0, false, 60, 30);
+        createVehicles<Turtle>(turtles, 2, -2, 0, true, 30, 20);
+        createVehicles<Turtle>(turtles, 2, -4, 0, true, 30, 20);
 
         // Initialize all of the GameObjects
         for (GameObject* go : gameObjects) {
@@ -460,18 +463,26 @@ private:
     }
 
     template <typename T>
-    void createVehicles(vector<T*> &vehicleVector, int n, float zPos, float yPos, bool isGoingRight, int randMod, int randConst, float width) {
+    void createVehicles(vector<T*> &vehicleVector, int n, float zPos, float yPos, bool isGoingRight, int randMod, int randConst) {
         float randSpeed = (float)(rand() % randMod + randConst) / 100.0f;
         for (int j = 0; j < n; j++) {
+            int offset = rand() % 7 + 1;
+
             Vector3 spawnPosition;
             Vector3 spawnSpeed;
 
             if (isGoingRight){
-                spawnPosition = Vector3(-7.0f - width - j*(width+1), yPos, zPos);
+                spawnPosition = Vector3(-7.0f - offset, yPos, zPos);
                 spawnSpeed = Vector3(-randSpeed, 0, 0);
+                if (j > 0){
+                    spawnPosition.x = vehicleVector.back()->position.x - vehicleVector.back()->boundingBox.vecMax.x - 0.5f - offset;
+                }
             } else {
-                spawnPosition = Vector3(6.0f + width + j*(width+1), yPos, zPos);
+                spawnPosition = Vector3(7.0f + offset, yPos, zPos);
                 spawnSpeed = Vector3(randSpeed, 0, 0);
+                if (j > 0){
+                    spawnPosition.x = vehicleVector.back()->position.x + vehicleVector.back()->boundingBox.vecMax.x  +0.5f + offset;
+                }
             }
 
             T* vehicle = new T(spawnPosition, spawnSpeed, isGoingRight);
@@ -481,6 +492,7 @@ private:
             gameObjects.push_back(vehicle);
         }
     }
+
 
     template <typename T>
     void checkVehicleBoundaryCollisions(vector<T*> &vehicleVector) {
@@ -492,15 +504,55 @@ private:
                 if (((vehicle->position.x + vehicle->boundingBox.vecMin.x) > maxX)
                     && ((vehicle->position.x + vehicle->boundingBox.vecMax.x) > maxX)) {
                     vehicle->respawn();
+                    int offset = rand() % 3 + 1;
+                    vehicle->position.x -= offset;
+
+                    while(checkVehicleCollision(vehicle, vehicleVector)){
+                        vehicle->position.x -= (vehicle->boundingBox.vecMax.x + 0.5);
+                    }
                 }
             } else if (!vehicle->isGoingRight) {
                 if (((vehicle->position.x + vehicle->boundingBox.vecMin.x) < minX)
                     && ((vehicle->position.x + vehicle->boundingBox.vecMax.x) < minX)) {
                     vehicle->respawn();
+                    int offset = rand() % 3 + 1;
+                    vehicle->position.x += offset;
+                    while(checkVehicleCollision(vehicle, vehicleVector)){
+                        vehicle->position.x += vehicle->boundingBox.vecMax.x + 0.5;
+                    }
                 }
             }
         }
     }
+
+    template <typename T>
+    bool checkVehicleCollision(T* primeVehicle, vector<T*> &vehicleVector){
+        for (T* vehicle: vehicleVector) {
+            if (vehicle->position != primeVehicle->position) {
+                if(primeVehicle->collideWith(vehicle)){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    /* TODO: Does not work
+    // Check for overlaps in the vehicles
+    if (vehicle->position != go->position) {
+        if (go->getType() == vehicle->getType()) {
+            GameObject *objA = (vehicle->position.x > go->position.x) ? vehicle : go;
+
+            Vector3 tempPos = objA->position;
+            if (vehicle->isGoingRight){
+                tempPos.x -= (float) (rand() % 5 + 3);
+            } else {
+                tempPos.x += (float) (rand() % 5 + 3);
+            }
+            objA->position = tempPos;
+        }
+    }
+    */
 
 };
 
