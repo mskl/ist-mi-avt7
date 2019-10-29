@@ -14,7 +14,6 @@
 #include <GL/glew.h>     // include GLEW to access OpenGL 3.3 functions
 #include <GL/freeglut.h> // GLUT is the toolkit to interface with the OS
 
-// Use Very Simple Libs
 #include "libs/AVTmathLib.h"
 #include "VertexAttrDef.h"
 #include "libs/vsShaderLib.h"
@@ -38,6 +37,7 @@
 #include "objects/PointLight.h"
 #include "objects/Car.h"
 #include "objects/Turtle.h"
+#include "objects/SceneStencil.h"
 
 using namespace std;
 
@@ -108,6 +108,9 @@ public:
     Player* player = new Player(Vector3(-5.0f, 1, 0));
     Target* target = new Target(Vector3(0.25f, 1.25f, -5.75f));
 
+    // The stencil cube
+    SceneStencil* stencil = new SceneStencil();
+
     // Lights
     Light* directionalLight = new DirectionalLight(Vector3(0.0f, 5.0f, 0.0f), 6, false);
     SpotLight* spotLight = new SpotLight(Vector3(0, -1, 0), Vector3(0, 2, 0), 7, false);
@@ -126,15 +129,19 @@ public:
         gameObjects.push_back(new River());
         gameObjects.push_back(new Road());
         gameObjects.push_back(new Ground());
+
         //gameObjects.push_back(new Sidewalls());
+
+        gameObjects.push_back(stencil);
 
         // The empty side colliders
         gameObjects.push_back(new SideCollider(LEFT));
         gameObjects.push_back(new SideCollider(RIGHT));
 
         // Save the lights to gameObjects
-        for (auto &pl : pointLights)
+        for (auto &pl : pointLights) {
             gameObjects.push_back(pl);
+        }
 
         gameObjects.push_back(directionalLight);
         gameObjects.push_back(spotLight);
@@ -154,6 +161,10 @@ public:
         loadIdentity(PROJECTION);
 
         selectCamera(currentCameraType);
+
+        if (USE_STENCIL) {
+            stencil->resizeRender();
+        }
     }
 
     void processKeys(unsigned char key, int xx, int yy)
@@ -281,6 +292,12 @@ public:
 
         // Sets the background color of the game
         glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+
+        // Setup the stencil
+        if (USE_STENCIL) {
+            glClearStencil(0x0);
+            glEnable(GL_STENCIL_TEST);
+        }
     }
 
     void renderScene() {
@@ -536,24 +553,6 @@ private:
         }
         return false;
     }
-
-    /* TODO: Does not work
-    // Check for overlaps in the vehicles
-    if (vehicle->position != go->position) {
-        if (go->getType() == vehicle->getType()) {
-            GameObject *objA = (vehicle->position.x > go->position.x) ? vehicle : go;
-
-            Vector3 tempPos = objA->position;
-            if (vehicle->isGoingRight){
-                tempPos.x -= (float) (rand() % 5 + 3);
-            } else {
-                tempPos.x += (float) (rand() % 5 + 3);
-            }
-            objA->position = tempPos;
-        }
-    }
-    */
-
 };
 
 #endif //AVT7_GAMEMANAGER_H
