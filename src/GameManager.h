@@ -105,7 +105,7 @@ public:
             = CameraOrthogonal(-7, 8, -8, 7);
 
     // Player
-    Player* player = new Player(Vector3(-5.0f, 1, 0));
+    Player* player = new Player(Vector3(0, 1, 0));
     Target* target = new Target(Vector3(0.25f, 1.25f, -5.75f));
 
     // The stencil cube
@@ -130,9 +130,9 @@ public:
         gameObjects.push_back(new Road());
         gameObjects.push_back(new Ground());
 
-        //gameObjects.push_back(new Sidewalls());
+        gameObjects.push_back(new Sidewalls());
 
-        gameObjects.push_back(stencil);
+        // gameObjects.push_back(stencil);
 
         // The empty side colliders
         gameObjects.push_back(new SideCollider(LEFT));
