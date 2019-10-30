@@ -21,12 +21,13 @@ in Data {
 } DataIn;
 
 void main() {
+    #define a 0.3
+    #define b 0
+    #define c 0.04
+    #define spotCutOff 0.9
+
     float intensity = 0.0f;
-    float spotCutOff=0.9;
     vec4 spec = vec4(0.0);
-    float a = 0.3;
-    float b = 0;
-    float c = 0.04;
 
     for (int i = 0; i < 8; i++) {
         vec3 n = normalize(DataIn.normal);
