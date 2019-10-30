@@ -10,7 +10,7 @@
 class SceneCollider: public DynamicGameObject {
 public:
     explicit SceneCollider(Vector3 pos)
-            : DynamicGameObject(pos, Vector3(0, 0, 0), Vector3(13.0, 5, 13), BOUNDS,  Vector3(0, 0, 0)){
+            : DynamicGameObject(pos, Vector3(0, 0, 0), Vector3(13.0, 5, 13), BOUNDS,  Vector3(0, 0, 0), false){
     }
 
     void init() override {

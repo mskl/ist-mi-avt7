@@ -14,6 +14,11 @@
 #include "GameManager.h"
 #include "libs/vsShaderLib.h"
 
+// Macro to print filename when using std::cout
+#define mycout std::cout <<  __FILE__  << "(" << __LINE__ << ") "
+#define cout mycout
+
+#define USE_STENCIL 0
 
 extern struct MyMesh mesh[];
 extern VSShaderLib shader;
@@ -71,12 +76,18 @@ protected:
         return {loc_amb, loc_dif, loc_spc, loc_shi};
     }
 
-    static void buildVAO(GLint mid) {
+    virtual void buildVAO(GLint mid) {
         computeDerivedMatrix(PROJ_VIEW_MODEL);
         glUniformMatrix4fv(vm_uniformId, 1, GL_FALSE, mCompMatrix[VIEW_MODEL]);
         glUniformMatrix4fv(pvm_uniformId, 1, GL_FALSE, mCompMatrix[PROJ_VIEW_MODEL]);
         computeNormalMatrix3x3();
         glUniformMatrix3fv(normal_uniformId, 1, GL_FALSE, mNormal3x3);
+
+        if (USE_STENCIL) {
+            glStencilFunc(GL_EQUAL, 0x1, 0x1);
+            glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
+        }
+
         glBindVertexArray(mesh[mid].vao);
         glDrawElements(mesh[mid].type, mesh[mid].numIndexes, GL_UNSIGNED_INT, 0);
     }
