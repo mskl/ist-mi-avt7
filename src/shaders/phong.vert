@@ -15,6 +15,9 @@ uniform vec4 l_spot_dir;
 in vec4 position;
 in vec4 normal;
 
+// Fragment pos used for fog computation
+out vec4 pos;
+
 out Data {
     vec3 normal;
     vec3 eye;
@@ -22,7 +25,8 @@ out Data {
 } DataOut;
 
 void main () {
-    vec4 pos = m_viewModel * position;
+    // Used in the fog computation
+    pos = m_viewModel * position;
 
     DataOut.normal = normalize(m_normal * normal.xyz);
     DataOut.eye = vec3(-pos);

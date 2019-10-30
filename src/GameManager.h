@@ -55,6 +55,10 @@ GLint pvm_uniformId;
 GLint vm_uniformId;
 GLint normal_uniformId;
 
+// Fog
+GLint fog_enabled_id;
+GLint fog_enabled = 1;
+
 // Light GLSL stuff
 GLint l_pos_id[8];  // pointers to shader variables
 GLint l_enabled_id; // GLSL pointer to the boolean array
@@ -64,7 +68,6 @@ GLint l_spot_dir_id;
 GLint texMode_uniformId;
 GLint tex_loc0, tex_loc1, tex_loc2, tex_loc3, tex_loc4;
 GLuint TextureArray[25];
-
 
 class GameManager {
 public:
@@ -166,22 +169,22 @@ public:
         switch(key) {
             // Escape exits the game
             case 27: glutLeaveMainLoop(); break;
-                // Quality settings
+            // Quality settings
             case 'm': glEnable(GL_MULTISAMPLE); break;
             case 'M': glDisable(GL_MULTISAMPLE); break;
-                // Player movement
+            // Player movement
             case 'p': movePlayer(1, 0); break;
             case 'o': movePlayer(-1, 0); break;
             case 'q': movePlayer(0, -1); break;
             case 'a': movePlayer(0, 1); break;
-                // Respawn player
+            // Respawn player
             case 'R': player->respawn(); break;
-                // Random target position
+            // Random target position
             case 'v': target->setRandomPosition(); break;
-                // Increase speed
+            // Increase speed
             case 'i':
                 increaseSpeedMultipliers(); break;
-                // Night lights
+            // Night lights
             case 'n': directionalLight->toggleLight(); break;
             case 'h': spotLight->toggleLight(); break;
             case 'c':
@@ -195,6 +198,7 @@ public:
                     changeAnimationState(isPlaying);
                 }
                 break;
+            // Restart the game if the player died
             case 'r':
                 if (player->currentLives <= 0) {
                     resetSpeedMultipliers();
@@ -203,7 +207,10 @@ public:
                     infoString = "";
                 }
                 break;
-
+            // Fog switch
+            case 'f':
+                fog_enabled = !fog_enabled;
+                break;
             // CameraType
             case '1': selectCamera(CAMERA_PERSPECTIVE_FOLLOW); break;
             case '2': selectCamera(CAMERA_PERSPECTIVE_FIXED); break;
@@ -265,6 +272,9 @@ public:
         // Get the index of a light boolean mask
         l_enabled_id = glGetUniformLocation(shader.getProgramIndex(), "l_enabled");
         l_spot_dir_id = glGetUniformLocation(shader.getProgramIndex(), "l_spot_dir");
+
+        // Get the id of fog_enabled
+        fog_enabled_id = glGetUniformLocation(shader.getProgramIndex(), "fogEnabled");
 
         printf("InfoLog for Per Fragment Phong Lightning Shader\n%s\n\n", shader.getAllInfoLogs().c_str());
         return(shader.isProgramLinked());
@@ -330,6 +340,9 @@ public:
         // Update SpotLight position
         spotLight->position = player->position + Vector3(0.5f, 1.2f, 0.5f);
         spotLight->light_dir = Vector3(0, 0, -1);
+
+        // Update the fog state
+        updateFog();
 
         // Check for boundaries of the moving objects
         checkVehicleBoundaryCollisions<Bus>(busses);
@@ -552,6 +565,11 @@ private:
             }
         }
         return false;
+    }
+
+    void updateFog() {
+        //  Set the state of the fog and send it into the shader
+        glUniform1i(fog_enabled_id, fog_enabled);
     }
 };
 

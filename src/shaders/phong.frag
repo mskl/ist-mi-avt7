@@ -20,6 +20,15 @@ in Data {
     vec3 lightDir[8];
 } DataIn;
 
+in vec4 pos; // Used for fog computation
+uniform int fogEnabled;
+
+vec3 getFog( in vec3 rgb, in float distance) {
+    float fogAmount =  exp(-distance*0.04);
+    vec3 fogColor = vec3(1, 1, 1);
+    return mix(fogColor, rgb, fogAmount);
+}
+
 void main() {
     #define a 0.3
     #define b 0
@@ -29,6 +38,7 @@ void main() {
     float intensity = 0.0f;
     vec4 spec = vec4(0.0);
 
+    // Calculate the lights output for all of the lights
     for (int i = 0; i < 8; i++) {
         vec3 n = normalize(DataIn.normal);
         vec3 l = normalize(DataIn.lightDir[i]);
@@ -66,5 +76,12 @@ void main() {
         }
     }
 
-    colorOut = max((intensity * mat.diffuse + spec),mat.ambient);
+    colorOut = max((intensity * mat.diffuse + spec), mat.ambient);
+
+    // Mix the fog with the final color of the fragment
+    if (fogEnabled == 1) {
+        float dist = length(pos);
+        vec3 fogged = getFog(colorOut.rgb, dist);
+        colorOut = vec4( fogged , 1);
+    }
 }
