@@ -161,10 +161,6 @@ public:
         loadIdentity(PROJECTION);
 
         selectCamera(currentCameraType);
-
-        if (USE_STENCIL) {
-            stencil->resizeRender();
-        }
     }
 
     void processKeys(unsigned char key, int xx, int yy)
