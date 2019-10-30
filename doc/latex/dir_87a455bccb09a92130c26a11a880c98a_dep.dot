@@ -1,0 +1,11 @@
+digraph "/Users/matya/AVT7/src/libs" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_68267d1309a1af8e8297ef4c3efbcdba {
+    graph [ bgcolor="#ddddee", pencolor="black", label="src" fontname="Helvetica", fontsize="10", URL="dir_68267d1309a1af8e8297ef4c3efbcdba.html"]
+  dir_87a455bccb09a92130c26a11a880c98a [shape=box, label="libs", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_87a455bccb09a92130c26a11a880c98a.html"];
+  }
+  dir_bbf56bce9985720f86fc476f3812db24 [shape=box label="primitives" URL="dir_bbf56bce9985720f86fc476f3812db24.html"];
+  dir_87a455bccb09a92130c26a11a880c98a->dir_bbf56bce9985720f86fc476f3812db24 [headlabel="1", labeldistance=1.5 headhref="dir_000001_000004.html"];
+}

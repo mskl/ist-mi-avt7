@@ -1,0 +1,126 @@
+\hypertarget{main_8cpp}{}\section{/\+Users/matya/\+A\+V\+T7/src/main.cpp File Reference}
+\label{main_8cpp}\index{/\+Users/matya/\+A\+V\+T7/src/main.\+cpp@{/\+Users/matya/\+A\+V\+T7/src/main.\+cpp}}
+{\ttfamily \#include $<$iostream$>$}\newline
+{\ttfamily \#include $<$sstream$>$}\newline
+{\ttfamily \#include $<$G\+L/glew.\+h$>$}\newline
+{\ttfamily \#include $<$G\+L/freeglut.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}Game\+Manager.\+h\char`\"{}}\newline
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{struct_game_manager_wrapper}{Game\+Manager\+Wrapper}
+\end{DoxyCompactItemize}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{main_8cpp_a75643d42ae09f02951d5d11d9b94428f}{C\+A\+P\+T\+I\+ON}~\char`\"{}A\+VT Per Fragment Phong Lightning Demo\char`\"{}
+\item 
+\#define \hyperlink{main_8cpp_aabf15b5c3d6b95879c870d7204b33367}{M\+A\+X\+\_\+\+M\+E\+S\+H\+\_\+\+C\+O\+U\+NT}~1000
+\item 
+\#define \hyperlink{main_8cpp_a498d9f026138406895e9a34b504ac6a6}{W\+I\+N\+D\+O\+W\+\_\+\+W\+I\+D\+TH}~1280
+\item 
+\#define \hyperlink{main_8cpp_a5473cf64fa979b48335079c99532e243}{W\+I\+N\+D\+O\+W\+\_\+\+H\+E\+I\+G\+HT}~1280
+\item 
+\#define \hyperlink{main_8cpp_ac92ca5ab87034a348decad7ee8d4bd1b}{F\+PS}~60
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{main_8cpp_a5a2513e1f41919b94fbb1cf15b615527}{timer} (int value)
+\item 
+void \hyperlink{main_8cpp_a34d4a276a7642c1adcd732f607f8279c}{refresh} (int value)
+\item 
+void \hyperlink{main_8cpp_a89e0c01e47a60c7b0e2e956cdc848c82}{initialise\+Glut} (int argc, char $\ast$$\ast$argv)
+\item 
+void \hyperlink{main_8cpp_a9370d5224059cee6dd6f6a94abf2a518}{initialise\+Glew} ()
+\item 
+int \hyperlink{main_8cpp_a3c04138a5bfe5d72780bb7e82a18e627}{main} (int argc, char $\ast$$\ast$argv)
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_v_s_shader_lib}{V\+S\+Shader\+Lib} \hyperlink{main_8cpp_ac47a0fc488d784ac7b790ab3e9922b76}{shader}
+\item 
+struct \hyperlink{struct_my_mesh}{My\+Mesh} \hyperlink{main_8cpp_abaddf4c2260c987d2668be63be3e9cb4}{mesh} \mbox{[}\hyperlink{main_8cpp_aabf15b5c3d6b95879c870d7204b33367}{M\+A\+X\+\_\+\+M\+E\+S\+H\+\_\+\+C\+O\+U\+NT}\mbox{]}
+\end{DoxyCompactItemize}
+
+
+\subsection{Macro Definition Documentation}
+\mbox{\Hypertarget{main_8cpp_a75643d42ae09f02951d5d11d9b94428f}\label{main_8cpp_a75643d42ae09f02951d5d11d9b94428f}} 
+\index{main.\+cpp@{main.\+cpp}!C\+A\+P\+T\+I\+ON@{C\+A\+P\+T\+I\+ON}}
+\index{C\+A\+P\+T\+I\+ON@{C\+A\+P\+T\+I\+ON}!main.\+cpp@{main.\+cpp}}
+\subsubsection{\texorpdfstring{C\+A\+P\+T\+I\+ON}{CAPTION}}
+{\footnotesize\ttfamily \#define C\+A\+P\+T\+I\+ON~\char`\"{}A\+VT Per Fragment Phong Lightning Demo\char`\"{}}
+
+\mbox{\Hypertarget{main_8cpp_ac92ca5ab87034a348decad7ee8d4bd1b}\label{main_8cpp_ac92ca5ab87034a348decad7ee8d4bd1b}} 
+\index{main.\+cpp@{main.\+cpp}!F\+PS@{F\+PS}}
+\index{F\+PS@{F\+PS}!main.\+cpp@{main.\+cpp}}
+\subsubsection{\texorpdfstring{F\+PS}{FPS}}
+{\footnotesize\ttfamily \#define F\+PS~60}
+
+\mbox{\Hypertarget{main_8cpp_aabf15b5c3d6b95879c870d7204b33367}\label{main_8cpp_aabf15b5c3d6b95879c870d7204b33367}} 
+\index{main.\+cpp@{main.\+cpp}!M\+A\+X\+\_\+\+M\+E\+S\+H\+\_\+\+C\+O\+U\+NT@{M\+A\+X\+\_\+\+M\+E\+S\+H\+\_\+\+C\+O\+U\+NT}}
+\index{M\+A\+X\+\_\+\+M\+E\+S\+H\+\_\+\+C\+O\+U\+NT@{M\+A\+X\+\_\+\+M\+E\+S\+H\+\_\+\+C\+O\+U\+NT}!main.\+cpp@{main.\+cpp}}
+\subsubsection{\texorpdfstring{M\+A\+X\+\_\+\+M\+E\+S\+H\+\_\+\+C\+O\+U\+NT}{MAX\_MESH\_COUNT}}
+{\footnotesize\ttfamily \#define M\+A\+X\+\_\+\+M\+E\+S\+H\+\_\+\+C\+O\+U\+NT~1000}
+
+\mbox{\Hypertarget{main_8cpp_a5473cf64fa979b48335079c99532e243}\label{main_8cpp_a5473cf64fa979b48335079c99532e243}} 
+\index{main.\+cpp@{main.\+cpp}!W\+I\+N\+D\+O\+W\+\_\+\+H\+E\+I\+G\+HT@{W\+I\+N\+D\+O\+W\+\_\+\+H\+E\+I\+G\+HT}}
+\index{W\+I\+N\+D\+O\+W\+\_\+\+H\+E\+I\+G\+HT@{W\+I\+N\+D\+O\+W\+\_\+\+H\+E\+I\+G\+HT}!main.\+cpp@{main.\+cpp}}
+\subsubsection{\texorpdfstring{W\+I\+N\+D\+O\+W\+\_\+\+H\+E\+I\+G\+HT}{WINDOW\_HEIGHT}}
+{\footnotesize\ttfamily \#define W\+I\+N\+D\+O\+W\+\_\+\+H\+E\+I\+G\+HT~1280}
+
+\mbox{\Hypertarget{main_8cpp_a498d9f026138406895e9a34b504ac6a6}\label{main_8cpp_a498d9f026138406895e9a34b504ac6a6}} 
+\index{main.\+cpp@{main.\+cpp}!W\+I\+N\+D\+O\+W\+\_\+\+W\+I\+D\+TH@{W\+I\+N\+D\+O\+W\+\_\+\+W\+I\+D\+TH}}
+\index{W\+I\+N\+D\+O\+W\+\_\+\+W\+I\+D\+TH@{W\+I\+N\+D\+O\+W\+\_\+\+W\+I\+D\+TH}!main.\+cpp@{main.\+cpp}}
+\subsubsection{\texorpdfstring{W\+I\+N\+D\+O\+W\+\_\+\+W\+I\+D\+TH}{WINDOW\_WIDTH}}
+{\footnotesize\ttfamily \#define W\+I\+N\+D\+O\+W\+\_\+\+W\+I\+D\+TH~1280}
+
+
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{main_8cpp_a9370d5224059cee6dd6f6a94abf2a518}\label{main_8cpp_a9370d5224059cee6dd6f6a94abf2a518}} 
+\index{main.\+cpp@{main.\+cpp}!initialise\+Glew@{initialise\+Glew}}
+\index{initialise\+Glew@{initialise\+Glew}!main.\+cpp@{main.\+cpp}}
+\subsubsection{\texorpdfstring{initialise\+Glew()}{initialiseGlew()}}
+{\footnotesize\ttfamily void initialise\+Glew (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{main_8cpp_a89e0c01e47a60c7b0e2e956cdc848c82}\label{main_8cpp_a89e0c01e47a60c7b0e2e956cdc848c82}} 
+\index{main.\+cpp@{main.\+cpp}!initialise\+Glut@{initialise\+Glut}}
+\index{initialise\+Glut@{initialise\+Glut}!main.\+cpp@{main.\+cpp}}
+\subsubsection{\texorpdfstring{initialise\+Glut()}{initialiseGlut()}}
+{\footnotesize\ttfamily void initialise\+Glut (\begin{DoxyParamCaption}\item[{int}]{argc,  }\item[{char $\ast$$\ast$}]{argv }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{main_8cpp_a3c04138a5bfe5d72780bb7e82a18e627}\label{main_8cpp_a3c04138a5bfe5d72780bb7e82a18e627}} 
+\index{main.\+cpp@{main.\+cpp}!main@{main}}
+\index{main@{main}!main.\+cpp@{main.\+cpp}}
+\subsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}\item[{int}]{argc,  }\item[{char $\ast$$\ast$}]{argv }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{main_8cpp_a34d4a276a7642c1adcd732f607f8279c}\label{main_8cpp_a34d4a276a7642c1adcd732f607f8279c}} 
+\index{main.\+cpp@{main.\+cpp}!refresh@{refresh}}
+\index{refresh@{refresh}!main.\+cpp@{main.\+cpp}}
+\subsubsection{\texorpdfstring{refresh()}{refresh()}}
+{\footnotesize\ttfamily void refresh (\begin{DoxyParamCaption}\item[{int}]{value }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{main_8cpp_a5a2513e1f41919b94fbb1cf15b615527}\label{main_8cpp_a5a2513e1f41919b94fbb1cf15b615527}} 
+\index{main.\+cpp@{main.\+cpp}!timer@{timer}}
+\index{timer@{timer}!main.\+cpp@{main.\+cpp}}
+\subsubsection{\texorpdfstring{timer()}{timer()}}
+{\footnotesize\ttfamily void timer (\begin{DoxyParamCaption}\item[{int}]{value }\end{DoxyParamCaption})}
+
+
+
+\subsection{Variable Documentation}
+\mbox{\Hypertarget{main_8cpp_abaddf4c2260c987d2668be63be3e9cb4}\label{main_8cpp_abaddf4c2260c987d2668be63be3e9cb4}} 
+\index{main.\+cpp@{main.\+cpp}!mesh@{mesh}}
+\index{mesh@{mesh}!main.\+cpp@{main.\+cpp}}
+\subsubsection{\texorpdfstring{mesh}{mesh}}
+{\footnotesize\ttfamily struct \hyperlink{struct_my_mesh}{My\+Mesh} mesh\mbox{[}\hyperlink{main_8cpp_aabf15b5c3d6b95879c870d7204b33367}{M\+A\+X\+\_\+\+M\+E\+S\+H\+\_\+\+C\+O\+U\+NT}\mbox{]}}
+
+\mbox{\Hypertarget{main_8cpp_ac47a0fc488d784ac7b790ab3e9922b76}\label{main_8cpp_ac47a0fc488d784ac7b790ab3e9922b76}} 
+\index{main.\+cpp@{main.\+cpp}!shader@{shader}}
+\index{shader@{shader}!main.\+cpp@{main.\+cpp}}
+\subsubsection{\texorpdfstring{shader}{shader}}
+{\footnotesize\ttfamily \hyperlink{class_v_s_shader_lib}{V\+S\+Shader\+Lib} shader}
+

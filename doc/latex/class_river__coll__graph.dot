@@ -1,0 +1,15 @@
+digraph "River"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node3 [label="River",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node4 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid"];
+  Node4 [label="CollidableGameObject",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_collidable_game_object.html"];
+  Node5 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid"];
+  Node5 [label="GameObject",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_game_object.html"];
+  Node6 -> Node5 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" position" ];
+  Node6 [label="Vector3",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_vector3.html"];
+  Node7 -> Node4 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" boundingBox" ];
+  Node7 [label="BoundingBox",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_bounding_box.html"];
+  Node6 -> Node7 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" vecMin\nvecMax" ];
+}

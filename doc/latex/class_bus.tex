@@ -1,0 +1,109 @@
+\hypertarget{class_bus}{}\section{Bus Class Reference}
+\label{class_bus}\index{Bus@{Bus}}
+
+
+{\ttfamily \#include $<$Bus.\+h$>$}
+
+Inheritance diagram for Bus\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=5.000000cm]{class_bus}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_bus_a262505182585ed32d38dda38ab68147f}{Bus} (\hyperlink{class_vector3}{Vector3} pos, \hyperlink{class_vector3}{Vector3} \hyperlink{class_dynamic_game_object_a54cb8a3a5fe8314cd5751f223b2b49ae}{speed}, bool going\+Right, \hyperlink{_game_object_8h_a57678b60d65afb213d04a6b090c64a08}{Game\+Object\+Type} type=\hyperlink{_game_object_8h_a57678b60d65afb213d04a6b090c64a08a885a6a40e3fde5dfec3db7fefea61f9b}{B\+US}, \hyperlink{class_vector3}{Vector3} min=\hyperlink{class_vector3}{Vector3}(0, 0, 0), \hyperlink{class_vector3}{Vector3} max=\hyperlink{class_vector3}{Vector3}(3, 1, 1))
+\item 
+virtual void \hyperlink{class_bus_a4f917c97b2fc287fc9b01795250f591d}{respawn} ()
+\item 
+void \hyperlink{class_bus_a7bff316b767441b92f8e82f17a44fbf7}{init} () override
+\item 
+void \hyperlink{class_bus_ad07157ce2a50211ea599d040da7a4517}{update} (int \hyperlink{_game_manager_8h_afea6a95c7a1c119b7106a4c735eb259d}{delta\+Time}) final
+\item 
+void \hyperlink{class_bus_a0fe709af4b2ca86583d8647f323c231c}{render} () override
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+bool \hyperlink{class_bus_ad27976dad538444f6e95212834d989a8}{is\+Going\+Right} = false
+\item 
+float \hyperlink{class_bus_ab2899ff7aa88eccd9ec84a79355b671b}{angle} = 0
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_bus_a262505182585ed32d38dda38ab68147f}\label{class_bus_a262505182585ed32d38dda38ab68147f}} 
+\index{Bus@{Bus}!Bus@{Bus}}
+\index{Bus@{Bus}!Bus@{Bus}}
+\subsubsection{\texorpdfstring{Bus()}{Bus()}}
+{\footnotesize\ttfamily Bus\+::\+Bus (\begin{DoxyParamCaption}\item[{\hyperlink{class_vector3}{Vector3}}]{pos,  }\item[{\hyperlink{class_vector3}{Vector3}}]{speed,  }\item[{bool}]{going\+Right,  }\item[{\hyperlink{_game_object_8h_a57678b60d65afb213d04a6b090c64a08}{Game\+Object\+Type}}]{type = {\ttfamily \hyperlink{_game_object_8h_a57678b60d65afb213d04a6b090c64a08a885a6a40e3fde5dfec3db7fefea61f9b}{B\+US}},  }\item[{\hyperlink{class_vector3}{Vector3}}]{min = {\ttfamily \hyperlink{class_vector3}{Vector3}(0,~0,~0)},  }\item[{\hyperlink{class_vector3}{Vector3}}]{max = {\ttfamily \hyperlink{class_vector3}{Vector3}(3,~1,~1)} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_bus_a7bff316b767441b92f8e82f17a44fbf7}\label{class_bus_a7bff316b767441b92f8e82f17a44fbf7}} 
+\index{Bus@{Bus}!init@{init}}
+\index{init@{init}!Bus@{Bus}}
+\subsubsection{\texorpdfstring{init()}{init()}}
+{\footnotesize\ttfamily void Bus\+::init (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \hyperlink{class_game_object_aecb2c1b9f69715d854f7604d5d7978ec}{Game\+Object}.
+
+
+
+Reimplemented in \hyperlink{class_car_ae7d4da15bf41cc2d36465129372f2a71}{Car}.
+
+\mbox{\Hypertarget{class_bus_a0fe709af4b2ca86583d8647f323c231c}\label{class_bus_a0fe709af4b2ca86583d8647f323c231c}} 
+\index{Bus@{Bus}!render@{render}}
+\index{render@{render}!Bus@{Bus}}
+\subsubsection{\texorpdfstring{render()}{render()}}
+{\footnotesize\ttfamily void Bus\+::render (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \hyperlink{class_game_object_a484efb66a7a27c101e84c11d9905d7a6}{Game\+Object}.
+
+
+
+Reimplemented in \hyperlink{class_car_a52c7156c403d267444de3d4813fffba2}{Car}.
+
+\mbox{\Hypertarget{class_bus_a4f917c97b2fc287fc9b01795250f591d}\label{class_bus_a4f917c97b2fc287fc9b01795250f591d}} 
+\index{Bus@{Bus}!respawn@{respawn}}
+\index{respawn@{respawn}!Bus@{Bus}}
+\subsubsection{\texorpdfstring{respawn()}{respawn()}}
+{\footnotesize\ttfamily virtual void Bus\+::respawn (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+\mbox{\Hypertarget{class_bus_ad07157ce2a50211ea599d040da7a4517}\label{class_bus_ad07157ce2a50211ea599d040da7a4517}} 
+\index{Bus@{Bus}!update@{update}}
+\index{update@{update}!Bus@{Bus}}
+\subsubsection{\texorpdfstring{update()}{update()}}
+{\footnotesize\ttfamily void Bus\+::update (\begin{DoxyParamCaption}\item[{int}]{delta\+Time }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [final]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \hyperlink{class_dynamic_game_object_aaa505b57d131bbbce44d500ec2ca0e83}{Dynamic\+Game\+Object}.
+
+
+
+\subsection{Member Data Documentation}
+\mbox{\Hypertarget{class_bus_ab2899ff7aa88eccd9ec84a79355b671b}\label{class_bus_ab2899ff7aa88eccd9ec84a79355b671b}} 
+\index{Bus@{Bus}!angle@{angle}}
+\index{angle@{angle}!Bus@{Bus}}
+\subsubsection{\texorpdfstring{angle}{angle}}
+{\footnotesize\ttfamily float Bus\+::angle = 0}
+
+\mbox{\Hypertarget{class_bus_ad27976dad538444f6e95212834d989a8}\label{class_bus_ad27976dad538444f6e95212834d989a8}} 
+\index{Bus@{Bus}!is\+Going\+Right@{is\+Going\+Right}}
+\index{is\+Going\+Right@{is\+Going\+Right}!Bus@{Bus}}
+\subsubsection{\texorpdfstring{is\+Going\+Right}{isGoingRight}}
+{\footnotesize\ttfamily bool Bus\+::is\+Going\+Right = false}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/\+Users/matya/\+A\+V\+T7/src/objects/\hyperlink{_bus_8h}{Bus.\+h}\end{DoxyCompactItemize}

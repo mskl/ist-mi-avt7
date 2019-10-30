@@ -1,0 +1,10 @@
+digraph "CameraOrthogonal"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node2 [label="CameraOrthogonal",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node3 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid"];
+  Node3 [label="Camera",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_camera.html"];
+  Node4 -> Node3 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" pos" ];
+  Node4 [label="Vector3",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_vector3.html"];
+}

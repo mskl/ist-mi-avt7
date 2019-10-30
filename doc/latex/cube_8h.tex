@@ -1,0 +1,141 @@
+\hypertarget{cube_8h}{}\section{/\+Users/matya/\+A\+V\+T7/src/primitives/cube.h File Reference}
+\label{cube_8h}\index{/\+Users/matya/\+A\+V\+T7/src/primitives/cube.\+h@{/\+Users/matya/\+A\+V\+T7/src/primitives/cube.\+h}}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{cube_8h_a960bc53db9b730f4a2ced3562705806b}{face\+Count} = 12
+\item 
+float \hyperlink{cube_8h_a25986ed96a435775e363f05540a2f9c4}{vertices} \mbox{[}$\,$\mbox{]}
+\item 
+float \hyperlink{cube_8h_ada2c19be508b011428787734d4bb5add}{quad\+\_\+vertices} \mbox{[}$\,$\mbox{]}
+\item 
+float \hyperlink{cube_8h_a6b71977a5354a71231fb557f3699e751}{quad\+\_\+vertices\+\_\+0} \mbox{[}$\,$\mbox{]}
+\item 
+float \hyperlink{cube_8h_a830a495fab2a80347002ceb578171297}{quad\+\_\+normals} \mbox{[}$\,$\mbox{]}
+\item 
+float \hyperlink{cube_8h_a8feebfa299673b7bf72a365ccadb2eb6}{normals} \mbox{[}$\,$\mbox{]}
+\item 
+float \hyperlink{cube_8h_a9836a66aa143672900c1e99623792f5c}{tex\+Coords} \mbox{[}$\,$\mbox{]}
+\item 
+float \hyperlink{cube_8h_afad1190bc6714a6c50851c1136c4ac8f}{quad\+\_\+tex\+Coords} \mbox{[}$\,$\mbox{]}
+\item 
+unsigned int \hyperlink{cube_8h_ae655e23ae43fc73f2408cdc66032c3b1}{face\+Index} \mbox{[}$\,$\mbox{]}
+\item 
+unsigned int \hyperlink{cube_8h_a072b92ebbe2ddf35d8947fbf5d7ba5ee}{quad\+\_\+face\+Index} \mbox{[}$\,$\mbox{]}
+\end{DoxyCompactItemize}
+
+
+\subsection{Variable Documentation}
+\mbox{\Hypertarget{cube_8h_a960bc53db9b730f4a2ced3562705806b}\label{cube_8h_a960bc53db9b730f4a2ced3562705806b}} 
+\index{cube.\+h@{cube.\+h}!face\+Count@{face\+Count}}
+\index{face\+Count@{face\+Count}!cube.\+h@{cube.\+h}}
+\subsubsection{\texorpdfstring{face\+Count}{faceCount}}
+{\footnotesize\ttfamily int face\+Count = 12}
+
+\mbox{\Hypertarget{cube_8h_ae655e23ae43fc73f2408cdc66032c3b1}\label{cube_8h_ae655e23ae43fc73f2408cdc66032c3b1}} 
+\index{cube.\+h@{cube.\+h}!face\+Index@{face\+Index}}
+\index{face\+Index@{face\+Index}!cube.\+h@{cube.\+h}}
+\subsubsection{\texorpdfstring{face\+Index}{faceIndex}}
+{\footnotesize\ttfamily unsigned int face\+Index\mbox{[}$\,$\mbox{]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}
+= \{
+    0,1,2,0,2,3,
+    4,5,6,4,6,7,
+    8,9,10,8,10,11,
+    12,13,14,12,14,15,
+    16,17,18,16,18,19,
+    20,21,22,20,22,23
+\}
+\end{DoxyCode}
+\mbox{\Hypertarget{cube_8h_a8feebfa299673b7bf72a365ccadb2eb6}\label{cube_8h_a8feebfa299673b7bf72a365ccadb2eb6}} 
+\index{cube.\+h@{cube.\+h}!normals@{normals}}
+\index{normals@{normals}!cube.\+h@{cube.\+h}}
+\subsubsection{\texorpdfstring{normals}{normals}}
+{\footnotesize\ttfamily float normals\mbox{[}$\,$\mbox{]}}
+
+\mbox{\Hypertarget{cube_8h_a072b92ebbe2ddf35d8947fbf5d7ba5ee}\label{cube_8h_a072b92ebbe2ddf35d8947fbf5d7ba5ee}} 
+\index{cube.\+h@{cube.\+h}!quad\+\_\+face\+Index@{quad\+\_\+face\+Index}}
+\index{quad\+\_\+face\+Index@{quad\+\_\+face\+Index}!cube.\+h@{cube.\+h}}
+\subsubsection{\texorpdfstring{quad\+\_\+face\+Index}{quad\_faceIndex}}
+{\footnotesize\ttfamily unsigned int quad\+\_\+face\+Index\mbox{[}$\,$\mbox{]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}
+= \{
+    0,1,2,2,3,0
+\}
+\end{DoxyCode}
+\mbox{\Hypertarget{cube_8h_a830a495fab2a80347002ceb578171297}\label{cube_8h_a830a495fab2a80347002ceb578171297}} 
+\index{cube.\+h@{cube.\+h}!quad\+\_\+normals@{quad\+\_\+normals}}
+\index{quad\+\_\+normals@{quad\+\_\+normals}!cube.\+h@{cube.\+h}}
+\subsubsection{\texorpdfstring{quad\+\_\+normals}{quad\_normals}}
+{\footnotesize\ttfamily float quad\+\_\+normals\mbox{[}$\,$\mbox{]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}
+= \{   
+    0.0f, 0.0f, 1.0f, 0.0f,
+    0.0f, 0.0f, 1.0f, 0.0f,
+    0.0f, 0.0f, 1.0f, 0.0f,
+    0.0f, 0.0f, 1.0f, 0.0f
+\}
+\end{DoxyCode}
+\mbox{\Hypertarget{cube_8h_afad1190bc6714a6c50851c1136c4ac8f}\label{cube_8h_afad1190bc6714a6c50851c1136c4ac8f}} 
+\index{cube.\+h@{cube.\+h}!quad\+\_\+tex\+Coords@{quad\+\_\+tex\+Coords}}
+\index{quad\+\_\+tex\+Coords@{quad\+\_\+tex\+Coords}!cube.\+h@{cube.\+h}}
+\subsubsection{\texorpdfstring{quad\+\_\+tex\+Coords}{quad\_texCoords}}
+{\footnotesize\ttfamily float quad\+\_\+tex\+Coords\mbox{[}$\,$\mbox{]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}
+= \{
+    0.0f, 0.0f, 0.0f, 1.0f,
+    1.0f, 0.0f, 0.0f, 1.0f,
+    1.0f, 1.0f, 0.0f, 1.0f,
+    0.0f, 1.0f, 0.0f, 1.0f
+\}
+\end{DoxyCode}
+\mbox{\Hypertarget{cube_8h_ada2c19be508b011428787734d4bb5add}\label{cube_8h_ada2c19be508b011428787734d4bb5add}} 
+\index{cube.\+h@{cube.\+h}!quad\+\_\+vertices@{quad\+\_\+vertices}}
+\index{quad\+\_\+vertices@{quad\+\_\+vertices}!cube.\+h@{cube.\+h}}
+\subsubsection{\texorpdfstring{quad\+\_\+vertices}{quad\_vertices}}
+{\footnotesize\ttfamily float quad\+\_\+vertices\mbox{[}$\,$\mbox{]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}
+= \{   
+    -0.5f, -0.5f, 0.0f, 1.0f,  
+     0.5f, -0.5f, 0.0f, 1.0f,   
+     0.5f,  0.5f, 0.0f, 1.0f,   
+    -0.5f,  0.5f, 0.0f, 1.0f,   
+\}
+\end{DoxyCode}
+\mbox{\Hypertarget{cube_8h_a6b71977a5354a71231fb557f3699e751}\label{cube_8h_a6b71977a5354a71231fb557f3699e751}} 
+\index{cube.\+h@{cube.\+h}!quad\+\_\+vertices\+\_\+0@{quad\+\_\+vertices\+\_\+0}}
+\index{quad\+\_\+vertices\+\_\+0@{quad\+\_\+vertices\+\_\+0}!cube.\+h@{cube.\+h}}
+\subsubsection{\texorpdfstring{quad\+\_\+vertices\+\_\+0}{quad\_vertices\_0}}
+{\footnotesize\ttfamily float quad\+\_\+vertices\+\_\+0\mbox{[}$\,$\mbox{]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}
+= \{   
+    -3.0f, -3.0f, 0.0f, 1.0f,  
+     3.0f, -3.0f, 0.0f, 1.0f,   
+     3.0f,  3.0f, 0.0f, 1.0f,   
+    -3.0f,  3.0f, 0.0f, 1.0f,   
+\}
+\end{DoxyCode}
+\mbox{\Hypertarget{cube_8h_a9836a66aa143672900c1e99623792f5c}\label{cube_8h_a9836a66aa143672900c1e99623792f5c}} 
+\index{cube.\+h@{cube.\+h}!tex\+Coords@{tex\+Coords}}
+\index{tex\+Coords@{tex\+Coords}!cube.\+h@{cube.\+h}}
+\subsubsection{\texorpdfstring{tex\+Coords}{texCoords}}
+{\footnotesize\ttfamily float tex\+Coords\mbox{[}$\,$\mbox{]}}
+
+\mbox{\Hypertarget{cube_8h_a25986ed96a435775e363f05540a2f9c4}\label{cube_8h_a25986ed96a435775e363f05540a2f9c4}} 
+\index{cube.\+h@{cube.\+h}!vertices@{vertices}}
+\index{vertices@{vertices}!cube.\+h@{cube.\+h}}
+\subsubsection{\texorpdfstring{vertices}{vertices}}
+{\footnotesize\ttfamily float vertices\mbox{[}$\,$\mbox{]}}
+

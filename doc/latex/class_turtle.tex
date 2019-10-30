@@ -1,0 +1,141 @@
+\hypertarget{class_turtle}{}\section{Turtle Class Reference}
+\label{class_turtle}\index{Turtle@{Turtle}}
+
+
+{\ttfamily \#include $<$Turtle.\+h$>$}
+
+Inheritance diagram for Turtle\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=4.000000cm]{class_turtle}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_turtle_a970240e0b41cea58ef93f8f0d3e17fd4}{Turtle} (\hyperlink{class_vector3}{Vector3} pos, \hyperlink{class_vector3}{Vector3} \hyperlink{class_dynamic_game_object_a54cb8a3a5fe8314cd5751f223b2b49ae}{speed})
+\item 
+void \hyperlink{class_turtle_a6ba4b31af71ea52e0e885a3e3beb783c}{init} () override
+\item 
+void \hyperlink{class_turtle_a697924198490c52307fdb006f1df7456}{render} () override
+\item 
+void \hyperlink{class_turtle_a6c70cb2158f173b82df6620905ad435c}{respawn} ()
+\item 
+void \hyperlink{class_turtle_a6d62e3f4e21f5ce3ffb4e7e2a8a9da1b}{update} (int \hyperlink{_game_manager_8h_afea6a95c7a1c119b7106a4c735eb259d}{delta\+Time}) override
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_vector3}{Vector3} \hyperlink{class_turtle_a9052d3e0b90f7334d5fb3ac37617b3a6}{init\+Pos}
+\item 
+\hyperlink{class_vector3}{Vector3} \hyperlink{class_turtle_a085cc226004058c86277dfe21a2dc077}{init\+Speed}
+\item 
+float \hyperlink{class_turtle_a827a4dc9095185fd3e7fd1a56e6e3587}{random\+Time\+Offset} = 0.\+0f
+\item 
+const float \hyperlink{class_turtle_ab854ea2525dee2b36f2eba8f16573287}{wave\+Time} = 1000.\+0f
+\item 
+G\+Lint \hyperlink{class_turtle_a786de5c643f4bb563bbf851da057a85b}{prev\+Time} = 1
+\item 
+bool \hyperlink{class_turtle_a4a81d2f3cef8a9d8556f05b6356d0fd2}{is\+Under\+Water} = false
+\item 
+float \hyperlink{class_turtle_a4e52ca74d8dff20d4e1aa16a1774dea4}{pos\+Turtle\+Body\+Water} = 0.\+2f
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_turtle_a970240e0b41cea58ef93f8f0d3e17fd4}\label{class_turtle_a970240e0b41cea58ef93f8f0d3e17fd4}} 
+\index{Turtle@{Turtle}!Turtle@{Turtle}}
+\index{Turtle@{Turtle}!Turtle@{Turtle}}
+\subsubsection{\texorpdfstring{Turtle()}{Turtle()}}
+{\footnotesize\ttfamily Turtle\+::\+Turtle (\begin{DoxyParamCaption}\item[{\hyperlink{class_vector3}{Vector3}}]{pos,  }\item[{\hyperlink{class_vector3}{Vector3}}]{speed }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_turtle_a6ba4b31af71ea52e0e885a3e3beb783c}\label{class_turtle_a6ba4b31af71ea52e0e885a3e3beb783c}} 
+\index{Turtle@{Turtle}!init@{init}}
+\index{init@{init}!Turtle@{Turtle}}
+\subsubsection{\texorpdfstring{init()}{init()}}
+{\footnotesize\ttfamily void Turtle\+::init (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \hyperlink{class_game_object_aecb2c1b9f69715d854f7604d5d7978ec}{Game\+Object}.
+
+\mbox{\Hypertarget{class_turtle_a697924198490c52307fdb006f1df7456}\label{class_turtle_a697924198490c52307fdb006f1df7456}} 
+\index{Turtle@{Turtle}!render@{render}}
+\index{render@{render}!Turtle@{Turtle}}
+\subsubsection{\texorpdfstring{render()}{render()}}
+{\footnotesize\ttfamily void Turtle\+::render (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \hyperlink{class_game_object_a484efb66a7a27c101e84c11d9905d7a6}{Game\+Object}.
+
+\mbox{\Hypertarget{class_turtle_a6c70cb2158f173b82df6620905ad435c}\label{class_turtle_a6c70cb2158f173b82df6620905ad435c}} 
+\index{Turtle@{Turtle}!respawn@{respawn}}
+\index{respawn@{respawn}!Turtle@{Turtle}}
+\subsubsection{\texorpdfstring{respawn()}{respawn()}}
+{\footnotesize\ttfamily void Turtle\+::respawn (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{class_turtle_a6d62e3f4e21f5ce3ffb4e7e2a8a9da1b}\label{class_turtle_a6d62e3f4e21f5ce3ffb4e7e2a8a9da1b}} 
+\index{Turtle@{Turtle}!update@{update}}
+\index{update@{update}!Turtle@{Turtle}}
+\subsubsection{\texorpdfstring{update()}{update()}}
+{\footnotesize\ttfamily void Turtle\+::update (\begin{DoxyParamCaption}\item[{int}]{delta\+Time }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \hyperlink{class_dynamic_game_object_aaa505b57d131bbbce44d500ec2ca0e83}{Dynamic\+Game\+Object}.
+
+
+
+\subsection{Member Data Documentation}
+\mbox{\Hypertarget{class_turtle_a9052d3e0b90f7334d5fb3ac37617b3a6}\label{class_turtle_a9052d3e0b90f7334d5fb3ac37617b3a6}} 
+\index{Turtle@{Turtle}!init\+Pos@{init\+Pos}}
+\index{init\+Pos@{init\+Pos}!Turtle@{Turtle}}
+\subsubsection{\texorpdfstring{init\+Pos}{initPos}}
+{\footnotesize\ttfamily \hyperlink{class_vector3}{Vector3} Turtle\+::init\+Pos}
+
+\mbox{\Hypertarget{class_turtle_a085cc226004058c86277dfe21a2dc077}\label{class_turtle_a085cc226004058c86277dfe21a2dc077}} 
+\index{Turtle@{Turtle}!init\+Speed@{init\+Speed}}
+\index{init\+Speed@{init\+Speed}!Turtle@{Turtle}}
+\subsubsection{\texorpdfstring{init\+Speed}{initSpeed}}
+{\footnotesize\ttfamily \hyperlink{class_vector3}{Vector3} Turtle\+::init\+Speed}
+
+\mbox{\Hypertarget{class_turtle_a4a81d2f3cef8a9d8556f05b6356d0fd2}\label{class_turtle_a4a81d2f3cef8a9d8556f05b6356d0fd2}} 
+\index{Turtle@{Turtle}!is\+Under\+Water@{is\+Under\+Water}}
+\index{is\+Under\+Water@{is\+Under\+Water}!Turtle@{Turtle}}
+\subsubsection{\texorpdfstring{is\+Under\+Water}{isUnderWater}}
+{\footnotesize\ttfamily bool Turtle\+::is\+Under\+Water = false}
+
+\mbox{\Hypertarget{class_turtle_a4e52ca74d8dff20d4e1aa16a1774dea4}\label{class_turtle_a4e52ca74d8dff20d4e1aa16a1774dea4}} 
+\index{Turtle@{Turtle}!pos\+Turtle\+Body\+Water@{pos\+Turtle\+Body\+Water}}
+\index{pos\+Turtle\+Body\+Water@{pos\+Turtle\+Body\+Water}!Turtle@{Turtle}}
+\subsubsection{\texorpdfstring{pos\+Turtle\+Body\+Water}{posTurtleBodyWater}}
+{\footnotesize\ttfamily float Turtle\+::pos\+Turtle\+Body\+Water = 0.\+2f}
+
+\mbox{\Hypertarget{class_turtle_a786de5c643f4bb563bbf851da057a85b}\label{class_turtle_a786de5c643f4bb563bbf851da057a85b}} 
+\index{Turtle@{Turtle}!prev\+Time@{prev\+Time}}
+\index{prev\+Time@{prev\+Time}!Turtle@{Turtle}}
+\subsubsection{\texorpdfstring{prev\+Time}{prevTime}}
+{\footnotesize\ttfamily G\+Lint Turtle\+::prev\+Time = 1}
+
+\mbox{\Hypertarget{class_turtle_a827a4dc9095185fd3e7fd1a56e6e3587}\label{class_turtle_a827a4dc9095185fd3e7fd1a56e6e3587}} 
+\index{Turtle@{Turtle}!random\+Time\+Offset@{random\+Time\+Offset}}
+\index{random\+Time\+Offset@{random\+Time\+Offset}!Turtle@{Turtle}}
+\subsubsection{\texorpdfstring{random\+Time\+Offset}{randomTimeOffset}}
+{\footnotesize\ttfamily float Turtle\+::random\+Time\+Offset = 0.\+0f}
+
+\mbox{\Hypertarget{class_turtle_ab854ea2525dee2b36f2eba8f16573287}\label{class_turtle_ab854ea2525dee2b36f2eba8f16573287}} 
+\index{Turtle@{Turtle}!wave\+Time@{wave\+Time}}
+\index{wave\+Time@{wave\+Time}!Turtle@{Turtle}}
+\subsubsection{\texorpdfstring{wave\+Time}{waveTime}}
+{\footnotesize\ttfamily const float Turtle\+::wave\+Time = 1000.\+0f}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/\+Users/matya/\+A\+V\+T7/src/objects/\hyperlink{_turtle_8h}{Turtle.\+h}\end{DoxyCompactItemize}

@@ -1,0 +1,101 @@
+\hypertarget{class_test_cube_collision}{}\section{Test\+Cube\+Collision Class Reference}
+\label{class_test_cube_collision}\index{Test\+Cube\+Collision@{Test\+Cube\+Collision}}
+
+
+{\ttfamily \#include $<$Test\+Cube\+Collision.\+h$>$}
+
+Inheritance diagram for Test\+Cube\+Collision\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=4.000000cm]{class_test_cube_collision}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_test_cube_collision_a512c666b3899713b54b096e3e5ab5e58}{Test\+Cube\+Collision} (\hyperlink{class_vector3}{Vector3} pos, \hyperlink{class_vector3}{Vector3} \hyperlink{class_dynamic_game_object_a54cb8a3a5fe8314cd5751f223b2b49ae}{speed}, float tscale, \hyperlink{_game_object_8h_a57678b60d65afb213d04a6b090c64a08}{Game\+Object\+Type} type=T\+E\+ST, \hyperlink{class_vector3}{Vector3} min=\hyperlink{class_vector3}{Vector3}(0, 0, 0), \hyperlink{class_vector3}{Vector3} max=\hyperlink{class_vector3}{Vector3}(1, 1, 1))
+\item 
+virtual void \hyperlink{class_test_cube_collision_a796cf89af42a38b44956f753e14637b2}{respawn} ()
+\item 
+void \hyperlink{class_test_cube_collision_a22fade1ca48a2cd49dd4ca6cbc93821b}{init} () override
+\item 
+void \hyperlink{class_test_cube_collision_ae528ac632377372d93964c938748fddf}{update} (int \hyperlink{_game_manager_8h_afea6a95c7a1c119b7106a4c735eb259d}{delta\+Time}) final
+\item 
+void \hyperlink{class_test_cube_collision_ae5cd1052745d6acf9cbb2a6bde8b757a}{render} () override
+\item 
+bool \hyperlink{class_test_cube_collision_a94a32ad4ffd215b7c16efa866eb31ef2}{is\+Inside} (const \hyperlink{class_game_object}{Game\+Object} $\ast$other) const
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+float \hyperlink{class_test_cube_collision_a3cd9b6464419d2c5a26bfc42d120819c}{mscale} = 0.\+0f
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_test_cube_collision_a512c666b3899713b54b096e3e5ab5e58}\label{class_test_cube_collision_a512c666b3899713b54b096e3e5ab5e58}} 
+\index{Test\+Cube\+Collision@{Test\+Cube\+Collision}!Test\+Cube\+Collision@{Test\+Cube\+Collision}}
+\index{Test\+Cube\+Collision@{Test\+Cube\+Collision}!Test\+Cube\+Collision@{Test\+Cube\+Collision}}
+\subsubsection{\texorpdfstring{Test\+Cube\+Collision()}{TestCubeCollision()}}
+{\footnotesize\ttfamily Test\+Cube\+Collision\+::\+Test\+Cube\+Collision (\begin{DoxyParamCaption}\item[{\hyperlink{class_vector3}{Vector3}}]{pos,  }\item[{\hyperlink{class_vector3}{Vector3}}]{speed,  }\item[{float}]{tscale,  }\item[{\hyperlink{_game_object_8h_a57678b60d65afb213d04a6b090c64a08}{Game\+Object\+Type}}]{type = {\ttfamily TEST},  }\item[{\hyperlink{class_vector3}{Vector3}}]{min = {\ttfamily \hyperlink{class_vector3}{Vector3}(0,~0,~0)},  }\item[{\hyperlink{class_vector3}{Vector3}}]{max = {\ttfamily \hyperlink{class_vector3}{Vector3}(1,~1,~1)} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_test_cube_collision_a22fade1ca48a2cd49dd4ca6cbc93821b}\label{class_test_cube_collision_a22fade1ca48a2cd49dd4ca6cbc93821b}} 
+\index{Test\+Cube\+Collision@{Test\+Cube\+Collision}!init@{init}}
+\index{init@{init}!Test\+Cube\+Collision@{Test\+Cube\+Collision}}
+\subsubsection{\texorpdfstring{init()}{init()}}
+{\footnotesize\ttfamily void Test\+Cube\+Collision\+::init (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \hyperlink{class_game_object_aecb2c1b9f69715d854f7604d5d7978ec}{Game\+Object}.
+
+\mbox{\Hypertarget{class_test_cube_collision_a94a32ad4ffd215b7c16efa866eb31ef2}\label{class_test_cube_collision_a94a32ad4ffd215b7c16efa866eb31ef2}} 
+\index{Test\+Cube\+Collision@{Test\+Cube\+Collision}!is\+Inside@{is\+Inside}}
+\index{is\+Inside@{is\+Inside}!Test\+Cube\+Collision@{Test\+Cube\+Collision}}
+\subsubsection{\texorpdfstring{is\+Inside()}{isInside()}}
+{\footnotesize\ttfamily bool Test\+Cube\+Collision\+::is\+Inside (\begin{DoxyParamCaption}\item[{const \hyperlink{class_game_object}{Game\+Object} $\ast$}]{other }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{class_test_cube_collision_ae5cd1052745d6acf9cbb2a6bde8b757a}\label{class_test_cube_collision_ae5cd1052745d6acf9cbb2a6bde8b757a}} 
+\index{Test\+Cube\+Collision@{Test\+Cube\+Collision}!render@{render}}
+\index{render@{render}!Test\+Cube\+Collision@{Test\+Cube\+Collision}}
+\subsubsection{\texorpdfstring{render()}{render()}}
+{\footnotesize\ttfamily void Test\+Cube\+Collision\+::render (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \hyperlink{class_game_object_a484efb66a7a27c101e84c11d9905d7a6}{Game\+Object}.
+
+\mbox{\Hypertarget{class_test_cube_collision_a796cf89af42a38b44956f753e14637b2}\label{class_test_cube_collision_a796cf89af42a38b44956f753e14637b2}} 
+\index{Test\+Cube\+Collision@{Test\+Cube\+Collision}!respawn@{respawn}}
+\index{respawn@{respawn}!Test\+Cube\+Collision@{Test\+Cube\+Collision}}
+\subsubsection{\texorpdfstring{respawn()}{respawn()}}
+{\footnotesize\ttfamily virtual void Test\+Cube\+Collision\+::respawn (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+\mbox{\Hypertarget{class_test_cube_collision_ae528ac632377372d93964c938748fddf}\label{class_test_cube_collision_ae528ac632377372d93964c938748fddf}} 
+\index{Test\+Cube\+Collision@{Test\+Cube\+Collision}!update@{update}}
+\index{update@{update}!Test\+Cube\+Collision@{Test\+Cube\+Collision}}
+\subsubsection{\texorpdfstring{update()}{update()}}
+{\footnotesize\ttfamily void Test\+Cube\+Collision\+::update (\begin{DoxyParamCaption}\item[{int}]{delta\+Time }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [final]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \hyperlink{class_dynamic_game_object_aaa505b57d131bbbce44d500ec2ca0e83}{Dynamic\+Game\+Object}.
+
+
+
+\subsection{Member Data Documentation}
+\mbox{\Hypertarget{class_test_cube_collision_a3cd9b6464419d2c5a26bfc42d120819c}\label{class_test_cube_collision_a3cd9b6464419d2c5a26bfc42d120819c}} 
+\index{Test\+Cube\+Collision@{Test\+Cube\+Collision}!mscale@{mscale}}
+\index{mscale@{mscale}!Test\+Cube\+Collision@{Test\+Cube\+Collision}}
+\subsubsection{\texorpdfstring{mscale}{mscale}}
+{\footnotesize\ttfamily float Test\+Cube\+Collision\+::mscale = 0.\+0f}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/\+Users/matya/\+A\+V\+T7/src/objects/\hyperlink{_test_cube_collision_8h}{Test\+Cube\+Collision.\+h}\end{DoxyCompactItemize}

@@ -1,0 +1,129 @@
+\hypertarget{class_dynamic_game_object}{}\section{Dynamic\+Game\+Object Class Reference}
+\label{class_dynamic_game_object}\index{Dynamic\+Game\+Object@{Dynamic\+Game\+Object}}
+
+
+{\ttfamily \#include $<$Dynamic\+Game\+Object.\+h$>$}
+
+Inheritance diagram for Dynamic\+Game\+Object\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.758621cm]{class_dynamic_game_object}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_dynamic_game_object_ab7d7036c283760e0035d39713a82016a}{Dynamic\+Game\+Object} (\hyperlink{class_vector3}{Vector3} pos, \hyperlink{class_vector3}{Vector3} min, \hyperlink{class_vector3}{Vector3} max, \hyperlink{_game_object_8h_a57678b60d65afb213d04a6b090c64a08}{Game\+Object\+Type} type, \hyperlink{class_vector3}{Vector3} \hyperlink{class_dynamic_game_object_a54cb8a3a5fe8314cd5751f223b2b49ae}{speed})
+\item 
+\hyperlink{class_vector3}{Vector3} \hyperlink{class_dynamic_game_object_a22d2cededc50901db950ac23b46e4d42}{get\+Speed} () final
+\item 
+void \hyperlink{class_dynamic_game_object_aaa505b57d131bbbce44d500ec2ca0e83}{update} (int \hyperlink{_game_manager_8h_afea6a95c7a1c119b7106a4c735eb259d}{delta\+Time}) override
+\item 
+virtual float \hyperlink{class_dynamic_game_object_a677f4bdcd11800fee831a13234382619}{get\+Speed\+Multiplier} () const
+\item 
+virtual void \hyperlink{class_dynamic_game_object_a7bf254357b0d2491044d175afdc36ca4}{set\+Speed\+Multiplier} (float new\+Speed\+Mult)
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_vector3}{Vector3} \hyperlink{class_dynamic_game_object_a54cb8a3a5fe8314cd5751f223b2b49ae}{speed}
+\item 
+\hyperlink{class_vector3}{Vector3} \hyperlink{class_dynamic_game_object_a43bcea908ce101c1060dfec7eb3099a9}{init\+Speed}
+\item 
+\hyperlink{class_vector3}{Vector3} \hyperlink{class_dynamic_game_object_a3bb99e52ae5e37dd3b309e80c2262c82}{init\+Pos}
+\item 
+float \hyperlink{class_dynamic_game_object_a0816663ea0effab6d4b441600aa38b59}{environment\+Speed\+Multiplier} = 1.\+0f
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_dynamic_game_object_ab7d7036c283760e0035d39713a82016a}\label{class_dynamic_game_object_ab7d7036c283760e0035d39713a82016a}} 
+\index{Dynamic\+Game\+Object@{Dynamic\+Game\+Object}!Dynamic\+Game\+Object@{Dynamic\+Game\+Object}}
+\index{Dynamic\+Game\+Object@{Dynamic\+Game\+Object}!Dynamic\+Game\+Object@{Dynamic\+Game\+Object}}
+\subsubsection{\texorpdfstring{Dynamic\+Game\+Object()}{DynamicGameObject()}}
+{\footnotesize\ttfamily Dynamic\+Game\+Object\+::\+Dynamic\+Game\+Object (\begin{DoxyParamCaption}\item[{\hyperlink{class_vector3}{Vector3}}]{pos,  }\item[{\hyperlink{class_vector3}{Vector3}}]{min,  }\item[{\hyperlink{class_vector3}{Vector3}}]{max,  }\item[{\hyperlink{_game_object_8h_a57678b60d65afb213d04a6b090c64a08}{Game\+Object\+Type}}]{type,  }\item[{\hyperlink{class_vector3}{Vector3}}]{speed }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_dynamic_game_object_a22d2cededc50901db950ac23b46e4d42}\label{class_dynamic_game_object_a22d2cededc50901db950ac23b46e4d42}} 
+\index{Dynamic\+Game\+Object@{Dynamic\+Game\+Object}!get\+Speed@{get\+Speed}}
+\index{get\+Speed@{get\+Speed}!Dynamic\+Game\+Object@{Dynamic\+Game\+Object}}
+\subsubsection{\texorpdfstring{get\+Speed()}{getSpeed()}}
+{\footnotesize\ttfamily \hyperlink{class_vector3}{Vector3} Dynamic\+Game\+Object\+::get\+Speed (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [final]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \hyperlink{class_game_object_ac08043ba5563ecbd118e522169f7f919}{Game\+Object}.
+
+\mbox{\Hypertarget{class_dynamic_game_object_a677f4bdcd11800fee831a13234382619}\label{class_dynamic_game_object_a677f4bdcd11800fee831a13234382619}} 
+\index{Dynamic\+Game\+Object@{Dynamic\+Game\+Object}!get\+Speed\+Multiplier@{get\+Speed\+Multiplier}}
+\index{get\+Speed\+Multiplier@{get\+Speed\+Multiplier}!Dynamic\+Game\+Object@{Dynamic\+Game\+Object}}
+\subsubsection{\texorpdfstring{get\+Speed\+Multiplier()}{getSpeedMultiplier()}}
+{\footnotesize\ttfamily virtual float Dynamic\+Game\+Object\+::get\+Speed\+Multiplier (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \hyperlink{class_game_object_a577ca32504b1551f75e1724219c4f6cf}{Game\+Object}.
+
+\mbox{\Hypertarget{class_dynamic_game_object_a7bf254357b0d2491044d175afdc36ca4}\label{class_dynamic_game_object_a7bf254357b0d2491044d175afdc36ca4}} 
+\index{Dynamic\+Game\+Object@{Dynamic\+Game\+Object}!set\+Speed\+Multiplier@{set\+Speed\+Multiplier}}
+\index{set\+Speed\+Multiplier@{set\+Speed\+Multiplier}!Dynamic\+Game\+Object@{Dynamic\+Game\+Object}}
+\subsubsection{\texorpdfstring{set\+Speed\+Multiplier()}{setSpeedMultiplier()}}
+{\footnotesize\ttfamily virtual void Dynamic\+Game\+Object\+::set\+Speed\+Multiplier (\begin{DoxyParamCaption}\item[{float}]{new\+Speed\+Mult }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \hyperlink{class_game_object_ab3d0617433250c19ccbb64bfca1bb905}{Game\+Object}.
+
+
+
+Reimplemented in \hyperlink{class_player_a9098e6b411ea9102b02bb911eca6515b}{Player}.
+
+\mbox{\Hypertarget{class_dynamic_game_object_aaa505b57d131bbbce44d500ec2ca0e83}\label{class_dynamic_game_object_aaa505b57d131bbbce44d500ec2ca0e83}} 
+\index{Dynamic\+Game\+Object@{Dynamic\+Game\+Object}!update@{update}}
+\index{update@{update}!Dynamic\+Game\+Object@{Dynamic\+Game\+Object}}
+\subsubsection{\texorpdfstring{update()}{update()}}
+{\footnotesize\ttfamily void Dynamic\+Game\+Object\+::update (\begin{DoxyParamCaption}\item[{int}]{delta\+Time }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \hyperlink{class_game_object_a6dc5215a3d0efc7a9e2332006b31c868}{Game\+Object}.
+
+
+
+Reimplemented in \hyperlink{class_turtle_a6d62e3f4e21f5ce3ffb4e7e2a8a9da1b}{Turtle}, \hyperlink{class_player_a51e705a6ad3628144e02832d1839b360}{Player}, \hyperlink{class_bus_ad07157ce2a50211ea599d040da7a4517}{Bus}, \hyperlink{class_test_cube_collision_ae528ac632377372d93964c938748fddf}{Test\+Cube\+Collision}, and \hyperlink{class_target_a5f3b2dc70e8065e53199ab3244059ba7}{Target}.
+
+
+
+\subsection{Member Data Documentation}
+\mbox{\Hypertarget{class_dynamic_game_object_a0816663ea0effab6d4b441600aa38b59}\label{class_dynamic_game_object_a0816663ea0effab6d4b441600aa38b59}} 
+\index{Dynamic\+Game\+Object@{Dynamic\+Game\+Object}!environment\+Speed\+Multiplier@{environment\+Speed\+Multiplier}}
+\index{environment\+Speed\+Multiplier@{environment\+Speed\+Multiplier}!Dynamic\+Game\+Object@{Dynamic\+Game\+Object}}
+\subsubsection{\texorpdfstring{environment\+Speed\+Multiplier}{environmentSpeedMultiplier}}
+{\footnotesize\ttfamily float Dynamic\+Game\+Object\+::environment\+Speed\+Multiplier = 1.\+0f}
+
+\mbox{\Hypertarget{class_dynamic_game_object_a3bb99e52ae5e37dd3b309e80c2262c82}\label{class_dynamic_game_object_a3bb99e52ae5e37dd3b309e80c2262c82}} 
+\index{Dynamic\+Game\+Object@{Dynamic\+Game\+Object}!init\+Pos@{init\+Pos}}
+\index{init\+Pos@{init\+Pos}!Dynamic\+Game\+Object@{Dynamic\+Game\+Object}}
+\subsubsection{\texorpdfstring{init\+Pos}{initPos}}
+{\footnotesize\ttfamily \hyperlink{class_vector3}{Vector3} Dynamic\+Game\+Object\+::init\+Pos}
+
+\mbox{\Hypertarget{class_dynamic_game_object_a43bcea908ce101c1060dfec7eb3099a9}\label{class_dynamic_game_object_a43bcea908ce101c1060dfec7eb3099a9}} 
+\index{Dynamic\+Game\+Object@{Dynamic\+Game\+Object}!init\+Speed@{init\+Speed}}
+\index{init\+Speed@{init\+Speed}!Dynamic\+Game\+Object@{Dynamic\+Game\+Object}}
+\subsubsection{\texorpdfstring{init\+Speed}{initSpeed}}
+{\footnotesize\ttfamily \hyperlink{class_vector3}{Vector3} Dynamic\+Game\+Object\+::init\+Speed}
+
+\mbox{\Hypertarget{class_dynamic_game_object_a54cb8a3a5fe8314cd5751f223b2b49ae}\label{class_dynamic_game_object_a54cb8a3a5fe8314cd5751f223b2b49ae}} 
+\index{Dynamic\+Game\+Object@{Dynamic\+Game\+Object}!speed@{speed}}
+\index{speed@{speed}!Dynamic\+Game\+Object@{Dynamic\+Game\+Object}}
+\subsubsection{\texorpdfstring{speed}{speed}}
+{\footnotesize\ttfamily \hyperlink{class_vector3}{Vector3} Dynamic\+Game\+Object\+::speed}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/\+Users/matya/\+A\+V\+T7/src/\hyperlink{_dynamic_game_object_8h}{Dynamic\+Game\+Object.\+h}\end{DoxyCompactItemize}
