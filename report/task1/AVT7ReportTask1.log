@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.99999 (TeX Live 2018) (preloaded format=xelatex 2019.1.16)  30 OCT 2019 23:25
+This is XeTeX, Version 3.14159265-2.6-0.99999 (TeX Live 2018) (preloaded format=xelatex 2019.1.16)  31 OCT 2019 11:30
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -760,14 +760,16 @@ File: images/image5.png Graphic file (type bmp)
 <images/image5.png>
 
 [3]
+File: images/textures.png Graphic file (type bmp)
+<images/textures.png>
 File: images/image2.png Graphic file (type bmp)
 <images/image2.png>
  [4] (./AVT7ReportTask1.aux) ) 
 Here is how much of TeX's memory you used:
- 16105 strings out of 492970
- 321028 string characters out of 6133938
+ 16109 strings out of 492970
+ 321110 string characters out of 6133938
  392806 words of memory out of 5000000
- 20003 multiletter control sequences out of 15000+600000
+ 20006 multiletter control sequences out of 15000+600000
  536728 words of font info for 62 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  39i,6n,33p,10485b,239s stack positions out of 5000i,500n,10000p,200000b,80000s
