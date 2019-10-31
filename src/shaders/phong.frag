@@ -33,11 +33,9 @@ in Data {
     vec2 tex_coord;
 } DataIn;
 
-
-
 vec3 getFog( in vec3 rgb, in float distance) {
-    float fogAmount = exp(-distance*0.03);
-    vec3 fogColor = vec3(0.4, 0.5, 0.6);
+    float fogAmount = exp(-distance*0.04);
+    vec3 fogColor = vec3(0.5, 0.6, 0.7);
     return mix(fogColor, rgb, fogAmount);
 }
 

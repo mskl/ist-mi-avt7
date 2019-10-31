@@ -55,9 +55,9 @@ GLint pvm_uniformId;
 GLint vm_uniformId;
 GLint normal_uniformId;
 
-// Fog
+// Fog enabled is int used as a boolean
 GLint fog_enabled_id;
-GLint fog_enabled = 1;
+GLint fog_enabled = 0;
 
 // Light GLSL stuff
 GLint l_pos_id[8];  // pointers to shader variables
