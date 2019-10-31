@@ -33,6 +33,7 @@ public:
     }
 
     void render() override {
+        renderTexture(texMode_uniformId, 0);
         pushMatrix(MODEL);
             renderMaterials(ids[0]);
             translate(MODEL, -13 / 2, 0, 7);

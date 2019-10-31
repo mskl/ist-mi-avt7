@@ -62,6 +62,8 @@ public:
     }
 
     void render() override {
+        renderTexture(texMode_uniformId, 0);
+
         renderMaterials(ids[0]);
         pushMatrix(MODEL);
             if (isGoingRight){;

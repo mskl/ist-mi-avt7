@@ -151,6 +151,7 @@ public:
         else if (lastJumpDir.x == 0 && lastJumpDir.z == 1) rotation = 180;
         else if (lastJumpDir.x == 0 && lastJumpDir.z == -1) rotation = 0;
 
+        renderTexture(texMode_uniformId, 0);
         pushMatrix(MODEL);
             // Body
             renderMaterials(ids[0]);

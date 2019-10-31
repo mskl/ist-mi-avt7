@@ -27,6 +27,7 @@ public:
     }
 
     void render() override {
+        renderTexture(texMode_uniformId, 0);
         pushMatrix(MODEL);
             translate(MODEL, position.x , position.y, position.z);
             renderMaterials(ids[0]);

@@ -36,13 +36,13 @@ AMaterial mat_car       = AMaterial(amb, yellow, spec_matte, black, 10, 0);
 AMaterial mat_car_wheel = AMaterial(amb, black, spec_matte, black, 10, 0);
 
 
-AMaterial mat_ground    = AMaterial(amb, green, spec_matte, black, 10, 0);
-AMaterial mat_river     = AMaterial(amb, blue, spec_matte, black, 10, 0);
+AMaterial mat_ground    = AMaterial(amb, green, spec_matte, black, 10, 3);
+AMaterial mat_river     = AMaterial(amb, blue, spec_matte, black, 10, 2);
 AMaterial mat_log       = AMaterial(amb, brown, spec_matte, black, 10, 0);
 AMaterial mat_turtle       = AMaterial(amb, green, spec_matte, black, 10, 0);
 AMaterial mat_turtle_dark       = AMaterial(amb, green_dark, spec_matte, black, 10, 0);
 AMaterial mat_sidewalls = AMaterial(amb, grey, spec_matte, black, 10, 0);
-AMaterial mat_road      = AMaterial(amb, black, spec_shiny, black, 10, 0);
+AMaterial mat_road      = AMaterial(amb, black, spec_shiny, black, 10, 1);
 AMaterial mat_coord_x   = AMaterial(blue, blue, spec_matte, black, 10, 0);
 AMaterial mat_coord_y   = AMaterial(yellow, yellow, spec_matte, black, 10, 0);
 AMaterial mat_coord_z   = AMaterial(green, green, spec_matte, black, 10, 0);

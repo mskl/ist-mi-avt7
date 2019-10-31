@@ -1,12 +1,20 @@
 #version 330
 
+uniform sampler2D texmap;
+uniform sampler2D texmap1;
+uniform sampler2D texmap2;
+uniform sampler2D texmap3;
+
+uniform int texMode;
+out vec4 colorOut;
+
 struct Materials {
     vec4 diffuse;
     vec4 ambient;
     vec4 specular;
     vec4 emissive;
     float shininess;
-    int texCount;
+    int texcount;
 };
 
 // Stuff used for fog computation
@@ -25,7 +33,12 @@ in Data {
     vec3 normal;
     vec3 eye;
     vec3 lightDir[8];
+    vec2 tex_coord;
 } DataIn;
+
+in vec4 pos; // Used for fog computation
+uniform int fogEnabled;
+
 
 vec3 getFog( in vec3 rgb, in float distance) {
     float fogAmount = exp(-distance*0.03);
@@ -41,6 +54,7 @@ void main() {
 
     float intensity = 0.0f;
     vec4 spec = vec4(0.0);
+    vec4 texel, texel1;
 
     // Calculate the lights output for all of the lights
     for (int i = 0; i < 8; i++) {
@@ -80,12 +94,27 @@ void main() {
         }
     }
 
-    colorOut = max((intensity * mat.diffuse + spec), mat.ambient);
+    if(mat.texcount == 1)
+        texel = texture(texmap, DataIn.tex_coord);
+    else if(mat.texcount == 2)
+        texel = texture(texmap1, DataIn.tex_coord);
+    else if(mat.texcount == 3)
+        texel = texture(texmap2, DataIn.tex_coord);
 
+    if(texMode == 0){
+        colorOut = max((intensity * mat.diffuse + spec), mat.ambient);
+    }else if(texMode == 2){
+        colorOut = intensity*texel + spec;
+    }else if(texMode == 3){ //Text
+        vec4 cor = vec4(1,1,1,1);
+        vec4 texcolol = texture(texmap3, DataIn.tex_coord);
+        if(texcolol[0]+texcolol[1]+texcolol[2] < 2.5) discard;
+        colorOut = texcolol*cor;
+    }
     // Mix the fog with the final color of the fragment
-    if (fogEnabled == 1) {
+    /*if (fogEnabled == 1) {
         float dist = length(pos);
         vec3 fogged = getFog(colorOut.rgb, dist);
-        colorOut = vec4(fogged, 1);
-    }
+        colorOut = vec4( fogged , 1);
+    }*/
 }

@@ -30,6 +30,7 @@ public:
     }
 
     void render() override {
+        renderTexture(texMode_uniformId, 0);
         GLint curTime = glutGet(GLUT_ELAPSED_TIME);
         pushMatrix(MODEL);
             translate(MODEL, position.x, position.y, position.z);

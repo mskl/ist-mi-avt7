@@ -31,6 +31,7 @@ public:
     }
 
     void render() final {
+        renderTexture(texMode_uniformId, 0);
         renderMaterials(ids[0]);
         pushMatrix(MODEL);
             translate(MODEL, position.x, position.y, position.z);

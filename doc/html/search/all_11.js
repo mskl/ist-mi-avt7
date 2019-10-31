@@ -13,7 +13,7 @@ var searchData=
   ['tex_5floc3',['tex_loc3',['../_game_manager_8h.html#a4a7ceb626c72d8afcb5c45fd8baca498',1,'GameManager.h']]],
   ['tex_5floc4',['tex_loc4',['../_game_manager_8h.html#a69e2f5370c1434984eef245400fec538',1,'GameManager.h']]],
   ['texcoords',['texCoords',['../cube_8h.html#a9836a66aa143672900c1e99623792f5c',1,'cube.h']]],
-  ['texcount',['texCount',['../struct_material.html#ad0964c5d437284a4dc9cfbe6e6dcafcc',1,'Material::texCount()'],['../struct_a_material.html#a188a4f0c36c5a95beaa4d99f38ee098f',1,'AMaterial::texcount()']]],
+  ['texcount',['texcount',['../struct_material.html#ad0964c5d437284a4dc9cfbe6e6dcafcc',1,'Material::texcount()'],['../struct_a_material.html#a188a4f0c36c5a95beaa4d99f38ee098f',1,'AMaterial::texcount()']]],
   ['texmode_5funiformid',['texMode_uniformId',['../_game_manager_8h.html#a9cf98f4bf781468e4337cc440a5f90ed',1,'texMode_uniformId():&#160;GameManager.h'],['../_road_8h.html#a9cf98f4bf781468e4337cc440a5f90ed',1,'texMode_uniformId():&#160;GameManager.h']]],
   ['textfileread',['textFileRead',['../class_v_s_shader_lib.html#a7e9e011a122f2c0956ba6c885864b00b',1,'VSShaderLib']]],
   ['texture_5fcoord_5fattrib',['TEXTURE_COORD_ATTRIB',['../class_v_s_shader_lib.html#ac4141d01d0c856c9ca456e51afd9a2c5a04a13d475dac56d907d91b3b83716f7c',1,'VSShaderLib::TEXTURE_COORD_ATTRIB()'],['../_vertex_attr_def_8h.html#a93e555e944321b163ad6e79d21f87786a0299f8a91038df13af10accfee44b190',1,'TEXTURE_COORD_ATTRIB():&#160;VertexAttrDef.h']]],

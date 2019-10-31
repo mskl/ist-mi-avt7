@@ -13,13 +13,13 @@ struct AMaterial {
     float shininess;
     int texcount;
 
-    AMaterial(float* n_amb, float* n_diff, float* n_spec, float* n_emmisive, float n_shininess, int n_texCount) {
+    AMaterial(float* n_amb, float* n_diff, float* n_spec, float* n_emmisive, float n_shininess, int n_texcount) {
         amb = n_amb;
         diff = n_diff;
         spec = n_spec;
         emissive = n_emmisive;
         shininess = n_shininess;
-        texcount = n_texCount;
+        texcount = n_texcount;
     }
 };
 

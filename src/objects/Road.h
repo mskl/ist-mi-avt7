@@ -27,7 +27,7 @@ public:
             pushMatrix(MODEL);
                 renderMaterials(ids[0]);
                 translate(MODEL, -13 / 2, 0, 1);
-                renderTexture(texMode_uniformId);
+                renderTexture(texMode_uniformId, 2);
                 scale(MODEL, 13, 1, 5);
                 buildVAO(ids[0]);
             popMatrix(MODEL);
