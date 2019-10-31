@@ -83,19 +83,24 @@ After each physics update, the collisions are checked by the GameManager class. 
 In order to check what's beneath of the player, the player's GameObject contains 2 colliders. One on the top for collisions with cars and busses and one beneath to check whether the player is standing on a log or a turtle.
 
 \section{Texture mapping}
-Due to time constraints of our team members, texture mapping was not implemented. We hope to change this before the next iteration of the project.
+Due to time constraints of our team members, texture mapping was not implemented at the date when the project was showcased in the lab. However we have \emph{implemented the texturing} while this report was also written. The textures are handled using the TGA texture class.
+\begin{figure}[!htb]
+	\centering
+  	\includegraphics[width=0.85\linewidth]{images/textures.png}
+  	\caption{Textures in the game.}
+\end{figure}
+
 
 \section{HUD (lives, score, reset, pause)}
-We utilized the game window's title to communicate with the player. This is done by accessing the GLUT's window handle and passing a string into it. Game window therefore shows the information about the current lives, score and provides the user with instructions when the player dies.
+We utilized the game window's title to communicate with the player. This is done by accessing the GLUT's window handle and passing a string into it. Game window therefore shows the information about the current lives, score and provides the user with instructions when the player dies. This can be seen on the image below.
 
 \begin{figure}[!htb]
 	\centering
   	\includegraphics[width=\linewidth]{images/image2.png}
-  	\caption{Example of the implemented HUD.}
 \end{figure}
 
 
 \section{Conclusion}
-We have implemented a functional prototype of a Frogger3D game in OpenGL. Matyáš Skalický is responsible for the overall architecture, physics and lights. Mykhaylo Marfeychuk worked on collision detections, object modeling, respawning and animation. Bernardo Eichler was not able to contribute to this assignment due to personal reasons. We hope that this will be not the case of the following assignments.
+We have implemented a functional prototype of a Frogger3D game in OpenGL. Matyáš Skalický is responsible for the overall architecture, physics and lights. Mykhaylo Marfeychuk worked on collision detections, object modeling, respawning, animation and texturing. Bernardo Eichler was not able to contribute to this assignment due to personal reasons. We hope that this will be not the case of the following assignments. Since the showcase of the project at the laboratory, we have implemented the missing textures.
 
 \end{document}  
