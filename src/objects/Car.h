@@ -52,6 +52,8 @@ public:
 
     void render() override {
         renderMaterials(ids[0]);
+        renderTexture(texMode_uniformId, 0);
+
         pushMatrix(MODEL);
             if (isGoingRight){;
                 translate(MODEL, position.x+1.5, position.y, position.z+1);

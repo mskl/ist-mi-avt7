@@ -27,6 +27,7 @@ public:
     }
 
     void render() override {
+        renderTexture(texMode_uniformId, 2);
         pushMatrix(MODEL);
             // The integral division by 2 is wanted
             pushMatrix(MODEL);

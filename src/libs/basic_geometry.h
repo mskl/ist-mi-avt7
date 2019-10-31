@@ -6,7 +6,7 @@ struct Material{
 	float specular[4];
 	float emissive[4];
 	float shininess;
-	int texCount;
+	int texcount;
 };
 
 // A model can be made of many meshes. Each is stored  in the following structure

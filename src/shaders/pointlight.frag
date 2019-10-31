@@ -8,7 +8,7 @@ struct Materials {
 	vec4 specular;
 	vec4 emissive;
 	float shininess;
-	int texCount;
+	int texcount;
 };
 
 uniform Materials mat;
@@ -33,6 +33,6 @@ void main()
 		float intSpec = max(dot(h,n), 0.0);
 		spec = mat.specular.rgb * pow(intSpec, mat.shininess);
 	}
-	
+
 	colorOut = vec4(max(intensity * mat.diffuse.rgb + spec, mat.ambient.rgb), 1.0);
 }

@@ -48,10 +48,11 @@ protected:
         glUniform4fv(si.loc_dif, 1, mesh[mid].mat.diffuse);
         glUniform4fv(si.loc_spc, 1, mesh[mid].mat.specular);
         glUniform1f(si.loc_shi, mesh[mid].mat.shininess);
+        glUniform1i(si.loc_txcnt, mesh[mid].mat.texcount);
     }
 
-    static void renderTexture(GLint mid){
-        glUniform1i(mid, 0);
+    static void renderTexture(GLint mid, int mode=0){
+        glUniform1i(mid, mode);
     }
 
     static void setMaterial(GLint mid, AMaterial mat) {
@@ -60,7 +61,7 @@ protected:
         memcpy(mesh[mid].mat.specular, mat.spec, 4 * sizeof(float));
         memcpy(mesh[mid].mat.emissive, mat.emissive, 4 * sizeof(float));
         mesh[mid].mat.shininess = mat.shininess;
-        mesh[mid].mat.texCount = mat.texcount;
+        mesh[mid].mat.texcount = mat.texcount;
     }
 
     static ShaderIndices getPointers(GLint mid) {
@@ -72,8 +73,9 @@ protected:
         glUniform4fv(loc_spc, 1, mesh[mid].mat.specular);
         GLint loc_shi = glGetUniformLocation(shader.getProgramIndex(), "mat.shininess");
         glUniform1f(loc_shi, mesh[mid].mat.shininess);
-
-        return {loc_amb, loc_dif, loc_spc, loc_shi};
+        GLint loc_txcnt = glGetUniformLocation(shader.getProgramIndex(), "mat.texcount");
+        glUniform1f(loc_txcnt, mesh[mid].mat.texcount);
+        return {loc_amb, loc_dif, loc_spc, loc_shi, loc_txcnt};
     }
 
     virtual void buildVAO(GLint mid) {

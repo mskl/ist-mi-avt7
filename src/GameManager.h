@@ -38,7 +38,7 @@
 #include "objects/Car.h"
 #include "objects/Turtle.h"
 #include "objects/SceneStencil.h"
-
+#include "libs/TGA.h"
 // Macro to print filename shen using cout
 #define mycout std::cout <<  __FILE__  << "(" << __LINE__ << ") "
 #define cout mycout
@@ -65,9 +65,10 @@ GLint l_enabled_id; // GLSL pointer to the boolean array
 GLint l_enabled[8] = {1, 1, 1, 1, 1, 1, 1, 1};
 GLint l_spot_dir_id;
 
+GLint tex_loc, tex_loc1, tex_loc2;
 GLint texMode_uniformId;
-GLint tex_loc0, tex_loc1, tex_loc2, tex_loc3, tex_loc4;
-GLuint TextureArray[25];
+
+GLuint TextureArray[3];
 
 class GameManager {
 public:
@@ -255,13 +256,16 @@ public:
         glBindAttribLocation(shader.getProgramIndex(), TANGENT_ATTRIB, "tangent");
         glLinkProgram(shader.getProgramIndex());
 
-        texMode_uniformId = glGetUniformLocation(shader.getProgramIndex(), "texMode");
-        tex_loc0 = glGetUniformLocation(shader.getProgramIndex(), "texmap0");
 
         // Get the indexes of stuff
+
+        texMode_uniformId = glGetUniformLocation(shader.getProgramIndex(), "texMode"); // different modes of texturing
         pvm_uniformId = glGetUniformLocation(shader.getProgramIndex(), "m_pvm");
         vm_uniformId = glGetUniformLocation(shader.getProgramIndex(), "m_viewModel");
         normal_uniformId = glGetUniformLocation(shader.getProgramIndex(), "m_normal");
+        tex_loc = glGetUniformLocation(shader.getProgramIndex(), "texmap");
+        tex_loc1 = glGetUniformLocation(shader.getProgramIndex(), "texmap1");
+        tex_loc2 = glGetUniformLocation(shader.getProgramIndex(), "texmap2");
 
         // Get the light indexes
         for (int i = 0; i < 8; i++) {
@@ -282,6 +286,13 @@ public:
 
     void initScene() {
         srand(time(NULL));
+
+        //Texture Object definition
+
+        glGenTextures(3, TextureArray);
+        TGA_Texture(TextureArray, "textures/Road.tga", 0);
+        TGA_Texture(TextureArray, "textures/River.tga", 1);
+        TGA_Texture(TextureArray, "textures/Grass.tga", 2);
 
         createVehicles<Bus>(busses, 4, 1, 1, true, 80, 50);
         createVehicles<Car>(cars, 5, 3, 1, false, 80, 50);
@@ -337,12 +348,28 @@ public:
             exit(1);
         }
 
+
         // Update SpotLight position
         spotLight->position = player->position + Vector3(0.5f, 1.2f, 0.5f);
         spotLight->light_dir = Vector3(0, 0, -1);
 
+
         // Update the fog state
         updateFog();
+
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, TextureArray[0]);
+
+        glActiveTexture(GL_TEXTURE1);
+        glBindTexture(GL_TEXTURE_2D, TextureArray[1]);
+
+        glActiveTexture(GL_TEXTURE2);
+        glBindTexture(GL_TEXTURE_2D, TextureArray[2]);
+
+        //Indicar aos tres samplers do GLSL quais os Texture Units a serem usados
+        glUniform1i(tex_loc, 0);
+        glUniform1i(tex_loc1, 1);
+        glUniform1i(tex_loc2, 2);
 
         // Check for boundaries of the moving objects
         checkVehicleBoundaryCollisions<Bus>(busses);
@@ -390,6 +417,7 @@ public:
         }
 
         // Swap the back and front buffer
+        glBindTexture(GL_TEXTURE_2D, 0);
         glutSwapBuffers();
     }
 
