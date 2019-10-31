@@ -71,7 +71,7 @@ GLint texMode_uniformId;
 GLuint TextureArray[4];
 
 // TEXT THINGS
-int _fontSize = 16;
+float _fontSize = 16;
 GLuint text_vaoID;
 GLuint text_texCoordBuffer;
 GLuint text_vertexBuffer;
@@ -148,7 +148,8 @@ public:
         gameObjects.push_back(new Road());
         gameObjects.push_back(new Ground());
 
-        gameObjects.push_back(new Sidewalls());
+        //gameObjects.push_back(new Sidewalls());
+        gameObjects.push_back(stencil);
 
         // Save the lights to gameObjects
         for (auto &pl : pointLights) {
@@ -301,10 +302,15 @@ public:
         //Texture Object definition
 
         glGenTextures(4, TextureArray);
-        TGA_Texture(TextureArray, "textures/Road.tga", 0);
-        TGA_Texture(TextureArray, "textures/River.tga", 1);
-        TGA_Texture(TextureArray, "textures/Grass.tga", 2);
-        TGA_Texture(TextureArray, "Anno_16x16_2.tga", 3);
+        string road_text = "textures/Road.tga";
+        string river_text = "textures/River.tga";
+        string grass_text = "textures/Grass.tga";
+        string anno_text = "Anno_16x16_2.tga";
+
+        TGA_Texture(TextureArray, (char*)road_text.c_str(), 0);
+        TGA_Texture(TextureArray, (char*)river_text.c_str(), 1);
+        TGA_Texture(TextureArray, (char*)grass_text.c_str(), 2);
+        TGA_Texture(TextureArray, (char*)anno_text.c_str(), 3);
 
         createVehicles<Bus>(busses, 4, 1, 1, true, 80, 50);
         createVehicles<Car>(cars, 5, 3, 1, false, 80, 50);

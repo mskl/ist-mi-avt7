@@ -22,7 +22,7 @@ public:
     void render() override {
         pushMatrix(MODEL);
         renderMaterials(ids[0]);
-        translate(MODEL, 7, -3, -6);
+        translate(MODEL, -6, -3, -6);
         scale(MODEL,     13, 10, 13);
 
         computeDerivedMatrix(PROJ_VIEW_MODEL);

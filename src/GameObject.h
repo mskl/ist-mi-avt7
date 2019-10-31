@@ -18,7 +18,7 @@
 #define mycout std::cout <<  __FILE__  << "(" << __LINE__ << ") "
 #define cout mycout
 
-#define USE_STENCIL 0
+#define USE_STENCIL 1
 
 extern struct MyMesh mesh[];
 extern VSShaderLib shader;
