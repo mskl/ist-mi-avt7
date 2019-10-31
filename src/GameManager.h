@@ -300,7 +300,6 @@ public:
         srand(time(NULL));
 
         //Texture Object definition
-
         glGenTextures(4, TextureArray);
         string road_text = "textures/Road.tga";
         string river_text = "textures/River.tga";
