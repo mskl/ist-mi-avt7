@@ -65,10 +65,20 @@ GLint l_enabled_id; // GLSL pointer to the boolean array
 GLint l_enabled[8] = {1, 1, 1, 1, 1, 1, 1, 1};
 GLint l_spot_dir_id;
 
-GLint tex_loc, tex_loc1, tex_loc2;
+GLint tex_loc, tex_loc1, tex_loc2,tex_loc3;
 GLint texMode_uniformId;
 
-GLuint TextureArray[3];
+GLuint TextureArray[4];
+
+// TEXT THINGS
+int _fontSize = 16;
+GLuint text_vaoID;
+GLuint text_texCoordBuffer;
+GLuint text_vertexBuffer;
+GLint doingText_uniformId;
+GLint doingTextV_uniformId;
+
+
 
 class GameManager {
 public:
@@ -266,6 +276,7 @@ public:
         tex_loc = glGetUniformLocation(shader.getProgramIndex(), "texmap");
         tex_loc1 = glGetUniformLocation(shader.getProgramIndex(), "texmap1");
         tex_loc2 = glGetUniformLocation(shader.getProgramIndex(), "texmap2");
+        tex_loc3 = glGetUniformLocation(shader.getProgramIndex(), "texmap3");
 
         // Get the light indexes
         for (int i = 0; i < 8; i++) {
@@ -289,10 +300,11 @@ public:
 
         //Texture Object definition
 
-        glGenTextures(3, TextureArray);
+        glGenTextures(4, TextureArray);
         TGA_Texture(TextureArray, "textures/Road.tga", 0);
         TGA_Texture(TextureArray, "textures/River.tga", 1);
         TGA_Texture(TextureArray, "textures/Grass.tga", 2);
+        TGA_Texture(TextureArray, "Anno_16x16_2.tga", 3);
 
         createVehicles<Bus>(busses, 4, 1, 1, true, 80, 50);
         createVehicles<Car>(cars, 5, 3, 1, false, 80, 50);
@@ -323,6 +335,84 @@ public:
         }
     }
 
+    void initTextureMappedFont() {
+        float text_vertices[] = {
+                0.0f, 0.0f,
+                _fontSize, 0.0f,
+                _fontSize, _fontSize,
+                0.0f, _fontSize
+        };
+
+        glGenVertexArrays(1, &text_vaoID);
+        glBindVertexArray(text_vaoID);
+        glGenBuffers(1, &text_vertexBuffer);
+        glBindBuffer(GL_ARRAY_BUFFER, text_vertexBuffer);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * 8, &text_vertices[0], GL_STATIC_DRAW);
+        glEnableVertexAttribArray(VERTEX_ATTRIB1);
+        glVertexAttribPointer(VERTEX_ATTRIB1, 2, GL_FLOAT, GL_FALSE, 0, 0);
+
+        //Just initialize with something for now, the tex coords are updated
+        //for each character printed
+        float text_texCoords[] = {
+                0.0f, 0.0f,
+                0.0f, 0.0f,
+                0.0f, 0.0f,
+                0.0f, 0.0f
+        };
+
+        glGenBuffers(1, &text_texCoordBuffer);
+        glBindBuffer(GL_ARRAY_BUFFER, text_texCoordBuffer);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * 8, &text_texCoords[0], GL_DYNAMIC_DRAW);
+        glEnableVertexAttribArray(VERTEX_ATTRIB2);
+        glVertexAttribPointer(VERTEX_ATTRIB2, 2, GL_FLOAT, GL_FALSE, 0, 0);
+
+        //set the orthographic projection matrix
+        //ortho(0.0f, float(WinX), 0.0f, float(WinY), -1.0f, 1.0f);
+    }
+
+    void DrawString(float x, float y, const std::string& str) {
+
+        float text_texCoords[8];
+
+        pushMatrix(MODEL);
+        translate(MODEL, x, y, 0);
+        glBindVertexArray(text_vaoID);
+        // glTranslatef(x, y, 0.0); //Position our text
+        for (std::string::size_type i = 0; i < str.size(); ++i)
+        {
+            const float aux = 1.0f / 16.0f;
+
+            int ch = int(str[i]);
+            float xPos = float(ch % 16) * aux;
+            float yPos = float(ch / 16) * aux;
+
+            text_texCoords[0] = xPos;
+            text_texCoords[1] = 1.0f - yPos - aux;
+
+            text_texCoords[2] = xPos + aux;
+            text_texCoords[3] = 1.0f - yPos - aux;
+
+            text_texCoords[4] = xPos + aux;
+            text_texCoords[5] = 1.0f - yPos - 0.001f;
+
+            text_texCoords[6] = xPos;
+            text_texCoords[7] = 1.0f - yPos - 0.001f;
+
+            glBindBuffer(GL_ARRAY_BUFFER, text_texCoordBuffer);
+            glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(float) * 8, &text_texCoords[0]);
+
+            computeDerivedMatrix(PROJ_VIEW_MODEL);
+            glUniformMatrix4fv(pvm_uniformId, 1, GL_FALSE, mCompMatrix[PROJ_VIEW_MODEL]);
+
+            glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+
+            translate(MODEL, _fontSize * 0.8f, 0.0f, 0.0f);
+        }
+        glBindVertexArray(0);
+        popMatrix(MODEL);
+
+        glEnable(GL_DEPTH_TEST);
+    }
     void renderScene() {
         FrameCount++;
         genDeltaTime();
@@ -366,10 +456,14 @@ public:
         glActiveTexture(GL_TEXTURE2);
         glBindTexture(GL_TEXTURE_2D, TextureArray[2]);
 
+        glActiveTexture(GL_TEXTURE3);
+        glBindTexture(GL_TEXTURE_2D, TextureArray[3]);
+
         //Indicar aos tres samplers do GLSL quais os Texture Units a serem usados
         glUniform1i(tex_loc, 0);
         glUniform1i(tex_loc1, 1);
         glUniform1i(tex_loc2, 2);
+        glUniform1i(tex_loc3, 3);
 
         // Check for boundaries of the moving objects
         checkVehicleBoundaryCollisions<Bus>(busses);
@@ -418,6 +512,25 @@ public:
 
         // Swap the back and front buffer
         glBindTexture(GL_TEXTURE_2D, 0);
+        /*
+        glBlendFunc(GL_ONE, GL_ZERO);
+        glDisable(GL_BLEND);
+        // H U D
+        glDisable(GL_DEPTH_TEST);
+        pushMatrix(MODEL);
+        loadIdentity(VIEW);
+        loadIdentity(MODEL);
+        loadIdentity(PROJECTION);
+        ortho(0, 1280, 0, 1280, 0, 1);
+        glUniform1i(texMode_uniformId, 3);
+
+        _fontSize = 24;
+        initTextureMappedFont();
+        std::string s = "LIVES:dd a da sd sa dsa dashjdhsakdhsakjh" ;
+        DrawString(10, 10, s);
+        //popMatrix(MODEL);
+        glEnable(GL_DEPTH_TEST);
+        */
         glutSwapBuffers();
     }
 

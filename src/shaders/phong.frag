@@ -3,6 +3,7 @@
 uniform sampler2D texmap;
 uniform sampler2D texmap1;
 uniform sampler2D texmap2;
+uniform sampler2D texmap3;
 
 uniform int texMode;
 out vec4 colorOut;
@@ -89,12 +90,17 @@ void main() {
     else if(mat.texcount == 2)
         texel = texture(texmap1, DataIn.tex_coord);
     else if(mat.texcount == 3)
-    texel = texture(texmap2, DataIn.tex_coord);
+        texel = texture(texmap2, DataIn.tex_coord);
 
     if(texMode == 0){
         colorOut = max((intensity * mat.diffuse + spec), mat.ambient);
     }else if(texMode == 2){
         colorOut = intensity*texel + spec;
+    }else if(texMode == 3){ //Text
+        vec4 cor = vec4(1,1,1,1);
+        vec4 texcolol = texture(texmap3, DataIn.tex_coord);
+        if(texcolol[0]+texcolol[1]+texcolol[2] < 2.5) discard;
+        colorOut = texcolol*cor;
     }
     // Mix the fog with the final color of the fragment
     /*if (fogEnabled == 1) {
