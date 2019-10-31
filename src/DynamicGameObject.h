@@ -27,8 +27,8 @@ public:
         return speed * environmentSpeedMultiplier;
     }
 
-    void update(int deltaTime) override {
-        position = position + speed*(1.0f/(float)deltaTime)*environmentSpeedMultiplier;
+    void update(float deltaTime) override {
+        position = position + speed * deltaTime * environmentSpeedMultiplier;
     }
 
     virtual float getSpeedMultiplier() const {

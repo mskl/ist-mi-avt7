@@ -23,7 +23,7 @@ void TGA_Texture(unsigned int *textureArray, char *strFileName, int ID)
 	textureType = GL_RGB;
 	if(pBitMap->channels == 4)	textureType = GL_RGBA;
 
-	//ATENCAO:Não funciona usar no parametro internal format da funcao o numero de canais. Tem de ser uma cont simbolica: GL_RGB ou GL_RGBA
+	//ATENCAO:Nï¿½o funciona usar no parametro internal format da funcao o numero de canais. Tem de ser uma cont simbolica: GL_RGB ou GL_RGBA
 	//glTexImage2D(GL_TEXTURE_2D,0, pBitMap->channels, pBitMap->size_x, pBitMap->size_y, 0,textureType, GL_UNSIGNED_BYTE, pBitMap->data);
 	
 	glTexImage2D(GL_TEXTURE_2D,0, textureType, pBitMap->size_x, pBitMap->size_y, 0,textureType, GL_UNSIGNED_BYTE, pBitMap->data);
@@ -31,7 +31,6 @@ void TGA_Texture(unsigned int *textureArray, char *strFileName, int ID)
 	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-
 	
 	if (pBitMap)									
 	{

@@ -70,8 +70,8 @@ public:
         }
     }
 
-    void update(int deltaTime) final {
-        Vector3 deltaSpeed = speed *(1.0f/(float)deltaTime);
+    void update(float deltaTime) final {
+        Vector3 deltaSpeed = speed * deltaTime;
 
         // Player is on a log staged for a jump
         if (playerState == JUMPSTAGED) {

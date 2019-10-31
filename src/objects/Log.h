@@ -49,7 +49,7 @@ public:
         position = initPos;
     }
 
-    void update(int deltaTime) override {
+    void update(float deltaTime) override {
         if (animationEnabled) {
             GLint currentTime = glutGet(GLUT_ELAPSED_TIME);
             prevTime = currentTime;

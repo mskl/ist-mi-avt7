@@ -6,7 +6,6 @@
 #define AVT7_GAMEOBJECT_H
 
 #include "libs/basic_geometry.h"
-#include <tuple>
 #include "Vector3.h"
 #include "ShaderIndices.h"
 #include "BoundingBox.h"
@@ -121,7 +120,7 @@ public:
 
     virtual void render() { }
 
-    virtual void update(int deltaTime) { }
+    virtual void update(float deltaTime) { }
 
     // --------------------------------- following methods are meant to be overriden -------------------------------- //
     virtual GameObjectType getType() {

@@ -21,10 +21,10 @@ public:
         createCube(ids.back());
     }
 
-    void update(int deltaTime) final {
+    void update(float deltaTime) final {
         if (animationEnabled) {
             // Rotate the cube
-            angle +=50* (1.0f/(float)deltaTime);
+            angle +=50* (deltaTime);
         }
 
         DynamicGameObject::update(deltaTime);

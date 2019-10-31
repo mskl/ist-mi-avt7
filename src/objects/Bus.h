@@ -53,9 +53,9 @@ public:
         createCube(ids.back());
     }
 
-    void update(int deltaTime) final {
+    void update(float deltaTime) final {
         if (animationEnabled) {
-            angle -=50*abs(speed.x)* (1.0f/(float)deltaTime);
+            angle -=50*abs(speed.x)* (deltaTime);
         }
 
         DynamicGameObject::update(deltaTime);

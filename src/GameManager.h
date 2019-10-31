@@ -269,8 +269,8 @@ public:
 
 
         // Get the indexes of stuff
-
-        texMode_uniformId = glGetUniformLocation(shader.getProgramIndex(), "texMode"); // different modes of texturing
+        // different modes of texturing
+        texMode_uniformId = glGetUniformLocation(shader.getProgramIndex(), "texMode");
         pvm_uniformId = glGetUniformLocation(shader.getProgramIndex(), "m_pvm");
         vm_uniformId = glGetUniformLocation(shader.getProgramIndex(), "m_viewModel");
         normal_uniformId = glGetUniformLocation(shader.getProgramIndex(), "m_normal");
@@ -487,7 +487,7 @@ public:
 
                 // Update the physics
                 if (isPlaying){
-                    go->update(deltaTime);
+                    go->update(float(deltaTime/200.0f));
                 }
 
                 if (go->position != player->position) {
