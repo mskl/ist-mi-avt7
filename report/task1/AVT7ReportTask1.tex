@@ -27,7 +27,7 @@
 \maketitle
 
 \section{Overall project structure}
-The main class which is responsible for managing all of the game is the GameManager. The GameManager is created and from the \textit{main.cpp} and all of the game logic is done there. But first we initialize GLUT, GLEW, and create a window. Functions of the GameManager such as keyboard inputs, mouse handling, screen resizing and rendering are registered as GLUT callbacks.
+The main class which is responsible for managing all of the game is the GameManager. The GameManager is created and initialized from the \textit{main.cpp} and all of the game logic is done there. But first we initialize GLUT, GLEW, and create a window. Functions of the GameManager such as keyboard inputs, mouse handling, screen resizing and rendering are registered as GLUT callbacks.
 
 All game elements inherit from the base GameObject class. This class stores the position of the object and defines several virtual functions. For example, objects which are dynamic (DynamicGameObject) then override some of the virtual functions (such as render or update) in order to add further functionality. Other example is the CollidableGameObject which implements collisions. Full GameObject inheritance tree is visualized on the Figure below.
 
