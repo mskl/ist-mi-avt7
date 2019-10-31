@@ -1,12 +1,10 @@
 #version 330
 
+uniform int texMode;
 uniform sampler2D texmap;
 uniform sampler2D texmap1;
 uniform sampler2D texmap2;
 uniform sampler2D texmap3;
-
-uniform int texMode;
-out vec4 colorOut;
 
 struct Materials {
     vec4 diffuse;
@@ -17,17 +15,16 @@ struct Materials {
     int texcount;
 };
 
+// Output color from the shader
+out vec4 colorOut;
+uniform Materials mat;
+
 // Stuff used for fog computation
 in vec4 pos;
 uniform int fogEnabled;
 
 // Stuff used by lights
 uniform vec4 l_spot_dir;
-
-// Output color from the shader
-out vec4 colorOut;
-
-uniform Materials mat;
 
 in Data {
     vec3 normal;
@@ -36,8 +33,6 @@ in Data {
     vec2 tex_coord;
 } DataIn;
 
-in vec4 pos; // Used for fog computation
-uniform int fogEnabled;
 
 
 vec3 getFog( in vec3 rgb, in float distance) {
@@ -111,10 +106,11 @@ void main() {
         if(texcolol[0]+texcolol[1]+texcolol[2] < 2.5) discard;
         colorOut = texcolol*cor;
     }
+
     // Mix the fog with the final color of the fragment
-    /*if (fogEnabled == 1) {
+    if (fogEnabled == 1) {
         float dist = length(pos);
         vec3 fogged = getFog(colorOut.rgb, dist);
         colorOut = vec4( fogged , 1);
-    }*/
+    }
 }
