@@ -5,22 +5,30 @@
 #ifndef AVT7_SIDECOLLIDER_H
 #define AVT7_SIDECOLLIDER_H
 
+#include <assert.h>
 #include "../DynamicGameObject.h"
-
-enum SideColliderSide {LEFT, RIGHT};
 
 class SideCollider: public DynamicGameObject {
 public:
-    explicit SideCollider(SideColliderSide side)
-            : DynamicGameObject(Vector3(), Vector3(), Vector3(), BOUNDS,  Vector3(), false){
-        if (side == LEFT) {
-            boundingBox.vecMin = Vector3(-7, -3, -7);
-            boundingBox.vecMax = Vector3(-6, 3, -6);
-        } else if (side == RIGHT) {
-            boundingBox.vecMin = Vector3(7, -3, -6);
-            boundingBox.vecMax = Vector3(8, 3, 7);
-        }
+    explicit SideCollider(Vector3 min, Vector3 max, GameObjectType goType)
+            : DynamicGameObject(Vector3(), min, max, goType,  Vector3(), false){
+        assert(goType == BOUNDS || goType == DEADLYBOUNDS);
     }
+
+    /*
+    void init() override {
+        ids.push_back(idCount+=1);
+        setMaterial(ids.back(), mat_player_mouth);
+        createCubeMinMax(ids.back(), this->boundingBox.vecMin, this->boundingBox.vecMax);
+    }
+
+    void render() override {
+        pushMatrix(MODEL);
+        renderMaterials(ids[0]);
+        buildVAO(ids[0]);
+        popMatrix(MODEL);
+    }
+    */
 };
 
 /**/

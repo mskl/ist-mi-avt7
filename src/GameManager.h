@@ -38,6 +38,7 @@
 #include "objects/Car.h"
 #include "objects/Turtle.h"
 #include "objects/SceneStencil.h"
+#include "objects/SideCollider.h"
 #include "libs/TGA.h"
 // Macro to print filename shen using cout
 #define mycout std::cout <<  __FILE__  << "(" << __LINE__ << ") "
@@ -77,7 +78,6 @@ GLuint text_texCoordBuffer;
 GLuint text_vertexBuffer;
 GLint doingText_uniformId;
 GLint doingTextV_uniformId;
-
 
 
 class GameManager {
@@ -148,6 +148,10 @@ public:
         gameObjects.push_back(new Road());
         gameObjects.push_back(new Ground());
 
+        // First deadly right, then deadly left
+        gameObjects.push_back(new SideCollider(Vector3(7, -3, -5), Vector3(8, 3, 0), DEADLYBOUNDS));
+        gameObjects.push_back(new SideCollider(Vector3(-7, -3, -5), Vector3(-6, 3, 0), DEADLYBOUNDS));
+
         //gameObjects.push_back(new Sidewalls());
         gameObjects.push_back(stencil);
 
@@ -163,8 +167,7 @@ public:
         gameObjects.push_back(target);
     }
 
-    void changeSize(int w, int h)
-    {
+    void changeSize(int w, int h) {
         float ratio;
         // Prevent a divide by zero, when window is too short
         if (h == 0) h = 1;
@@ -176,8 +179,7 @@ public:
         selectCamera(currentCameraType);
     }
 
-    void processKeys(unsigned char key, int xx, int yy)
-    {
+    void processKeys(unsigned char key, int xx, int yy) {
         switch(key) {
             // Escape exits the game
             case 27: glutLeaveMainLoop(); break;
@@ -247,7 +249,7 @@ public:
         }
 
         lastMoveTime = curTime;
-        player->jump(moveVec, 0.5f);
+        player->jump(moveVec, 1.0f);
     }
 
     GLuint setupShaders() {
@@ -256,8 +258,7 @@ public:
         shader.loadShader(VSShaderLib::VERTEX_SHADER, VERTEX_SHADER_PATH);
         shader.loadShader(VSShaderLib::FRAGMENT_SHADER, FRAGMENT_SHADER_PATH);
 
-        // set semantics for the shader variables
-        // TODO: Use either BindAttrib or GetUniformLocation for all of the GLSL variables
+        // Set semantics for the shader variables
         glBindFragDataLocation(shader.getProgramIndex(), 0,"colorOut");
         glBindAttribLocation(shader.getProgramIndex(), VERTEX_COORD_ATTRIB, "position");
         glBindAttribLocation(shader.getProgramIndex(), NORMAL_ATTRIB, "normal");
@@ -267,9 +268,7 @@ public:
         glBindAttribLocation(shader.getProgramIndex(), TANGENT_ATTRIB, "tangent");
         glLinkProgram(shader.getProgramIndex());
 
-
-        // Get the indexes of stuff
-        // different modes of texturing
+        // Different modes of texturing
         texMode_uniformId = glGetUniformLocation(shader.getProgramIndex(), "texMode");
         pvm_uniformId = glGetUniformLocation(shader.getProgramIndex(), "m_pvm");
         vm_uniformId = glGetUniformLocation(shader.getProgramIndex(), "m_viewModel");
@@ -304,7 +303,7 @@ public:
         string road_text = "textures/Road.tga";
         string river_text = "textures/River.tga";
         string grass_text = "textures/Grass.tga";
-        string anno_text = "Anno_16x16_2.tga";
+        string anno_text = "textures/Anno_16x16_2.tga";
 
         TGA_Texture(TextureArray, (char*)road_text.c_str(), 0);
         TGA_Texture(TextureArray, (char*)river_text.c_str(), 1);
@@ -376,7 +375,6 @@ public:
     }
 
     void DrawString(float x, float y, const std::string& str) {
-
         float text_texCoords[8];
 
         pushMatrix(MODEL);
@@ -443,28 +441,24 @@ public:
             exit(1);
         }
 
-
         // Update SpotLight position
         spotLight->position = player->position + Vector3(0.5f, 1.2f, 0.5f);
         spotLight->light_dir = Vector3(0, 0, -1);
 
-
         // Update the fog state
         updateFog();
 
+        // Bind the textures
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, TextureArray[0]);
-
         glActiveTexture(GL_TEXTURE1);
         glBindTexture(GL_TEXTURE_2D, TextureArray[1]);
-
         glActiveTexture(GL_TEXTURE2);
         glBindTexture(GL_TEXTURE_2D, TextureArray[2]);
-
         glActiveTexture(GL_TEXTURE3);
         glBindTexture(GL_TEXTURE_2D, TextureArray[3]);
 
-        //Indicar aos tres samplers do GLSL quais os Texture Units a serem usados
+        // Send the textures
         glUniform1i(tex_loc, 0);
         glUniform1i(tex_loc1, 1);
         glUniform1i(tex_loc2, 2);
@@ -496,9 +490,6 @@ public:
 
                 // Render the objects ()
                 go->render();
-
-                // Check collisions with player
-                checkPlayerCollisions(go, riverBorder, roadDeath, hitRiver, hitLog);
             }
         }
 
@@ -541,52 +532,43 @@ public:
 
 private:
     void checkPlayerCollisions(GameObject *go, bool &riverBorder, bool &roadDeath, bool &hitRiver, bool &hitLog) {
-        if (!(go->position == player->position)) {
-            if (player->collideWith(go)) {
-                if (go->getType() == BUS || go->getType() == CAR) {
-                    roadDeath = true;
-                } else if(go->getType() == TARGET){
-                    target->setRandomPosition();
-                    increaseSpeedMultipliers();
-                    player->respawn();
-                    score += pointsPerTarget;
-                }
-            } else if ((player->playerState == GROUNDED) && (player->collideWithBottom(go))) {
-                cout << "Bottom collision with " << go->getType() << endl;
-                if (go->getType() == LOG) {
-                    hitLog = true;
-                    player->playerState = ONLOG;
-                    player->speed = go->getSpeed();
-                } else if (go->getType() == TURTLE) {
-                    Turtle* turt = (Turtle*)go;
-                    cout << turt->isUnderWater << endl;
-                    if(turt->isUnderWater){
-                        hitRiver = true;
-                    }else{
-                        hitLog = true;
-                        player->playerState = ONTURTLE;
-                        player->speed = go->getSpeed();
-                    }
-                } else if (go->getType() == RIVER) {
+        if (player->collideWith(go)) {
+            if (go->getType() == BUS || go->getType() == CAR) {
+                roadDeath = true;
+            } else if(go->getType() == TARGET){
+                target->setRandomPosition();
+                increaseSpeedMultipliers();
+                player->respawn();
+                score += pointsPerTarget;
+            } else if (go->getType() == DEADLYBOUNDS) {
+                riverBorder = true;
+            }
+        } else if ((player->playerState == GROUNDED) && (player->collideWithBottom(go))) {
+            cout << "Bottom collision with " << go->getType() << endl;
+            if (go->getType() == LOG) {
+                hitLog = true;
+                player->playerState = ONLOG;
+                player->speed = go->getSpeed();
+            } else if (go->getType() == TURTLE) {
+                Turtle* turt = (Turtle*)go;
+                cout << turt->isUnderWater << endl;
+                if(turt->isUnderWater){
                     hitRiver = true;
+                }else{
+                    hitLog = true;
+                    player->playerState = ONTURTLE;
+                    player->speed = go->getSpeed();
                 }
-            }else if (player->playerState == ONTURTLE){
-                if (go->getType() == TURTLE && (player->collideWithBottom(go))) {
-                    Turtle* turt = (Turtle*) go;
-                    if(turt->isUnderWater){
-                        hitRiver = true;
-                        player->playerState = GROUNDED;
-                    }
+            } else if (go->getType() == RIVER) {
+                hitRiver = true;
+            }
+        } else if (player->playerState == ONTURTLE){
+            if (go->getType() == TURTLE && (player->collideWithBottom(go))) {
+                Turtle* turt = (Turtle*) go;
+                if(turt->isUnderWater){
+                    hitRiver = true;
+                    player->playerState = GROUNDED;
                 }
-
-                if(go->getType() == BOUNDS && player->playerState == ONTURTLE && !player->collideWith(go)){
-                    riverBorder = true;
-                }
-            }else{
-                if(go->getType() == BOUNDS && player->playerState == ONLOG){
-                    riverBorder = true;
-                }
-
             }
         }
     }

@@ -1,4 +1,43 @@
+#include "../Vector3.h"
+
+#define ONE 1.0f
 int faceCount = 12;
+
+float * get_shifted_vertices(Vector3 min, Vector3 max) {
+    static float shifted_vertices[96] = {
+            min.x, max.y, max.z, ONE,
+            min.x, min.y, max.z, ONE,
+            max.x, min.y, max.z, ONE,
+            max.x, max.y, max.z, ONE,
+
+            max.x, max.y, min.z, ONE,
+            max.x, min.y, min.z, ONE,
+            min.x, min.y, min.z, ONE,
+            min.x, max.y, min.z, ONE,
+
+            max.x, max.y, max.z, ONE,
+            max.x, min.y, max.z, ONE,
+            max.x, min.y, min.z, ONE,
+            max.x, max.y, min.z, ONE,
+
+            min.x, max.y, min.z, ONE,
+            min.x, max.y, max.z, ONE,
+            max.x, max.y, max.z, ONE,
+            max.x, max.y, min.z, ONE,
+
+            min.x, max.y, min.z, ONE,
+            min.x, min.y, min.z, ONE,
+            min.x, min.y, max.z, ONE,
+            min.x, max.y, max.z, ONE,
+
+            min.x, min.y, max.z, ONE,
+            min.x, min.y, min.z, ONE,
+            max.x, min.y, min.z, ONE,
+            max.x, min.y, max.z, ONE
+    };
+
+    return shifted_vertices;
+}
 
 float vertices[] = {
 	0.0f, 1.0f, 1.0f, 1.0f,

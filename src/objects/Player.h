@@ -17,7 +17,7 @@ protected:
     // Calculated position where the jump will happen
     Vector3 transitionPos = Vector3();
     Vector3 transitionJumpDir = Vector3();
-    float transitionJumpSpeed = 0;
+    float transitionJumpTime = 0;
 
     // The bottomBoundingBox check for collisions with river and (or) a log
     BoundingBox bottomBox = BoundingBox(Vector3(0.1, -1, 0.1), Vector3(0.9, 0, 0.9));
@@ -35,12 +35,12 @@ public:
         initPos = pos;
     }
 
-    void jump(Vector3 jumpDir, float jumpSpeed) {
+    void jump(Vector3 jumpDir, float jumpTime) {
         // Player is riding a log
         if (playerState == ONLOG || playerState == ONTURTLE) {
             playerState = JUMPSTAGED;
             transitionJumpDir = jumpDir;
-            transitionJumpSpeed = jumpSpeed;
+            transitionJumpTime = jumpTime;
 
             transitionPos = Vector3();
 
@@ -65,7 +65,7 @@ public:
         if (playerState == GROUNDED) {
             playerState = JUMPING;
             jumpTargetPos = position + jumpDir;
-            speed = (jumpDir * -1) / jumpSpeed;
+            speed = (jumpDir * -1) / jumpTime;
             lastJumpDir = jumpDir;
         }
     }
@@ -82,7 +82,7 @@ public:
                 playerState = JUMPING;
                 position = transitionPos;
                 jumpTargetPos = position + transitionJumpDir;
-                speed = (transitionJumpDir * -1) / transitionJumpSpeed;
+                speed = (transitionJumpDir * -1) / transitionJumpTime;
             }
         }
 

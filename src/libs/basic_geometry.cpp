@@ -72,6 +72,38 @@ void createQuad(float size_x, float size_y)
 }
 */
 
+void createCubeMinMax(GLint _objId, Vector3 _min, Vector3 _max) {
+    // Works only for one object in scene, acts weird
+    mesh[_objId].numIndexes = faceCount * 3;
+
+    glGenVertexArrays(1, &(mesh[_objId].vao));
+    glBindVertexArray(mesh[_objId].vao);
+
+    glGenBuffers(2, VboId);
+    glBindBuffer(GL_ARRAY_BUFFER, VboId[0]);
+
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices) + sizeof(normals) + sizeof(texCoords), NULL, GL_STATIC_DRAW);
+    glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vertices), get_shifted_vertices(_min, _max));
+    glBufferSubData(GL_ARRAY_BUFFER, sizeof(vertices), sizeof(normals), normals);
+    glBufferSubData(GL_ARRAY_BUFFER, sizeof(vertices) + sizeof(normals), sizeof(texCoords), texCoords);
+
+    glEnableVertexAttribArray(VERTEX_COORD_ATTRIB);
+    glVertexAttribPointer(VERTEX_COORD_ATTRIB, 4, GL_FLOAT, 0, 0, 0);
+    glEnableVertexAttribArray(NORMAL_ATTRIB);
+    glVertexAttribPointer(NORMAL_ATTRIB, 4, GL_FLOAT, 0, 0, (void *) sizeof(vertices));
+    glEnableVertexAttribArray(TEXTURE_COORD_ATTRIB);
+    glVertexAttribPointer(TEXTURE_COORD_ATTRIB, 4, GL_FLOAT, 0, 0, (void *) (sizeof(vertices) + sizeof(normals)));
+
+    //index buffer
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, VboId[1]);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * mesh[_objId].numIndexes, faceIndex, GL_STATIC_DRAW);
+
+    // unbind the VAO
+    glBindVertexArray(0);
+
+    mesh[_objId].type = GL_TRIANGLES;
+}
+
 void createCube(GLint _objId) {
     mesh[_objId].numIndexes = faceCount * 3;
 

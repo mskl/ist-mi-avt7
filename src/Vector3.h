@@ -5,6 +5,8 @@
 #ifndef AVT7_VECTOR3_H
 #define AVT7_VECTOR3_H
 
+#include "iostream"
+
 class Vector3 {
 public:
     float x;
@@ -66,11 +68,10 @@ public:
         return sqrt(delta.x * delta.x + delta.y * delta.y + delta.z * delta.z);
     }
 
-    friend ostream& operator<< (ostream& os, const Vector3& vec) {
+    friend std::ostream& operator<< (std::ostream& os, const Vector3& vec) {
         os << "(" << vec.x << ", " << vec.y << ", " << vec.z << ")";
         return os;
     }
-
 };
 
 #endif //AVT7_VECTOR3_H

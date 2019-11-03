@@ -42,7 +42,6 @@ public:
                 buildVAO(ids[0]);
             popMatrix(MODEL);
         popMatrix(MODEL);
-
     }
 
     void respawn(){

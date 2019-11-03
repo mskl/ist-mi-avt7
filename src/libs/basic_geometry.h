@@ -1,3 +1,5 @@
+#include "../Vector3.h"
+
 #define MAXIMUM_TEXTURES 4
 
 struct Material{
@@ -21,6 +23,7 @@ struct MyMesh {
 	};
 
 void createCube(GLint id);
+void createCubeMinMax(GLint id, Vector3 min, Vector3 max);
 void createSphere(float radius, int divisions);
 void createRectangle(float length, float height, float width, GLint mid);
 //void computeVAO(int numP, float *p, float *pfloatoints, int sides, float smoothCos);
