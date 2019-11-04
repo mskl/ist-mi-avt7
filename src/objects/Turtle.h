@@ -17,13 +17,13 @@ public:
     // One rotation revolution happens in this time
     const float waveTime = 1000.0f;
 
-    bool isGoingRight;
     GLint prevTime = 1;
 
     bool isUnderWater = false;
     float posTurtleBodyWater = 0.2f;
-    Turtle (Vector3 pos, Vector3 speed, bool isGoingRight)
-            : DynamicGameObject(pos, Vector3(0, 0, 0), Vector3(5, 1, 1), TURTLE, speed, isGoingRight){
+    Turtle (Vector3 pos, Vector3 speed, bool goingRight, GameObjectType type=TURTLE,
+            Vector3 min = Vector3(0, 0, 0), Vector3 max = Vector3(3, 1, 1))
+            : DynamicGameObject(pos, min, max, type, speed, goingRight) {
         randomTimeOffset = (((float) rand()) / (float)RAND_MAX) * waveTime;
     }
 
