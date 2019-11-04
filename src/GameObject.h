@@ -13,11 +13,11 @@
 #include "GameManager.h"
 #include "libs/vsShaderLib.h"
 
+#define USE_STENCIL 0
+
 // Macro to print filename when using std::cout
 #define mycout std::cout <<  __FILE__  << "(" << __LINE__ << ") "
 #define cout mycout
-
-#define USE_STENCIL 1
 
 extern struct MyMesh mesh[];
 extern VSShaderLib shader;
@@ -42,7 +42,6 @@ protected:
     static int idCount;
 
     static void renderMaterials(GLint mid) {
-
         ShaderIndices si = getPointers(mid);
         glUniform4fv(si.loc_amb, 1, mesh[mid].mat.ambient);
         glUniform4fv(si.loc_dif, 1, mesh[mid].mat.diffuse);
@@ -91,6 +90,7 @@ protected:
         }
 
         if(isTransparent){
+            // TODO: Could this be also obtained from the alpha of material? :)
             glEnable(GL_BLEND);
             glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
             glDepthMask(GL_FALSE); // Don't write to depth buffer=

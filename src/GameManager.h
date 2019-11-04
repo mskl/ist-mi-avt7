@@ -107,7 +107,6 @@ public:
     GLint lastMoveTime = 0;
     GLint moveTimeout = 300;
 
-
     enum CameraType {
         CAMERA_PERSPECTIVE_FOLLOW,
         CAMERA_PERSPECTIVE_FIXED,
@@ -153,7 +152,7 @@ public:
         gameObjects.push_back(new SideCollider(Vector3(-7, -3, -5), Vector3(-6, 3, 0), DEADLYBOUNDS));
 
         //gameObjects.push_back(new Sidewalls());
-        gameObjects.push_back(stencil);
+        // gameObjects.push_back(stencil);
 
         // Save the lights to gameObjects
         for (auto &pl : pointLights) {
@@ -168,14 +167,11 @@ public:
     }
 
     void changeSize(int w, int h) {
-        float ratio;
         // Prevent a divide by zero, when window is too short
         if (h == 0) h = 1;
 
         // set the viewport to be the entire window
         glViewport(0, 0, w, h);
-        loadIdentity(PROJECTION);
-
         selectCamera(currentCameraType);
     }
 
@@ -324,6 +320,7 @@ public:
             go->init();
         }
 
+        stencil->init();
         target->isTransparent = true;
 
         // some GL settings
@@ -393,13 +390,10 @@ public:
 
             text_texCoords[0] = xPos;
             text_texCoords[1] = 1.0f - yPos - aux;
-
             text_texCoords[2] = xPos + aux;
             text_texCoords[3] = 1.0f - yPos - aux;
-
             text_texCoords[4] = xPos + aux;
             text_texCoords[5] = 1.0f - yPos - 0.001f;
-
             text_texCoords[6] = xPos;
             text_texCoords[7] = 1.0f - yPos - 0.001f;
 
@@ -418,6 +412,7 @@ public:
 
         glEnable(GL_DEPTH_TEST);
     }
+
     void renderScene() {
         FrameCount++;
         genDeltaTime();
@@ -498,7 +493,6 @@ public:
         }
 
         // Render transparent objects
-
         for (GameObject *go : gameObjects) {
             if (go->isEnabled()) {
                 if(go->isTransparent){
@@ -541,6 +535,13 @@ public:
         //popMatrix(MODEL);
         glEnable(GL_DEPTH_TEST);
         */
+
+        // TODO: Remove from resize
+        loadIdentity(PROJECTION);
+        ortho(-7, 8, -8, 7, -30, 30);
+        // stencil->render();
+
+        selectCamera(currentCameraType);
         glutSwapBuffers();
     }
 
@@ -622,9 +623,9 @@ private:
     }
 
     void selectCamera(CameraType newCamera) {
+        loadIdentity(PROJECTION);
         currentCameraType = newCamera;
 
-        loadIdentity(PROJECTION);
         if (newCamera == CAMERA_PERSPECTIVE_FOLLOW) {
             cameraPerspectiveMoving.project(glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT));
         } else if (newCamera == CAMERA_PERSPECTIVE_FIXED) {
@@ -667,7 +668,6 @@ private:
             gameObjects.push_back(vehicle);
         }
     }
-
 
     template <typename T>
     void checkVehicleBoundaryCollisions(vector<T*> &vehicleVector) {

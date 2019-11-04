@@ -21,28 +21,25 @@ public:
 
     void render() override {
         pushMatrix(MODEL);
-        renderMaterials(ids[0]);
-        translate(MODEL, -6, -3, -6);
-        scale(MODEL,     13, 10, 13);
+            renderMaterials(ids[0]);
 
-        computeDerivedMatrix(PROJ_VIEW_MODEL);
-        glUniformMatrix4fv(vm_uniformId, 1, GL_FALSE, mCompMatrix[VIEW_MODEL]);
-        glUniformMatrix4fv(pvm_uniformId, 1, GL_FALSE, mCompMatrix[PROJ_VIEW_MODEL]);
-        computeNormalMatrix3x3();
-        glUniformMatrix3fv(normal_uniformId, 1, GL_FALSE, mNormal3x3);
+            computeDerivedMatrix(PROJ_VIEW_MODEL);
+            glUniformMatrix4fv(vm_uniformId, 1, GL_FALSE, mCompMatrix[VIEW_MODEL]);
+            glUniformMatrix4fv(pvm_uniformId, 1, GL_FALSE, mCompMatrix[PROJ_VIEW_MODEL]);
+            computeNormalMatrix3x3();
+            glUniformMatrix3fv(normal_uniformId, 1, GL_FALSE, mNormal3x3);
 
-        if (USE_STENCIL) {
-            glClear(GL_STENCIL_BUFFER_BIT);
-            // Always fails
-            glStencilFunc(GL_NEVER, 0x1, 0x1);
+            if (USE_STENCIL) {
+                glClear(GL_STENCIL_BUFFER_BIT);
+                // Always fails
+                glStencilFunc(GL_NEVER, 0x1, 0x1);
 
-            // actions to change stencil buffer
-            // GL_REPLACE = set the value in stencil buffer to ref in glStencilFunc()
-            glStencilOp(GL_REPLACE, GL_KEEP, GL_KEEP);
-        }
+                // actions to change stencil buffer
+                glStencilOp(GL_REPLACE, GL_KEEP, GL_KEEP);
+            }
 
-        glBindVertexArray(mesh[ids[0]].vao);
-        glDrawElements(mesh[ids[0]].type, mesh[ids[0]].numIndexes, GL_UNSIGNED_INT, 0);
+            glBindVertexArray(mesh[ids[0]].vao);
+            glDrawElements(mesh[ids[0]].type, mesh[ids[0]].numIndexes, GL_UNSIGNED_INT, 0);
         popMatrix(MODEL);
     }
 };
