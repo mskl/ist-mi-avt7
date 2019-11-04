@@ -42,6 +42,7 @@ protected:
     static int idCount;
 
     static void renderMaterials(GLint mid) {
+
         ShaderIndices si = getPointers(mid);
         glUniform4fv(si.loc_amb, 1, mesh[mid].mat.ambient);
         glUniform4fv(si.loc_dif, 1, mesh[mid].mat.diffuse);
@@ -77,7 +78,7 @@ protected:
         return {loc_amb, loc_dif, loc_spc, loc_shi, loc_txcnt};
     }
 
-    virtual void buildVAO(GLint mid) {
+    virtual void buildVAO(GLint mid, bool isTransparent = false) {
         computeDerivedMatrix(PROJ_VIEW_MODEL);
         glUniformMatrix4fv(vm_uniformId, 1, GL_FALSE, mCompMatrix[VIEW_MODEL]);
         glUniformMatrix4fv(pvm_uniformId, 1, GL_FALSE, mCompMatrix[PROJ_VIEW_MODEL]);
@@ -89,13 +90,24 @@ protected:
             glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
         }
 
+        if(isTransparent){
+            glEnable(GL_BLEND);
+            glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+            glDepthMask(GL_FALSE); // Don't write to depth buffer=
+        }
+
+        //glDisable(GL_BLEND);
         glBindVertexArray(mesh[mid].vao);
         glDrawElements(mesh[mid].type, mesh[mid].numIndexes, GL_UNSIGNED_INT, 0);
+
+        glDepthMask(GL_TRUE);
+        glCullFace(GL_BACK);
+
     }
 
 public:
     Vector3 position;
-
+    bool isTransparent = false;
     GameObject(Vector3 pos) {
         this->position = pos;
     }

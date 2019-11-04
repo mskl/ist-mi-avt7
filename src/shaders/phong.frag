@@ -96,8 +96,10 @@ void main() {
 
     if(texMode == 0){
         colorOut = max((intensity * mat.diffuse + spec), mat.ambient);
+        colorOut[3] = mat.diffuse[3];
     }else if(texMode == 2){
         colorOut = intensity*texel + spec;
+        colorOut[3] = mat.diffuse[3];
     }else if(texMode == 3){ //Text
         vec4 cor = vec4(1,1,1,1);
         vec4 texcolol = texture(texmap3, DataIn.tex_coord);
@@ -109,6 +111,7 @@ void main() {
     if (fogEnabled == 1) {
         float dist = length(pos);
         vec3 fogged = getFog(colorOut.rgb, dist);
-        colorOut = vec4( fogged , 1);
+        colorOut = vec4( fogged , 0.1);
     }
+    //colorOut = vec4( colorOut.rgba[0], colorOut.rgba[1],colorOut.rgba[2],0.5);
 }

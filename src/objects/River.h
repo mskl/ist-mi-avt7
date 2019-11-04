@@ -18,16 +18,31 @@ public:
         ids.push_back(idCount+=1);
         setMaterial(ids.back(), mat_river);
         createCube(ids.back());
+
+
+        ids.push_back(idCount+=1);
+        setMaterial(ids.back(), mat_river_bottom);
+        createCube(ids.back());
+        isTransparent = true;
     }
 
     void render() {
         pushMatrix(MODEL);
+            renderMaterials(ids[0]);
             pushMatrix(MODEL);
-                renderMaterials(ids[0]);
-                translate(MODEL, -13 / 2, 0, -5);
-                renderTexture(texMode_uniformId, 2);
-                scale(MODEL, 13, 0.8, 5);
-                buildVAO(ids[0]);
+                translate(MODEL, -13 / 2, 0, -6);
+                //renderTexture(texMode_uniformId, 2);
+                scale(MODEL, 13, 0.8, 6);
+                buildVAO(ids[0], true);
+
+            popMatrix(MODEL);
+
+            renderMaterials(ids[1]);
+            pushMatrix(MODEL);
+                translate(MODEL, -13 / 2, 0, -6);
+                //renderTexture(texMode_uniformId, 2);
+                scale(MODEL, 13, 0.1, 6);
+                buildVAO(ids[1], true);
             popMatrix(MODEL);
         popMatrix(MODEL);
     }

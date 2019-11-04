@@ -324,6 +324,8 @@ public:
             go->init();
         }
 
+        target->isTransparent = true;
+
         // some GL settings
         glEnable(GL_DEPTH_TEST);
         glEnable(GL_CULL_FACE);
@@ -489,7 +491,19 @@ public:
                 }
 
                 // Render the objects ()
-                go->render();
+                if(!go->isTransparent) {
+                    go->render();
+                }
+            }
+        }
+
+        // Render transparent objects
+
+        for (GameObject *go : gameObjects) {
+            if (go->isEnabled()) {
+                if(go->isTransparent){
+                    go->render();
+                }
             }
         }
 
@@ -644,7 +658,10 @@ private:
             }
 
             T* vehicle = new T(spawnPosition, spawnSpeed, isGoingRight);
-
+            if(vehicle->getType() == TURTLE){
+                cout << vehicle->isGoingRight << endl;
+                cout << isGoingRight << endl;
+            }
             // Add the vehicle to both the GameObjects vector as well as the vehicle-specific vector vehicleVector
             vehicleVector.push_back(vehicle);
             gameObjects.push_back(vehicle);
@@ -656,8 +673,10 @@ private:
     void checkVehicleBoundaryCollisions(vector<T*> &vehicleVector) {
         const float minX = -6;
         const float maxX = 7;
-
         for (T* vehicle: vehicleVector) {
+            /*if(vehicle->getType() == TURTLE){
+                cout << vehicle->isGoingRight << endl;
+            }*/
             if (vehicle->isGoingRight) {
                 if (((vehicle->position.x + vehicle->boundingBox.vecMin.x) > maxX)
                     && ((vehicle->position.x + vehicle->boundingBox.vecMax.x) > maxX)) {
