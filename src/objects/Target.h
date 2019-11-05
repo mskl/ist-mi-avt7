@@ -44,8 +44,10 @@ public:
     }
 
     void setRandomPosition() {
-        int randomX = rand() % 13 - 6;
-
+        int randomX = rand() % 7 - 6;
+        randomX *= 2;
+        if (randomX < -6)
+            randomX = randomX * -1 - 6;
         if (randomX == 7)
             randomX -=1;
 
