@@ -30,7 +30,7 @@ public:
         pushMatrix(MODEL);
             renderMaterials(ids[0]);
             pushMatrix(MODEL);
-                translate(MODEL, -13 / 2, 0, -6);
+                translate(MODEL, -13 / 2, 0, -5);
                 //renderTexture(texMode_uniformId, 2);
                 scale(MODEL, 13, 0.8, 6);
                 buildVAO(ids[0], true);

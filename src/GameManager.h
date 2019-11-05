@@ -22,6 +22,7 @@
 #include "CameraPerspectiveMoving.h"
 #include "CameraOrthogonal.h"
 #include "objects/River.h"
+#include "objects/RiverBlock.h"
 #include "objects/Ground.h"
 #include "objects/Player.h"
 #include "objects/Road.h"
@@ -122,7 +123,7 @@ public:
             = CameraOrthogonal(-7, 8, -8, 7);
 
     // Player
-    Player* player = new Player(Vector3(0, 1, 0));
+    Player* player = new Player(Vector3(-2, 1, -6));
     Target* target = new Target(Vector3(0.25f, 1.25f, -5.75f));
 
     // The stencil cube
@@ -144,6 +145,12 @@ public:
         pointLights.push_back(new PointLight(Vector3(5.0f, 3.0f, 7.0f), 5, true));
 
         gameObjects.push_back(new River());
+        gameObjects.push_back(new RiverBlock(Vector3(-5, 0, -6)));
+        gameObjects.push_back(new RiverBlock(Vector3(-3, 0, -6)));
+        gameObjects.push_back(new RiverBlock(Vector3(-1, 0, -6)));
+        gameObjects.push_back(new RiverBlock(Vector3(1, 0, -6)));
+        gameObjects.push_back(new RiverBlock(Vector3(3, 0, -6)));
+        gameObjects.push_back(new RiverBlock(Vector3(5, 0, -6)));
         gameObjects.push_back(new Road());
         gameObjects.push_back(new Ground());
 
