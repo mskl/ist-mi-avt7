@@ -22,7 +22,6 @@
 #include "CameraPerspectiveMoving.h"
 #include "CameraOrthogonal.h"
 #include "objects/River.h"
-#include "objects/RiverBlock.h"
 #include "objects/Ground.h"
 #include "objects/Player.h"
 #include "objects/Road.h"
@@ -145,14 +144,17 @@ public:
         pointLights.push_back(new PointLight(Vector3(5.0f, 3.0f, 7.0f), 5, true));
 
         gameObjects.push_back(new River());
-        gameObjects.push_back(new RiverBlock(Vector3(-5, 0, -6)));
-        gameObjects.push_back(new RiverBlock(Vector3(-3, 0, -6)));
-        gameObjects.push_back(new RiverBlock(Vector3(-1, 0, -6)));
-        gameObjects.push_back(new RiverBlock(Vector3(1, 0, -6)));
-        gameObjects.push_back(new RiverBlock(Vector3(3, 0, -6)));
-        gameObjects.push_back(new RiverBlock(Vector3(5, 0, -6)));
         gameObjects.push_back(new Road());
-        gameObjects.push_back(new Ground());
+        gameObjects.push_back(new Ground(Vector3(-13 / 2, 0, 6), Vector3(13, 1, 1)));
+        gameObjects.push_back(new Ground(Vector3(-13 / 2, 0, 0), Vector3(13, 1, 1)));
+        gameObjects.push_back(new Ground(Vector3(-6, 0, -6), Vector3(1, 1, 1)));
+        gameObjects.push_back(new Ground(Vector3(-4, 0, -6), Vector3(1, 1, 1)));
+        gameObjects.push_back(new Ground(Vector3(-2, 0, -6), Vector3(1, 1, 1)));
+        gameObjects.push_back(new Ground(Vector3(0, 0, -6), Vector3(1, 1, 1)));
+        gameObjects.push_back(new Ground(Vector3(2, 0, -6), Vector3(1, 1, 1)));
+        gameObjects.push_back(new Ground(Vector3(4, 0, -6), Vector3(1, 1, 1)));
+        gameObjects.push_back(new Ground(Vector3(6, 0, -6), Vector3(1, 1, 1)));
+
 
         // First deadly right, then deadly left
         gameObjects.push_back(new SideCollider(Vector3(7, -3, -5), Vector3(8, 3, 0), DEADLYBOUNDS));
@@ -583,6 +585,9 @@ private:
                 }
             } else if (go->getType() == RIVER) {
                 hitRiver = true;
+            } else if (go->getType() == GROUND) {
+                cout << "Colliding with ground" << endl;
+                hitRiver = false;
             }
         } else if (player->playerState == ONTURTLE){
             if (go->getType() == TURTLE && (player->collideWithBottom(go))) {

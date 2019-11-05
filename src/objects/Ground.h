@@ -6,9 +6,9 @@
 #define AVT7_GROUND_H
 
 
-class Ground: public GameObject {
+class Ground: public CollidableGameObject {
 public:
-    explicit Ground(): GameObject(Vector3()) {
+    explicit Ground(Vector3 pos, Vector3 maxPos): CollidableGameObject(pos, Vector3(0,0,0), maxPos, GROUND) {
 
     }
 
@@ -37,11 +37,11 @@ public:
             // The integral division by 2 is wanted
             pushMatrix(MODEL);
                 renderMaterials(ids[0]);
-                translate(MODEL, -13 / 2, 0, 6);
-                scale(MODEL, 13, 1, 1);
+                translate(MODEL, position.x, position.y, position.z);
+                scale(MODEL, boundingBox.vecMax.x,boundingBox.vecMax.y,boundingBox.vecMax.z);
                 buildVAO(ids[0]);
             popMatrix(MODEL);
-
+            /*
             pushMatrix(MODEL);
                 renderMaterials(ids[1]);
                 translate(MODEL, -13 / 2, 0, 0);
@@ -95,7 +95,7 @@ public:
                 scale(MODEL, 1, 1, 1);
                 buildVAO(ids[2]);
             popMatrix(MODEL);
-
+            */
         popMatrix(MODEL);
     }
 };

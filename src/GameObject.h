@@ -30,7 +30,7 @@ extern GLint vm_uniformId;
 extern GLint normal_uniformId;
 extern GLint l_pos_id[8];
 
-enum GameObjectType {BOUNDS, TARGET, LOG, TURTLE, RIVER, BUS,CAR, UNKNOWN, PLAYER, DEADLYBOUNDS};
+enum GameObjectType {BOUNDS, TARGET, LOG, TURTLE, RIVER, GROUND, BUS,CAR, UNKNOWN, PLAYER, DEADLYBOUNDS};
 
 class GameObject {
 protected:
