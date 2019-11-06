@@ -568,7 +568,7 @@ private:
                 riverBorder = true;
             }
         } else if ((player->playerState == GROUNDED) && (player->collideWithBottom(go))) {
-            cout << "Bottom collision with " << go->getType() << endl;
+            //cout << "Bottom collision with " << go->getType() << endl;
             if (go->getType() == LOG) {
                 hitLog = true;
                 player->playerState = ONLOG;
@@ -586,7 +586,6 @@ private:
             } else if (go->getType() == RIVER) {
                 hitRiver = true;
             } else if (go->getType() == GROUND) {
-                cout << "Colliding with ground" << endl;
                 hitRiver = false;
             }
         } else if (player->playerState == ONTURTLE){
@@ -697,6 +696,9 @@ private:
                     vehicle->position.x -= offset;
 
                     while(checkVehicleCollision(vehicle, vehicleVector)){
+                        if(vehicle->getType() == TURTLE){
+                            cout << "Turtles collided" << endl;
+                        }
                         vehicle->position.x -= (vehicle->boundingBox.vecMax.x + 0.5);
                     }
                 }

@@ -22,7 +22,7 @@ public:
     bool isUnderWater = false;
     float posTurtleBodyWater = 0.2f;
     Turtle (Vector3 pos, Vector3 speed, bool goingRight, GameObjectType type=TURTLE,
-            Vector3 min = Vector3(0, 0, 0), Vector3 max = Vector3(3, 1, 1))
+            Vector3 min = Vector3(0, 0, 0), Vector3 max = Vector3(4.8, 1, 1))
             : DynamicGameObject(pos, min, max, type, speed, goingRight) {
         randomTimeOffset = (((float) rand()) / (float)RAND_MAX) * waveTime;
     }
