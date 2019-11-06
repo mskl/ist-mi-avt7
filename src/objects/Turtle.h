@@ -58,140 +58,140 @@ public:
             renderMaterials(ids[0]);
             // The turtle body
             pushMatrix(MODEL);
-                translate(MODEL, 0, posTurtleBodyWater, 0.1);
-                scale(MODEL,     1, 0.8, 0.8);
+                translate(MODEL, 0, 0.5f + posTurtleBodyWater, 0.1);
+                scale(MODEL,     1, 0.2, 0.8);
                 buildVAO(ids[0]);
             popMatrix(MODEL);
 
             // The turtle hump
             pushMatrix(MODEL);
-                translate(MODEL, 0, std::min(posTurtleBodyWater*2.2f, posTurtleBodyWater), 0.1);
-                scale(MODEL,     0.7, 1.0, 0.8);
+                translate(MODEL, 0, 0.7f + posTurtleBodyWater, 0.1);
+                scale(MODEL,     0.7, 0.2, 0.8);
                 buildVAO(ids[0]);
             popMatrix(MODEL);
             // Head
             pushMatrix(MODEL);
-                translate(MODEL, 0.9, std::min(posTurtleBodyWater*2.2f, posTurtleBodyWater), 0.4);
-                scale(MODEL,     0.2, 1, 0.25);
+                translate(MODEL, 0.9, 0.7f + std::min(posTurtleBodyWater*2.2f, posTurtleBodyWater), 0.4);
+                scale(MODEL,     0.2, 0.2, 0.25);
                 buildVAO(ids[0]);
             popMatrix(MODEL);
             // Top back leg
             pushMatrix(MODEL);
-                translate(MODEL, -0.1, posTurtleBodyWater, 0);
-                scale(MODEL,     0.3, 0.8, 0.2);
+                translate(MODEL, -0.1, 0.5f + posTurtleBodyWater, 0);
+                scale(MODEL,     0.3, 0.2, 0.2);
                 buildVAO(ids[0]);
             popMatrix(MODEL);
 
             // Bottom back leg
             pushMatrix(MODEL);
-                translate(MODEL, -0.1, posTurtleBodyWater, 0.8);
-                scale(MODEL,     0.3, 0.8, 0.2);
+                translate(MODEL, -0.1, 0.5f + posTurtleBodyWater, 0.8);
+                scale(MODEL,     0.3, 0.2, 0.2);
                 buildVAO(ids[0]);
             popMatrix(MODEL);
 
             // Top front leg
             pushMatrix(MODEL);
-                translate(MODEL, 0.9, posTurtleBodyWater, 0);
-                scale(MODEL,     0.3, 0.8, 0.2);
+                translate(MODEL, 0.9, 0.5f + posTurtleBodyWater, 0);
+                scale(MODEL,     0.3, 0.2, 0.2);
                 buildVAO(ids[0]);
             popMatrix(MODEL);
             // Bottom front leg
             pushMatrix(MODEL);
-                translate(MODEL, 0.9, posTurtleBodyWater, 0.8);
-                scale(MODEL,     0.3, 0.8, 0.2);
+                translate(MODEL, 0.9, 0.5f + posTurtleBodyWater, 0.8);
+                scale(MODEL,     0.3, 0.2, 0.2);
                 buildVAO(ids[0]);
             popMatrix(MODEL);
 
 
             // The turtle body
             pushMatrix(MODEL);
-                translate(MODEL, 1.8, posTurtleBodyWater, 0.1);
-                scale(MODEL,     1, 0.8, 0.8);
+                translate(MODEL, 1.8, 0.5f + posTurtleBodyWater, 0.1);
+                scale(MODEL,     1, 0.2, 0.8);
                 buildVAO(ids[0]);
             popMatrix(MODEL);
 
             // The turtle hump
             pushMatrix(MODEL);
-                translate(MODEL, 1.8, std::min(posTurtleBodyWater*2.2f, posTurtleBodyWater), 0.1);
-                scale(MODEL,     0.7, 1.0, 0.8);
+                translate(MODEL, 1.8, 0.7f + posTurtleBodyWater, 0.1);
+                scale(MODEL,     0.7, 0.2, 0.8);
                 buildVAO(ids[0]);
             popMatrix(MODEL);
             // Head
             pushMatrix(MODEL);
-                translate(MODEL, 2.7, std::min(posTurtleBodyWater*2.2f, posTurtleBodyWater), 0.4);
-                scale(MODEL,     0.2, 1, 0.25);
+                translate(MODEL, 2.7, 0.7f + std::min(posTurtleBodyWater*2.2f, posTurtleBodyWater), 0.4);
+                scale(MODEL,     0.2, 0.2, 0.25);
                 buildVAO(ids[0]);
             popMatrix(MODEL);
             // Top back leg
             pushMatrix(MODEL);
-                translate(MODEL, 1.7, posTurtleBodyWater, 0);
-                scale(MODEL,     0.3, 0.8, 0.2);
+                translate(MODEL, 1.7, 0.5f + posTurtleBodyWater, 0);
+                scale(MODEL,     0.3, 0.2, 0.2);
                 buildVAO(ids[0]);
             popMatrix(MODEL);
 
             // Bottom back leg
             pushMatrix(MODEL);
-                translate(MODEL, 1.7, posTurtleBodyWater, 0.8);
-                scale(MODEL,     0.3, 0.8, 0.2);
+                translate(MODEL, 1.7, 0.5f + posTurtleBodyWater, 0.8);
+                scale(MODEL,     0.3, 0.2, 0.2);
                 buildVAO(ids[0]);
             popMatrix(MODEL);
 
             // Top front leg
             pushMatrix(MODEL);
-                translate(MODEL, 2.7, posTurtleBodyWater, 0);
-                scale(MODEL,     0.3, 0.8, 0.2);
+                translate(MODEL, 2.7, 0.5f + posTurtleBodyWater, 0);
+                scale(MODEL,     0.3, 0.2, 0.2);
                 buildVAO(ids[0]);
             popMatrix(MODEL);
             // Bottom front leg
             pushMatrix(MODEL);
-                translate(MODEL, 2.7, posTurtleBodyWater, 0.8);
-                scale(MODEL,     0.3, 0.8, 0.2);
+                translate(MODEL, 2.7, 0.5f + posTurtleBodyWater, 0.8);
+                scale(MODEL,     0.3, 0.2, 0.2);
                 buildVAO(ids[0]);
             popMatrix(MODEL);
 
             // The turtle body
             pushMatrix(MODEL);
-                translate(MODEL, 3.6, posTurtleBodyWater, 0.1);
-                scale(MODEL,     1, 0.8, 0.8);
+                translate(MODEL, 3.6, 0.5f + posTurtleBodyWater, 0.1);
+                scale(MODEL,     1, 0.2, 0.8);
                 buildVAO(ids[0]);
             popMatrix(MODEL);
 
             // The turtle hump
             pushMatrix(MODEL);
-                translate(MODEL, 3.6, std::min(posTurtleBodyWater*2.2f, posTurtleBodyWater), 0.1);
-                scale(MODEL,     0.7, 1.0, 0.8);
+                translate(MODEL, 3.6, 0.7f + posTurtleBodyWater, 0.1);
+                scale(MODEL,     0.7, 0.2, 0.8);
                 buildVAO(ids[0]);
             popMatrix(MODEL);
             // Head
             pushMatrix(MODEL);
-                translate(MODEL, 4.5, std::min(posTurtleBodyWater*2.2f, posTurtleBodyWater), 0.4);
-                scale(MODEL,     0.2, 1, 0.25);
+                translate(MODEL, 4.5, 0.7f + std::min(posTurtleBodyWater*2.2f, posTurtleBodyWater), 0.4);
+                scale(MODEL,     0.2, 0.2, 0.25);
                 buildVAO(ids[0]);
             popMatrix(MODEL);
             // Top back leg
             pushMatrix(MODEL);
-                translate(MODEL, 3.5, posTurtleBodyWater, 0);
-                scale(MODEL,     0.3, 0.8, 0.2);
+                translate(MODEL, 3.5, 0.5f + posTurtleBodyWater, 0);
+                scale(MODEL,     0.3, 0.2, 0.2);
                 buildVAO(ids[0]);
             popMatrix(MODEL);
 
             // Bottom back leg
             pushMatrix(MODEL);
-                translate(MODEL, 3.5, posTurtleBodyWater, 0.8);
-                scale(MODEL,     0.3, 0.8, 0.2);
+                translate(MODEL, 3.5, 0.5f + posTurtleBodyWater, 0.8);
+                scale(MODEL,     0.3, 0.2, 0.2);
                 buildVAO(ids[0]);
             popMatrix(MODEL);
 
             // Top front leg
             pushMatrix(MODEL);
-                translate(MODEL, 4.5, posTurtleBodyWater, 0);
-                scale(MODEL,     0.3, 0.8, 0.2);
+                translate(MODEL, 4.5, 0.5f + posTurtleBodyWater, 0);
+                scale(MODEL,     0.3, 0.2, 0.2);
                 buildVAO(ids[0]);
             popMatrix(MODEL);
             // Bottom front leg
             pushMatrix(MODEL);
-                translate(MODEL, 4.5, posTurtleBodyWater, 0.8);
-                scale(MODEL,     0.3, 0.8, 0.2);
+                translate(MODEL, 4.5, 0.5f + posTurtleBodyWater, 0.8);
+                scale(MODEL,     0.3, 0.2, 0.2);
                 buildVAO(ids[0]);
             popMatrix(MODEL);
         popMatrix(MODEL);
