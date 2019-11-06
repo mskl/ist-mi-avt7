@@ -36,9 +36,9 @@ public:
             translate(MODEL, position.x, position.y, position.z);
                 renderMaterials(ids[0]);
                 pushMatrix(MODEL);
-                scale(MODEL,     3.0, 0.8, 0.8);
-                rotate(MODEL, angle, 1, 0, 0);
-                translate(MODEL, 0, 0.2, 0.2);
+                scale(MODEL,     3.0, 0.1, 0.8);
+                //rotate(MODEL, angle, 1, 0, 0);
+                translate(MODEL, 0, 8, 0.2+angle);
                 buildVAO(ids[0]);
             popMatrix(MODEL);
         popMatrix(MODEL);
@@ -52,7 +52,7 @@ public:
         if (animationEnabled) {
             GLint currentTime = glutGet(GLUT_ELAPSED_TIME);
             prevTime = currentTime;
-            angle =  8.0f*sin(currentTime/waveTime + randomTimeOffset);
+            angle =  0.1f*sin(currentTime/waveTime + randomTimeOffset);
         }
 
         DynamicGameObject::update(deltaTime);
