@@ -54,9 +54,11 @@ public:
             else if (speed.z < 0) transitionPos.z = ceil(position.z);
             else transitionPos.z = position.z;
 
+            /*
             cout << "Player pos: " << position << endl;
             cout << "Player speed: " << speed << endl;
             cout << "Staged transition pos: " << transitionPos << endl;
+            */
 
             lastJumpDir = jumpDir;
         }

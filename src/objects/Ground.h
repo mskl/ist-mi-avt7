@@ -16,19 +16,6 @@ public:
         ids.push_back(idCount+=1);
         setMaterial(ids.back(), mat_ground);
         createCube(ids.back());
-
-        ids.push_back(idCount+=1);
-        setMaterial(ids.back(), mat_ground);
-        createCube(ids.back());
-
-        ids.push_back(idCount+=1);
-        setMaterial(ids.back(), mat_ground);
-        createCube(ids.back());
-
-        ids.push_back(idCount+=1);
-        setMaterial(ids.back(), mat_ground);
-        createCube(ids.back());
-
     }
 
     void render() override {
@@ -41,61 +28,6 @@ public:
                 scale(MODEL, boundingBox.vecMax.x,boundingBox.vecMax.y,boundingBox.vecMax.z);
                 buildVAO(ids[0]);
             popMatrix(MODEL);
-            /*
-            pushMatrix(MODEL);
-                renderMaterials(ids[1]);
-                translate(MODEL, -13 / 2, 0, 0);
-                scale(MODEL, 13, 1, 1);
-                buildVAO(ids[1]);
-            popMatrix(MODEL);
-            //Other side
-            pushMatrix(MODEL);
-                renderMaterials(ids[2]);
-                translate(MODEL, -13 / 2, 0, -6);
-                scale(MODEL, 1, 1, 1);
-                buildVAO(ids[2]);
-            popMatrix(MODEL);
-
-            pushMatrix(MODEL);
-                renderMaterials(ids[2]);
-                translate(MODEL, -4, 0, -6);
-                scale(MODEL, 1, 1, 1);
-                buildVAO(ids[2]);
-            popMatrix(MODEL);
-
-            pushMatrix(MODEL);
-                renderMaterials(ids[2]);
-                translate(MODEL, -2, 0, -6);
-                scale(MODEL, 1, 1, 1);
-                buildVAO(ids[2]);
-            popMatrix(MODEL);
-
-            pushMatrix(MODEL);
-                renderMaterials(ids[2]);
-                translate(MODEL, 0, 0, -6);
-                scale(MODEL, 1, 1, 1);
-                buildVAO(ids[2]);
-            popMatrix(MODEL);
-
-            pushMatrix(MODEL);
-                renderMaterials(ids[2]);
-                translate(MODEL, 2, 0, -6);
-                scale(MODEL, 1, 1, 1);
-                buildVAO(ids[2]);
-            popMatrix(MODEL);
-            pushMatrix(MODEL);
-                renderMaterials(ids[2]);
-                translate(MODEL, 4, 0, -6);
-                scale(MODEL, 1, 1, 1);
-                buildVAO(ids[2]);
-            popMatrix(MODEL);
-            pushMatrix(MODEL);
-                renderMaterials(ids[2]);
-                translate(MODEL, 6, 0, -6);
-                scale(MODEL, 1, 1, 1);
-                buildVAO(ids[2]);
-            popMatrix(MODEL);
-            */
         popMatrix(MODEL);
     }
 };

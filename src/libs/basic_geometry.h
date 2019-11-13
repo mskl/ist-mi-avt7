@@ -23,6 +23,7 @@ struct MyMesh {
 	};
 
 void createCube(GLint id, bool centered=false);
+void createQuad(int, float, float);
 void createCubeMinMax(GLint id, Vector3 min, Vector3 max);
 void createSphere(float radius, int divisions);
 void createRectangle(float length, float height, float width, GLint mid);

@@ -29,12 +29,12 @@ Basic Revolution Geometry
 extern struct MyMesh mesh[];
 GLuint VboId[2];
 
-/*
-void createQuad(float size_x, float size_y)
+
+void createQuad(GLint _objId, float size_x, float size_y)
 {
 	int i;
 	float vert[16];
-	mesh[objId].numIndexes = 2*3;
+	mesh[_objId].numIndexes = 2*3;
 
 	memcpy(vert, quad_vertices, sizeof(float) * 16);
 
@@ -43,8 +43,8 @@ void createQuad(float size_x, float size_y)
 		vert[i*4+1] *= size_y;
 	}
 
-	glGenVertexArrays(1, &(mesh[objId].vao));
-	glBindVertexArray(mesh[objId].vao);
+	glGenVertexArrays(1, &(mesh[_objId].vao));
+	glBindVertexArray(mesh[_objId].vao);
 
 	glGenBuffers(2, VboId);
 	glBindBuffer(GL_ARRAY_BUFFER, VboId[0]);
@@ -63,14 +63,13 @@ void createQuad(float size_x, float size_y)
     
     //index buffer
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, VboId[1]);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * mesh[objId].numIndexes, quad_faceIndex , GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * mesh[_objId].numIndexes, quad_faceIndex , GL_STATIC_DRAW);
     
     // unbind the VAO
     glBindVertexArray(0);
 
-	mesh[objId].type = GL_TRIANGLES;
+	mesh[_objId].type = GL_TRIANGLES;
 }
-*/
 
 void createCubeMinMax(GLint _objId, Vector3 _min, Vector3 _max) {
     // Works only for one object in scene, acts weird

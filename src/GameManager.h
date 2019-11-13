@@ -40,6 +40,8 @@
 #include "objects/SceneStencil.h"
 #include "objects/SideCollider.h"
 #include "libs/TGA.h"
+#include "objects/Tree.h"
+
 // Macro to print filename shen using cout
 #define mycout std::cout <<  __FILE__  << "(" << __LINE__ << ") "
 #define cout mycout
@@ -66,10 +68,10 @@ GLint l_enabled_id; // GLSL pointer to the boolean array
 GLint l_enabled[8] = {1, 1, 1, 1, 1, 1, 1, 1};
 GLint l_spot_dir_id;
 
-GLint tex_loc, tex_loc1, tex_loc2,tex_loc3;
+GLint tex_loc, tex_loc1, tex_loc2, tex_loc3, tex_loc4;
 GLint texMode_uniformId;
 
-GLuint TextureArray[4];
+GLuint TextureArray[5];
 
 // TEXT THINGS
 float _fontSize = 16;
@@ -78,7 +80,6 @@ GLuint text_texCoordBuffer;
 GLuint text_vertexBuffer;
 GLint doingText_uniformId;
 GLint doingTextV_uniformId;
-
 
 class GameManager {
 public:
@@ -122,7 +123,7 @@ public:
             = CameraOrthogonal(-7, 8, -8, 7);
 
     // Player
-    Player* player = new Player(Vector3(-2, 1, -6));
+    Player* player = new Player(Vector3(0, 1, 6));
     Target* target = new Target(Vector3(0.25f, 1.25f, -5.75f));
 
     // The stencil cube
@@ -132,6 +133,9 @@ public:
     Light* directionalLight = new DirectionalLight(Vector3(0.0f, 5.0f, 0.0f), 6, false);
     SpotLight* spotLight = new SpotLight(Vector3(0, -1, 0), Vector3(0, 2, 0), 7, false);
     vector<PointLight*> pointLights = vector<PointLight*>();
+
+    // Tree
+    Tree* tree = new Tree(Vector3(0, 1, 0));
 
 public:
     GameManager() {
@@ -155,12 +159,11 @@ public:
         gameObjects.push_back(new Ground(Vector3(4, 0, -6), Vector3(1, 1, 1)));
         gameObjects.push_back(new Ground(Vector3(6, 0, -6), Vector3(1, 1, 1)));
 
-
         // First deadly right, then deadly left
         gameObjects.push_back(new SideCollider(Vector3(7, -3, -5), Vector3(8, 3, 0), DEADLYBOUNDS));
         gameObjects.push_back(new SideCollider(Vector3(-7, -3, -5), Vector3(-6, 3, 0), DEADLYBOUNDS));
 
-        //gameObjects.push_back(new Sidewalls());
+        // gameObjects.push_back(new Sidewalls());
         // gameObjects.push_back(stencil);
 
         // Save the lights to gameObjects
@@ -282,6 +285,8 @@ public:
         tex_loc1 = glGetUniformLocation(shader.getProgramIndex(), "texmap1");
         tex_loc2 = glGetUniformLocation(shader.getProgramIndex(), "texmap2");
         tex_loc3 = glGetUniformLocation(shader.getProgramIndex(), "texmap3");
+        tex_loc4 = glGetUniformLocation(shader.getProgramIndex(), "texmap4");
+
 
         // Get the light indexes
         for (int i = 0; i < 8; i++) {
@@ -304,16 +309,18 @@ public:
         srand(time(NULL));
 
         //Texture Object definition
-        glGenTextures(4, TextureArray);
+        glGenTextures(5, TextureArray);
         string road_text = "textures/Road.tga";
         string river_text = "textures/River.tga";
         string grass_text = "textures/Grass.tga";
         string anno_text = "textures/Anno_16x16_2.tga";
+        string tree_text = "textures/tree.tga";
 
         TGA_Texture(TextureArray, (char*)road_text.c_str(), 0);
         TGA_Texture(TextureArray, (char*)river_text.c_str(), 1);
         TGA_Texture(TextureArray, (char*)grass_text.c_str(), 2);
         TGA_Texture(TextureArray, (char*)anno_text.c_str(), 3);
+        TGA_Texture(TextureArray, (char*)tree_text.c_str(), 4);
 
         createVehicles<Bus>(busses, 4, 1, 1, true, 80, 50);
         createVehicles<Car>(cars, 5, 3, 1, false, 80, 50);
@@ -330,6 +337,7 @@ public:
         }
 
         stencil->init();
+        tree->init();
         target->isTransparent = true;
 
         // some GL settings
@@ -378,8 +386,8 @@ public:
         glEnableVertexAttribArray(VERTEX_ATTRIB2);
         glVertexAttribPointer(VERTEX_ATTRIB2, 2, GL_FLOAT, GL_FALSE, 0, 0);
 
-        //set the orthographic projection matrix
-        //ortho(0.0f, float(WinX), 0.0f, float(WinY), -1.0f, 1.0f);
+        // Set the orthographic projection matrix
+        // ortho(0.0f, float(WinX), 0.0f, float(WinY), -1.0f, 1.0f);
     }
 
     void DrawString(float x, float y, const std::string& str) {
@@ -388,7 +396,8 @@ public:
         pushMatrix(MODEL);
         translate(MODEL, x, y, 0);
         glBindVertexArray(text_vaoID);
-        // glTranslatef(x, y, 0.0); //Position our text
+        // Position our text
+        // glTranslatef(x, y, 0.0);
         for (std::string::size_type i = 0; i < str.size(); ++i)
         {
             const float aux = 1.0f / 16.0f;
@@ -463,12 +472,15 @@ public:
         glBindTexture(GL_TEXTURE_2D, TextureArray[2]);
         glActiveTexture(GL_TEXTURE3);
         glBindTexture(GL_TEXTURE_2D, TextureArray[3]);
+        glActiveTexture(GL_TEXTURE4);
+        glBindTexture(GL_TEXTURE_2D, TextureArray[4]);
 
         // Send the textures
         glUniform1i(tex_loc, 0);
         glUniform1i(tex_loc1, 1);
         glUniform1i(tex_loc2, 2);
         glUniform1i(tex_loc3, 3);
+        glUniform1i(tex_loc4, 4);
 
         // Check for boundaries of the moving objects
         checkVehicleBoundaryCollisions<Bus>(busses);
@@ -482,12 +494,14 @@ public:
         bool hitRiver = false;
         bool hitLog = false;
 
+        #define GAME_INVERSE_SPEED 200
+
         for (GameObject *go : gameObjects) {
             if (go->isEnabled()) {
 
                 // Update the physics
                 if (isPlaying){
-                    go->update(float(deltaTime/200.0f));
+                    go->update(float(deltaTime/float(GAME_INVERSE_SPEED)));
                 }
 
                 if (go->position != player->position) {
@@ -495,7 +509,7 @@ public:
                 }
 
                 // Render the objects ()
-                if(!go->isTransparent) {
+                if (!go->isTransparent) {
                     go->render();
                 }
             }
@@ -504,10 +518,17 @@ public:
         // Render transparent objects
         for (GameObject *go : gameObjects) {
             if (go->isEnabled()) {
-                if(go->isTransparent){
+                if (go->isTransparent){
                     go->render();
                 }
             }
+        }
+
+        // Render the billboards
+        if (currentCameraType == CAMERA_PERSPECTIVE_FOLLOW) {
+            tree->render(cameraPerspectiveMoving.pos + cameraPerspectiveMoving.localPos);
+        } else if (currentCameraType == CAMERA_PERSPECTIVE_FIXED) {
+            tree->render(cameraPerspectiveFixed.pos + cameraPerspectiveFixed.localPos);
         }
 
         bool deathInRiver = hitRiver && (!hitLog) && (player->playerState != ONLOG);
@@ -525,7 +546,8 @@ public:
 
         // Swap the back and front buffer
         glBindTexture(GL_TEXTURE_2D, 0);
-        /*
+
+        /* // HUD STUFF
         glBlendFunc(GL_ONE, GL_ZERO);
         glDisable(GL_BLEND);
         // H U D
@@ -547,7 +569,7 @@ public:
 
         // TODO: Remove from resize
         loadIdentity(PROJECTION);
-        ortho(-7, 8, -8, 7, -30, 30);
+        // ortho(-7, 8, -8, 7, -30, 30);
         // stencil->render();
 
         selectCamera(currentCameraType);
@@ -670,9 +692,9 @@ private:
             }
 
             T* vehicle = new T(spawnPosition, spawnSpeed, isGoingRight);
-            if(vehicle->getType() == TURTLE){
-                cout << vehicle->isGoingRight << endl;
-                cout << isGoingRight << endl;
+            if (vehicle->getType() == TURTLE){
+                // cout << vehicle->isGoingRight << endl;
+                // cout << isGoingRight << endl;
             }
             // Add the vehicle to both the GameObjects vector as well as the vehicle-specific vector vehicleVector
             vehicleVector.push_back(vehicle);
