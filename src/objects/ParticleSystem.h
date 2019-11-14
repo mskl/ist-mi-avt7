@@ -8,7 +8,7 @@
 #include "../GameObject.h"
 #include "../GameManager.h"
 
-#define MAX_PARTICULAS  150
+#define MAX_PARTICLES  150
 
 typedef struct {
     float	life;
@@ -22,7 +22,7 @@ typedef struct {
 class ParticleSystem: public GameObject {
 protected:
     int dead_num_particles;
-    Particle particles[MAX_PARTICULAS];
+    Particle particles[MAX_PARTICLES];
 
 public:
     ParticleSystem(Vector3 pos)
@@ -32,13 +32,13 @@ public:
 
     void init() final {
         ids.push_back(idCount+=1);
-        setMaterial(ids.back(), mat_ground);
+        setMaterial(ids.back(), mat_particle);
         createQuad(ids.back(), 2, 2);
     }
 
     void update(float deltaTime) final {
         float h = 0.033 * deltaTime;
-        for (int i = 0; i < MAX_PARTICULAS; i++) {
+        for (int i = 0; i < MAX_PARTICLES; i++) {
             particles[i].x += (h * particles[i].vx);
             particles[i].y += (h * particles[i].vy);
             particles[i].z += (h * particles[i].vz);
@@ -53,16 +53,13 @@ public:
         // draw fireworks particles
         renderTexture(texMode_uniformId, PARTICLE_TEXTURE_INDEX);
 
-        for (int i = 0; i < MAX_PARTICULAS; i++) {
+        for (int i = 0; i < MAX_PARTICLES; i++) {
             if (particles[i].life > 0.0f) {
-                // TODO: Change the color of the material
-                /*
-                float particle_color[4];
-                particle_color[0] = particula[i].r;
-                particle_color[1] = particula[i].g;
-                particle_color[2] = particula[i].b;
-                particle_color[3] = particula[i].life;
-                */
+                mat_particle.diff[0] = particles[i].r;
+                mat_particle.diff[1] = particles[i].g;
+                mat_particle.diff[2] = particles[i].b;
+                mat_particle.diff[3] = particles[i].life;
+
                 renderMaterials(ids[0]);
                 pushMatrix(MODEL);
                 translate(MODEL, particles[i].x, particles[i].y, particles[i].z);
@@ -73,9 +70,10 @@ public:
             }
         }
 
-        glDepthMask(GL_TRUE); //make depth buffer again writeable
+        //make depth buffer again writeable
+        glDepthMask(GL_TRUE);
 
-        if (dead_num_particles == MAX_PARTICULAS) {
+        if (dead_num_particles == MAX_PARTICLES) {
             setEnabled(false);
             dead_num_particles = 0;
         }
@@ -89,7 +87,7 @@ public:
         for (auto & i : particles) {
             v = 0.8 * frand() + 0.2;
             phi = frand() * M_PI;
-            theta = 2.0* frand() *M_PI;
+            theta = 2.0 * frand() *M_PI;
 
             i.x = position.x;
             i.y = position.y;
@@ -106,8 +104,8 @@ public:
             i.g = 0.552f;
             i.b = 0.211f;
 
-            i.life = 1.0f;		/* vida inicial */
-            i.fade = 0.005f;    /* step de decr�scimo da vida para cada itera��o */
+            i.life = 1.0f;
+            i.fade = 0.005f;
         }
     }
 

@@ -307,6 +307,7 @@ public:
         tex_grass_loc = glGetUniformLocation(shader.getProgramIndex(), "tex_grass");    //texmap2
         tex_text_loc = glGetUniformLocation(shader.getProgramIndex(), "tex_text");      //texmap3
         tex_tree_loc = glGetUniformLocation(shader.getProgramIndex(), "tex_tree");      //texmap4
+        tex_particle_loc = glGetUniformLocation(shader.getProgramIndex(), "tex_particle");
 
         // Get the light indexes
         for (int i = 0; i < 8; i++) {

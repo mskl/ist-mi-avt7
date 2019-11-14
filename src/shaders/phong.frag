@@ -119,7 +119,7 @@ void main() {
         colorOut[3] = texColor[3];
     } else if (texMode == 5) { // Particle
         vec4 texColor = texture(tex_particle, DataIn.tex_coord);
-        if(texColor[3] == 0.0) { // || (mat.diffuse.a == 0.0)
+        if(texColor[3] == 0.0 || (mat.diffuse[3] == 0.0)) {
             discard;
         } else {
             colorOut = mat.diffuse * texColor;
