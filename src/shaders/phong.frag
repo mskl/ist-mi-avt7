@@ -1,11 +1,11 @@
 #version 330
 
 uniform int texMode;
-uniform sampler2D texmap0;
-uniform sampler2D texmap1;
-uniform sampler2D texmap2;
-uniform sampler2D texmap3;
-uniform sampler2D texmap4;
+uniform sampler2D tex_road;
+uniform sampler2D tex_river;
+uniform sampler2D tex_grass;
+uniform sampler2D tex_text;
+uniform sampler2D tex_tree;
 
 struct Materials {
     vec4 diffuse;
@@ -89,11 +89,11 @@ void main() {
     }
 
     if(mat.texcount == 1)
-        texel = texture(texmap0, DataIn.tex_coord);
+        texel = texture(tex_road, DataIn.tex_coord);
     else if(mat.texcount == 2)
-        texel = texture(texmap1, DataIn.tex_coord);
+        texel = texture(tex_river, DataIn.tex_coord);
     else if(mat.texcount == 3)
-        texel = texture(texmap2, DataIn.tex_coord);
+        texel = texture(tex_grass, DataIn.tex_coord);
 
     if (texMode == 0){
         colorOut = max((intensity * mat.diffuse + spec), mat.ambient);
@@ -103,13 +103,13 @@ void main() {
         colorOut[3] = mat.diffuse[3];
     } else if(texMode == 3){ // Text
         vec4 cor = vec4(1,1,1,1);
-        vec4 texColor = texture(texmap3, DataIn.tex_coord);
+        vec4 texColor = texture(tex_text, DataIn.tex_coord);
         if (texColor[0] + texColor[1] + texColor[2] < 2.5){
             discard;
         }
         colorOut = texColor*cor;
     } else if(texMode == 4){ // Tree
-        vec4 texColor = texture(texmap4, DataIn.tex_coord);
+        vec4 texColor = texture(tex_tree, DataIn.tex_coord);
         if (texColor[3] == 0.0) {
             discard;
         }

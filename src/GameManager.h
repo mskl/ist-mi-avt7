@@ -69,7 +69,7 @@ GLint l_enabled[8] = {1, 1, 1, 1, 1, 1, 1, 1};
 GLint l_spot_dir_id;
 
 // Textures
-GLint tex_loc0, tex_loc1, tex_loc2, tex_loc3, tex_loc4;
+GLint tex_road_loc, tex_river_loc, tex_grass_loc, tex_text_loc, tex_tree_loc;
 GLint texMode_uniformId;
 GLuint TextureArray[5];
 
@@ -293,12 +293,11 @@ public:
         vm_uniformId = glGetUniformLocation(shader.getProgramIndex(), "m_viewModel");
         normal_uniformId = glGetUniformLocation(shader.getProgramIndex(), "m_normal");
 
-        tex_loc0 = glGetUniformLocation(shader.getProgramIndex(), "texmap0");
-        tex_loc1 = glGetUniformLocation(shader.getProgramIndex(), "texmap1");
-        tex_loc2 = glGetUniformLocation(shader.getProgramIndex(), "texmap2");
-        tex_loc3 = glGetUniformLocation(shader.getProgramIndex(), "texmap3");
-        tex_loc4 = glGetUniformLocation(shader.getProgramIndex(), "texmap4");
-
+        tex_road_loc = glGetUniformLocation(shader.getProgramIndex(), "tex_road");      //texmap0
+        tex_river_loc = glGetUniformLocation(shader.getProgramIndex(), "tex_river");    //texmap1
+        tex_grass_loc = glGetUniformLocation(shader.getProgramIndex(), "tex_grass");    //texmap2
+        tex_text_loc = glGetUniformLocation(shader.getProgramIndex(), "tex_text");      //texmap3
+        tex_tree_loc = glGetUniformLocation(shader.getProgramIndex(), "tex_tree");      //texmap4
 
         // Get the light indexes
         for (int i = 0; i < 8; i++) {
@@ -491,11 +490,11 @@ public:
         glBindTexture(GL_TEXTURE_2D, TextureArray[TREE_TEXTURE_INDEX]);
 
         // Send the textures
-        glUniform1i(tex_loc0, ROAD_TEXTURE_INDEX);
-        glUniform1i(tex_loc1, RIVER_TEXTURE_INDEX);
-        glUniform1i(tex_loc2, GRASS_TEXTURE_INDEX);
-        glUniform1i(tex_loc3, TEXT_TEXTURE_INDEX);
-        glUniform1i(tex_loc4, TREE_TEXTURE_INDEX);
+        glUniform1i(tex_road_loc, ROAD_TEXTURE_INDEX);
+        glUniform1i(tex_river_loc, RIVER_TEXTURE_INDEX);
+        glUniform1i(tex_grass_loc, GRASS_TEXTURE_INDEX);
+        glUniform1i(tex_text_loc, TEXT_TEXTURE_INDEX);
+        glUniform1i(tex_tree_loc, TREE_TEXTURE_INDEX);
 
         // Check for boundaries of the moving objects
         checkVehicleBoundaryCollisions<Bus>(busses);
