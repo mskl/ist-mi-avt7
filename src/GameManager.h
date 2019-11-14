@@ -103,6 +103,7 @@ public:
     vector<Car*> cars = vector<Car*>();
     vector<Log*> logs = vector<Log*>();
     vector<Turtle*> turtles = vector<Turtle*>();
+    vector<Tree*> trees = vector<Tree*>();
 
     // All in microseconds
     GLint lastMoveTime = 0;
@@ -134,9 +135,6 @@ public:
     SpotLight* spotLight = new SpotLight(Vector3(0, -1, 0), Vector3(0, 2, 0), 7, false);
     vector<PointLight*> pointLights = vector<PointLight*>();
 
-    // Tree
-    Tree* tree = new Tree(Vector3(0, 1, 0));
-
 public:
     GameManager() {
         // Keep the pointLight in separate vector as well.
@@ -159,6 +157,19 @@ public:
         gameObjects.push_back(new Ground(Vector3(4, 0, -6), Vector3(1, 1, 1)));
         gameObjects.push_back(new Ground(Vector3(6, 0, -6), Vector3(1, 1, 1)));
 
+        trees.push_back(new Tree(Vector3(7.5, 2, -6)));
+        trees.push_back(new Tree(Vector3(9, 2, -3)));
+        trees.push_back(new Tree(Vector3(7.5, 2, 0)));
+        trees.push_back(new Tree(Vector3(8.1, 2, 1)));
+        trees.push_back(new Tree(Vector3(8, 2, 5)));
+
+        trees.push_back(new Tree(Vector3(-6.9, 2, -5.5)));
+        trees.push_back(new Tree(Vector3(-9.1, 2, -4)));
+        trees.push_back(new Tree(Vector3(-8, 2, -2)));
+        trees.push_back(new Tree(Vector3(-7, 2, 2)));
+        trees.push_back(new Tree(Vector3(-9, 2, 4)));
+        trees.push_back(new Tree(Vector3(-7.5, 2, 6)));
+        
         // First deadly right, then deadly left
         gameObjects.push_back(new SideCollider(Vector3(7, -3, -5), Vector3(8, 3, 0), DEADLYBOUNDS));
         gameObjects.push_back(new SideCollider(Vector3(-7, -3, -5), Vector3(-6, 3, 0), DEADLYBOUNDS));
@@ -337,8 +348,11 @@ public:
             go->init();
         }
 
+        for (auto tree: trees) {
+            tree->init();
+        }
+
         stencil->init();
-        tree->init();
         target->isTransparent = true;
 
         // some GL settings
@@ -525,11 +539,13 @@ public:
             }
         }
 
-        // Render the billboards
-        if (currentCameraType == CAMERA_PERSPECTIVE_FOLLOW) {
-            tree->render(cameraPerspectiveMoving.pos + cameraPerspectiveMoving.localPos);
-        } else if (currentCameraType == CAMERA_PERSPECTIVE_FIXED) {
-            tree->render(cameraPerspectiveFixed.pos + cameraPerspectiveFixed.localPos);
+        for (auto tree: trees) {
+            // Render the billboards
+            if (currentCameraType == CAMERA_PERSPECTIVE_FOLLOW) {
+                tree->render(cameraPerspectiveMoving.pos + cameraPerspectiveMoving.localPos);
+            } else if (currentCameraType == CAMERA_PERSPECTIVE_FIXED) {
+                tree->render(cameraPerspectiveFixed.pos + cameraPerspectiveFixed.localPos);
+            }
         }
 
         bool deathInRiver = hitRiver && (!hitLog) && (player->playerState != ONLOG);
