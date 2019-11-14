@@ -169,7 +169,7 @@ public:
         trees.push_back(new Tree(Vector3(-7, 2, 2)));
         trees.push_back(new Tree(Vector3(-9, 2, 4)));
         trees.push_back(new Tree(Vector3(-7.5, 2, 6)));
-        
+
         // First deadly right, then deadly left
         gameObjects.push_back(new SideCollider(Vector3(7, -3, -5), Vector3(8, 3, 0), DEADLYBOUNDS));
         gameObjects.push_back(new SideCollider(Vector3(-7, -3, -5), Vector3(-6, 3, 0), DEADLYBOUNDS));

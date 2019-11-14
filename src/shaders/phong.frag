@@ -110,6 +110,10 @@ void main() {
         colorOut = texcolol*cor;
     } else if(texMode == 4){ // Tree
         vec4 texColor = texture(texmap4, DataIn.tex_coord);
+        if (texColor[3] == 0.0) {
+            discard;
+        }
+
         colorOut = intensity*texColor + spec;
         colorOut[3] = texColor[3];
     }
