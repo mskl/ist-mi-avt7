@@ -9,15 +9,17 @@
 #include "../libs/Billboard.h"
 
 class Tree: public GameObject {
-public:
-    Tree(Vector3 pos): GameObject(pos) {
+    float treeSize;
 
+public:
+    Tree(Vector3 pos, float treeSize=2.0f): GameObject(pos) {
+        this->treeSize = treeSize;
     }
 
     void init() override {
         ids.push_back(idCount+=1);
-        setMaterial(ids.back(), mat_ground);
-        createQuad(ids.back(), 6, 6);
+        setMaterial(ids.back(), mat_tree);
+        createQuad(ids.back(), treeSize, treeSize);
     }
 
     void render(Vector3 camPos) {
@@ -36,7 +38,7 @@ public:
 
         pushMatrix(MODEL);
             renderMaterials(ids[0]);
-            translate(MODEL, position.x, position.y, position.z);
+            translate(MODEL, position.x, position.y + treeSize / 2, position.z);
             l3dBillboardSphericalBegin(cam, pos);
             buildVAO(ids[0]);
         popMatrix(MODEL);

@@ -68,7 +68,7 @@ GLint l_enabled_id; // GLSL pointer to the boolean array
 GLint l_enabled[8] = {1, 1, 1, 1, 1, 1, 1, 1};
 GLint l_spot_dir_id;
 
-GLint tex_loc, tex_loc1, tex_loc2, tex_loc3, tex_loc4;
+GLint tex_loc0, tex_loc1, tex_loc2, tex_loc3, tex_loc4;
 GLint texMode_uniformId;
 
 GLuint TextureArray[5];
@@ -163,7 +163,7 @@ public:
         gameObjects.push_back(new SideCollider(Vector3(7, -3, -5), Vector3(8, 3, 0), DEADLYBOUNDS));
         gameObjects.push_back(new SideCollider(Vector3(-7, -3, -5), Vector3(-6, 3, 0), DEADLYBOUNDS));
 
-        // gameObjects.push_back(new Sidewalls());
+        gameObjects.push_back(new Sidewalls());
         // gameObjects.push_back(stencil);
 
         // Save the lights to gameObjects
@@ -281,7 +281,8 @@ public:
         pvm_uniformId = glGetUniformLocation(shader.getProgramIndex(), "m_pvm");
         vm_uniformId = glGetUniformLocation(shader.getProgramIndex(), "m_viewModel");
         normal_uniformId = glGetUniformLocation(shader.getProgramIndex(), "m_normal");
-        tex_loc = glGetUniformLocation(shader.getProgramIndex(), "texmap");
+
+        tex_loc0 = glGetUniformLocation(shader.getProgramIndex(), "texmap0");
         tex_loc1 = glGetUniformLocation(shader.getProgramIndex(), "texmap1");
         tex_loc2 = glGetUniformLocation(shader.getProgramIndex(), "texmap2");
         tex_loc3 = glGetUniformLocation(shader.getProgramIndex(), "texmap3");
@@ -476,7 +477,7 @@ public:
         glBindTexture(GL_TEXTURE_2D, TextureArray[4]);
 
         // Send the textures
-        glUniform1i(tex_loc, 0);
+        glUniform1i(tex_loc0, 0);
         glUniform1i(tex_loc1, 1);
         glUniform1i(tex_loc2, 2);
         glUniform1i(tex_loc3, 3);
