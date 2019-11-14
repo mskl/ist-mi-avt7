@@ -103,11 +103,11 @@ void main() {
         colorOut[3] = mat.diffuse[3];
     } else if(texMode == 3){ // Text
         vec4 cor = vec4(1,1,1,1);
-        vec4 texcolol = texture(texmap3, DataIn.tex_coord);
-        if (texcolol[0]+texcolol[1]+texcolol[2] < 2.5){
+        vec4 texColor = texture(texmap3, DataIn.tex_coord);
+        if (texColor[0] + texColor[1] + texColor[2] < 2.5){
             discard;
         }
-        colorOut = texcolol*cor;
+        colorOut = texColor*cor;
     } else if(texMode == 4){ // Tree
         vec4 texColor = texture(texmap4, DataIn.tex_coord);
         if (texColor[3] == 0.0) {

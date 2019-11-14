@@ -68,12 +68,12 @@ GLint l_enabled_id; // GLSL pointer to the boolean array
 GLint l_enabled[8] = {1, 1, 1, 1, 1, 1, 1, 1};
 GLint l_spot_dir_id;
 
+// Textures
 GLint tex_loc0, tex_loc1, tex_loc2, tex_loc3, tex_loc4;
 GLint texMode_uniformId;
-
 GLuint TextureArray[5];
 
-// TEXT THINGS
+// Hud text
 float _fontSize = 16;
 GLuint text_vaoID;
 GLuint text_texCoordBuffer;
@@ -320,7 +320,7 @@ public:
     void initScene() {
         srand(time(NULL));
 
-        //Texture Object definition
+        // Texture Object definition
         glGenTextures(5, TextureArray);
         string road_text = "textures/Road.tga";
         string river_text = "textures/River.tga";
@@ -328,11 +328,11 @@ public:
         string anno_text = "textures/Anno_16x16_2.tga";
         string tree_text = "textures/tree.tga";
 
-        TGA_Texture(TextureArray, (char*)road_text.c_str(), 0);
-        TGA_Texture(TextureArray, (char*)river_text.c_str(), 1);
-        TGA_Texture(TextureArray, (char*)grass_text.c_str(), 2);
-        TGA_Texture(TextureArray, (char*)anno_text.c_str(), 3);
-        TGA_Texture(TextureArray, (char*)tree_text.c_str(), 4);
+        TGA_Texture(TextureArray, (char*)road_text.c_str(), ROAD_TEXTURE_INDEX);
+        TGA_Texture(TextureArray, (char*)river_text.c_str(), RIVER_TEXTURE_INDEX);
+        TGA_Texture(TextureArray, (char*)grass_text.c_str(), GRASS_TEXTURE_INDEX);
+        TGA_Texture(TextureArray, (char*)anno_text.c_str(), TEXT_TEXTURE_INDEX);
+        TGA_Texture(TextureArray, (char*)tree_text.c_str(), TREE_TEXTURE_INDEX);
 
         createVehicles<Bus>(busses, 4, 1, 1, true, 80, 50);
         createVehicles<Car>(cars, 5, 3, 1, false, 80, 50);
@@ -386,8 +386,7 @@ public:
         glEnableVertexAttribArray(VERTEX_ATTRIB1);
         glVertexAttribPointer(VERTEX_ATTRIB1, 2, GL_FLOAT, GL_FALSE, 0, 0);
 
-        //Just initialize with something for now, the tex coords are updated
-        //for each character printed
+        //Just initialize with something for now, the tex coords are updated for each character printed
         float text_texCoords[] = {
                 0.0f, 0.0f,
                 0.0f, 0.0f,
@@ -407,12 +406,13 @@ public:
 
     void DrawString(float x, float y, const std::string& str) {
         float text_texCoords[8];
-
         pushMatrix(MODEL);
         translate(MODEL, x, y, 0);
         glBindVertexArray(text_vaoID);
+
         // Position our text
         // glTranslatef(x, y, 0.0);
+
         for (std::string::size_type i = 0; i < str.size(); ++i)
         {
             const float aux = 1.0f / 16.0f;
@@ -480,22 +480,22 @@ public:
 
         // Bind the textures
         glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, TextureArray[0]);
+        glBindTexture(GL_TEXTURE_2D, TextureArray[ROAD_TEXTURE_INDEX]);
         glActiveTexture(GL_TEXTURE1);
-        glBindTexture(GL_TEXTURE_2D, TextureArray[1]);
+        glBindTexture(GL_TEXTURE_2D, TextureArray[RIVER_TEXTURE_INDEX]);
         glActiveTexture(GL_TEXTURE2);
-        glBindTexture(GL_TEXTURE_2D, TextureArray[2]);
+        glBindTexture(GL_TEXTURE_2D, TextureArray[GRASS_TEXTURE_INDEX]);
         glActiveTexture(GL_TEXTURE3);
-        glBindTexture(GL_TEXTURE_2D, TextureArray[3]);
+        glBindTexture(GL_TEXTURE_2D, TextureArray[TEXT_TEXTURE_INDEX]);
         glActiveTexture(GL_TEXTURE4);
-        glBindTexture(GL_TEXTURE_2D, TextureArray[4]);
+        glBindTexture(GL_TEXTURE_2D, TextureArray[TREE_TEXTURE_INDEX]);
 
         // Send the textures
-        glUniform1i(tex_loc0, 0);
-        glUniform1i(tex_loc1, 1);
-        glUniform1i(tex_loc2, 2);
-        glUniform1i(tex_loc3, 3);
-        glUniform1i(tex_loc4, 4);
+        glUniform1i(tex_loc0, ROAD_TEXTURE_INDEX);
+        glUniform1i(tex_loc1, RIVER_TEXTURE_INDEX);
+        glUniform1i(tex_loc2, GRASS_TEXTURE_INDEX);
+        glUniform1i(tex_loc3, TEXT_TEXTURE_INDEX);
+        glUniform1i(tex_loc4, TREE_TEXTURE_INDEX);
 
         // Check for boundaries of the moving objects
         checkVehicleBoundaryCollisions<Bus>(busses);
@@ -513,7 +513,6 @@ public:
 
         for (GameObject *go : gameObjects) {
             if (go->isEnabled()) {
-
                 // Update the physics
                 if (isPlaying){
                     go->update(float(deltaTime/float(GAME_INVERSE_SPEED)));
@@ -539,8 +538,8 @@ public:
             }
         }
 
+        // Render the trees as billboards - they need the camera position for this
         for (auto tree: trees) {
-            // Render the billboards
             if (currentCameraType == CAMERA_PERSPECTIVE_FOLLOW) {
                 tree->render(cameraPerspectiveMoving.pos + cameraPerspectiveMoving.localPos);
             } else if (currentCameraType == CAMERA_PERSPECTIVE_FIXED) {
@@ -564,7 +563,8 @@ public:
         // Swap the back and front buffer
         glBindTexture(GL_TEXTURE_2D, 0);
 
-        /* // HUD STUFF
+        /*
+        // HUD STUFF
         glBlendFunc(GL_ONE, GL_ZERO);
         glDisable(GL_BLEND);
         // H U D
@@ -759,7 +759,7 @@ private:
     bool checkVehicleCollision(T* primeVehicle, vector<T*> &vehicleVector){
         for (T* vehicle: vehicleVector) {
             if (vehicle->position != primeVehicle->position) {
-                if(primeVehicle->collideWith(vehicle)){
+                if (primeVehicle->collideWith(vehicle)){
                     return true;
                 }
             }
