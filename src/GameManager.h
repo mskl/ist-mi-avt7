@@ -82,7 +82,7 @@ GLint doingText_uniformId;
 GLint doingTextV_uniformId;
 
 // Fireworks particle system
-#define MAX_PARTICULAS  1500
+#define MAX_PARTICULAS  150
 #define frand()			((float)rand()/RAND_MAX)
 int fireworks = 0;
 typedef struct {
@@ -263,7 +263,7 @@ public:
             case 'e':
                 fireworks = 1;
                 iniParticulas();
-                //glutTimerFunc(0, iterate, 0);  //timer for particle system
+                glutTimerFunc(0, iterate, 0);  //timer for particle system
                 break;
             // CameraType
             case '1': selectCamera(CAMERA_PERSPECTIVE_FOLLOW); break;
@@ -376,6 +376,10 @@ public:
 
         stencil->init();
         target->isTransparent = true;
+
+        // PARTICLES
+        mesh[678].mat.texcount = 1;
+        createQuad(678, 2, 2);
 
         // some GL settings
         glEnable(GL_DEPTH_TEST);
@@ -585,6 +589,59 @@ public:
             onDeath();
         }
 
+        if (fireworks) {
+            float particle_color[4];
+            // draw fireworks particles
+            glBindTexture(GL_TEXTURE_2D, TextureArray[PARTICLE_TEXTURE_INDEX]); //particle.tga associated to TU0
+            glEnable(GL_BLEND);
+            glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+            glDepthMask(GL_FALSE);  //Depth Buffer Read Only
+
+            glUniform1i(texMode_uniformId, PARTICLE_TEXTURE_INDEX); // draw modulated textured particles
+
+            for (int i = 0; i < MAX_PARTICULAS; i++) {
+                if (particula[i].life > 0.0f) /* s� desenha as que ainda est�o vivas */
+                {
+
+                    /* A vida da part�cula representa o canal alpha da cor. Como o blend est� activo a cor final � a soma da cor rgb do fragmento multiplicada pelo
+                    alpha com a cor do pixel destino */
+
+                    particle_color[0] = particula[i].r;
+                    particle_color[1] = particula[i].g;
+                    particle_color[2] = particula[i].b;
+                    particle_color[3] = particula[i].life;
+
+                    // send the material - diffuse color modulated with texture
+                    tex_particle_loc = glGetUniformLocation(shader.getProgramIndex(), "mat.diffuse");
+                    glUniform4fv(tex_particle_loc, 1, particle_color);
+
+                    pushMatrix(MODEL);
+                    translate(MODEL, particula[i].x, particula[i].y, particula[i].z);
+
+                    // send matrices to OGL
+                    computeDerivedMatrix(PROJ_VIEW_MODEL);
+                    glUniformMatrix4fv(vm_uniformId, 1, GL_FALSE, mCompMatrix[VIEW_MODEL]);
+                    glUniformMatrix4fv(pvm_uniformId, 1, GL_FALSE, mCompMatrix[PROJ_VIEW_MODEL]);
+                    computeNormalMatrix3x3();
+                    glUniformMatrix3fv(normal_uniformId, 1, GL_FALSE, mNormal3x3);
+
+                    glBindVertexArray(mesh[678].vao);
+                    glDrawElements(mesh[678].type, mesh[678].numIndexes, GL_UNSIGNED_INT, 0);
+                    popMatrix(MODEL);
+                } else dead_num_particles++;
+            }
+
+            glDepthMask(GL_TRUE); //make depth buffer again writeable
+
+            if (dead_num_particles == MAX_PARTICULAS) {
+                fireworks = 0;
+                dead_num_particles = 0;
+                printf("All particles dead\n");
+            }
+
+        }
+
+
         // Swap the back and front buffer
         glBindTexture(GL_TEXTURE_2D, 0);
 
@@ -645,7 +702,7 @@ private:
             theta = 2.0*frand()*M_PI;
 
             particula[i].x = 0.0f;
-            particula[i].y = 10.0f;
+            particula[i].y = 3.0f; // was 10
             particula[i].z = 0.0f;
             particula[i].vx = v * cos(theta) * sin(phi);
             particula[i].vy = v * cos(phi);

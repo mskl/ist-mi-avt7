@@ -109,6 +109,7 @@ protected:
 public:
     Vector3 position;
     bool isTransparent = false;
+
     GameObject(Vector3 pos) {
         this->position = pos;
     }

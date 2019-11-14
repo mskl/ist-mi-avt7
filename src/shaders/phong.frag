@@ -6,6 +6,7 @@ uniform sampler2D tex_river;
 uniform sampler2D tex_grass;
 uniform sampler2D tex_text;
 uniform sampler2D tex_tree;
+uniform sampler2D tex_particle;
 
 struct Materials {
     vec4 diffuse;
@@ -96,6 +97,7 @@ void main() {
         texel = texture(tex_grass, DataIn.tex_coord);
 
     if (texMode == 0){
+        // The plain color without texture
         colorOut = max((intensity * mat.diffuse + spec), mat.ambient);
         colorOut[3] = mat.diffuse[3];
     } else if(texMode == 2){
@@ -113,9 +115,15 @@ void main() {
         if (texColor[3] == 0.0) {
             discard;
         }
-
         colorOut = intensity*texColor + spec;
         colorOut[3] = texColor[3];
+    } else if (texMode == 5) { // Particle
+        vec4 texColor = texture(tex_particle, DataIn.tex_coord);
+        if(texColor[3] == 0.0) { // || (mat.diffuse.a == 0.0)
+            discard;
+        } else {
+            colorOut = mat.diffuse * texColor;
+        }
     }
 
     // Mix the fog with the final color of the fragment
