@@ -50,6 +50,12 @@ public:
     }
 
     void render() final {
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+        //Depth Buffer Read Only
+        glDepthMask(GL_FALSE);
+
         // draw fireworks particles
         renderTexture(texMode_uniformId, PARTICLE_TEXTURE_INDEX);
 
@@ -62,15 +68,15 @@ public:
 
                 renderMaterials(ids[0]);
                 pushMatrix(MODEL);
-                translate(MODEL, particles[i].x, particles[i].y, particles[i].z);
-                buildVAO(ids[0]);
+                    translate(MODEL, particles[i].x, particles[i].y, particles[i].z);
+                    buildVAO(ids[0]);
                 popMatrix(MODEL);
             } else {
                 dead_num_particles++;
             }
         }
 
-        //make depth buffer again writeable
+        // make depth buffer again writeable
         glDepthMask(GL_TRUE);
 
         if (dead_num_particles == MAX_PARTICLES) {

@@ -110,7 +110,7 @@ void main() {
             discard;
         }
         colorOut = texColor*cor;
-    } else if(texMode == 4){ // Tree
+    } else if (texMode == 4){ // Tree
         vec4 texColor = texture(tex_tree, DataIn.tex_coord);
         if (texColor[3] == 0.0) {
             discard;
@@ -119,11 +119,11 @@ void main() {
         colorOut[3] = texColor[3];
     } else if (texMode == 5) { // Particle
         vec4 texColor = texture(tex_particle, DataIn.tex_coord);
-        if(texColor[3] == 0.0 || (mat.diffuse[3] == 0.0)) {
+        if (texColor[3] == 0.0 || (mat.diffuse[3] == 0.0)) {
             discard;
-        } else {
-            colorOut = mat.diffuse * texColor;
         }
+        colorOut = mat.diffuse * texColor;
+        colorOut[3] = texColor[3];
     }
 
     // Mix the fog with the final color of the fragment

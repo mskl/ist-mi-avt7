@@ -23,7 +23,7 @@ public:
     }
 
     void render(Vector3 camPos) {
-        renderTexture(texMode_uniformId, 4);
+        renderTexture(texMode_uniformId, TREE_TEXTURE_INDEX);
         float* cam = new float[3];
         float* pos = new float[3];
 

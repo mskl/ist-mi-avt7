@@ -75,7 +75,8 @@ void refresh(int value)
 void initialiseGlut(int argc, char **argv) {
     // GLUT initialization
     glutInit(&argc, argv);
-    glutInitDisplayMode(GLUT_DEPTH|GLUT_DOUBLE|GLUT_RGBA|GLUT_STENCIL|GLUT_MULTISAMPLE);
+    glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA | GLUT_STENCIL | GLUT_MULTISAMPLE);
+
 
     glutInitContextVersion (3, 3);
     glutInitContextProfile (GLUT_CORE_PROFILE );

@@ -369,7 +369,6 @@ public:
         glEnable(GL_DEPTH_TEST);
         glEnable(GL_CULL_FACE);
         glEnable(GL_MULTISAMPLE);
-
         // Sets the background color of the game
         glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 
@@ -462,6 +461,8 @@ public:
 
         // Clear the buffer and load indentity into VIEW and MODEL matrix
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        glEnable(GL_DEPTH_TEST);
+
         loadIdentity(VIEW);
         loadIdentity(MODEL);
 
@@ -602,6 +603,11 @@ public:
         // stencil->render();
 
         selectCamera(currentCameraType);
+
+        // Swap the buffers
+        glBindVertexArray(0);
+        glBindTexture(GL_TEXTURE_2D, 0);
+        glDisable(GL_BLEND);
         glutSwapBuffers();
     }
 
