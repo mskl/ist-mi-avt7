@@ -41,6 +41,7 @@
 #include "objects/SideCollider.h"
 #include "libs/TGA.h"
 #include "objects/Tree.h"
+#include "objects/ParticleSystem.h"
 
 // Macro to print filename shen using cout
 #define mycout std::cout <<  __FILE__  << "(" << __LINE__ << ") "
@@ -80,21 +81,6 @@ GLuint text_texCoordBuffer;
 GLuint text_vertexBuffer;
 GLint doingText_uniformId;
 GLint doingTextV_uniformId;
-
-// Fireworks particle system
-#define MAX_PARTICULAS  150
-#define frand()			((float)rand()/RAND_MAX)
-int fireworks = 0;
-typedef struct {
-    float	life;		// vida
-    float	fade;		// fade
-    float	r, g, b;    // color
-    GLfloat x, y, z;    // posi��o
-    GLfloat vx, vy, vz; // velocidade
-    GLfloat ax, ay, az; // acelera��o
-} Particle;
-Particle particula[MAX_PARTICULAS];
-int dead_num_particles = 0;
 
 class GameManager {
 public:
@@ -149,6 +135,9 @@ public:
     Light* directionalLight = new DirectionalLight(Vector3(0.0f, 5.0f, 0.0f), 6, false);
     SpotLight* spotLight = new SpotLight(Vector3(0, -1, 0), Vector3(0, 2, 0), 7, false);
     vector<PointLight*> pointLights = vector<PointLight*>();
+
+    // Particle system
+    ParticleSystem* particleSystem = new ParticleSystem(Vector3(0, 3, 0));
 
 public:
     GameManager() {
@@ -261,9 +250,7 @@ public:
                 break;
             // Fireworks
             case 'e':
-                fireworks = 1;
-                iniParticulas();
-                glutTimerFunc(0, iterate, 0);  //timer for particle system
+                particleSystem->initParticles(Vector3(0, 3, 0));
                 break;
             // CameraType
             case '1': selectCamera(CAMERA_PERSPECTIVE_FOLLOW); break;
@@ -375,11 +362,8 @@ public:
         }
 
         stencil->init();
+        particleSystem->init();
         target->isTransparent = true;
-
-        // PARTICLES
-        mesh[678].mat.texcount = 1;
-        createQuad(678, 2, 2);
 
         // some GL settings
         glEnable(GL_DEPTH_TEST);
@@ -576,6 +560,10 @@ public:
             }
         }
 
+        // Render the particle system
+        particleSystem->update(float(deltaTime/float(GAME_INVERSE_SPEED)));
+        particleSystem->render();
+
         bool deathInRiver = hitRiver && (!hitLog) && (player->playerState != ONLOG);
 
         if (riverBorder) {
@@ -589,64 +577,10 @@ public:
             onDeath();
         }
 
-        if (fireworks) {
-            float particle_color[4];
-            // draw fireworks particles
-            glBindTexture(GL_TEXTURE_2D, TextureArray[PARTICLE_TEXTURE_INDEX]); //particle.tga associated to TU0
-            glEnable(GL_BLEND);
-            glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-            glDepthMask(GL_FALSE);  //Depth Buffer Read Only
-
-            glUniform1i(texMode_uniformId, PARTICLE_TEXTURE_INDEX); // draw modulated textured particles
-
-            for (int i = 0; i < MAX_PARTICULAS; i++) {
-                if (particula[i].life > 0.0f) /* s� desenha as que ainda est�o vivas */
-                {
-
-                    /* A vida da part�cula representa o canal alpha da cor. Como o blend est� activo a cor final � a soma da cor rgb do fragmento multiplicada pelo
-                    alpha com a cor do pixel destino */
-
-                    particle_color[0] = particula[i].r;
-                    particle_color[1] = particula[i].g;
-                    particle_color[2] = particula[i].b;
-                    particle_color[3] = particula[i].life;
-
-                    // send the material - diffuse color modulated with texture
-                    tex_particle_loc = glGetUniformLocation(shader.getProgramIndex(), "mat.diffuse");
-                    glUniform4fv(tex_particle_loc, 1, particle_color);
-
-                    pushMatrix(MODEL);
-                    translate(MODEL, particula[i].x, particula[i].y, particula[i].z);
-
-                    // send matrices to OGL
-                    computeDerivedMatrix(PROJ_VIEW_MODEL);
-                    glUniformMatrix4fv(vm_uniformId, 1, GL_FALSE, mCompMatrix[VIEW_MODEL]);
-                    glUniformMatrix4fv(pvm_uniformId, 1, GL_FALSE, mCompMatrix[PROJ_VIEW_MODEL]);
-                    computeNormalMatrix3x3();
-                    glUniformMatrix3fv(normal_uniformId, 1, GL_FALSE, mNormal3x3);
-
-                    glBindVertexArray(mesh[678].vao);
-                    glDrawElements(mesh[678].type, mesh[678].numIndexes, GL_UNSIGNED_INT, 0);
-                    popMatrix(MODEL);
-                } else dead_num_particles++;
-            }
-
-            glDepthMask(GL_TRUE); //make depth buffer again writeable
-
-            if (dead_num_particles == MAX_PARTICULAS) {
-                fireworks = 0;
-                dead_num_particles = 0;
-                printf("All particles dead\n");
-            }
-
-        }
-
-
         // Swap the back and front buffer
-        glBindTexture(GL_TEXTURE_2D, 0);
-
         /*
         // HUD STUFF
+        glBindTexture(GL_TEXTURE_2D, 0);
         glBlendFunc(GL_ONE, GL_ZERO);
         glDisable(GL_BLEND);
         // H U D
@@ -676,51 +610,6 @@ public:
     }
 
 private:
-    static void iterate(int value) {
-        float h = 0.033;
-        if (fireworks) {
-            for (int i = 0; i < MAX_PARTICULAS; i++) {
-                particula[i].x += (h*particula[i].vx);
-                particula[i].y += (h*particula[i].vy);
-                particula[i].z += (h*particula[i].vz);
-                particula[i].vx += (h*particula[i].ax);
-                particula[i].vy += (h*particula[i].ay);
-                particula[i].vz += (h*particula[i].az);
-                particula[i].life -= particula[i].fade;
-            }
-            glutPostRedisplay();
-            glutTimerFunc(33, iterate, 0);
-        }
-    }
-
-    void iniParticulas(void) {
-        GLfloat v, theta, phi;
-
-        for (int i = 0; i<MAX_PARTICULAS; i++) {
-            v = 0.8*frand() + 0.2;
-            phi = frand()*M_PI;
-            theta = 2.0*frand()*M_PI;
-
-            particula[i].x = 0.0f;
-            particula[i].y = 3.0f; // was 10
-            particula[i].z = 0.0f;
-            particula[i].vx = v * cos(theta) * sin(phi);
-            particula[i].vy = v * cos(phi);
-            particula[i].vz = v * sin(theta) * sin(phi);
-            particula[i].ax = 0.1f; /* simular um pouco de vento */
-            particula[i].ay = -0.15f; /* simular a acelera��o da gravidade */
-            particula[i].az = 0.0f;
-
-            /* tom amarelado que vai ser multiplicado pela textura que varia entre branco e preto */
-            particula[i].r = 0.882f;
-            particula[i].g = 0.552f;
-            particula[i].b = 0.211f;
-
-            particula[i].life = 1.0f;		/* vida inicial */
-            particula[i].fade = 0.005f;	    /* step de decr�scimo da vida para cada itera��o */
-        }
-    }
-
     void checkPlayerCollisions(GameObject *go, bool &riverBorder, bool &roadDeath, bool &hitRiver, bool &hitLog) {
         if (player->collideWith(go)) {
             if (go->getType() == BUS || go->getType() == CAR) {

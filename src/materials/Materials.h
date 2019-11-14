@@ -41,6 +41,7 @@ AMaterial mat_car_wheel = AMaterial(amb, black, spec_matte, black, 10, 0);
 
 
 AMaterial mat_ground    = AMaterial(amb, green, spec_matte, black, 10, 3);
+AMaterial mat_particle  = AMaterial(amb, green, spec_matte, black, 10, 1);
 AMaterial mat_tree      = AMaterial(amb, green, spec_matte, black, 10, 1);
 AMaterial mat_river     = AMaterial(amb, blue_transparent, spec_matte, black, 100, 2);
 AMaterial mat_river_bottom  = AMaterial(amb, blue_solid, spec_matte, black, 10, 2);
