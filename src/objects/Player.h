@@ -13,6 +13,7 @@ class Player: public DynamicGameObject {
 protected:
     // Position of the start of the jump and the end of the jump
     Vector3 jumpTargetPos = Vector3();
+    Vector3 jumpStartPos = Vector3();
 
     // Calculated position where the jump will happen
     Vector3 transitionPos = Vector3();
@@ -66,6 +67,7 @@ public:
         // Player is grounded
         if (playerState == GROUNDED) {
             playerState = JUMPING;
+            jumpStartPos = position;
             jumpTargetPos = position + jumpDir;
             speed = (jumpDir * -1) / jumpTime;
             lastJumpDir = jumpDir;
@@ -83,6 +85,7 @@ public:
             if (futureDistance > targetDistance) {
                 playerState = JUMPING;
                 position = transitionPos;
+                jumpStartPos = position;
                 jumpTargetPos = position + transitionJumpDir;
                 speed = (transitionJumpDir * -1) / transitionJumpTime;
             }
@@ -90,8 +93,18 @@ public:
 
         // Player is currently jumping
         else if (playerState == JUMPING) {
-            float targetDistance = jumpTargetPos.distance(position);
-            float futureDistance = jumpTargetPos.distance(position + deltaSpeed);
+            float jumpDistance = jumpStartPos.distance(jumpTargetPos);
+            // Measure only flat distance
+            float startDistace = jumpStartPos.distance(
+                    Vector3(position.x, jumpStartPos.y, position.z));
+            float targetDistance = jumpTargetPos.distance(
+                    Vector3(position.x, jumpTargetPos.y, position.z));
+            float futureDistance = jumpTargetPos.distance(
+                    Vector3(position.x, jumpTargetPos.y, position.z) + deltaSpeed);
+
+            // jumpProgress is progress between <0, 1>
+            float jumpProgress = (startDistace / jumpDistance);
+            position.y = 1 + sin(jumpProgress * 3.14f) / 2.0f;
 
             if (futureDistance > targetDistance) {
                 playerState = GROUNDED;
@@ -99,6 +112,7 @@ public:
                 position = jumpTargetPos;
             }
         }
+
         DynamicGameObject::update(deltaTime);
     }
 
