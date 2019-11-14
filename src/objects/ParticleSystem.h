@@ -9,7 +9,6 @@
 #include "../GameManager.h"
 
 #define MAX_PARTICULAS  150
-#define frand()			((float)rand()/RAND_MAX)
 
 typedef struct {
     float	life;
@@ -21,12 +20,14 @@ typedef struct {
 } Particle;
 
 class ParticleSystem: public GameObject {
+protected:
+    int dead_num_particles;
+    Particle particles[MAX_PARTICULAS];
+
 public:
-    Particle particula[MAX_PARTICULAS];
-    int dead_num_particles = 0;
-
-    ParticleSystem(Vector3 pos) : GameObject(pos) {
-
+    ParticleSystem(Vector3 pos)
+        : GameObject(pos), dead_num_particles(0) {
+        isTransparent = true;
     }
 
     void init() final {
@@ -37,18 +38,14 @@ public:
 
     void update(float deltaTime) final {
         float h = 0.033 * deltaTime;
-        if (isEnabled()) {
-            for (int i = 0; i < MAX_PARTICULAS; i++) {
-                particula[i].x += (h*particula[i].vx);
-                particula[i].y += (h*particula[i].vy);
-                particula[i].z += (h*particula[i].vz);
-                particula[i].vx += (h*particula[i].ax);
-                particula[i].vy += (h*particula[i].ay);
-                particula[i].vz += (h*particula[i].az);
-                particula[i].life -= particula[i].fade;
-            }
-            // glutPostRedisplay();
-            // glutTimerFunc(33, iterate, 0);
+        for (int i = 0; i < MAX_PARTICULAS; i++) {
+            particles[i].x += (h * particles[i].vx);
+            particles[i].y += (h * particles[i].vy);
+            particles[i].z += (h * particles[i].vz);
+            particles[i].vx += (h * particles[i].ax);
+            particles[i].vy += (h * particles[i].ay);
+            particles[i].vz += (h * particles[i].az);
+            particles[i].life -= particles[i].fade;
         }
     }
 
@@ -56,18 +53,8 @@ public:
         // draw fireworks particles
         renderTexture(texMode_uniformId, PARTICLE_TEXTURE_INDEX);
 
-        glEnable(GL_BLEND);
-        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-        glDepthMask(GL_FALSE);  // Depth Buffer Read Only
-
-/*
-        glBindTexture(GL_TEXTURE_2D, TextureArray[PARTICLE_TEXTURE_INDEX]); //particle.tga associated to TU0
-        // GL STUFF WAS HERE
-        glUniform1i(texMode_uniformId, PARTICLE_TEXTURE_INDEX); // draw modulated textured particles
-*/
-
         for (int i = 0; i < MAX_PARTICULAS; i++) {
-            if (particula[i].life > 0.0f) {
+            if (particles[i].life > 0.0f) {
                 // TODO: Change the color of the material
                 /*
                 float particle_color[4];
@@ -78,7 +65,7 @@ public:
                 */
                 renderMaterials(ids[0]);
                 pushMatrix(MODEL);
-                translate(MODEL, particula[i].x, particula[i].y, particula[i].z);
+                translate(MODEL, particles[i].x, particles[i].y, particles[i].z);
                 buildVAO(ids[0]);
                 popMatrix(MODEL);
             } else {
@@ -91,16 +78,15 @@ public:
         if (dead_num_particles == MAX_PARTICULAS) {
             setEnabled(false);
             dead_num_particles = 0;
-            printf("All particles dead\n");
         }
     }
 
-    void initParticles(Vector3 newPos = Vector3()) {
+    void spawnParticles(Vector3 newPos = Vector3()) {
         setEnabled(true);
         position = newPos;
         GLfloat v, theta, phi;
 
-        for (auto & i : particula) {
+        for (auto & i : particles) {
             v = 0.8 * frand() + 0.2;
             phi = frand() * M_PI;
             theta = 2.0* frand() *M_PI;
@@ -123,6 +109,10 @@ public:
             i.life = 1.0f;		/* vida inicial */
             i.fade = 0.005f;    /* step de decr�scimo da vida para cada itera��o */
         }
+    }
+
+    static float frand() {
+        return ((float)rand()/RAND_MAX);
     }
 };
 

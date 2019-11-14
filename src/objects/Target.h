@@ -13,6 +13,7 @@ public:
     float angle = 0;
     Target(Vector3 pos)
             : DynamicGameObject(pos, Vector3(0, 0, 0), Vector3(1, 1, 1), TARGET, Vector3(), false) {
+        isTransparent = true;
     }
 
     void init() override {
