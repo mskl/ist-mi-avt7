@@ -69,9 +69,9 @@ GLint l_enabled[8] = {1, 1, 1, 1, 1, 1, 1, 1};
 GLint l_spot_dir_id;
 
 // Textures
-GLint tex_road_loc, tex_river_loc, tex_grass_loc, tex_text_loc, tex_tree_loc;
+GLint tex_road_loc, tex_river_loc, tex_grass_loc, tex_text_loc, tex_tree_loc, tex_particle_loc;
 GLint texMode_uniformId;
-GLuint TextureArray[5];
+GLuint TextureArray[6];
 
 // Hud text
 float _fontSize = 16;
@@ -80,6 +80,21 @@ GLuint text_texCoordBuffer;
 GLuint text_vertexBuffer;
 GLint doingText_uniformId;
 GLint doingTextV_uniformId;
+
+// Fireworks particle system
+#define MAX_PARTICULAS  1500
+#define frand()			((float)rand()/RAND_MAX)
+int fireworks = 0;
+typedef struct {
+    float	life;		// vida
+    float	fade;		// fade
+    float	r, g, b;    // color
+    GLfloat x, y, z;    // posi��o
+    GLfloat vx, vy, vz; // velocidade
+    GLfloat ax, ay, az; // acelera��o
+} Particle;
+Particle particula[MAX_PARTICULAS];
+int dead_num_particles = 0;
 
 class GameManager {
 public:
@@ -244,6 +259,12 @@ public:
             case 'f':
                 fog_enabled = !fog_enabled;
                 break;
+            // Fireworks
+            case 'e':
+                fireworks = 1;
+                iniParticulas();
+                //glutTimerFunc(0, iterate, 0);  //timer for particle system
+                break;
             // CameraType
             case '1': selectCamera(CAMERA_PERSPECTIVE_FOLLOW); break;
             case '2': selectCamera(CAMERA_PERSPECTIVE_FIXED); break;
@@ -320,18 +341,20 @@ public:
         srand(time(NULL));
 
         // Texture Object definition
-        glGenTextures(5, TextureArray);
+        glGenTextures(6, TextureArray);
         string road_text = "textures/Road.tga";
         string river_text = "textures/River.tga";
         string grass_text = "textures/Grass.tga";
         string anno_text = "textures/Anno_16x16_2.tga";
         string tree_text = "textures/tree.tga";
+        string particle_text = "textures/particle.tga";
 
         TGA_Texture(TextureArray, (char*)road_text.c_str(), ROAD_TEXTURE_INDEX);
         TGA_Texture(TextureArray, (char*)river_text.c_str(), RIVER_TEXTURE_INDEX);
         TGA_Texture(TextureArray, (char*)grass_text.c_str(), GRASS_TEXTURE_INDEX);
         TGA_Texture(TextureArray, (char*)anno_text.c_str(), TEXT_TEXTURE_INDEX);
         TGA_Texture(TextureArray, (char*)tree_text.c_str(), TREE_TEXTURE_INDEX);
+        TGA_Texture(TextureArray,  (char*)particle_text.c_str(), PARTICLE_TEXTURE_INDEX);
 
         createVehicles<Bus>(busses, 4, 1, 1, true, 80, 50);
         createVehicles<Car>(cars, 5, 3, 1, false, 80, 50);
@@ -488,6 +511,8 @@ public:
         glBindTexture(GL_TEXTURE_2D, TextureArray[TEXT_TEXTURE_INDEX]);
         glActiveTexture(GL_TEXTURE4);
         glBindTexture(GL_TEXTURE_2D, TextureArray[TREE_TEXTURE_INDEX]);
+        glActiveTexture(GL_TEXTURE5);
+        glBindTexture(GL_TEXTURE_2D, TextureArray[PARTICLE_TEXTURE_INDEX]);
 
         // Send the textures
         glUniform1i(tex_road_loc, ROAD_TEXTURE_INDEX);
@@ -495,6 +520,7 @@ public:
         glUniform1i(tex_grass_loc, GRASS_TEXTURE_INDEX);
         glUniform1i(tex_text_loc, TEXT_TEXTURE_INDEX);
         glUniform1i(tex_tree_loc, TREE_TEXTURE_INDEX);
+        glUniform1i(tex_particle_loc, PARTICLE_TEXTURE_INDEX);
 
         // Check for boundaries of the moving objects
         checkVehicleBoundaryCollisions<Bus>(busses);
@@ -593,6 +619,51 @@ public:
     }
 
 private:
+    static void iterate(int value) {
+        float h = 0.033;
+        if (fireworks) {
+            for (int i = 0; i < MAX_PARTICULAS; i++) {
+                particula[i].x += (h*particula[i].vx);
+                particula[i].y += (h*particula[i].vy);
+                particula[i].z += (h*particula[i].vz);
+                particula[i].vx += (h*particula[i].ax);
+                particula[i].vy += (h*particula[i].ay);
+                particula[i].vz += (h*particula[i].az);
+                particula[i].life -= particula[i].fade;
+            }
+            glutPostRedisplay();
+            glutTimerFunc(33, iterate, 0);
+        }
+    }
+
+    void iniParticulas(void) {
+        GLfloat v, theta, phi;
+
+        for (int i = 0; i<MAX_PARTICULAS; i++) {
+            v = 0.8*frand() + 0.2;
+            phi = frand()*M_PI;
+            theta = 2.0*frand()*M_PI;
+
+            particula[i].x = 0.0f;
+            particula[i].y = 10.0f;
+            particula[i].z = 0.0f;
+            particula[i].vx = v * cos(theta) * sin(phi);
+            particula[i].vy = v * cos(phi);
+            particula[i].vz = v * sin(theta) * sin(phi);
+            particula[i].ax = 0.1f; /* simular um pouco de vento */
+            particula[i].ay = -0.15f; /* simular a acelera��o da gravidade */
+            particula[i].az = 0.0f;
+
+            /* tom amarelado que vai ser multiplicado pela textura que varia entre branco e preto */
+            particula[i].r = 0.882f;
+            particula[i].g = 0.552f;
+            particula[i].b = 0.211f;
+
+            particula[i].life = 1.0f;		/* vida inicial */
+            particula[i].fade = 0.005f;	    /* step de decr�scimo da vida para cada itera��o */
+        }
+    }
+
     void checkPlayerCollisions(GameObject *go, bool &riverBorder, bool &roadDeath, bool &hitRiver, bool &hitLog) {
         if (player->collideWith(go)) {
             if (go->getType() == BUS || go->getType() == CAR) {

@@ -19,6 +19,7 @@ enum TextureID {
     GRASS_TEXTURE_INDEX = 2,
     TEXT_TEXTURE_INDEX = 3,
     TREE_TEXTURE_INDEX = 4,
+    PARTICLE_TEXTURE_INDEX = 5,
 };
 
 	
