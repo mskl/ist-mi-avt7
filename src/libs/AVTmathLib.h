@@ -205,4 +205,7 @@
 
 		///It calculates only the PVM matrix. Just an auxiliary function to be used in billboad demo: it implies that VIEW_MODEL was already calculated
 		void computeDerivedMatrix_PVM();
+
+        //Maps object coordinates to window coordinates: - should be used after computeDerivedMatrix
+        bool project(float *objCoord, float *windowCoord, int *m_viewport);
 #endif

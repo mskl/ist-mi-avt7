@@ -439,3 +439,29 @@ void computeNormalMatrix3x3() {
 	mNormal3x3[7] = (mMat3x3[2] * mMat3x3[3] - mMat3x3[0] * mMat3x3[5]) * invDet;
 	mNormal3x3[8] = (mMat3x3[0] * mMat3x3[4] - mMat3x3[3] * mMat3x3[1]) * invDet;
 }
+
+bool project(float *objCoord, float *windowCoord, int *m_viewport) {
+    float point_tmp[4];
+
+    //gets point in clipping coordinates
+    //multMatrixPoint(PROJ_VIEW_MODEL, objCoord, point_tmp);
+    multMatrixPoint(PROJECTION, objCoord, point_tmp);
+    //normalize between -1 and 1
+    if (point_tmp[3] == 0.0f)  //the w value
+        return false;
+    else
+        point_tmp[3] = 1 / point_tmp[3];
+
+    // Perspective division
+    point_tmp[0] *= point_tmp[3];
+    point_tmp[1] *= point_tmp[3];
+    point_tmp[2] *= point_tmp[3];
+
+    // Window coordinates
+    // Map x, y to range 0-1
+    windowCoord[0] = (point_tmp[0] * 0.5 + 0.5)*m_viewport[2] + m_viewport[0];
+    windowCoord[1] = (point_tmp[1] * 0.5 + 0.5)*m_viewport[3] + m_viewport[1];
+    // This is only correct when glDepthRange(0.0, 1.0)
+    windowCoord[2] = (1.0 + point_tmp[0])*0.5;	// Between 0 and 1
+    return true;
+}

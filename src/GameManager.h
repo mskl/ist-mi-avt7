@@ -134,6 +134,7 @@ public:
 
     // The stencil cube
     SceneStencil* stencil = new SceneStencil();
+
     // Lights
     Light* directionalLight = new DirectionalLight(Vector3(0.0f, 5.0f, 0.0f), 6, false);
     SpotLight* spotLight = new SpotLight(Vector3(0, -1, 0), Vector3(0, 2, 0), 7, false);
@@ -180,7 +181,7 @@ public:
         gameObjects.push_back(new SideCollider(Vector3(-7, -3, -5), Vector3(-6, 3, 0), DEADLYBOUNDS));
 
         gameObjects.push_back(new Sidewalls());
-        // gameObjects.push_back(stencil);
+        gameObjects.push_back(particleSystem);
 
         // Save the lights to gameObjects
         for (auto &pl : pointLights) {
@@ -192,6 +193,10 @@ public:
 
         gameObjects.push_back(player);
         gameObjects.push_back(target);
+
+        if (USE_STENCIL) {
+            gameObjects.push_back(stencil);
+        }
     }
 
     void changeSize(int w, int h) {
@@ -364,7 +369,6 @@ public:
         }
 
         stencil->init();
-        particleSystem->init();
 
         // some GL settings
         glEnable(GL_DEPTH_TEST);
@@ -562,10 +566,6 @@ public:
             }
         }
 
-        // Render the particle system on top
-        particleSystem->update(float(deltaTime/float(GAME_INVERSE_SPEED)));
-        particleSystem->render();
-
         bool deathInRiver = hitRiver && (!hitLog) && (player->playerState != ONLOG);
 
         if (riverBorder) {
@@ -604,8 +604,10 @@ public:
 
         // TODO: Remove from resize
         loadIdentity(PROJECTION);
-        // ortho(-7, 8, -8, 7, -30, 30);
-        // stencil->render();
+
+        if (USE_STENCIL) {
+            stencil->render();
+        }
 
         selectCamera(currentCameraType);
 
