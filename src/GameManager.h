@@ -179,7 +179,6 @@ public:
         gameObjects.push_back(new SideCollider(Vector3(-7, -3, -5), Vector3(-6, 3, 0), DEADLYBOUNDS));
 
         gameObjects.push_back(new Sidewalls());
-        gameObjects.push_back(particleSystem);
         // gameObjects.push_back(stencil);
 
         // Save the lights to gameObjects
@@ -364,6 +363,7 @@ public:
         }
 
         stencil->init();
+        particleSystem->init();
 
         // some GL settings
         glEnable(GL_DEPTH_TEST);
@@ -560,6 +560,10 @@ public:
                 tree->render(cameraPerspectiveFixed.pos + cameraPerspectiveFixed.localPos);
             }
         }
+
+        // Render the particle system on top
+        particleSystem->update(float(deltaTime/float(GAME_INVERSE_SPEED)));
+        particleSystem->render();
 
         bool deathInRiver = hitRiver && (!hitLog) && (player->playerState != ONLOG);
 

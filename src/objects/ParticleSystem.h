@@ -53,7 +53,8 @@ public:
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-        //Depth Buffer Read Only
+        // Depth Buffer Read Only
+        glDisable(GL_DEPTH_TEST);
         glDepthMask(GL_FALSE);
 
         // draw fireworks particles
@@ -78,6 +79,7 @@ public:
 
         // make depth buffer again writeable
         glDepthMask(GL_TRUE);
+        glEnable(GL_DEPTH_TEST);
 
         if (dead_num_particles == MAX_PARTICLES) {
             setEnabled(false);
