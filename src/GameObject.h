@@ -77,12 +77,21 @@ protected:
         return {loc_amb, loc_dif, loc_spc, loc_shi, loc_txcnt};
     }
 
-    virtual void buildVAO(GLint mid, bool isTransparent = false) {
+    static void computeMatrixes(GLint mid) {
         computeDerivedMatrix(PROJ_VIEW_MODEL);
         glUniformMatrix4fv(vm_uniformId, 1, GL_FALSE, mCompMatrix[VIEW_MODEL]);
         glUniformMatrix4fv(pvm_uniformId, 1, GL_FALSE, mCompMatrix[PROJ_VIEW_MODEL]);
         computeNormalMatrix3x3();
         glUniformMatrix3fv(normal_uniformId, 1, GL_FALSE, mNormal3x3);
+    }
+
+    static void drawElements(GLint mid) {
+        glBindVertexArray(mesh[mid].vao);
+        glDrawElements(mesh[mid].type, mesh[mid].numIndexes, GL_UNSIGNED_INT, 0);
+    }
+
+    virtual void buildVAO(GLint mid, bool isTransparent = false) {
+        computeMatrixes(mid);
 
         if (USE_STENCIL) {
             glStencilFunc(GL_EQUAL, 0x1, 0x1);
@@ -97,12 +106,12 @@ protected:
             glDepthMask(GL_FALSE);
         }
 
-        // glDisable(GL_BLEND);
-        glBindVertexArray(mesh[mid].vao);
-        glDrawElements(mesh[mid].type, mesh[mid].numIndexes, GL_UNSIGNED_INT, 0);
+        drawElements(mid);
 
-        glDepthMask(GL_TRUE);
-        glCullFace(GL_BACK);
+        if (isTransparent) {
+            glDepthMask(GL_TRUE);
+            glCullFace(GL_BACK);
+        }
     }
 
 public:

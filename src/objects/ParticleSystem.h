@@ -8,7 +8,7 @@
 #include "../GameObject.h"
 #include "../GameManager.h"
 
-#define MAX_PARTICLES  150
+#define MAX_PARTICLES  30
 
 typedef struct {
     float	life;
@@ -27,6 +27,7 @@ protected:
 public:
     ParticleSystem(Vector3 pos)
         : GameObject(pos), dead_num_particles(0) {
+        // Do not use the default transparency pipeline!
         isTransparent = true;
     }
 
@@ -34,10 +35,11 @@ public:
         ids.push_back(idCount+=1);
         setMaterial(ids.back(), mat_particle);
         createQuad(ids.back(), 2, 2);
+        // createCube(ids.back(), true);
     }
 
     void update(float deltaTime) final {
-        float h = 0.033 * deltaTime;
+        float h = 0.3 * deltaTime;
         for (int i = 0; i < MAX_PARTICLES; i++) {
             particles[i].x += (h * particles[i].vx);
             particles[i].y += (h * particles[i].vy);
@@ -54,7 +56,6 @@ public:
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
         // Depth Buffer Read Only
-        glDisable(GL_DEPTH_TEST);
         glDepthMask(GL_FALSE);
 
         // draw fireworks particles
@@ -79,7 +80,6 @@ public:
 
         // make depth buffer again writeable
         glDepthMask(GL_TRUE);
-        glEnable(GL_DEPTH_TEST);
 
         if (dead_num_particles == MAX_PARTICLES) {
             setEnabled(false);

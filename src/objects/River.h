@@ -19,7 +19,6 @@ public:
         setMaterial(ids.back(), mat_river);
         createCube(ids.back());
 
-
         ids.push_back(idCount+=1);
         setMaterial(ids.back(), mat_river_bottom);
         createCube(ids.back());
