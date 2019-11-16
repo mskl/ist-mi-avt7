@@ -194,9 +194,9 @@ public:
         gameObjects.push_back(player);
         gameObjects.push_back(target);
 
-        if (USE_STENCIL) {
+        //if (USE_STENCIL) {
             gameObjects.push_back(stencil);
-        }
+        //}
     }
 
     void changeSize(int w, int h) {

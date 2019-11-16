@@ -15,7 +15,7 @@ public:
 
     void init() override {
         ids.push_back(idCount += 1);
-        setMaterial(ids.back(), mat_player);
+        setMaterial(ids.back(), mat_bus);
         createQuad(ids.back(), 1, 1);
     }
 
@@ -26,9 +26,9 @@ public:
         float height = m_viewport[3];
 
         renderTexture(texMode_uniformId, 0);
+        renderMaterials(ids[0]);
         pushMatrix(PROJECTION);
         loadIdentity(PROJECTION);
-            renderMaterials(ids[0]);
             pushMatrix(VIEW);
                 loadIdentity(VIEW);
                 pushMatrix(MODEL);
