@@ -115,8 +115,9 @@ public:
             if (futureDistance > targetDistance) {
                 // Draw a particle system
                 Vector3 normalized = speed.normalized();
-                particleSystem->spawnParticles(position+Vector3(0.5, 0, 0.5) - normalized / 2.0,
-                        speed);
+                particleSystem->spawnParticles(
+                        position+Vector3(0.5, 0, 0.5) - normalized / 2.0,speed
+                        );
 
                 playerState = GROUNDED;
                 speed = Vector3(0, 0, 0);
