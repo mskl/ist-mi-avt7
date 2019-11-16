@@ -21,7 +21,7 @@ float blue_solid[4]    = {0.53f, 0.81f, 0.86f, 1.0f};
 float blue_transparent[4] = {0.01f, 0.66f, 0.96f, 0.5f};
 float pale_transparent[4] = {0.88f, 0.72f, 0.56f, 0.7f};
 float yellow[4]     = {1.0f, 1.0f, 0.0f, 1.0f};
-float grey[4]       = {0.8f, 0.8f, 0.8f, 1.0f};
+float grey[4]       = {0.5f, 0.5f, 0.5f, 1.0f};
 float brown[4]      = {0.6f, 0.3f, 0.0f, 1.0f};
 float black[4]      = {0.0f, 0.0f, 0.0f, 1.0f};
 float bluelight[4]  = {0.6f, 1.0f, 1.0f, 0.7f};
@@ -41,7 +41,7 @@ AMaterial mat_car_wheel = AMaterial(amb, black, spec_matte, black, 10, 0);
 
 
 AMaterial mat_ground    = AMaterial(amb, green, spec_matte, black, 10, 3);
-AMaterial mat_particle  = AMaterial(amb, green, spec_matte, black, 10, 1);
+AMaterial mat_particle  = AMaterial(amb, grey, spec_matte, black, 10, 1);
 AMaterial mat_tree      = AMaterial(amb, green, spec_matte, black, 10, 1);
 AMaterial mat_river     = AMaterial(amb, blue_transparent, spec_matte, black, 100, 2);
 AMaterial mat_river_bottom  = AMaterial(amb, blue_solid, spec_matte, black, 10, 2);

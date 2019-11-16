@@ -8,7 +8,7 @@
 #include "../GameObject.h"
 #include "../GameManager.h"
 
-#define MAX_PARTICLES  50
+#define MAX_PARTICLES  10
 
 typedef struct {
     float	life;
@@ -94,13 +94,21 @@ public:
         for (auto & i : particles) {
             Vector3 ns = Vector3(newSpeed.x, newSpeed.y, newSpeed.z);
 
-            ns.x = ns.x * frand() * 3.0f + (frand()*2-1);
+            // Random spawn speed
+            ns.x = ns.x * frand() * 3.0f + (frand()*2-1)*2;
             ns.y = -3.0f*frand();
-            ns.z = ns.z * frand() * 3.0f + (frand()*2-1);
+            ns.z = ns.z * frand() * 3.0f + (frand()*2-1)*2;
 
             i.x = position.x;
             i.y = position.y;
             i.z = position.z;
+
+            // Random spawn position
+            if (newSpeed.x != 0) {
+                i.z += frand()-0.5f;
+            } else if (newSpeed.z != 0) {
+                i.x += frand()-0.5f;
+            }
 
             i.vx = ns.x;
             i.vy = ns.y;
