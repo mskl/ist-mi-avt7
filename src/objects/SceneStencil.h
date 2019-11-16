@@ -26,7 +26,6 @@ public:
         float height = m_viewport[3];
 
         renderTexture(texMode_uniformId, 0);
-        renderMaterials(ids[0]);
         pushMatrix(PROJECTION);
         loadIdentity(PROJECTION);
             pushMatrix(VIEW);
@@ -34,14 +33,25 @@ public:
                 pushMatrix(MODEL);
                     ortho(m_viewport[0], m_viewport[0] + m_viewport[2] - 1, m_viewport[1],
                           m_viewport[1] + m_viewport[3] - 1, -1, 1);
+
                     translate(MODEL, width/2, height/2, 0);
-                    scale(MODEL,     width, height*0.9, 1);
+                    scale(MODEL,     width, height*0.8, 1);
+
+                    renderMaterials(ids[0]);
+                    computeDerivedMatrix(PROJ_VIEW_MODEL);
+                    glUniformMatrix4fv(vm_uniformId, 1, GL_FALSE, mCompMatrix[VIEW_MODEL]);
+                    glUniformMatrix4fv(pvm_uniformId, 1, GL_FALSE, mCompMatrix[PROJ_VIEW_MODEL]);
+                    computeNormalMatrix3x3();
+                    glUniformMatrix3fv(normal_uniformId, 1, GL_FALSE, mNormal3x3);
+
                     if (USE_STENCIL) {
                         glClear(GL_STENCIL_BUFFER_BIT);
                         glStencilFunc(GL_NEVER, 0x1, 0x1);    // Always fails
                         glStencilOp(GL_REPLACE, GL_KEEP, GL_KEEP);      // actions to change stencil buffer
                     }
-                    buildVAO(ids[0]);
+
+                    glBindVertexArray(mesh[ids[0]].vao);
+                    glDrawElements(mesh[ids[0]].type, mesh[ids[0]].numIndexes, GL_UNSIGNED_INT, 0);
                 popMatrix(MODEL);
             popMatrix(VIEW);
         popMatrix(PROJECTION);

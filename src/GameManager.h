@@ -122,23 +122,15 @@ public:
     CameraPerspective cameraPerspectiveFixed
             = CameraPerspective(20, 0, 90, Vector3(0, 20, 0));
     CameraOrthogonal cameraOrthogonal
-            = CameraOrthogonal(-7, 8, -8, 7);
+            = CameraOrthogonal(-8, 9, -9, 8);
 
-    // Particle system
     ParticleSystem* particleSystem = new ParticleSystem(Vector3(0, 3, 0));
-
-    // Player
     Player* player = new Player(Vector3(0, 1, 6), particleSystem);
-
     Target* target = new Target(Vector3(0.25f, 1.25f, -5.75f));
-
-    // The stencil cube
     SceneStencil* stencil = new SceneStencil();
 
-    // Lights
     Light* directionalLight = new DirectionalLight(Vector3(0.0f, 5.0f, 0.0f), 6, false);
     SpotLight* spotLight = new SpotLight(Vector3(0, -1, 0), Vector3(0, 2, 0), 7, false);
-
     vector<PointLight*> pointLights = vector<PointLight*>();
 
 public:
@@ -194,9 +186,9 @@ public:
         gameObjects.push_back(player);
         gameObjects.push_back(target);
 
-        //if (USE_STENCIL) {
+        if (USE_STENCIL) {
             gameObjects.push_back(stencil);
-        //}
+        }
     }
 
     void changeSize(int w, int h) {
@@ -253,10 +245,6 @@ public:
             // Fog switch
             case 'f':
                 fog_enabled = !fog_enabled;
-                break;
-            // Fireworks
-            case 'e':
-                particleSystem->spawnParticles(Vector3(0, 3, 0));
                 break;
             // CameraType
             case '1': selectCamera(CAMERA_PERSPECTIVE_FOLLOW); break;
@@ -451,7 +439,6 @@ public:
             glUniformMatrix4fv(pvm_uniformId, 1, GL_FALSE, mCompMatrix[PROJ_VIEW_MODEL]);
 
             glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
-
             translate(MODEL, _fontSize * 0.8f, 0.0f, 0.0f);
         }
         glBindVertexArray(0);
