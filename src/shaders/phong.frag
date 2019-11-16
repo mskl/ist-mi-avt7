@@ -118,18 +118,11 @@ void main() {
         colorOut = intensity*texColor + spec;
         colorOut[3] = texColor[3];
     } else if (texMode == 5) { // Particle
-        /*vec4 texColor = texture(tex_particle, DataIn.tex_coord);
+        vec4 texColor = texture(tex_particle, DataIn.tex_coord);
         if (texColor[3] == 0.0 || (mat.diffuse[3] == 0.0)) {
             discard;
         }
-        colorOut = mat.diffuse * texColor;
-        colorOut[3] = texColor[3];*/
-        vec4 texColor = texture(tex_particle, DataIn.tex_coord);
-        if (texColor[3] == 0.0) {
-            discard;
-        }
-        colorOut = intensity*texColor + spec;
-        colorOut[3] = texColor[3];
+        colorOut = mat.diffuse * texColor + spec;
     }
 
     // Mix the fog with the final color of the fragment

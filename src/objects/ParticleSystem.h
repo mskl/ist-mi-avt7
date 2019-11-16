@@ -8,7 +8,7 @@
 #include "../GameObject.h"
 #include "../GameManager.h"
 
-#define MAX_PARTICLES  30
+#define MAX_PARTICLES  50
 
 typedef struct {
     float	life;
@@ -34,19 +34,20 @@ public:
     void init() final {
         ids.push_back(idCount+=1);
         setMaterial(ids.back(), mat_particle);
-        createQuad(ids.back(), 2, 2);
-        // createCube(ids.back(), true);
+        createQuad(ids.back(), 0.3, 0.3);
     }
 
     void update(float deltaTime) final {
-        float h = 0.3 * deltaTime;
+        float h = 0.3f * deltaTime;
+        float g = 4.0f;
+
         for (int i = 0; i < MAX_PARTICLES; i++) {
             particles[i].x += (h * particles[i].vx);
             particles[i].y += (h * particles[i].vy);
             particles[i].z += (h * particles[i].vz);
-            particles[i].vx += (h * particles[i].ax);
-            particles[i].vy += (h * particles[i].ay);
-            particles[i].vz += (h * particles[i].az);
+
+            // Simulate the gravity
+            particles[i].vy -= h*g;
             particles[i].life -= particles[i].fade;
         }
     }
@@ -63,11 +64,9 @@ public:
 
         for (int i = 0; i < MAX_PARTICLES; i++) {
             if (particles[i].life > 0.0f) {
-                mat_particle.diff[0] = particles[i].r;
-                mat_particle.diff[1] = particles[i].g;
-                mat_particle.diff[2] = particles[i].b;
                 mat_particle.diff[3] = particles[i].life;
 
+                setMaterial(ids[0], mat_particle);
                 renderMaterials(ids[0]);
                 pushMatrix(MODEL);
                     translate(MODEL, particles[i].x, particles[i].y, particles[i].z);
@@ -87,33 +86,28 @@ public:
         }
     }
 
-    void spawnParticles(Vector3 newPos = Vector3()) {
+    void spawnParticles(Vector3 newPos = Vector3(), Vector3 newSpeed = Vector3(1)) {
         setEnabled(true);
         position = newPos;
         GLfloat v, theta, phi;
 
         for (auto & i : particles) {
-            v = 0.8 * frand() + 0.2;
-            phi = frand() * M_PI;
-            theta = 2.0 * frand() *M_PI;
+            Vector3 ns = Vector3(newSpeed.x, newSpeed.y, newSpeed.z);
+
+            ns.x = ns.x * frand() * 3.0f + (frand()*2-1);
+            ns.y = -3.0f*frand();
+            ns.z = ns.z * frand() * 3.0f + (frand()*2-1);
 
             i.x = position.x;
             i.y = position.y;
             i.z = position.z;
-            i.vx = v * cos(theta) * sin(phi);
-            i.vy = v * cos(phi);
-            i.vz = v * sin(theta) * sin(phi);
-            i.ax = 0.1f;    /* simular um pouco de vento */
-            i.ay = -0.15f;  /* simular a acelera��o da gravidade */
-            i.az = 0.0f;
 
-            /* tom amarelado que vai ser multiplicado pela textura que varia entre branco e preto */
-            i.r = 0.882f;
-            i.g = 0.552f;
-            i.b = 0.211f;
+            i.vx = ns.x;
+            i.vy = ns.y;
+            i.vz = ns.z;
 
             i.life = 1.0f;
-            i.fade = 0.005f;
+            i.fade = 0.05f;
         }
     }
 

@@ -124,20 +124,21 @@ public:
     CameraOrthogonal cameraOrthogonal
             = CameraOrthogonal(-7, 8, -8, 7);
 
+    // Particle system
+    ParticleSystem* particleSystem = new ParticleSystem(Vector3(0, 3, 0));
+
     // Player
-    Player* player = new Player(Vector3(0, 1, 6));
+    Player* player = new Player(Vector3(0, 1, 6), particleSystem);
+
     Target* target = new Target(Vector3(0.25f, 1.25f, -5.75f));
 
     // The stencil cube
     SceneStencil* stencil = new SceneStencil();
-
     // Lights
     Light* directionalLight = new DirectionalLight(Vector3(0.0f, 5.0f, 0.0f), 6, false);
     SpotLight* spotLight = new SpotLight(Vector3(0, -1, 0), Vector3(0, 2, 0), 7, false);
-    vector<PointLight*> pointLights = vector<PointLight*>();
 
-    // Particle system
-    ParticleSystem* particleSystem = new ParticleSystem(Vector3(0, 3, 0));
+    vector<PointLight*> pointLights = vector<PointLight*>();
 
 public:
     GameManager() {

@@ -53,6 +53,11 @@ public:
         return {-this->x, -this->y, -this->z};
     }
 
+    Vector3 normalized() const {
+        float magnitude = distance(Vector3(0));
+        return Vector3(x/magnitude, y/magnitude, z/magnitude);
+    }
+
     inline bool operator>(const Vector3& vec) const {
         return (this->x > vec.x) && (this->y > vec.y) && (this->z > vec.z);
     }
@@ -63,7 +68,7 @@ public:
         z = vec.z;
     }
 
-    inline float distance(const Vector3& vec) const{
+    inline float distance(const Vector3& vec) const {
         Vector3 delta = Vector3(this->x - vec.x, this->y - vec.y, this->z - vec.z);
         return sqrt(delta.x * delta.x + delta.y * delta.y + delta.z * delta.z);
     }

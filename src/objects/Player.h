@@ -6,6 +6,7 @@
 #define AVT7_PLAYER_H
 
 #include "../DynamicGameObject.h"
+#include "ParticleSystem.h"
 
 enum PlayerState {JUMPING, GROUNDED, ONLOG, ONTURTLE, JUMPSTAGED};
 
@@ -22,6 +23,7 @@ protected:
 
     // The bottomBoundingBox check for collisions with river and (or) a log
     BoundingBox bottomBox = BoundingBox(Vector3(0.1, -1, 0.1), Vector3(0.9, 0, 0.9));
+
 public:
     // Current state of the player
     PlayerState playerState = GROUNDED;
@@ -31,9 +33,13 @@ public:
     int startingLives = 5;
     int currentLives = startingLives;
 
-    Player(Vector3 pos)
-        : DynamicGameObject(pos,Vector3(), Vector3(1),PLAYER, Vector3(), false) {
-        initPos = pos;
+    // Particle system assiciated to the player
+    ParticleSystem* particleSystem;
+
+    Player(Vector3 pos, ParticleSystem* particleSystem)
+        : DynamicGameObject(pos,Vector3(), Vector3(1),PLAYER, Vector3(), false){
+        this->particleSystem = particleSystem;
+        this->initPos = pos;
     }
 
     void jump(Vector3 jumpDir, float jumpTime) {
@@ -107,6 +113,11 @@ public:
             position.y = 1 + sin(jumpProgress * 3.14f) / 2.0f;
 
             if (futureDistance > targetDistance) {
+                // Draw a particle system
+                Vector3 normalized = speed.normalized();
+                particleSystem->spawnParticles(position+Vector3(0.5, 0, 0.5) - normalized / 2.0,
+                        speed);
+
                 playerState = GROUNDED;
                 speed = Vector3(0, 0, 0);
                 position = jumpTargetPos;
