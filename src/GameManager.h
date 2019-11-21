@@ -74,13 +74,14 @@ GLint tex_road_loc, tex_river_loc, tex_grass_loc, tex_text_loc, tex_tree_loc, te
 GLint texMode_uniformId;
 GLuint TextureArray[6];
 
+// Shadows
+GLuint shadowMode_uniformId;
+
 // Hud text
 float _fontSize = 16;
 GLuint text_vaoID;
 GLuint text_texCoordBuffer;
 GLuint text_vertexBuffer;
-GLint doingText_uniformId;
-GLint doingTextV_uniformId;
 
 class GameManager {
 public:
@@ -302,6 +303,9 @@ public:
         tex_tree_loc = glGetUniformLocation(shader.getProgramIndex(), "tex_tree");      //texmap4
         tex_particle_loc = glGetUniformLocation(shader.getProgramIndex(), "tex_particle");
 
+        // Shadows
+        shadowMode_uniformId = glGetUniformLocation(shader.getProgramIndex(), "shadowMode");
+
         // Get the light indexes
         for (int i = 0; i < 8; i++) {
             std::string pos = "l_pos_" + to_string(i);
@@ -401,50 +405,6 @@ public:
         glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * 8, &text_texCoords[0], GL_DYNAMIC_DRAW);
         glEnableVertexAttribArray(VERTEX_ATTRIB2);
         glVertexAttribPointer(VERTEX_ATTRIB2, 2, GL_FLOAT, GL_FALSE, 0, 0);
-
-        // Set the orthographic projection matrix
-        // ortho(0.0f, float(WinX), 0.0f, float(WinY), -1.0f, 1.0f);
-    }
-
-    void DrawString(float x, float y, const std::string& str) {
-        float text_texCoords[8];
-        pushMatrix(MODEL);
-        translate(MODEL, x, y, 0);
-        glBindVertexArray(text_vaoID);
-
-        // Position our text
-        // glTranslatef(x, y, 0.0);
-
-        for (std::string::size_type i = 0; i < str.size(); ++i)
-        {
-            const float aux = 1.0f / 16.0f;
-
-            int ch = int(str[i]);
-            float xPos = float(ch % 16) * aux;
-            float yPos = float(ch / 16) * aux;
-
-            text_texCoords[0] = xPos;
-            text_texCoords[1] = 1.0f - yPos - aux;
-            text_texCoords[2] = xPos + aux;
-            text_texCoords[3] = 1.0f - yPos - aux;
-            text_texCoords[4] = xPos + aux;
-            text_texCoords[5] = 1.0f - yPos - 0.001f;
-            text_texCoords[6] = xPos;
-            text_texCoords[7] = 1.0f - yPos - 0.001f;
-
-            glBindBuffer(GL_ARRAY_BUFFER, text_texCoordBuffer);
-            glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(float) * 8, &text_texCoords[0]);
-
-            computeDerivedMatrix(PROJ_VIEW_MODEL);
-            glUniformMatrix4fv(pvm_uniformId, 1, GL_FALSE, mCompMatrix[PROJ_VIEW_MODEL]);
-
-            glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
-            translate(MODEL, _fontSize * 0.8f, 0.0f, 0.0f);
-        }
-        glBindVertexArray(0);
-        popMatrix(MODEL);
-
-        glEnable(GL_DEPTH_TEST);
     }
 
     void renderScene() {
@@ -516,7 +476,6 @@ public:
         bool hitLog = false;
 
         #define GAME_INVERSE_SPEED 200
-
         for (GameObject *go : gameObjects) {
             if (go->isEnabled()) {
                 // Update the physics
@@ -527,11 +486,47 @@ public:
                 if (go->position != player->position) {
                     checkPlayerCollisions(go, riverBorder, roadDeath, hitRiver, hitLog);
                 }
+            }
+        }
 
-                // Render the objects ()
-                if (!go->isTransparent) {
-                    go->render();
-                }
+        // Render all of the GO's
+        renderAllGameObjects();
+
+        bool deathInRiver = hitRiver && (!hitLog) && (player->playerState != ONLOG);
+
+        if (riverBorder) {
+            cout << "Death in river border!" << endl;
+            onDeath();
+        } else if (deathInRiver) {
+            cout << "Death in river!" << endl;
+            onDeath();
+        } else if (roadDeath) {
+            cout << "Death on the road!" << endl;
+            onDeath();
+        }
+
+        // TODO: Remove from resize
+        loadIdentity(PROJECTION);
+
+        if (USE_STENCIL) {
+            stencil->render();
+        }
+
+        selectCamera(currentCameraType);
+
+        // Swap the buffers
+        glBindVertexArray(0);
+        glBindTexture(GL_TEXTURE_2D, 0);
+        glDisable(GL_BLEND);
+        glutSwapBuffers();
+    }
+
+private:
+    void renderAllGameObjects() {
+        for (GameObject *go : gameObjects) {
+            // Render the objects ()
+            if (!go->isTransparent) {
+                go->render();
             }
         }
 
@@ -552,60 +547,8 @@ public:
                 tree->render(cameraPerspectiveFixed.pos + cameraPerspectiveFixed.localPos);
             }
         }
-
-        bool deathInRiver = hitRiver && (!hitLog) && (player->playerState != ONLOG);
-
-        if (riverBorder) {
-            cout << "Death in river border!" << endl;
-            onDeath();
-        } else if (deathInRiver) {
-            cout << "Death in river!" << endl;
-            onDeath();
-        } else if (roadDeath) {
-            cout << "Death on the road!" << endl;
-            onDeath();
-        }
-
-        // Swap the back and front buffer
-        /*
-        // HUD STUFF
-        glBindTexture(GL_TEXTURE_2D, 0);
-        glBlendFunc(GL_ONE, GL_ZERO);
-        glDisable(GL_BLEND);
-        // H U D
-        glDisable(GL_DEPTH_TEST);
-        pushMatrix(MODEL);
-        loadIdentity(VIEW);
-        loadIdentity(MODEL);
-        loadIdentity(PROJECTION);
-        ortho(0, 1280, 0, 1280, 0, 1);
-        glUniform1i(texMode_uniformId, 3);
-
-        _fontSize = 24;
-        initTextureMappedFont();
-        std::string s = "LIVES:dd a da sd sa dsa dashjdhsakdhsakjh" ;
-        DrawString(10, 10, s);
-        //popMatrix(MODEL);
-        glEnable(GL_DEPTH_TEST);
-        */
-
-        // TODO: Remove from resize
-        loadIdentity(PROJECTION);
-
-        if (USE_STENCIL) {
-            stencil->render();
-        }
-
-        selectCamera(currentCameraType);
-
-        // Swap the buffers
-        glBindVertexArray(0);
-        glBindTexture(GL_TEXTURE_2D, 0);
-        glDisable(GL_BLEND);
-        glutSwapBuffers();
     }
 
-private:
     void checkPlayerCollisions(GameObject *go, bool &riverBorder, bool &roadDeath, bool &hitRiver, bool &hitLog) {
         if (player->collideWith(go)) {
             if (go->getType() == BUS || go->getType() == CAR) {

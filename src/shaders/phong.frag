@@ -8,6 +8,8 @@ uniform sampler2D tex_text;
 uniform sampler2D tex_tree;
 uniform sampler2D tex_particle;
 
+uniform bool shadowMode;
+
 struct Materials {
     vec4 diffuse;
     vec4 ambient;
@@ -96,33 +98,37 @@ void main() {
     else if(mat.texcount == 3)
         texel = texture(tex_grass, DataIn.tex_coord);
 
-    if (texMode == 0){
-        // The plain color without texture
-        colorOut = max((intensity * mat.diffuse + spec), mat.ambient);
-        colorOut[3] = mat.diffuse[3];
-    } else if(texMode == 2){
-        colorOut = intensity*texel + spec;
-        colorOut[3] = mat.diffuse[3];
-    } else if(texMode == 3){ // Text
-        vec4 cor = vec4(1,1,1,1);
-        vec4 texColor = texture(tex_text, DataIn.tex_coord);
-        if (texColor[0] + texColor[1] + texColor[2] < 2.5){
-            discard;
+    if(shadowMode) {
+        colorOut = vec4(0.5, 0.5, 0.5, 1.0);
+    } else {
+        if (texMode == 0){
+            // The plain color without texture
+            colorOut = max((intensity * mat.diffuse + spec), mat.ambient);
+            colorOut[3] = mat.diffuse[3];
+        } else if (texMode == 2){
+            colorOut = intensity*texel + spec;
+            colorOut[3] = mat.diffuse[3];
+        } else if (texMode == 3){ // Text
+            vec4 cor = vec4(1, 1, 1, 1);
+            vec4 texColor = texture(tex_text, DataIn.tex_coord);
+            if (texColor[0] + texColor[1] + texColor[2] < 2.5){
+                discard;
+            }
+            colorOut = texColor*cor;
+        } else if (texMode == 4){ // Tree
+            vec4 texColor = texture(tex_tree, DataIn.tex_coord);
+            if (texColor[3] == 0.0) {
+                discard;
+            }
+            colorOut = intensity*texColor + spec;
+            colorOut[3] = texColor[3];
+        } else if (texMode == 5) { // Particle
+            vec4 texColor = texture(tex_particle, DataIn.tex_coord);
+            if (texColor[3] == 0.0 || (mat.diffuse[3] == 0.0)) {
+                discard;
+            }
+            colorOut = mat.diffuse * texColor + spec;
         }
-        colorOut = texColor*cor;
-    } else if (texMode == 4){ // Tree
-        vec4 texColor = texture(tex_tree, DataIn.tex_coord);
-        if (texColor[3] == 0.0) {
-            discard;
-        }
-        colorOut = intensity*texColor + spec;
-        colorOut[3] = texColor[3];
-    } else if (texMode == 5) { // Particle
-        vec4 texColor = texture(tex_particle, DataIn.tex_coord);
-        if (texColor[3] == 0.0 || (mat.diffuse[3] == 0.0)) {
-            discard;
-        }
-        colorOut = mat.diffuse * texColor + spec;
     }
 
     // Mix the fog with the final color of the fragment

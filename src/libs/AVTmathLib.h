@@ -203,9 +203,12 @@
 		/// Computes Derived Matrices (4x4)
 		void computeDerivedMatrix(ComputedMatrixTypes aType);
 
-		///It calculates only the PVM matrix. Just an auxiliary function to be used in billboad demo: it implies that VIEW_MODEL was already calculated
+		/// It calculates only the PVM matrix. Just an auxiliary function to be used in billboad demo: it implies that VIEW_MODEL was already calculated
 		void computeDerivedMatrix_PVM();
 
-        //Maps object coordinates to window coordinates: - should be used after computeDerivedMatrix
+        // Maps object coordinates to window coordinates: - should be used after computeDerivedMatrix
         bool project(float *objCoord, float *windowCoord, int *m_viewport);
+
+        // Shadow projection
+        void shadow_matrix(float *m,float *plane, float *light);
 #endif
