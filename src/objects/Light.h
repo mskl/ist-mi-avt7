@@ -15,6 +15,9 @@ public:
     void toggleLight() {
         light_enabled = !light_enabled;
     }
+    bool isEnabled(){
+        return light_enabled;
+    }
 
 protected:
     bool light_enabled;
@@ -32,6 +35,7 @@ protected:
         l_enabled[light_id] = light_enabled;
         glUniform1iv(l_enabled_id, 8, l_enabled);
     }
+
 };
 
 #endif //AVT7_LIGHT_H
