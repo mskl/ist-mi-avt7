@@ -13,7 +13,7 @@
 #include "GameManager.h"
 #include "libs/vsShaderLib.h"
 
-#define USE_STENCIL 1
+#define USE_STENCIL 0
 
 // Macro to print filename when using std::cout
 #define mycout std::cout <<  __FILE__  << "(" << __LINE__ << ") "
