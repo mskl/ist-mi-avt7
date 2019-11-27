@@ -91,6 +91,10 @@ GLuint text_vaoID;
 GLuint text_texCoordBuffer;
 GLuint text_vertexBuffer;
 
+float lightPos[4] = {4.0f, 7.0f, 2.0f, 1.0f};
+
+int objId = 0;
+
 class GameManager {
 public:
     GLint WindowHandle = 0;
@@ -529,6 +533,7 @@ public:
             }
         }
 
+        renderShadows();
         // Render all of the GO's
         renderAllGameObjects();
 
@@ -557,12 +562,126 @@ public:
             stencil->render();
         }
         selectCamera(currentCameraType);
+
+        /* #################################### TEST SHADOWS #############################################3 */
+
+
+        /*for(Car* car : cars){
+            car->render();
+        }*/
+        /* #################################### TEST SHADOWS #############################################3 */
+
+
         // Swap the buffers
         glBindVertexArray(0);
         glBindTexture(GL_TEXTURE_2D, 0);
         glDisable(GL_BLEND);
         glutSwapBuffers();
     }
+
+    void renderShadows(){
+
+
+        GLfloat plano_chao[4] = { 0,1,0,-1.05f };
+
+        float res[4];
+        float mat[16];
+        glUniform1i(shadowMode_uniformId, 0);  //ilumina��o phong
+
+        // Desenhar apenas onde o stencil buffer esta a 1
+        glStencilFunc(GL_EQUAL, 0x1, 0x1);
+        glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
+        // Render the Shadows
+        glUniform1i(shadowMode_uniformId, 0);  //Render with constant color
+        shadow_matrix(mat, plano_chao, lightPos);
+
+        //glDisable(GL_DEPTH_TEST); //To force the shadow geometry to be rendered even if behind the floor
+
+        //Dark the color stored in color buffer
+        glBlendFunc(GL_DST_COLOR, GL_ZERO);
+        glStencilOp(GL_KEEP, GL_KEEP, GL_ZERO);
+
+        pushMatrix(MODEL);
+        multMatrix(MODEL, mat);
+        //draw_objects();
+
+        // Render all of the GO's
+        //renderAllGameObjects();
+        for(Car* car : cars){
+            car->render();
+        }
+
+
+        for(Bus* bus : busses){
+            bus->render();
+        }
+        popMatrix(MODEL);
+
+        //render the geometry
+        glUniform1i(shadowMode_uniformId, 0);
+    }
+
+    void draw_objects(void)
+    {
+        GLint loc;
+        objId = 100;   //sphere
+        loc = glGetUniformLocation(shader.getProgramIndex(), "mat.ambient");
+        glUniform4fv(loc, 1, mesh[objId].mat.ambient);
+        loc = glGetUniformLocation(shader.getProgramIndex(), "mat.diffuse");
+        glUniform4fv(loc, 1, mesh[objId].mat.diffuse);
+        loc = glGetUniformLocation(shader.getProgramIndex(), "mat.specular");
+        glUniform4fv(loc, 1, mesh[objId].mat.specular);
+        loc = glGetUniformLocation(shader.getProgramIndex(), "mat.shininess");
+        glUniform1f(loc, mesh[objId].mat.shininess);
+        pushMatrix(MODEL);
+        translate(MODEL, 0.0f, 0.0f, 0.0f);
+        translate(MODEL, 5.0f, 2.0f, -5.0f);
+        computeDerivedMatrix(PROJ_VIEW_MODEL);
+        glUniformMatrix4fv(vm_uniformId, 1, GL_FALSE, mCompMatrix[VIEW_MODEL]);
+        glUniformMatrix4fv(pvm_uniformId, 1, GL_FALSE, mCompMatrix[PROJ_VIEW_MODEL]);
+        computeNormalMatrix3x3();
+        glUniformMatrix3fv(normal_uniformId, 1, GL_FALSE, mNormal3x3);
+
+        glUniform1i(texMode_uniformId, 1);
+        glBindVertexArray(mesh[objId].vao);
+        if (!shader.isProgramValid()) {
+            printf("Program Not Valid!\n");
+            exit(1);
+        }
+        glDrawElements(mesh[objId].type, mesh[objId].numIndexes, GL_UNSIGNED_INT, 0);
+        glBindVertexArray(0);
+        popMatrix(MODEL);
+
+    }
+
+    static void draw_mirror(void) //specular mirror with cube
+    {
+        GLint loc;
+        objId = 3;
+        loc = glGetUniformLocation(shader.getProgramIndex(), "mat.ambient");
+        glUniform4fv(loc, 1, mesh[objId].mat.ambient);
+        loc = glGetUniformLocation(shader.getProgramIndex(), "mat.diffuse");
+        glUniform4fv(loc, 1, mesh[objId].mat.diffuse);
+        loc = glGetUniformLocation(shader.getProgramIndex(), "mat.specular");
+        glUniform4fv(loc, 1, mesh[objId].mat.specular);
+        loc = glGetUniformLocation(shader.getProgramIndex(), "mat.shininess");
+        glUniform1f(loc, mesh[objId].mat.shininess);
+        pushMatrix(MODEL);
+        scale(MODEL, 45.0f, 0.005f, 45.0f);
+        translate(MODEL, -0.5f, -0.5f, -0.5f); //centrar o cubo na origem
+        computeDerivedMatrix(PROJ_VIEW_MODEL);
+        glUniformMatrix4fv(vm_uniformId, 1, GL_FALSE, mCompMatrix[VIEW_MODEL]);
+        glUniformMatrix4fv(pvm_uniformId, 1, GL_FALSE, mCompMatrix[PROJ_VIEW_MODEL]);
+        computeNormalMatrix3x3();
+        glUniformMatrix3fv(normal_uniformId, 1, GL_FALSE, mNormal3x3);
+
+        glUniform1i(texMode_uniformId, 2);
+        glBindVertexArray(mesh[objId].vao);
+        glDrawElements(mesh[objId].type, mesh[objId].numIndexes, GL_UNSIGNED_INT, 0);
+        glBindVertexArray(0);
+        popMatrix(MODEL);
+    }
+
 
 private:
     void renderAllGameObjects() {
