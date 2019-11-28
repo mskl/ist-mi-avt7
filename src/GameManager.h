@@ -566,9 +566,7 @@ public:
         }
         selectCamera(currentCameraType);
 
-        /* #################################### TEST REFLECTION #############################################3 */
         renderMirror();
-        /* #################################### TEST REFLECTION #############################################3 */
         // Swap the buffers
         glBindVertexArray(0);
         glBindTexture(GL_TEXTURE_2D, 0);
@@ -577,8 +575,6 @@ public:
     }
 
     void renderShadows(){
-
-
         GLfloat plano_chao[4] = { 0,1,0,-1.05f };
 
         float res[4];
