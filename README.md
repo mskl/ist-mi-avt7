@@ -1,10 +1,13 @@
 # AVT7
 Three-Dimensional Vizualization and Animation at IST
 
+## Online app
+http://stoked.cz/projects/AVT7/index.html
+
 ## Deadlines
 - Checkpoint 1 (20%) - 23 October
 - Checkpoint 2 (30%) - 20 November
-- Checkpoint 3 (30%)  - 11 December
+- Checkpoint 3 (30%) - 11 December
 
 ### Checkpoint 1 - report
 The technical report for Assignment 1 should be delivered by email to jap@inesc-id.pt till the beginning of the next lab class. It should contain at maximum 4 pages and pictures are welcome in order to illustrate the graphical capabilities of your Frogger3D application.
