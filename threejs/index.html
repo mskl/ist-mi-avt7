@@ -4,10 +4,20 @@
 		<style>
 			body { margin: 0; }
 			canvas { width: 100%; height: 100% }
+			.info {
+				position: absolute;
+				top: 10px;
+				width: 100%;
+				text-align: left;
+				z-index: 100;
+				display:block;
+				color: white;
+			}
 		</style>
 	</head>
 	<body>
 		<script src="js/three.js"></script>
+		<script src="js/Lensflare.js"></script>
 		<script type="text/javascript" src="main.js"></script>
 		<script type="text/javascript" src="objects/Road.js"></script>
 		<script type="text/javascript" src="objects/Grass.js"></script>
@@ -17,6 +27,9 @@
 		<script type="text/javascript" src="objects/GrassBlock.js"></script>
 		<script type="text/javascript" src="objects/Log.js"></script>
 		<script type="text/javascript" src="objects/Crystal.js"></script>
+		<script type="text/javascript" src="objects/Crab.js"></script>
+		<script type="text/javascript" src="objects/Frog.js"></script>
+		<script type="text/javascript" src="objects/Turtle.js"></script>
 		<script>
 			
 
@@ -24,5 +37,9 @@
 			var gameManager = new GameManager();
 			gameManager.webGLStart();
 		</script>
+		<div class="info">
+			<div id="score">TestText</div>
+			<div id="lives">TestText</div>
+		</div>
 	</body>
 </html>

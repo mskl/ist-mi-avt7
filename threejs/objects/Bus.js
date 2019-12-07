@@ -1,22 +1,38 @@
-class Bus {
-    meshes = [];
+class Bus{
+    meshes = []
     wheelRotation = 0.1;
-    constructor(position){
+    clippingPlanes = [];
+    constructor(position,clippingPlanes){
         this.position = position;
+        if(clippingPlanes != null){
+            this.clippingPlanes = clippingPlanes;
+        }
         this.initializeObject();
     }
 
     initializeObject(){
         // Body
         var bodyGeometry = new THREE.BoxGeometry(3, 0.8, 1 );
-        var material = new THREE.MeshBasicMaterial( { color: "rgb(255,0,0)"} );
-        var meshBody = new THREE.Mesh( bodyGeometry, material );
-        meshBody.receiveShadow = true;
-        meshBody.castShadow = true;
-        this.meshes.push(meshBody)
-
-
-        var materialWheels = new THREE.MeshBasicMaterial( { color: "rgb(0,0,0)"} );
+        // Geometry
+        var material = new THREE.MeshPhongMaterial( {
+            shininess: 100,
+            color: "rgb(255, 0, 0)",
+            side: THREE.DoubleSide,
+            clippingPlanes: this.clippingPlanes,
+            clipShadows: true
+        } );
+        this.meshBody = new THREE.Mesh( bodyGeometry, material );
+        this.meshBody.receiveShadow = true;
+        this.meshBody.castShadow = true;
+        this.meshes.push(this.meshBody);
+        // Geometry
+        var materialWheels = new THREE.MeshPhongMaterial( {
+            shininess: 100,
+            color: "rgb(0, 0, 0)",
+            side: THREE.DoubleSide,
+            clippingPlanes: this.clippingPlanes,
+            clipShadows: true
+        } );
         // Front Left wheel
         var geometry = new THREE.BoxGeometry(0.3, 0.1, 0.3 );
         var meshWheel = new THREE.Mesh( geometry, materialWheels );
@@ -48,6 +64,15 @@ class Bus {
         this.meshes.push(meshWheel);
 
         this.updatePosition();
+
+        // Colliders
+        this.meshBody.geometry.computeBoundingBox();
+        this.boundingBox = this.meshBody.geometry.boundingBox.clone();
+
+
+        this.boxHelper = new THREE.BoxHelper( this.meshBody, 0xffff00 );
+        this.meshes.push(this.boxHelper);
+        
     }
 
     updatePosition(){
@@ -59,6 +84,11 @@ class Bus {
     }
 
     render(){
+        this.meshBody.updateMatrixWorld( true );
+        this.boundingBox.copy( this.meshBody.geometry.boundingBox ).applyMatrix4( this.meshBody.matrixWorld );
+
+        this.boxHelper.update();
+
         this.meshes[1].rotation.y += this.wheelRotation;
         this.meshes[2].rotation.y += this.wheelRotation;
         this.meshes[3].rotation.y += this.wheelRotation;
