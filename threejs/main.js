@@ -31,9 +31,9 @@ class GameManager{
 
 	// Camera Properties
 	camera_angle = 0;
-	camera_range = -12;
-	camera_speed = 0.5 * Math.PI/180;
-	camera_target = new THREE.Vector3(5, 7, 0);
+	camera_range = 18;
+	camera_speed = 4 * Math.PI/180;
+	camera_target = new THREE.Vector3(5, 5, 0);
 	camera_focal = 60;
 	camera_near = 0.1;
 	camera_far = 50;
@@ -59,6 +59,17 @@ class GameManager{
 
 	clippingPlanes = [new THREE.Plane( new THREE.Vector3( 1, 0, 0 )), new THREE.Plane( new THREE.Vector3( -1, 0, 0 ), 10)]
 
+
+    cameraOptions = {
+        ORBIT: 0,
+        CONTROLLED: 1,
+		THIRD_PERSON: 2,
+		TOP_DOWN: 3,
+		TOP_DOWN_ORTHOGRAPHIC: 4
+      };
+
+	selectedCamera = this.cameraOptions.ORBIT
+	
     constructor(){
 	}
 	cycle(){
@@ -77,17 +88,49 @@ class GameManager{
 	}
 	render (currentTime) {
 		if(!this.gameStarted) return;
-		this.camera_angle += this.camera_speed;
-		this.camera.position.x = Math.cos(this.camera_angle) * this.camera_range;
-		this.camera.position.y = Math.sin(this.camera_angle) * this.camera_range;
 		//this.camera.position.x = this.player.position.x;
 		//this.camera.position.y = -5;
-		this.camera.position.z = 5;
-		this.camera.up.set(0, 0, 1);
-		this.camera.lookAt(this.camera_target);
 		//this.camera.lookAt(this.player.position);
 		
 		
+
+
+		if(this.selectedCamera == this.cameraOptions.ORBIT){
+			console.log("Orbiting")
+			this.camera = this.perspective_camera;
+			this.camera_angle += this.camera_speed;
+			this.camera.position.x = Math.cos(this.camera_angle) * this.camera_range;
+			this.camera.position.y = Math.sin(this.camera_angle) * this.camera_range;
+			this.camera.position.z = 5;
+			this.camera.up.set(0, 0, 1);
+			this.camera.lookAt(this.camera_target);
+		}else if(this.selectedCamera == this.cameraOptions.THIRD_PERSON){
+			console.log("Third person")
+			this.camera = this.perspective_camera;
+			this.camera.position.x = this.player.position.x;
+			this.camera.position.y = this.player.position.y - 5;
+			this.camera.position.z = 5;
+			this.camera.up.set(0, 0, 1);
+			var lookPos = this.player.position;
+			lookPos.z = 1;
+			this.camera.lookAt(lookPos);
+		}else if(this.selectedCamera == this.cameraOptions.TOP_DOWN){
+			this.camera = this.perspective_camera;
+			this.camera.position.x = 5;
+			this.camera.position.y = 5;
+			this.camera.position.z = 15;
+			this.camera.up.set(0, 1, 0);
+			this.camera.lookAt(this.camera_target);
+		}else if(this.selectedCamera == this.cameraOptions.TOP_DOWN_ORTHOGRAPHIC){
+			this.camera = this.orthographic_camera;
+			this.camera.position.x = 5;
+			this.camera.position.y = 5;
+			this.camera.position.z = 15;
+			this.camera.up.set(0,1, 0);
+			this.camera.lookAt(this.camera_target);
+		}
+
+
 		for(var obj of this.gameObjects){
 			obj.render();
 		}
@@ -116,6 +159,14 @@ class GameManager{
 			this.currentScore += this.scorePerTarget;
 		}
 		this.displayText();
+
+
+		this.mirrorRect3.visible = false;
+		this.mirrorRect3Camera.updateCubeMap( this.renderer, this.scene );
+		this.mirrorRect3.visible = true;
+
+
+
 		this.renderer.render(this.scene, this.camera);
 	};
 
@@ -143,10 +194,17 @@ class GameManager{
 		this.toggleFog();
 
 		// Set some camera defaults
-		this.camera = new THREE.PerspectiveCamera(this.camera_focal, window.innerWidth/window.innerHeight,this.camera_near, this.camera_far);
-		this.camera.position.set(0, this.camera_range, 0);
-		this.camera.useQuaternion = true;
-		this.camera.lookAt(this.camera_target);
+		this.perspective_camera = new THREE.PerspectiveCamera(this.camera_focal, window.innerWidth/window.innerHeight,this.camera_near, this.camera_far);
+		this.perspective_camera.position.set(0, this.camera_range, 0);
+		this.perspective_camera.useQuaternion = true;
+		this.perspective_camera.lookAt(this.camera_target);
+
+		// Set some camera defaults
+		this.orthographic_camera = new THREE.OrthographicCamera( window.innerWidth / - 120, window.innerWidth / 120, window.innerHeight / 120, window.innerHeight / - 120,this.camera_near, this.camera_far);
+		this.orthographic_camera.position.set(0, this.camera_range, 0);
+		this.orthographic_camera.useQuaternion = true;
+		this.orthographic_camera.lookAt(this.camera_target);
+		this.scene.add(this.orthographic_camera)
 
 		// Add abbient light
 		var am_light = new THREE.AmbientLight(this.light_am_color); // soft white light
@@ -191,8 +249,6 @@ class GameManager{
 		this.gameObjects.push(this.target);
 		this.gameObjects.push(new Road(new THREE.Vector3(0,3,0)));
 		this.gameObjects.push(new River(new THREE.Vector3(0,9,0)));
-		this.gameObjects.push(new River(new THREE.Vector3(0,9,0)));
-
 
 		this.crabs.push(new Crab(new THREE.Vector3(0.5,12,0.8)));
 		this.gameObjects.push(this.crabs[0]);
@@ -212,8 +268,10 @@ class GameManager{
 				this.scene.add(mesh);	
 			}
 		}
-
 		
+		this.createRect()
+		
+		/*
 		// Cubemap
 		var deception_pass = new THREE.CubeTextureLoader()
 		.setPath( 'textures/' )
@@ -245,7 +303,19 @@ class GameManager{
 		var skyboxGeometry = new THREE.BoxGeometry(100, 100,100);
 		var skybox = new THREE.Mesh(skyboxGeometry, skyboxMaterial);
 		this.scene.add(skybox)
-		
+		*/
+
+		// Temporary skybox
+		const loader = new THREE.CubeTextureLoader();
+		const texture = loader.load([
+		'https://threejsfundamentals.org/threejs/resources/images/cubemaps/computer-history-museum/pos-x.jpg',
+		'https://threejsfundamentals.org/threejs/resources/images/cubemaps/computer-history-museum/neg-x.jpg',
+		'https://threejsfundamentals.org/threejs/resources/images/cubemaps/computer-history-museum/pos-y.jpg',
+		'https://threejsfundamentals.org/threejs/resources/images/cubemaps/computer-history-museum/neg-y.jpg',
+		'https://threejsfundamentals.org/threejs/resources/images/cubemaps/computer-history-museum/pos-z.jpg',
+		'https://threejsfundamentals.org/threejs/resources/images/cubemaps/computer-history-museum/neg-z.jpg',
+		]);
+		this.scene.background = texture;
 		// Keyboard listener
 
 		document.addEventListener("keydown", (event)=>{this.onDocumentKeyDown(event)}, false);
@@ -253,9 +323,34 @@ class GameManager{
 		// Render loop
 		this.renderer.setAnimationLoop((currentTime)=>{this.render(currentTime);});
 	}
+
+
+	createRect() {  
+		//var geometry =  new THREE.SphereGeometry( 3, 64, 64 );
+		var geometry =  new THREE.PlaneGeometry(10,7, 32 );
+		this.mirrorRect3Camera = new THREE.CubeCamera(1, 10, 1024 );
+
+        this.boxHelper = new THREE.BoxHelper( this.mirrorRect3Camera, 0xffff00 );
+        this.scene.add(this.boxHelper);
+		this.scene.add( this.mirrorRect3Camera );
+		var mirrorRectMaterial = new THREE.MeshBasicMaterial({ 
+		envMap: this.mirrorRect3Camera.renderTarget,
+		//reflectivity: 0.9,
+		transparent: true,
+		//side:THREE.DoubleSide, 
+		opacity: 0.8,
+		color: 0xaaaaaa,
+		});
+		this.mirrorRect3 = new THREE.Mesh( geometry, mirrorRectMaterial );
+		this.mirrorRect3.position.set(5,9,0.41);
+		this.mirrorRect3Camera.rotation.x = 1.5;
+		this.mirrorRect3Camera.position.set(0,9,1);
+		this.scene.add(this.mirrorRect3);
+	}
+  
 	onDocumentKeyDown(event) {
 		var keyCode = event.which;
-		//console.log(keyCode)
+		console.log(keyCode)
 		switch(keyCode){
 			case 39:
 				if(this.player.position.x < 9) this.player.currentDirection = this.player.direction.RIGHT;
@@ -268,6 +363,18 @@ class GameManager{
 				break;
 			case 40:
 				if(this.player.position.y > 0) this.player.currentDirection = this.player.direction.DOWN;
+				break;
+			case 49:
+				this.selectedCamera = this.cameraOptions.ORBIT;
+				break;
+			case 50:
+				this.selectedCamera = this.cameraOptions.THIRD_PERSON;
+				break;
+			case 51:
+				this.selectedCamera = this.cameraOptions.TOP_DOWN;
+				break;
+			case 52:
+				this.selectedCamera = this.cameraOptions.TOP_DOWN_ORTHOGRAPHIC;
 				break;
 			case 82:
 				this.resetPlayer();
