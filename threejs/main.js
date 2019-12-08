@@ -1,4 +1,3 @@
-
 class GameManager{
 
 	isFogEnabled = false;
@@ -14,12 +13,11 @@ class GameManager{
 	turtles = [];
 	crabs = [];
 
-	colliders = []
-	
+	colliders = [];
 	spotlights = [];
 
 	// Starting player position
-	startingPlayerPosition = new THREE.Vector3(5,6,1);
+	startingPlayerPosition = new THREE.Vector3(5,0,1);
 	startingLives = 3;
 	currentLives = 3;
 	currentScore = 0;
@@ -40,7 +38,7 @@ class GameManager{
 	camera_target = new THREE.Vector3(5, 5, 0);
 	camera_focal = 60;
 	camera_near = 0.1;
-	camera_far = 2000;
+	camera_far = 20000;
 
 	// Lights
 	light_am_color = 0xAAAAAA;
@@ -57,25 +55,27 @@ class GameManager{
 
 	clippingPlanes = [new THREE.Plane( new THREE.Vector3( 1, 0, 0 )), new THREE.Plane( new THREE.Vector3( -1, 0, 0 ), 10)]
 
-
     cameraOptions = {
         ORBIT: 0,
         CONTROLLED: 1,
 		THIRD_PERSON: 2,
 		TOP_DOWN: 3,
-		TOP_DOWN_ORTHOGRAPHIC: 4
+		TOP_DOWN_ORTHOGRAPHIC: 4,
+		STEREO: 5
       };
 
-	selectedCamera = this.cameraOptions.TOP_DOWN
-	
+	selectedCamera = this.cameraOptions.TOP_DOWN;
+
 	areLampsEnabled = false;
 	collidersVisible = false;
 	lensflareEnabled = true;
+
     constructor(){
+
 	}
 	cycle(){
-		timeElapsed = new Date().getTime();
-		timeDelta = timeElapsed - timePrevious;
+		var timeElapsed = new Date().getTime();
+		var timeDelta = timeElapsed - timePrevious;
 		timePrevious = timeElapsed;
 		requestAnimFrame(cycle);
 		if(texturesLeft >0) return;
@@ -92,7 +92,7 @@ class GameManager{
 		if(!this.gameStarted)
 			return;
 
-		if(this.selectedCamera == this.cameraOptions.ORBIT){
+		if(this.selectedCamera == this.cameraOptions.ORBIT || this.selectedCamera == this.cameraOptions.STEREO){
 			console.log("Orbiting")
 			this.camera = this.perspective_camera;
 			this.camera_angle += this.camera_speed;
@@ -118,12 +118,12 @@ class GameManager{
 			this.camera.position.z = 15;
 			this.camera.up.set(0, 1, 0);
 			this.camera.lookAt(this.camera_target);
-		}else if(this.selectedCamera == this.cameraOptions.TOP_DOWN_ORTHOGRAPHIC){
+		}else if(this.selectedCamera == this.cameraOptions.TOP_DOWN_ORTHOGRAPHIC) {
 			this.camera = this.orthographic_camera;
 			this.camera.position.x = 5;
 			this.camera.position.y = 5;
 			this.camera.position.z = 15;
-			this.camera.up.set(0,1, 0);
+			this.camera.up.set(0, 1, 0);
 			this.camera.lookAt(this.camera_target);
 		}
 
@@ -160,9 +160,13 @@ class GameManager{
 		//this.mirrorRect3Camera.update( this.renderer, this.scene );
 		//this.mirrorRect3.visible = true;
 
-		this.renderer.render(this.scene, this.camera);
-	};
 
+		this.renderer.render(this.scene, this.camera);
+
+		if (this.selectedCamera == this.cameraOptions.STEREO) {
+			this.effect.render(this.scene, this.camera );
+		}
+    };
 
 	webGLStart(){
 		// New renderer
@@ -195,7 +199,11 @@ class GameManager{
 		this.orthographic_camera.position.set(0, this.camera_range, 0);
 		this.orthographic_camera.useQuaternion = true;
 		this.orthographic_camera.lookAt(this.camera_target);
-		this.scene.add(this.orthographic_camera)
+		this.scene.add(this.orthographic_camera);
+
+		// Stereo effect
+		this.effect = new StereoEffect( this.renderer );
+		this.effect.setSize( window.innerWidth, window.innerHeight );
 
 		// Add abbient light
 		var am_light = new THREE.AmbientLight(this.light_am_color); // soft white light
@@ -224,47 +232,10 @@ class GameManager{
 				
 		// Add directional light
 		this.createSpotlights();
-
 		this.createGameObjects();
-		
-
 		this.toggleSpotlights();
 
-		/*
-		// Cubemap
-		var deception_pass = new THREE.CubeTextureLoader()
-		.setPath( 'textures/' )
-		.load( [
-		'Road.jpg', 'Road.jpg',
-		'Road.jpg', 'Road.jpg',
-		'Road.jpg', 'Road.jpg'
-		] );
-		console.log(deception_pass)
-		var cubemap = { type: 't', value: deception_pass }
-
 		// Skybox
-		
-
-		var skyboxMaterial = new THREE.ShaderMaterial({
-			uniforms: {
-				skybox: { type: "t", value: cubemap },
-			},
-			side: THREE.DoubleSide
-		});
-		var loader = new THREE.FileLoader();
-		loader.load('shaders/glsl/skybox.vs.glsl', function(shader) {
-		skyboxMaterial.vertexShader = shader
-		});
-		loader.load('shaders/glsl/skybox.fs.glsl', function(shader) {
-		skyboxMaterial.fragmentShader = shader
-		});
-
-		var skyboxGeometry = new THREE.BoxGeometry(100, 100,100);
-		var skybox = new THREE.Mesh(skyboxGeometry, skyboxMaterial);
-		this.scene.add(skybox)
-		*/
-
-		// Temporary skybox
 		const loader = new THREE.CubeTextureLoader();
 		const texture = loader.load([
 			'https://threejsfundamentals.org/threejs/resources/images/cubemaps/computer-history-museum/pos-x.jpg',
@@ -281,8 +252,6 @@ class GameManager{
 		void main() {
 			vec4 texColor = textureCube( tCube, vec3( vWorldDirection.xzy ) );
 			gl_FragColor = mapTexelToLinear( texColor );
-			#include <tonemapping_fragment>
-			#include <encodings_fragment>
 		}`;
 
 		let vertexShader = `
@@ -290,9 +259,8 @@ class GameManager{
 		#include <common>
 		void main() {
 			vWorldDirection = transformDirection( position, modelMatrix );
-			#include <begin_vertex>
-			#include <project_vertex>
-			gl_Position.z = gl_Position.w;
+        	vec4 mvPosition = modelViewMatrix * vec4( vec3(position), 1.0 );
+			gl_Position = projectionMatrix * mvPosition;
 		}`;
 
 		var shaderMaterial = new THREE.ShaderMaterial( {
@@ -348,7 +316,7 @@ class GameManager{
 			if(obj.colliders){
 				for(var collider of obj.colliders){
 					console.log("Has collider");
-					this.colliders.push(collider)
+					this.colliders.push(collider);
 					this.scene.add(collider);	
 				}
 			}
@@ -398,15 +366,22 @@ class GameManager{
 				break;
 			case 49:
 				this.selectedCamera = this.cameraOptions.ORBIT;
+				this.renderer.setSize(window.innerWidth, window.innerHeight);
 				break;
 			case 50:
 				this.selectedCamera = this.cameraOptions.THIRD_PERSON;
+				this.renderer.setSize(window.innerWidth, window.innerHeight);
 				break;
 			case 51:
 				this.selectedCamera = this.cameraOptions.TOP_DOWN;
+				this.renderer.setSize(window.innerWidth, window.innerHeight);
 				break;
 			case 52:
 				this.selectedCamera = this.cameraOptions.TOP_DOWN_ORTHOGRAPHIC;
+				this.renderer.setSize(window.innerWidth, window.innerHeight);
+				break;
+			case 53:
+				this.selectedCamera = this.cameraOptions.STEREO;
 				break;
 			case 81:
 				this.areLampsEnabled = !this.areLampsEnabled;
@@ -693,3 +668,39 @@ class GameManager{
 
 	}
 }
+
+var StereoEffect = function ( renderer ) {
+	var _stereo = new THREE.StereoCamera();
+	_stereo.aspect = 0.5;
+	var size = new THREE.Vector2();
+
+	this.setEyeSeparation = function ( eyeSep ) {
+		_stereo.eyeSep = eyeSep;
+	};
+
+	this.setSize = function ( width, height ) {
+		renderer.setSize( width, height );
+	};
+
+	this.render = function ( scene, camera ) {
+
+		scene.updateMatrixWorld();
+		if ( camera.parent === null )
+			camera.updateMatrixWorld();
+
+		_stereo.update( camera );
+		renderer.getSize( size );
+
+		if (renderer.autoClear)
+			renderer.clear();
+		renderer.setScissorTest( true );
+		renderer.setScissor( 0, 0, size.width / 2, size.height );
+		renderer.setViewport( 0, 0, size.width / 2, size.height );
+		renderer.render( scene, _stereo.cameraL );
+		renderer.setScissor( size.width / 2, 0, size.width / 2, size.height );
+		renderer.setViewport( size.width / 2, 0, size.width / 2, size.height );
+		renderer.render( scene, _stereo.cameraR );
+		renderer.setScissorTest( false );
+	};
+
+};
