@@ -238,12 +238,12 @@ class GameManager{
 		// Skybox
 		const loader = new THREE.CubeTextureLoader();
 		const texture = loader.load([
-			'https://threejsfundamentals.org/threejs/resources/images/cubemaps/computer-history-museum/pos-x.jpg',
-			'https://threejsfundamentals.org/threejs/resources/images/cubemaps/computer-history-museum/neg-x.jpg',
-			'https://threejsfundamentals.org/threejs/resources/images/cubemaps/computer-history-museum/pos-y.jpg',
-			'https://threejsfundamentals.org/threejs/resources/images/cubemaps/computer-history-museum/neg-y.jpg',
-			'https://threejsfundamentals.org/threejs/resources/images/cubemaps/computer-history-museum/pos-z.jpg',
-			'https://threejsfundamentals.org/threejs/resources/images/cubemaps/computer-history-museum/neg-z.jpg',
+			"./textures/ely_cloudtop/cloudtop_lf.png",
+			"./textures/ely_cloudtop/cloudtop_rt.png",
+			"./textures/ely_cloudtop/cloudtop_up.png",
+			"./textures/ely_cloudtop/cloudtop_dn.png",
+			"./textures/ely_cloudtop/cloudtop_ft.png",
+			"./textures/ely_cloudtop/cloudtop_bk.png",
 		]);
 
 		let fragmentShader = `
