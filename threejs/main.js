@@ -24,6 +24,9 @@ class GameManager{
 
 	scorePerTarget = 200;
 
+	shadowEnabled = false;
+	reflectionEnabled = false;
+
 	MOVE_UP = 1;
 	MOVE_DOWN = 0;
 
@@ -44,7 +47,7 @@ class GameManager{
 	light_am_color = 0xAAAAAA;
 	// Fog
 	fogColor = new THREE.Color(0xffffff);
-	blackColor = new THREE.Color("rgb(0,0,0)");
+	blackColor = new THREE.Color("rgb(113,112,117)");
 
 	bus_speed = 0.1;
 	car_speed = 0.06;
@@ -127,6 +130,14 @@ class GameManager{
 			this.camera.lookAt(this.camera_target);
 		}
 
+		if (this.shadowEnabled) {
+			this.renderer.shadowMap.enabled = true;
+			this.directionalLight.castShadow = true;
+		} else {
+			this.renderer.shadowMap.enabled = false;
+			this.directionalLight.castShadow = false;
+		}
+
 
 		for(var obj of this.gameObjects){
 			obj.render();
@@ -153,13 +164,18 @@ class GameManager{
 			this.respawnPlayer();
 			this.currentScore += this.scorePerTarget;
 		}
-		this.displayText();
 
+		if (this.selectedCamera != this.cameraOptions.STEREO) {
+			this.displayText();
+		} else {
+			this.clearText();
+		}
 
-		//this.mirrorRect3.visible = false;
-		//this.mirrorRect3Camera.update( this.renderer, this.scene );
-		//this.mirrorRect3.visible = true;
-
+		if (this.reflectionEnabled) {
+			this.mirrorRect3.visible = false;
+			this.mirrorRect3Camera.update( this.renderer, this.scene );
+			this.mirrorRect3.visible = true;
+		}
 
 		this.renderer.render(this.scene, this.camera);
 
@@ -171,7 +187,6 @@ class GameManager{
 	webGLStart(){
 		// New renderer
 		this.renderer = new THREE.WebGLRenderer({antialias: true});
-		// this.renderer.shadowMap.enabled = true;
 		this.renderer.shadowMapType = THREE.PCFSoftShadowMap;
 		this.renderer.setSize(window.innerWidth, window.innerHeight);
 		this.renderer.setClearColor(this.scene_color, this.scene_color_alpha);
@@ -224,10 +239,9 @@ class GameManager{
 		this.lensflare.visible = this.lensflareEnabled;
 		this.directionalLight = new THREE.SpotLight(0xDDDDDD,1);
 		this.directionalLight.position.set(12, 12 ,6);
-		this.directionalLight.castShadow = true;
-		
-		this.directionalLight.add(this.lensflare)
-		this.scene.add(this.directionalLight)
+
+		this.directionalLight.add(this.lensflare);
+		this.scene.add(this.directionalLight);
 
 				
 		// Add directional light
@@ -301,9 +315,9 @@ class GameManager{
 		this.gameObjects.push(this.crabs[0]);
 		this.player = new Frog(this.startingPlayerPosition);
 		
-		this.scene.add(this.player.meshes[0])
-		this.scene.add(this.player.meshes[1])
-		this.scene.add(this.player.meshes[2])
+		this.scene.add(this.player.meshes[0]);
+		this.scene.add(this.player.meshes[1]);
+		this.scene.add(this.player.meshes[2]);
 
 		this.createBusses();
 		this.createCars();
@@ -328,7 +342,7 @@ class GameManager{
 	createReflectionPlane() {  
 		//var geometry =  new THREE.SphereGeometry( 3, 64, 64 );
 		var geometry =  new THREE.PlaneGeometry(10,7, 32 );
-		this.mirrorRect3Camera = new THREE.CubeCamera(1, 10, 1024 );
+		this.mirrorRect3Camera = new THREE.CubeCamera(1, 10, 2048 );
 
         this.boxHelper = new THREE.BoxHelper( this.mirrorRect3Camera, 0xffff00 );
         this.scene.add(this.boxHelper);
@@ -401,6 +415,13 @@ class GameManager{
 			case 83: // Lens flare
 				this.lensflareEnabled = !this.lensflareEnabled;
 				this.lensflare.visible = this.lensflareEnabled;
+				break;
+
+			case 77:
+				this.shadowEnabled = !this.shadowEnabled;
+				break;
+			case 78:
+				this.reflectionEnabled = !this.reflectionEnabled;
 				break;
 		}
 		
@@ -615,7 +636,6 @@ class GameManager{
 		}
 	}
 
-
 	updateTurtles(currentTime){
 		for(var turtle of this.turtles){
 			turtle.position.x += this.turtle_speed;
@@ -625,10 +645,12 @@ class GameManager{
 			turtle.updatePosition(currentTime);
 		}
 	}
+
 	respawnPlayer(){
 		this.player.reset ();
 		this.player.position = this.startingPlayerPosition;
 	}
+
 	resetPlayer(){
 		this.currentLives -= 1;
 		if(!this.gameStarted){
@@ -640,17 +662,16 @@ class GameManager{
 
 		if(this.currentLives <= 0){
 			this.gameStarted = false;
-		}else{
+		}else {
 			this.respawnPlayer();
 		}
 	}
 
 	toggleFog(){
 		if(this.isFogEnabled){
-			//this.scene.background = this.fogColor;
-			this.scene.fog = new THREE.Fog(this.fogColor, 0.0025, 20);			
+			this.scene.fog = new THREE.Fog(this.fogColor, 0.0025, 20);
 		}else{
-			//this.scene.background = this.blackColor;
+			this.scene.background = this.blackColor;
 			this.scene.fog = null;
 		}
 	}
@@ -658,14 +679,25 @@ class GameManager{
 		document.getElementById("score").innerHTML = "Score: " + this.currentScore;
 		document.getElementById("lives").innerHTML = "Lives: " + this.currentLives;
 		document.getElementById("fog").innerHTML = "Fog (f): " + this.isFogEnabled;
-		document.getElementById("orbitcam").innerHTML = "Orbit camera (1): " + (this.cameraOptions.ORBIT == this.selectedCamera);
-		document.getElementById("thirdpersoncam").innerHTML = "Third person camera (2): " + (this.cameraOptions.THIRD_PERSON == this.selectedCamera);
-		document.getElementById("topdowncam").innerHTML = "Top down camera (3): " + (this.cameraOptions.TOP_DOWN == this.selectedCamera);
-		document.getElementById("ortocam").innerHTML = "Orthographic camera (4): " + (this.cameraOptions.TOP_DOWN_ORTHOGRAPHIC == this.selectedCamera);
+		document.getElementById("camera").innerHTML = "Selected camera: " + this.selectedCamera;
 		document.getElementById("lamps").innerHTML = "Side lamps (q): " + (this.areLampsEnabled);
 		document.getElementById("colliders").innerHTML = "Visible Colliders (a): " + (this.collidersVisible);
 		document.getElementById("lensflare").innerHTML = "Lensflare (s): " + (this.lensflareEnabled);
+		document.getElementById("shadow").innerHTML = "Shadow (m): " + (this.shadowEnabled);
+		document.getElementById("reflection").innerHTML = "Reflection (n): " + (this.reflectionEnabled);
 
+	}
+
+	clearText() {
+		document.getElementById("score").innerHTML = "";
+		document.getElementById("lives").innerHTML = "";
+		document.getElementById("fog").innerHTML = "";
+		document.getElementById("camera").innerHTML = "";
+		document.getElementById("lamps").innerHTML = "";
+		document.getElementById("colliders").innerHTML = "";
+		document.getElementById("lensflare").innerHTML = "";
+		document.getElementById("shadow").innerHTML = "";
+		document.getElementById("reflection").innerHTML = "";
 	}
 }
 
@@ -679,11 +711,10 @@ var StereoEffect = function ( renderer ) {
 	};
 
 	this.setSize = function ( width, height ) {
-		renderer.setSize( width, height );
+		renderer.setSize(width, height );
 	};
 
 	this.render = function ( scene, camera ) {
-
 		scene.updateMatrixWorld();
 		if ( camera.parent === null )
 			camera.updateMatrixWorld();
