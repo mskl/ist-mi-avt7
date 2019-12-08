@@ -36,11 +36,11 @@ class GameManager{
 	// Camera Properties
 	camera_angle = 0;
 	camera_range = 18;
-	camera_speed = 2 * Math.PI/180;
+	camera_speed = 0.02 * Math.PI/180;
 	camera_target = new THREE.Vector3(5, 5, 0);
 	camera_focal = 60;
 	camera_near = 0.1;
-	camera_far = 50;
+	camera_far = 2000;
 
 	// Lights
 	light_am_color = 0xAAAAAA;
@@ -87,8 +87,10 @@ class GameManager{
 
 
 	}
+
 	render (currentTime) {
-		if(!this.gameStarted) return;
+		if(!this.gameStarted)
+			return;
 
 		if(this.selectedCamera == this.cameraOptions.ORBIT){
 			console.log("Orbiting")
@@ -154,22 +156,18 @@ class GameManager{
 		this.displayText();
 
 
-		this.mirrorRect3.visible = false;
-		this.mirrorRect3Camera.update( this.renderer, this.scene );
-		this.mirrorRect3.visible = true;
-
-
+		//this.mirrorRect3.visible = false;
+		//this.mirrorRect3Camera.update( this.renderer, this.scene );
+		//this.mirrorRect3.visible = true;
 
 		this.renderer.render(this.scene, this.camera);
 	};
 
 
 	webGLStart(){
-
-
 		// New renderer
 		this.renderer = new THREE.WebGLRenderer({antialias: true});
-		this.renderer.shadowMap.enabled = true;
+		// this.renderer.shadowMap.enabled = true;
 		this.renderer.shadowMapType = THREE.PCFSoftShadowMap;
 		this.renderer.setSize(window.innerWidth, window.innerHeight);
 		this.renderer.setClearColor(this.scene_color, this.scene_color_alpha);
@@ -231,6 +229,7 @@ class GameManager{
 		
 
 		this.toggleSpotlights();
+
 		/*
 		// Cubemap
 		var deception_pass = new THREE.CubeTextureLoader()
@@ -264,17 +263,49 @@ class GameManager{
 		var skybox = new THREE.Mesh(skyboxGeometry, skyboxMaterial);
 		this.scene.add(skybox)
 		*/
+
 		// Temporary skybox
 		const loader = new THREE.CubeTextureLoader();
 		const texture = loader.load([
-		'https://threejsfundamentals.org/threejs/resources/images/cubemaps/computer-history-museum/pos-x.jpg',
-		'https://threejsfundamentals.org/threejs/resources/images/cubemaps/computer-history-museum/neg-x.jpg',
-		'https://threejsfundamentals.org/threejs/resources/images/cubemaps/computer-history-museum/pos-y.jpg',
-		'https://threejsfundamentals.org/threejs/resources/images/cubemaps/computer-history-museum/neg-y.jpg',
-		'https://threejsfundamentals.org/threejs/resources/images/cubemaps/computer-history-museum/pos-z.jpg',
-		'https://threejsfundamentals.org/threejs/resources/images/cubemaps/computer-history-museum/neg-z.jpg',
+			'https://threejsfundamentals.org/threejs/resources/images/cubemaps/computer-history-museum/pos-x.jpg',
+			'https://threejsfundamentals.org/threejs/resources/images/cubemaps/computer-history-museum/neg-x.jpg',
+			'https://threejsfundamentals.org/threejs/resources/images/cubemaps/computer-history-museum/pos-y.jpg',
+			'https://threejsfundamentals.org/threejs/resources/images/cubemaps/computer-history-museum/neg-y.jpg',
+			'https://threejsfundamentals.org/threejs/resources/images/cubemaps/computer-history-museum/pos-z.jpg',
+			'https://threejsfundamentals.org/threejs/resources/images/cubemaps/computer-history-museum/neg-z.jpg',
 		]);
-		this.scene.background = texture;
+
+		let fragmentShader = `
+		uniform samplerCube tCube;
+		varying vec3 vWorldDirection;
+		void main() {
+			vec4 texColor = textureCube( tCube, vec3( vWorldDirection.xzy ) );
+			gl_FragColor = mapTexelToLinear( texColor );
+			#include <tonemapping_fragment>
+			#include <encodings_fragment>
+		}`;
+
+		let vertexShader = `
+		varying vec3 vWorldDirection;
+		#include <common>
+		void main() {
+			vWorldDirection = transformDirection( position, modelMatrix );
+			#include <begin_vertex>
+			#include <project_vertex>
+			gl_Position.z = gl_Position.w;
+		}`;
+
+		var shaderMaterial = new THREE.ShaderMaterial( {
+			fragmentShader: fragmentShader,
+			vertexShader: vertexShader,
+			uniforms: {
+				tCube: { value: texture },
+			},
+			depthWrite: false,
+			side: THREE.BackSide
+		} );
+		this.scene.add(new THREE.Mesh(new THREE.BoxGeometry( 999, 999, 999), shaderMaterial));
+
 		// Keyboard listener
 		this.toggleColliders();
 		document.addEventListener("keydown", (event)=>{this.onDocumentKeyDown(event)}, false);
@@ -285,7 +316,6 @@ class GameManager{
 
 
 	createGameObjects(){
-
 		this.gameObjects.push(new Grass(new THREE.Vector3(0,0,0)));
 		this.gameObjects.push(new Grass(new THREE.Vector3(0,6,0)));
 		this.gameObjects.push(new GrassBlock(new THREE.Vector3(0,12,0)));
@@ -306,7 +336,6 @@ class GameManager{
 		this.scene.add(this.player.meshes[0])
 		this.scene.add(this.player.meshes[1])
 		this.scene.add(this.player.meshes[2])
-
 
 		this.createBusses();
 		this.createCars();
@@ -475,8 +504,6 @@ class GameManager{
 	}
 
 	repositionTarget(){
-
-
 		var pos = this.possibleTargetPositions[Math.floor(Math.random()*this.possibleTargetPositions.length)];
 		this.target.position = new THREE.Vector3(pos,12,0);
 		this.target.updatePosition();

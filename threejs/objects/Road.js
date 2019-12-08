@@ -9,8 +9,6 @@ class Road{
     }
 
     initializeObject(){
-
-
         var texture = new THREE.TextureLoader().load( 'textures/Road.jpg' );
         var geometry = new THREE.BoxGeometry(this.shapeSize[0],this.shapeSize[1],this.shapeSize[2]);
         var material = new THREE.MeshPhongMaterial( { map: texture } );
@@ -40,6 +38,7 @@ class Road{
         this.boxHelper = new THREE.BoxHelper( this.mesh, 0xffff00 );
         this.colliders.push(this.boxHelper);        
     }
+
     render(){
         
     }
