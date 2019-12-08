@@ -1,12 +1,23 @@
 <html>
 	<head>
-		<title>My first three.js app</title>
+		<title>AVT Frogger</title>
 		<style>
 			body { margin: 0; }
 			canvas { width: 100%; height: 100% }
 			.info {
 				position: absolute;
+				font-size: 40px;
 				top: 10px;
+				width: 100%;
+				text-align: left;
+				z-index: 100;
+				display:block;
+				color: white;
+			}
+			.info2 {
+				position: absolute;
+				font-size: 21px;
+				bottom: 10px;
 				width: 100%;
 				text-align: left;
 				z-index: 100;
@@ -30,6 +41,7 @@
 		<script type="text/javascript" src="objects/Crab.js"></script>
 		<script type="text/javascript" src="objects/Frog.js"></script>
 		<script type="text/javascript" src="objects/Turtle.js"></script>
+		<script type="text/javascript" src="objects/Spotlight.js"></script>
 		<script>
 			
 
@@ -40,6 +52,16 @@
 		<div class="info">
 			<div id="score">TestText</div>
 			<div id="lives">TestText</div>
+		</div>
+		<div class="info2">
+			<div id="fog">TestText</div>
+			<div id="orbitcam">TestText</div>
+			<div id="thirdpersoncam">TestText</div>
+			<div id="topdowncam">TestText</div>
+			<div id="ortocam">TestText</div>
+			<div id="lamps">TestText</div>
+			<div id="colliders">TestText</div>
+			<div id="lensflare">TestText</div>
 		</div>
 	</body>
 </html>

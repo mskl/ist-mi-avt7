@@ -1,5 +1,6 @@
 class Log{
     meshes = []
+    colliders = []
     shapeSize = [2,0.7,0.1]
     clippingPlanes = [];
     TAG = "LOG";
@@ -14,7 +15,7 @@ class Log{
     initializeObject(){
 
         var geometry = new THREE.BoxGeometry(this.shapeSize[0],this.shapeSize[1],this.shapeSize[2]);
-
+        console.log(this.clippingPlanes)
         // Geometry
         var material = new THREE.MeshPhongMaterial( {
             shininess: 100,
@@ -34,7 +35,8 @@ class Log{
 
 
         this.boxHelper = new THREE.BoxHelper( this.mesh, 0xffff00 );
-        this.meshes.push(this.boxHelper);
+        this.colliders.push(this.boxHelper);
+
         this.updatePosition();
 
     }

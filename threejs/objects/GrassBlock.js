@@ -1,5 +1,6 @@
 class GrassBlock{
     meshes = []
+    colliders = []
 
     TAG = "GROUND"
     constructor(position){
@@ -11,8 +12,8 @@ class GrassBlock{
 
         var texture = new THREE.TextureLoader().load( 'textures/Grass.jpg' );
         var geometry = new THREE.BoxGeometry(1, 1, 1 );
-        var materialTextured = new THREE.MeshLambertMaterial( { map: texture } );
-        var materialColor = new THREE.MeshLambertMaterial( { color: 0x00ff00} );
+        var materialTextured = new THREE.MeshPhongMaterial( { map: texture } );
+        var materialColor = new THREE.MeshPhongMaterial( { color: 0x00ff00} );
         
         var materials = [
             materialColor,        // Left side
@@ -34,7 +35,7 @@ class GrassBlock{
 
 
         this.boxHelper = new THREE.BoxHelper( this.mesh, 0xffff00 );
-        this.meshes.push(this.boxHelper);
+        this.colliders.push(this.boxHelper);        
     }
     render(){
         

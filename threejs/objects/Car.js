@@ -1,5 +1,6 @@
     class Car{
         meshes = []
+        colliders = []
         wheelRotation = -0.1;
         clippingPlanes = [];
         constructor(position, clippingPlanes){
@@ -76,7 +77,7 @@
 
 
             this.boxHelper = new THREE.BoxHelper( this.meshBody, 0xffff00 );
-            this.meshes.push(this.boxHelper);
+            this.colliders.push(this.boxHelper);
 
         }
 

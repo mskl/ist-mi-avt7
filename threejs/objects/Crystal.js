@@ -1,5 +1,6 @@
 class Crystal{
     meshes = []
+    colliders = []
     shapeSize = [2,0.7,0.1]
     rotationSpeed = 0.1;
     constructor(position){
@@ -38,10 +39,10 @@ class Crystal{
 
 
         this.boxHelper = new THREE.BoxHelper( this.mesh, 0xffff00 );
-        this.meshes.push(this.boxHelper);
+        this.colliders.push(this.boxHelper);        
 
         this.boxHelper2 = new THREE.BoxHelper( this.mesh2, 0xffff00 );
-        this.meshes.push(this.boxHelper2);
+        this.colliders.push(this.boxHelper2);        
     }
     render(){
         

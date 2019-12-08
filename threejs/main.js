@@ -13,7 +13,11 @@ class GameManager{
 	logs = [];
 	turtles = [];
 	crabs = [];
+
+	colliders = []
 	
+	spotlights = [];
+
 	// Starting player position
 	startingPlayerPosition = new THREE.Vector3(5,6,1);
 	startingLives = 3;
@@ -32,7 +36,7 @@ class GameManager{
 	// Camera Properties
 	camera_angle = 0;
 	camera_range = 18;
-	camera_speed = 4 * Math.PI/180;
+	camera_speed = 2 * Math.PI/180;
 	camera_target = new THREE.Vector3(5, 5, 0);
 	camera_focal = 60;
 	camera_near = 0.1;
@@ -40,12 +44,6 @@ class GameManager{
 
 	// Lights
 	light_am_color = 0xAAAAAA;
-	light_spot_color = 0xDDDDDD;
-	light_spot_intensity = 0.7;
-	light_spot_position = {x: 5, y: 10, z: 6}
-	light_spot_camera_near = 0.5;
-	light_spot_shadow_darkness = 0.35;
-
 	// Fog
 	fogColor = new THREE.Color(0xffffff);
 	blackColor = new THREE.Color("rgb(0,0,0)");
@@ -68,8 +66,11 @@ class GameManager{
 		TOP_DOWN_ORTHOGRAPHIC: 4
       };
 
-	selectedCamera = this.cameraOptions.ORBIT
+	selectedCamera = this.cameraOptions.TOP_DOWN
 	
+	areLampsEnabled = false;
+	collidersVisible = false;
+	lensflareEnabled = true;
     constructor(){
 	}
 	cycle(){
@@ -88,12 +89,6 @@ class GameManager{
 	}
 	render (currentTime) {
 		if(!this.gameStarted) return;
-		//this.camera.position.x = this.player.position.x;
-		//this.camera.position.y = -5;
-		//this.camera.lookAt(this.player.position);
-		
-		
-
 
 		if(this.selectedCamera == this.cameraOptions.ORBIT){
 			console.log("Orbiting")
@@ -140,10 +135,8 @@ class GameManager{
 		this.updateLogs();
 		this.updateTurtles(currentTime);
 		
-		var crabRotation = this.crabs[0].meshes[0].rotation;
+		var crabRotation = this.crabs[0].meshes[0].rotation.clone();
 		this.crabs[0].meshes[0].rotation.setFromRotationMatrix( this.camera.matrix );
-		this.crabs[0].meshes[0].rotation.x = crabRotation.x;
-		this.crabs[0].meshes[0].rotation.y = crabRotation.y;
 		this.player.render(currentTime);
 
 		var isCollidingWithBus = this.checkCollidingBusses();
@@ -162,7 +155,7 @@ class GameManager{
 
 
 		this.mirrorRect3.visible = false;
-		this.mirrorRect3Camera.updateCubeMap( this.renderer, this.scene );
+		this.mirrorRect3Camera.update( this.renderer, this.scene );
 		this.mirrorRect3.visible = true;
 
 
@@ -222,55 +215,22 @@ class GameManager{
 		this.lensflare.addElement( new THREE.LensflareElement( texture3, 70, 0.7 ) );
 		this.lensflare.addElement( new THREE.LensflareElement( texture3, 120, 0.9 ) );
 		this.lensflare.addElement( new THREE.LensflareElement( texture3, 70, 1 ) );
+		this.lensflare.visible = this.lensflareEnabled;
+		this.directionalLight = new THREE.SpotLight(0xDDDDDD,1);
+		this.directionalLight.position.set(12, 12 ,6);
+		this.directionalLight.castShadow = true;
+		
+		this.directionalLight.add(this.lensflare)
+		this.scene.add(this.directionalLight)
 
 				
 		// Add directional light
-		this.spot_light = new THREE.SpotLight(this.light_spot_color, this.light_spot_intensity);
-		this.spot_light.position.set(this.light_spot_position.x, this.light_spot_position.y, this.light_spot_position.z);
-		this.spot_light.target = this.scene;
-		this.spot_light.castShadow = true;
-		this.spot_light.receiveShadow = true;
-		this.spot_light.shadowDarkness = this.light_spot_shadow_darkness;
-		this.spot_light.shadowCameraNear	= this.light_spot_camera_near;		
+		this.createSpotlights();
 
-		this.spot_light.add( this.lensflare );
-
-		this.scene.add(this.spot_light);
-
-		this.gameObjects.push(new Grass(new THREE.Vector3(0,0,0)));
-		this.gameObjects.push(new Grass(new THREE.Vector3(0,6,0)));
-		this.gameObjects.push(new GrassBlock(new THREE.Vector3(0,12,0)));
-		this.gameObjects.push(new GrassBlock(new THREE.Vector3(2,12,0)));
-		this.gameObjects.push(new GrassBlock(new THREE.Vector3(4,12,0)));
-		this.gameObjects.push(new GrassBlock(new THREE.Vector3(6,12,0)));
-		this.gameObjects.push(new GrassBlock(new THREE.Vector3(8,12,0)));
-		this.target = new Crystal(new THREE.Vector3(0,12,0));
-		this.repositionTarget();
-		this.gameObjects.push(this.target);
-		this.gameObjects.push(new Road(new THREE.Vector3(0,3,0)));
-		this.gameObjects.push(new River(new THREE.Vector3(0,9,0)));
-
-		this.crabs.push(new Crab(new THREE.Vector3(0.5,12,0.8)));
-		this.gameObjects.push(this.crabs[0]);
-		this.player = new Frog(this.startingPlayerPosition);
+		this.createGameObjects();
 		
-		this.scene.add(this.player.meshes[0])
-		this.scene.add(this.player.meshes[1])
-		this.scene.add(this.player.meshes[2])
 
-
-		this.createBusses();
-		this.createCars();
-		this.createLogs();
-		this.createTurtles();
-		for(var obj of this.gameObjects){
-			for(var mesh of obj.meshes){
-				this.scene.add(mesh);	
-			}
-		}
-		
-		this.createRect()
-		
+		this.toggleSpotlights();
 		/*
 		// Cubemap
 		var deception_pass = new THREE.CubeTextureLoader()
@@ -304,7 +264,6 @@ class GameManager{
 		var skybox = new THREE.Mesh(skyboxGeometry, skyboxMaterial);
 		this.scene.add(skybox)
 		*/
-
 		// Temporary skybox
 		const loader = new THREE.CubeTextureLoader();
 		const texture = loader.load([
@@ -317,7 +276,7 @@ class GameManager{
 		]);
 		this.scene.background = texture;
 		// Keyboard listener
-
+		this.toggleColliders();
 		document.addEventListener("keydown", (event)=>{this.onDocumentKeyDown(event)}, false);
 
 		// Render loop
@@ -325,7 +284,51 @@ class GameManager{
 	}
 
 
-	createRect() {  
+	createGameObjects(){
+
+		this.gameObjects.push(new Grass(new THREE.Vector3(0,0,0)));
+		this.gameObjects.push(new Grass(new THREE.Vector3(0,6,0)));
+		this.gameObjects.push(new GrassBlock(new THREE.Vector3(0,12,0)));
+		this.gameObjects.push(new GrassBlock(new THREE.Vector3(2,12,0)));
+		this.gameObjects.push(new GrassBlock(new THREE.Vector3(4,12,0)));
+		this.gameObjects.push(new GrassBlock(new THREE.Vector3(6,12,0)));
+		this.gameObjects.push(new GrassBlock(new THREE.Vector3(8,12,0)));
+		this.target = new Crystal(new THREE.Vector3(0,12,0));
+		this.repositionTarget();
+		this.gameObjects.push(this.target);
+		this.gameObjects.push(new Road(new THREE.Vector3(0,3,0)));
+		this.gameObjects.push(new River(new THREE.Vector3(0,9,0)));
+
+		this.crabs.push(new Crab(new THREE.Vector3(0.5,12,0.8)));
+		this.gameObjects.push(this.crabs[0]);
+		this.player = new Frog(this.startingPlayerPosition);
+		
+		this.scene.add(this.player.meshes[0])
+		this.scene.add(this.player.meshes[1])
+		this.scene.add(this.player.meshes[2])
+
+
+		this.createBusses();
+		this.createCars();
+		this.createTurtles();
+		this.createLogs();
+		for(var obj of this.gameObjects){
+			for(var mesh of obj.meshes){
+				this.scene.add(mesh);	
+			}
+			if(obj.colliders){
+				for(var collider of obj.colliders){
+					console.log("Has collider");
+					this.colliders.push(collider)
+					this.scene.add(collider);	
+				}
+			}
+		}
+		
+		this.createReflectionPlane()
+	}
+
+	createReflectionPlane() {  
 		//var geometry =  new THREE.SphereGeometry( 3, 64, 64 );
 		var geometry =  new THREE.PlaneGeometry(10,7, 32 );
 		this.mirrorRect3Camera = new THREE.CubeCamera(1, 10, 1024 );
@@ -376,16 +379,44 @@ class GameManager{
 			case 52:
 				this.selectedCamera = this.cameraOptions.TOP_DOWN_ORTHOGRAPHIC;
 				break;
+			case 81:
+				this.areLampsEnabled = !this.areLampsEnabled;
+				this.toggleSpotlights();
+				break;
 			case 82:
 				this.resetPlayer();
 				break;
 			case 70: // fog
 				this.isFogEnabled = !this.isFogEnabled;
 				this.toggleFog();
+			
+			case 65: // Visible colliders
+				this.collidersVisible = !this.collidersVisible;
+				this.toggleColliders();
+			
+			case 83: // Lens flare
+				this.lensflareEnabled = !this.lensflareEnabled;
+				this.lensflare.visible = this.lensflareEnabled;
 				break;
 		}
 		
 	};
+
+	toggleSpotlights(){
+		for(var spotL of this.spotlights){
+			spotL.toggleLight(this.areLampsEnabled);
+		}
+
+		this.directionalLight.intensity = !this.areLampsEnabled ? 1 : 0;
+	}
+
+	toggleColliders(){
+		for(var collider of this.colliders){
+			collider.visible = this.collidersVisible;
+		}
+		
+	}
+
 	createBusses(){
 		var offset = Math.random() * (5 - 0.1) + 0.1;
 		this.busses.push(new Bus(new THREE.Vector3(-5,4,1),this.clippingPlanes));
@@ -420,7 +451,7 @@ class GameManager{
 
 
 		var offset = Math.random() * (2 - 0.1) + 0.1;
-		this.logs.push(new Log(new THREE.Vector3(11+offset,7,1)));
+		this.logs.push(new Log(new THREE.Vector3(11+offset,7,1),this.clippingPlanes));
 
 		var offset = Math.random() * (2 - 0.1) + 0.1;
 		this.logs.push(new Log(new THREE.Vector3(14+offset,7,1),this.clippingPlanes));
@@ -430,7 +461,7 @@ class GameManager{
 
 
 		var offset = Math.random() * (2 - 0.1) + 0.1;
-		this.logs.push(new Log(new THREE.Vector3(11+offset,9,1)));
+		this.logs.push(new Log(new THREE.Vector3(11+offset,9,1),this.clippingPlanes));
 
 		var offset = Math.random() * (2 - 0.1) + 0.1;
 		this.logs.push(new Log(new THREE.Vector3(14+offset,9,1),this.clippingPlanes));
@@ -449,6 +480,23 @@ class GameManager{
 		var pos = this.possibleTargetPositions[Math.floor(Math.random()*this.possibleTargetPositions.length)];
 		this.target.position = new THREE.Vector3(pos,12,0);
 		this.target.updatePosition();
+	}
+
+	createSpotlights(){
+
+		this.spotlights.push(new Spotlight(new THREE.Vector3(0.5,2,5)));
+		this.spotlights.push(new Spotlight(new THREE.Vector3(9.5,2,5)));
+		this.spotlights.push(new Spotlight(new THREE.Vector3(0.5,5,5)));
+		this.spotlights.push(new Spotlight(new THREE.Vector3(9.5,5,5)));
+
+		this.spotlights.push(new Spotlight(new THREE.Vector3(0.5,8,5)));
+		this.spotlights.push(new Spotlight(new THREE.Vector3(9.5,8,5)));
+		this.spotlights.push(new Spotlight(new THREE.Vector3(0.5,11,5)));
+		this.spotlights.push(new Spotlight(new THREE.Vector3(9.5,11,5)));
+		for(var spotL of this.spotlights){
+			this.scene.add(spotL.targetObject); 
+			this.scene.add(spotL.spot_light);
+		}
 	}
 
 	createTurtles(){
@@ -597,15 +645,24 @@ class GameManager{
 
 	toggleFog(){
 		if(this.isFogEnabled){
-			this.scene.background = this.fogColor;
+			//this.scene.background = this.fogColor;
 			this.scene.fog = new THREE.Fog(this.fogColor, 0.0025, 20);			
 		}else{
-			this.scene.background = this.blackColor;
+			//this.scene.background = this.blackColor;
 			this.scene.fog = null;
 		}
 	}
 	displayText(){
 		document.getElementById("score").innerHTML = "Score: " + this.currentScore;
 		document.getElementById("lives").innerHTML = "Lives: " + this.currentLives;
+		document.getElementById("fog").innerHTML = "Fog (f): " + this.isFogEnabled;
+		document.getElementById("orbitcam").innerHTML = "Orbit camera (1): " + (this.cameraOptions.ORBIT == this.selectedCamera);
+		document.getElementById("thirdpersoncam").innerHTML = "Third person camera (2): " + (this.cameraOptions.THIRD_PERSON == this.selectedCamera);
+		document.getElementById("topdowncam").innerHTML = "Top down camera (3): " + (this.cameraOptions.TOP_DOWN == this.selectedCamera);
+		document.getElementById("ortocam").innerHTML = "Orthographic camera (4): " + (this.cameraOptions.TOP_DOWN_ORTHOGRAPHIC == this.selectedCamera);
+		document.getElementById("lamps").innerHTML = "Side lamps (q): " + (this.areLampsEnabled);
+		document.getElementById("colliders").innerHTML = "Visible Colliders (a): " + (this.collidersVisible);
+		document.getElementById("lensflare").innerHTML = "Lensflare (s): " + (this.lensflareEnabled);
+
 	}
 }

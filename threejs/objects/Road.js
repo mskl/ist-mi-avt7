@@ -1,5 +1,6 @@
 class Road{
     meshes = []
+    colliders = []
     shapeSize = [10,5,1]
     TAG = "GROUND"
     constructor(position){
@@ -12,8 +13,8 @@ class Road{
 
         var texture = new THREE.TextureLoader().load( 'textures/Road.jpg' );
         var geometry = new THREE.BoxGeometry(this.shapeSize[0],this.shapeSize[1],this.shapeSize[2]);
-        var material = new THREE.MeshLambertMaterial( { map: texture } );
-        var material2 = new THREE.MeshLambertMaterial( { color: "rgb(90,98,102)"} );
+        var material = new THREE.MeshPhongMaterial( { map: texture } );
+        var material2 = new THREE.MeshPhongMaterial( { color: "rgb(90,98,102)"} );
         var materials = [
             material2,        // Left side
             material2,       // Right side
@@ -37,7 +38,7 @@ class Road{
         this.boundingBox.copy( this.mesh.geometry.boundingBox ).applyMatrix4( this.mesh.matrixWorld );
 
         this.boxHelper = new THREE.BoxHelper( this.mesh, 0xffff00 );
-        this.meshes.push(this.boxHelper);
+        this.colliders.push(this.boxHelper);        
     }
     render(){
         

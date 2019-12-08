@@ -1,5 +1,6 @@
 class Turtle{
     meshes = []
+    colliders = []
     shapeSize = [1,1,0.35]
 
     TAG = "TURTLE"
@@ -35,7 +36,7 @@ class Turtle{
 
 
         this.boxHelper = new THREE.BoxHelper( this.mesh, 0xffff00 );
-        this.meshes.push(this.boxHelper);
+        this.colliders.push(this.boxHelper);        
     }
     render(){
         

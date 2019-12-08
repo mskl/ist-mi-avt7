@@ -1,5 +1,6 @@
 class Bus{
     meshes = []
+    colliders = []
     wheelRotation = 0.1;
     clippingPlanes = [];
     constructor(position,clippingPlanes){
@@ -71,8 +72,7 @@ class Bus{
 
 
         this.boxHelper = new THREE.BoxHelper( this.meshBody, 0xffff00 );
-        this.meshes.push(this.boxHelper);
-        
+        this.colliders.push(this.boxHelper);        
     }
 
     updatePosition(){
