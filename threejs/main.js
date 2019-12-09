@@ -37,7 +37,7 @@ class GameManager{
 	// Camera Properties
 	camera_angle = 0;
 	camera_range = 18;
-	camera_speed = 0.02 * Math.PI/180;
+	camera_speed = 0.2 * Math.PI/180;
 	camera_target = new THREE.Vector3(5, 5, 0);
 	camera_focal = 60;
 	camera_near = 0.1;
@@ -318,6 +318,8 @@ class GameManager{
 		this.scene.add(this.player.meshes[0]);
 		this.scene.add(this.player.meshes[1]);
 		this.scene.add(this.player.meshes[2]);
+		this.colliders.push(this.player.colliders[0])
+		this.scene.add(this.player.colliders[0])
 
 		this.createBusses();
 		this.createCars();
@@ -342,7 +344,7 @@ class GameManager{
 	createReflectionPlane() {  
 		//var geometry =  new THREE.SphereGeometry( 3, 64, 64 );
 		var geometry =  new THREE.PlaneGeometry(10,7, 32 );
-		this.mirrorRect3Camera = new THREE.CubeCamera(1, 10, 2048 );
+		this.mirrorRect3Camera = new THREE.CubeCamera(1, 10000, 1024 );
 
         this.boxHelper = new THREE.BoxHelper( this.mirrorRect3Camera, 0xffff00 );
         this.scene.add(this.boxHelper);

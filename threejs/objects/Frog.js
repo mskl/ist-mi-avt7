@@ -1,5 +1,6 @@
 class Frog{
     meshes = [];
+    colliders = [];
     direction = {
         NONE: 0,
         UP: 1,
@@ -38,7 +39,7 @@ class Frog{
         ];
 
 
-        var materialTemp = new THREE.MeshLambertMaterial( { color: "rgb(255,255,255)"} );
+        var materialTemp = new THREE.MeshLambertMaterial( { transparent: true, opacity:0.0} );
         
         this.mesh = new THREE.Mesh( geometry, materials );
         this.meshBottomCollider = new THREE.Mesh( geometry, materialTemp );
@@ -57,7 +58,7 @@ class Frog{
 
 
         this.boxHelper = new THREE.BoxHelper( this.mesh, 0xffff00 );
-        this.meshes.push(this.boxHelper);
+        this.colliders.push(this.boxHelper);
     }
     render(currentTime){
 
