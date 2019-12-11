@@ -67,7 +67,7 @@ class GameManager{
 		STEREO: 5
       };
 
-	selectedCamera = this.cameraOptions.TOP_DOWN;
+	selectedCamera = this.cameraOptions.STEREO;
 
 	areLampsEnabled = false;
 	collidersVisible = false;
@@ -95,7 +95,7 @@ class GameManager{
 		if(!this.gameStarted)
 			return;
 
-		if(this.selectedCamera == this.cameraOptions.ORBIT || this.selectedCamera == this.cameraOptions.STEREO){
+		if(this.selectedCamera == this.cameraOptions.ORBIT) {
 			console.log("Orbiting")
 			this.camera = this.perspective_camera;
 			this.camera_angle += this.camera_speed;
@@ -104,7 +104,15 @@ class GameManager{
 			this.camera.position.z = 5;
 			this.camera.up.set(0, 0, 1);
 			this.camera.lookAt(this.camera_target);
-		}else if(this.selectedCamera == this.cameraOptions.THIRD_PERSON){
+		} else if(this.selectedCamera == this.cameraOptions.STEREO) {
+			console.log("Orbiting")
+			this.camera = this.perspective_camera;
+			this.camera_angle += this.camera_speed;
+			this.camera.position.x = Math.cos(this.camera_angle) * this.camera_range;
+			this.camera.position.y = Math.sin(this.camera_angle) * this.camera_range;
+			this.camera.position.z = 5;
+			this.controls.update();
+		} else if(this.selectedCamera == this.cameraOptions.THIRD_PERSON){
 			console.log("Third person")
 			this.camera = this.perspective_camera;
 			this.camera.position.x = this.player.position.x;
@@ -114,7 +122,7 @@ class GameManager{
 			var lookPos = this.player.position;
 			lookPos.z = 1;
 			this.camera.lookAt(lookPos);
-		}else if(this.selectedCamera == this.cameraOptions.TOP_DOWN){
+		} else if(this.selectedCamera == this.cameraOptions.TOP_DOWN){
 			this.camera = this.perspective_camera;
 			this.camera.position.x = 5;
 			this.camera.position.y = 5;
@@ -243,7 +251,6 @@ class GameManager{
 		this.directionalLight.add(this.lensflare);
 		this.scene.add(this.directionalLight);
 
-				
 		// Add directional light
 		this.createSpotlights();
 		this.createGameObjects();
@@ -287,6 +294,9 @@ class GameManager{
 			side: THREE.BackSide
 		} );
 		this.scene.add(new THREE.Mesh(new THREE.BoxGeometry( 999, 999, 999), shaderMaterial));
+
+		// Gyro controls
+		this.controls = new DeviceOrientationControls( this.perspective_camera );
 
 		// Keyboard listener
 		this.toggleColliders();
@@ -687,7 +697,6 @@ class GameManager{
 		document.getElementById("lensflare").innerHTML = "Lensflare (s): " + (this.lensflareEnabled);
 		document.getElementById("shadow").innerHTML = "Shadow (m): " + (this.shadowEnabled);
 		document.getElementById("reflection").innerHTML = "Reflection (n): " + (this.reflectionEnabled);
-
 	}
 
 	clearText() {
@@ -735,5 +744,79 @@ var StereoEffect = function ( renderer ) {
 		renderer.render( scene, _stereo.cameraR );
 		renderer.setScissorTest( false );
 	};
+};
 
+var DeviceOrientationControls = function ( object ) {
+	var scope = this;
+	this.object = object;
+	this.object.rotation.reorder( 'YXZ' );
+	this.enabled = true;
+	this.deviceOrientation = {};
+	this.screenOrientation = 0;
+	this.alphaOffset = 0; // radians
+
+	var onDeviceOrientationChangeEvent = function ( event ) {
+		scope.deviceOrientation = event;
+	};
+
+	var onScreenOrientationChangeEvent = function () {
+		scope.screenOrientation = window.orientation || 0;
+	};
+
+	// The angles alpha, beta and gamma form a set of intrinsic Tait-Bryan angles of type Z-X'-Y''
+	var setObjectQuaternion = function () {
+		var zee = new THREE.Vector3( 0, 0, 1 );
+		var euler = new THREE.Euler();
+		var q0 = new THREE.Quaternion();
+		var q1 = new THREE.Quaternion( - Math.sqrt( 0.5 ), 0, 0, Math.sqrt( 0.5 ) ); // - PI/2 around the x-axis
+
+		return function ( quaternion, alpha, beta, gamma, orient ) {
+			euler.set( beta, alpha, - gamma, 'YXZ' ); // 'ZXY' for the device, but 'YXZ' for us
+			quaternion.setFromEuler( euler ); // orient the device
+			quaternion.multiply( q1 ); // camera looks out the back of the device, not the top
+			quaternion.multiply( q0.setFromAxisAngle( zee, - orient ) ); // adjust for screen orientation
+		};
+	}();
+
+	this.connect = function () {
+		onScreenOrientationChangeEvent(); // run once on load
+		// iOS 13+
+		if ( window.DeviceOrientationEvent !== undefined && typeof window.DeviceOrientationEvent.requestPermission === 'function' ) {
+			window.DeviceOrientationEvent.requestPermission().then( function ( response ) {
+				if ( response == 'granted' ) {
+					window.addEventListener( 'orientationchange', onScreenOrientationChangeEvent, false );
+					window.addEventListener( 'deviceorientation', onDeviceOrientationChangeEvent, false );
+				}
+			} ).catch( function ( error ) {
+				console.error( 'THREE.DeviceOrientationControls: Unable to use DeviceOrientation API:', error );
+			} );
+		} else {
+			window.addEventListener( 'orientationchange', onScreenOrientationChangeEvent, false );
+			window.addEventListener( 'deviceorientation', onDeviceOrientationChangeEvent, false );
+		}
+		scope.enabled = true;
+	};
+
+	this.disconnect = function () {
+		window.removeEventListener( 'orientationchange', onScreenOrientationChangeEvent, false );
+		window.removeEventListener( 'deviceorientation', onDeviceOrientationChangeEvent, false );
+		scope.enabled = false;
+	};
+
+	this.update = function () {
+		if ( scope.enabled === false ) return;
+		var device = scope.deviceOrientation;
+		if ( device ) {
+			var alpha = device.alpha ? _Math.degToRad( device.alpha ) + scope.alphaOffset : 0; // Z
+			var beta = device.beta ? _Math.degToRad( device.beta ) : 0; // X'
+			var gamma = device.gamma ? _Math.degToRad( device.gamma ) : 0; // Y''
+			var orient = scope.screenOrientation ? _Math.degToRad( scope.screenOrientation ) : 0; // O
+			setObjectQuaternion( scope.object.quaternion, alpha, beta, gamma, orient );
+		}
+	};
+
+	this.dispose = function () {
+		scope.disconnect();
+	};
+	this.connect();
 };
