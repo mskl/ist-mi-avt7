@@ -438,6 +438,9 @@ class GameManager{
 			case 78:
 				this.reflectionEnabled = !this.reflectionEnabled;
 				break;
+			case 88:
+				this.player.selfPlay = !this.player.selfPlay;
+				break;
 		}
 		
 	};
@@ -703,6 +706,7 @@ class GameManager{
 		document.getElementById("lensflare").innerHTML = "Lensflare (s): " + (this.lensflareEnabled);
 		document.getElementById("shadow").innerHTML = "Shadow (m): " + (this.shadowEnabled);
 		document.getElementById("reflection").innerHTML = "Reflection (n): " + (this.reflectionEnabled);
+		document.getElementById("selfplay").innerHTML = "Self play (x): " + (this.player.selfPlay);
 	}
 
 	clearText() {
@@ -715,12 +719,14 @@ class GameManager{
 		document.getElementById("lensflare").innerHTML = "";
 		document.getElementById("shadow").innerHTML = "";
 		document.getElementById("reflection").innerHTML = "";
+		document.getElementById("selfplay").innerHTML = "";
 	}
 }
 
 var StereoEffect = function ( renderer ) {
 	var _stereo = new THREE.StereoCamera();
 	_stereo.aspect = 0.5;
+	_stereo.eyeSep = 0.0001;
 	var size = new THREE.Vector2();
 
 	this.setEyeSeparation = function ( eyeSep ) {
