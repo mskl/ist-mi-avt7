@@ -73,7 +73,7 @@ class GameManager{
 	collidersVisible = false;
 	lensflareEnabled = true;
 
-	selfPlay = true;
+	selfPlay = false;
 
     constructor(){
 
@@ -113,7 +113,9 @@ class GameManager{
 			this.camera.position.x = Math.cos(this.camera_angle) * this.camera_range;
 			this.camera.position.y = Math.sin(this.camera_angle) * this.camera_range;
 			this.camera.position.z = 5;
-			this.controls.update();
+			this.camera.up.set(0, 0, 1);
+			this.camera.lookAt(this.camera_target);
+			//this.controls.update();
 		} else if(this.selectedCamera == this.cameraOptions.THIRD_PERSON){
 			console.log("Third person")
 			this.camera = this.perspective_camera;
@@ -174,7 +176,7 @@ class GameManager{
 			this.respawnPlayer();
 			this.currentScore += this.scorePerTarget;
 		}
-
+		
 		if (this.selectedCamera != this.cameraOptions.STEREO) {
 			this.displayText();
 		} else {
@@ -764,7 +766,8 @@ var DeviceOrientationControls = function ( object ) {
 	};
 
 	var onScreenOrientationChangeEvent = function () {
-		scope.screenOrientation = window.orientation || 0;
+		//scope.screenOrientation = window.orientation || 0;
+		scope.screenOrientation = 0;
 	};
 
 	// The angles alpha, beta and gamma form a set of intrinsic Tait-Bryan angles of type Z-X'-Y''
@@ -815,9 +818,15 @@ var DeviceOrientationControls = function ( object ) {
 			var beta = device.beta ? _Math.degToRad( device.beta ) : 0; // X'
 			var gamma = device.gamma ? _Math.degToRad( device.gamma ) : 0; // Y''
 			var orient = scope.screenOrientation ? _Math.degToRad( scope.screenOrientation ) : 0; // O
+			document.getElementById("score").innerHTML = "Score: " + alpha;
+			document.getElementById("lives").innerHTML = "Score: " + gamma;
 			setObjectQuaternion( scope.object.quaternion, alpha, beta, gamma, orient );
 		}
 	};
+
+	this.isSupported = function(){
+		return !!scope.deviceOrientation;
+	}
 
 	this.dispose = function () {
 		scope.disconnect();
