@@ -3,8 +3,8 @@ class Frog{
     colliders = [];
     direction = {
         NONE: 0,
-        UP: 1,
-        DOWN: 2, 
+        DOWN: 1, 
+        UP: 2,
         LEFT: 3 ,
         RIGHT: 4 
       };
@@ -14,10 +14,16 @@ class Frog{
     clock = new THREE.Clock();
     startAnimationPosition
     currentTag = "GROUND";
+    
+    sequence = [];
 
     floatingMovingSpeed = 0;
-    constructor(position){
+
+    selfPlay = false;
+
+    constructor(position, selfPlay = false){
         this.position = position;
+        this.selfPlay = selfPlay;
         //this.position.x += 0.5;
         this.initializeObject();
     }
@@ -59,14 +65,25 @@ class Frog{
 
         this.boxHelper = new THREE.BoxHelper( this.mesh, 0xffff00 );
         this.colliders.push(this.boxHelper);
+
+        this.generatePlaySequence();
     }
     render(currentTime){
-
+        if(this.selfPlay){
+            if(this.currentDirection == this.direction.NONE){
+                this.currentDirection = this.sequence.shift();
+                if(this.currentDirection == this.direction.LEFT && (this.position.x >= 9)){
+                    this.currentDirection = this.direction.UP;
+                }
+                if(this.currentDirection == this.direction.RIGHT && (this.position.x <= 0)){
+                    this.currentDirection = this.direction.UP;
+                }
+            }
+        }
         var newPosition = this.position.clone();
 
         if(this.currentTag == "FLOATING" && !this.isJumping && this.currentDirection == this.direction.NONE){
             newPosition.x += this.floatingMovingSpeed;
-            console.log("Floating");
         }
         if(this.currentDirection != this.direction.NONE && !this.isJumping){
             this.finalPosition = this.position.clone();
@@ -127,8 +144,16 @@ class Frog{
         this.meshBottomCollider.position.set(this.position.x+0.5, this.position.y,this.position.z-0.75);
     }
 
+    generatePlaySequence(){
+        this.sequence = Array.from({length: 1000}, () => Math.floor(2 + Math.random() * 4));
+    }
+
     reset(){
         this.isJumping = false;
         this.currentDirection = this.direction.NONE;
+
+        if(this.selfPlay){
+            this.generatePlaySequence();
+        }
     }
 }

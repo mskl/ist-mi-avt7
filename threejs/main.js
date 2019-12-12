@@ -67,11 +67,13 @@ class GameManager{
 		STEREO: 5
       };
 
-	selectedCamera = this.cameraOptions.TOP_DOWN;
+	selectedCamera = this.cameraOptions.STEREO;
 
 	areLampsEnabled = false;
 	collidersVisible = false;
 	lensflareEnabled = true;
+
+	selfPlay = true;
 
     constructor(){
 
@@ -294,9 +296,8 @@ class GameManager{
 
 		// Render loop
 		this.renderer.setAnimationLoop((currentTime)=>{this.render(currentTime);});
+
 	}
-
-
 	createGameObjects(){
 		this.gameObjects.push(new Grass(new THREE.Vector3(0,0,0)));
 		this.gameObjects.push(new Grass(new THREE.Vector3(0,6,0)));
@@ -313,7 +314,7 @@ class GameManager{
 
 		this.crabs.push(new Crab(new THREE.Vector3(0.5,12,0.8)));
 		this.gameObjects.push(this.crabs[0]);
-		this.player = new Frog(this.startingPlayerPosition);
+		this.player = new Frog(this.startingPlayerPosition, this.selfPlay);
 		
 		this.scene.add(this.player.meshes[0]);
 		this.scene.add(this.player.meshes[1]);
@@ -655,6 +656,9 @@ class GameManager{
 
 	resetPlayer(){
 		this.currentLives -= 1;
+		if(this.selfPlay){
+			this.currentLives = 1000;
+		}
 		if(!this.gameStarted){
 			this.respawnPlayer();
 			this.currentLives = this.startingLives;
