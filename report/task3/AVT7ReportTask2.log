@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.99999 (TeX Live 2018) (preloaded format=xelatex 2019.1.16)  14 DEC 2019 16:57
+This is XeTeX, Version 3.14159265-2.6-0.99999 (TeX Live 2018) (preloaded format=xelatex 2019.1.16)  14 DEC 2019 17:24
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -776,15 +776,25 @@ File: images/cam_stereo.png Graphic file (type bmp)
 <images/cam_stereo.png>
  [1
 
-] [2]
-[3] (./AVT7ReportTask2.aux) ) 
+]
+File: images/pointlights.png Graphic file (type bmp)
+<images/pointlights.png>
+ [2]
+File: images/fog.png Graphic file (type bmp)
+<images/fog.png>
+
+[3] [4] (./AVT7ReportTask2.aux)
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
+ ) 
 Here is how much of TeX's memory you used:
- 16330 strings out of 492970
- 324060 string characters out of 6133938
- 393716 words of memory out of 5000000
- 20219 multiletter control sequences out of 15000+600000
+ 16342 strings out of 492970
+ 324254 string characters out of 6133938
+ 392748 words of memory out of 5000000
+ 20229 multiletter control sequences out of 15000+600000
  536736 words of font info for 63 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  39i,6n,33p,10487b,239s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on AVT7ReportTask2.pdf (3 pages).
+Output written on AVT7ReportTask2.pdf (4 pages).

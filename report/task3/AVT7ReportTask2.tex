@@ -31,45 +31,67 @@
 %  	\caption{Objects which inherit from the GameObject class.}
 %\end{figure}
 
-\section{Cameras}
+\section{Cameras and stereo effect}
 The application contains several cameras. The player can switch the camera using the keys 1 to 5. All of the cameras also show information about the game except for the stereo mode, for which we do not show any information on the screen to make the screen less cluttered.
 
 \begin{figure}[!htb]
 	\centering
  	\includegraphics[width=\linewidth]{images/cam_merged.png}
   	\caption{From top left: perspective following camera, rotating perspective camera, top perspective camera and top orthogonal camera.}
+	\label{cameras}
 \end{figure}
 
-\section{Object movement}
-
-\section{Lights}
-
-\section{Textures}
-
-\section{Collision detection}
-
-\section{Scoring system}
-
-\section{Fog}
-
-\section{Planar reflections}
-
-\section{Planar shadows}
-
-\section{Billboard}
-
-\section{Lens flare}
-
-\section{Shader with Skybox and Environment cube mapping}
-
-\section{Stereo viewing}
 The stereo viewing was implemented based on the module provided on the ThreeJS demo accessible at \url{https://threejs.org/examples/webgl_effects_stereo.html}. 
 
 \begin{figure}[!htb]
 	\centering
  	\includegraphics[width=\linewidth]{images/cam_stereo.png}
   	\caption{Stereo perspective rotating camera.}
+	\label{stereocam}
 \end{figure}
+
+\section{Object movement and collision detection}
+The objects position is after each timeframe by calling the update function.
+
+Collision detection is done by checking the collision of the player and all of the collidable game objects each frame. ThreeJS makes this very easy as we can easily precalculate the bounding box for a given geometry and then easily check for collisions between them. 
+
+
+\section{Lights}
+One of the lights can be seen on the Figure \ref{cameras} and represents the sun. User can also toggle the point lights in the scene with the q key.
+
+\begin{figure}[!htb]
+	\centering
+ 	\includegraphics[width=0.3\linewidth]{images/pointlights.png}
+  	\caption{Pointlights activated.}
+	\label{pointlights}
+\end{figure}
+
+\section{Scoring system}
+Scene contains the current score on the top of the screen. The score is increased when the player reaches the target crystal on the other side of the river and the game also speeds up to get harder.
+
+\section{Fog}
+Creating fog in ThreeJS is done simply by using the THREE.Fog() class. User can toggle the fog on and off using the f key. The result is shown on the Figure \ref{fog}.
+
+\begin{figure}[!htb]
+	\centering
+ 	\includegraphics[width=0.5\linewidth]{images/fog.png}
+  	\caption{Fog.}
+	\label{fog}
+\end{figure}
+
+
+\section{Planar reflections and shadows}
+
+\section{Billboard}
+We used a little crab to demonstrate the usage of billboards in our game. This can be seen for example on the Figure \ref{fog}.
+
+\section{Lens flare}
+For our demo, we have utilized the ThreeJS Lensflare class, which makes the lens flares very easy. the lens flare is located at the ``sun'' in the sky and can be seen for example on the Figure \ref{stereocam}.
+
+\section{Textures and skybox}
+ThreeJS allows the developers to write custom shaders for a material. The skybox is done using a large cube textured with a custom GLSL shader cube map. 
+
+We gave textured the ground with a grass texture as well as the road with the road stripes texture. Texturing using a GLSL shader was also utilized in the cubemap.
 
 \section*{Conclusion}
 We have implemented most of the required functionality for the third task of our project. Sadly, due to time contains and also one of our group member missing, we have not implemented the bump-mapping and a particle system. The mobile gyroscope controls were developed, however we ran into a technical problem that the mobile browser is not able to access the gyro data over http and our hosting did not have SSL set up. 
