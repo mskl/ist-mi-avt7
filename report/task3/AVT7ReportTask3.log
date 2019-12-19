@@ -1,10 +1,10 @@
-This is XeTeX, Version 3.14159265-2.6-0.99999 (TeX Live 2018) (preloaded format=xelatex 2019.1.16)  19 DEC 2019 02:34
+This is XeTeX, Version 3.14159265-2.6-0.99999 (TeX Live 2018) (preloaded format=xelatex 2019.1.16)  19 DEC 2019 02:36
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
  %&-line parsing enabled.
-**AVT7ReportTask2.tex
-(./AVT7ReportTask2.tex
+**AVT7ReportTask3.tex
+(./AVT7ReportTask3.tex
 LaTeX2e <2018-04-01> patch level 2
 Babel <3.18> and hyphenation patterns for 84 language(s) loaded.
 (/usr/local/texlive/2018/texmf-dist/tex/latex/base/article.cls
@@ -1005,8 +1005,8 @@ LaTeX Info: Redefining \addtolength on input line 81.
 )
 \c@@todonotes@numberoftodonotes=\count302
 )
-(./AVT7ReportTask2.aux)
-\openout1 = `AVT7ReportTask2.aux'.
+No file AVT7ReportTask3.aux.
+\openout1 = `AVT7ReportTask3.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 29.
 LaTeX Font Info:    ... okay on input line 29.
@@ -1024,7 +1024,6 @@ LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 29.
 LaTeX Font Info:    ... okay on input line 29.
 LaTeX Font Info:    Checking defaults for T3/cmr/m/n on input line 29.
 LaTeX Font Info:    Try loading font information for T3+cmr on input line 29.
-
 (/usr/local/texlive/2018/texmf-dist/tex/latex/tipa/t3cmr.fd
 File: t3cmr.fd 2001/12/31 TIPA font definitions
 )
@@ -1137,14 +1136,24 @@ File: images/cam_merged.png Graphic file (type bmp)
 <images/cam_merged.png>
 File: images/cam_stereo.png Graphic file (type bmp)
 <images/cam_stereo.png>
+
+
+LaTeX Warning: Reference `cameras' on page 1 undefined on input line 67.
+
 File: images/pointlights.png Graphic file (type bmp)
 <images/pointlights.png>
- [1
+[1
 
 
 ]
+
+LaTeX Warning: Reference `score' on page 2 undefined on input line 77.
+
 File: images/score.png Graphic file (type bmp)
 <images/score.png>
+
+LaTeX Warning: Reference `fog' on page 2 undefined on input line 88.
+
 File: images/fog.png Graphic file (type bmp)
 <images/fog.png>
 
@@ -1152,21 +1161,43 @@ Underfull \hbox (badness 10000) in paragraph at lines 97--97
 []\TU/lmr/bx/n/14.4 Planar reflections and
  []
 
+
+LaTeX Warning: Reference `reflection' on page 2 undefined on input line 98.
+
 File: images/reflection.png Graphic file (type bmp)
 <images/reflection.png>
+
+LaTeX Warning: Reference `shadow' on page 2 undefined on input line 107.
+
 File: images/shadows.png Graphic file (type bmp)
 <images/shadows.png>
 [2]
+
+LaTeX Warning: Reference `fog' on page 3 undefined on input line 117.
+
+
+LaTeX Warning: Reference `lensflare' on page 3 undefined on input line 120.
+
 File: images/lensflare.png Graphic file (type bmp)
 <images/lensflare.png>
- [3] (./AVT7ReportTask2.aux) ) 
+
+LaTeX Warning: Reference `fog' on page 3 undefined on input line 130.
+
+[3] (./AVT7ReportTask3.aux)
+
+LaTeX Warning: There were undefined references.
+
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
+ ) 
 Here is how much of TeX's memory you used:
- 28142 strings out of 492970
- 566837 string characters out of 6133938
- 716068 words of memory out of 5000000
+ 28140 strings out of 492970
+ 566797 string characters out of 6133938
+ 716004 words of memory out of 5000000
  31774 multiletter control sequences out of 15000+600000
  536736 words of font info for 63 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  62i,8n,56p,10420b,888s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on AVT7ReportTask2.pdf (3 pages).
+Output written on AVT7ReportTask3.pdf (3 pages).
