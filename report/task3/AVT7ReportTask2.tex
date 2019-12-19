@@ -68,7 +68,7 @@ The directional light can be seen on the Figure \ref{cameras}. The 8 point light
 
 \begin{figure}[!htb]
 	\centering
- 	\includegraphics[width=\linewidth]{images/pointlights.png}
+ 	\includegraphics[width=0.7\linewidth]{images/pointlights.png}
   	\caption{Pointlights activated.}
 	\label{pointlights}
 \end{figure}
@@ -104,7 +104,14 @@ The planar reflection is implemented using a cube camera positioned on the other
 	\label{reflection}
 \end{figure}
 
-// Describe the shadows
+The shadows are created by using the native  Three.js framework methods, which already does all the necessary to render the shadows. The framework first renders the models onto a plane, and then renders the real object on top. The shadows can be seen in Figure \ref{shadow}.
+
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=\linewidth]{images/shadows.png}
+  	\caption{Shadow.}
+	\label{shadow}
+\end{figure}
 
 \section{Billboard}
 We used a little crab to demonstrate the usage of billboards in our game. This can be seen for example on the Figure \ref{fog}.

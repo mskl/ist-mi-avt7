@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.99999 (TeX Live 2018) (preloaded format=xelatex 2019.1.16)  14 DEC 2019 20:59
+This is XeTeX, Version 3.14159265-2.6-0.99999 (TeX Live 2018) (preloaded format=xelatex 2019.1.16)  19 DEC 2019 02:34
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1145,9 +1145,6 @@ File: images/pointlights.png Graphic file (type bmp)
 ]
 File: images/score.png Graphic file (type bmp)
 <images/score.png>
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
 File: images/fog.png Graphic file (type bmp)
 <images/fog.png>
 
@@ -1157,15 +1154,17 @@ Underfull \hbox (badness 10000) in paragraph at lines 97--97
 
 File: images/reflection.png Graphic file (type bmp)
 <images/reflection.png>
+File: images/shadows.png Graphic file (type bmp)
+<images/shadows.png>
 [2]
 File: images/lensflare.png Graphic file (type bmp)
 <images/lensflare.png>
  [3] (./AVT7ReportTask2.aux) ) 
 Here is how much of TeX's memory you used:
- 28137 strings out of 492970
- 566751 string characters out of 6133938
- 716061 words of memory out of 5000000
- 31770 multiletter control sequences out of 15000+600000
+ 28142 strings out of 492970
+ 566837 string characters out of 6133938
+ 716068 words of memory out of 5000000
+ 31774 multiletter control sequences out of 15000+600000
  536736 words of font info for 63 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  62i,8n,56p,10420b,888s stack positions out of 5000i,500n,10000p,200000b,80000s
